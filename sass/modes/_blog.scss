@@ -1,0 +1,366 @@
+// =============================================================================
+// Mode: Blog
+// Personal blog/site styling using design system patterns
+// =============================================================================
+
+@use "../tokens/spacing" as *;
+@use "../tokens/typography" as *;
+@use "../patterns/cards" as *;
+@use "../patterns/lists" as *;
+@use "../patterns/sections" as *;
+@use "../patterns/buttons" as *;
+
+// =============================================================================
+// Layout
+// =============================================================================
+
+[data-mode="blog"] {
+  .layout__main {
+    @include container(var(--width-content));
+  }
+
+  .main-content {
+    padding-top: var(--space-4);
+  }
+}
+
+// =============================================================================
+// Hero Section
+// =============================================================================
+
+.hero {
+  @include hero;
+  text-align: left;
+}
+
+.hero__content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.hero__avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin-bottom: var(--space-6);
+  border: 3px solid var(--color-border);
+}
+
+.hero__title {
+  @include hero-title;
+}
+
+.hero__subtitle {
+  @include hero-subtitle;
+}
+
+.hero__actions {
+  @include button-group;
+  margin-top: var(--space-8);
+}
+
+.hero-meta {
+  margin-top: var(--space-8);
+}
+
+.bio-social {
+  @include cluster(var(--space-4));
+
+  a {
+    color: var(--color-text);
+    opacity: 0.8;
+    transition: all 0.2s ease;
+
+    &:hover {
+      color: var(--color-accent);
+      opacity: 1;
+      transform: translateY(-2px);
+    }
+  }
+}
+
+// =============================================================================
+// Sections
+// =============================================================================
+
+.section {
+  @include section;
+}
+
+.section--alt {
+  @include section-bordered;
+}
+
+.section__header {
+  @include section-header;
+}
+
+.section__title {
+  @include section-title;
+}
+
+.section__link {
+  @include section-link;
+}
+
+.view-all-link {
+  @include button-pill;
+  margin-top: var(--space-8);
+}
+
+// =============================================================================
+// Post List (row style)
+// =============================================================================
+
+.posts {
+  @include post-list;
+}
+
+.post {
+  @include post-item;
+}
+
+.post-row {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+// =============================================================================
+// Blog Cards (with description)
+// =============================================================================
+
+.blog-header {
+  @include page-header;
+  border-bottom: 4px solid var(--color-border);
+}
+
+.blog-header__title {
+  @include page-title;
+  font-size: var(--text-3xl);
+}
+
+.blog-header__description {
+  @include page-description;
+}
+
+.blog-posts {
+  margin: 0;
+}
+
+.blog-card {
+  @include blog-card-item;
+}
+
+.blog-card__title {
+  @include blog-card-title;
+}
+
+.blog-card__description {
+  @include blog-card-description;
+}
+
+.blog-card__meta {
+  @include blog-card-meta;
+}
+
+.blog-card__tags {
+  @include tag-list;
+}
+
+// =============================================================================
+// Tags
+// =============================================================================
+
+.tag {
+  @include tag('md');
+}
+
+.tag--small {
+  @include tag('sm');
+}
+
+.post-tags {
+  @include tag-list;
+  margin-top: var(--space-2);
+}
+
+// =============================================================================
+// Card Grid (homepage)
+// =============================================================================
+
+.card-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.card {
+  @include blog-card-item;
+}
+
+.card__title {
+  @include blog-card-title;
+  font-size: var(--text-base);
+
+  @media screen and (min-width: 800px) {
+    font-size: var(--text-lg);
+  }
+}
+
+.card__description {
+  display: none; // Hidden in compact view
+}
+
+.card__meta {
+  @include card-meta;
+}
+
+.card__tags {
+  display: none; // Hidden in compact view
+}
+
+// =============================================================================
+// Projects
+// =============================================================================
+
+.projects-section {
+  @include section-bordered;
+}
+
+.projects-grid {
+  @include card-grid(280px, var(--space-6));
+  margin-top: var(--space-8);
+}
+
+.project-card {
+  @include project-card;
+}
+
+// =============================================================================
+// About Preview
+// =============================================================================
+
+.about-preview {
+  max-width: none;
+  text-align: left;
+}
+
+.about-preview__content {
+  h2 {
+    @include h2;
+    font-size: var(--text-2xl);
+    margin-bottom: var(--space-4);
+  }
+
+  p {
+    font-size: var(--text-md);
+    color: var(--color-text-muted);
+    line-height: var(--leading-loose);
+    margin-bottom: var(--space-6);
+    max-width: 600px;
+  }
+}
+
+// =============================================================================
+// Pagination
+// =============================================================================
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-8);
+  padding: var(--space-12) 0;
+}
+
+.pagination__link {
+  @include button-pill;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.pagination__info {
+  @include text-small;
+}
+
+// =============================================================================
+// Article/Page Styles
+// =============================================================================
+
+.article-header {
+  @include page-header;
+}
+
+.article-header h1 {
+  @include page-title;
+}
+
+.article-header .description {
+  @include page-description;
+  margin-top: var(--space-4);
+}
+
+.post-meta {
+  @include page-meta;
+}
+
+.meta-line {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+
+  .reading-time {
+    @include text-mono;
+  }
+}
+
+.article-taxonomies {
+  @include tag-list;
+  margin-top: var(--space-4);
+}
+
+.article-post {
+  @include prose;
+  margin-top: var(--space-8);
+  margin-bottom: var(--space-8);
+}
+
+// =============================================================================
+// Taxonomy Pages
+// =============================================================================
+
+.taxonomy-list,
+.taxonomy-single {
+  padding: var(--space-12) 0;
+}
+
+.taxonomy-list__title,
+.taxonomy-single__title {
+  @include section-title;
+  margin-bottom: var(--space-8);
+}
+
+.taxonomy-list__items {
+  @include cluster(var(--space-4));
+  justify-content: flex-start;
+}
+
+.taxonomy-item {
+  @include tag-with-count;
+}
+
+.taxonomy-item__name {
+  font-weight: var(--font-medium);
+}
+
+.taxonomy-item__count {
+  background: var(--color-bg-elevated);
+  padding: 0 var(--space-2);
+  border-radius: 999px;
+  font-size: var(--text-xs);
+  min-width: 1.5em;
+  text-align: center;
+}

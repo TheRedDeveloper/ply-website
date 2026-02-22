@@ -1,0 +1,38 @@
+{# Footer - raskell.io style for site/blog mode #}
+{% set mode = config.extra.mode | default(value="site") %}
+
+{% if mode == "site" or mode == "blog" %}
+<footer class="footer flex" role="contentinfo">
+    <section class="container">
+        <nav class="footer-links" role="navigation" aria-label="Footer navigation">
+            {% if config.generate_feeds %}
+            <a href="{{ get_url(path='rss.xml') }}">RSS</a>
+            {% endif %}
+        </nav>
+    </section>
+    <script src="{{ get_url(path='js/app.js') | safe }}"></script>
+</footer>
+{% else %}
+{# Original tanuki footer for docs/book/product modes #}
+<footer class="footer" role="contentinfo">
+    <div class="container">
+        <div class="footer__content">
+            <p class="footer__copyright">
+                &copy; {{ now() | date(format="%Y") }} {{ config.extra.author | default(value=config.title) }}.
+                Built with <a href="https://www.getzola.org" target="_blank" rel="noopener noreferrer" aria-label="Zola static site generator (opens in new tab)">Zola</a>
+                and the <a href="https://github.com/raskell-io/tanuki" target="_blank" rel="noopener noreferrer" aria-label="Tanuki theme on GitHub (opens in new tab)">Tanuki</a> theme.
+            </p>
+
+            {% if config.extra.social_links %}
+            <nav class="footer__links" aria-label="Social links">
+                {% for link in config.extra.social_links %}
+                <a href="{{ link.url }}" target="_blank" rel="noopener noreferrer" aria-label="{{ link.name }} (opens in new tab)">
+                    {{ link.name }}
+                </a>
+                {% endfor %}
+            </nav>
+            {% endif %}
+        </div>
+    </div>
+</footer>
+{% endif %}

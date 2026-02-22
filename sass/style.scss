@@ -1,0 +1,47 @@
+// =============================================================================
+// Ply Website Stylesheet
+// Based on Tanuki theme, customized with Ply warm palette
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Design Tokens
+// Foundation: colors, spacing, typography
+// -----------------------------------------------------------------------------
+@use "tokens/colors";
+@use "tokens/spacing";
+@use "tokens/typography";
+
+// -----------------------------------------------------------------------------
+// Base Styles
+// Reset, fonts, and base element styling
+// -----------------------------------------------------------------------------
+@import "base/fonts";
+@import "base/catppuccin"; // Compatibility shim: maps --ctp-* → --ply-*
+@import "base/reset";
+@import "base/typography";
+
+// -----------------------------------------------------------------------------
+// Components
+// Shared UI components used across all modes
+// -----------------------------------------------------------------------------
+@import "components/layout";
+@import "components/navigation";
+@import "components/sidebar";
+@import "components/theme-toggle";
+@import "components/buttons";
+@import "components/code";
+@import "components/search";
+@import "components/landing";
+@import "components/print";
+@import "components/file_explorer";
+
+// -----------------------------------------------------------------------------
+// Mode-Specific Styles
+// Each mode uses patterns to build its unique appearance
+// -----------------------------------------------------------------------------
+@import "modes/blog";
+@import "modes/product";
+// @import "modes/raskell";  // Not used for Ply
+// @import "modes/docs";  // TODO: Refactor to use patterns
+// @import "modes/book";  // TODO: Refactor to use patterns
+// @import "modes/wiki";  // Future mode

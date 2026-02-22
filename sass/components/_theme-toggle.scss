@@ -1,0 +1,186 @@
+// =============================================================================
+// Theme Toggle - Nintendo-inspired whimsical animation
+// =============================================================================
+
+.theme-toggle {
+  --toggle-size: 44px;
+  --icon-size: 20px;
+
+  position: relative;
+  width: var(--toggle-size);
+  height: var(--toggle-size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-bg-surface);
+  border: 2px solid var(--color-border);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  overflow: hidden;
+
+  // Subtle glow effect
+  &::before {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle,
+      var(--color-accent) 0%,
+      transparent 70%
+    );
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: -1;
+  }
+
+  &:hover {
+    transform: scale(1.1);
+    border-color: var(--color-accent);
+    box-shadow: var(--shadow-glow);
+
+    &::before {
+      opacity: 0.2;
+    }
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  // Focus ring
+  &:focus-visible {
+    outline: none;
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px rgba(203, 166, 247, 0.3);
+  }
+}
+
+// Icon container
+.theme-toggle__icons {
+  position: relative;
+  width: var(--icon-size);
+  height: var(--icon-size);
+}
+
+// All theme icons share these base styles
+.theme-toggle__sun,
+.theme-toggle__moon,
+.theme-toggle__auto {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  opacity: 0;
+  transform: rotate(-90deg) scale(0.5);
+
+  svg {
+    width: var(--icon-size);
+    height: var(--icon-size);
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    fill: none;
+  }
+}
+
+// Icon colors
+.theme-toggle__sun {
+  color: var(--ctp-yellow);
+}
+
+.theme-toggle__moon {
+  color: var(--ctp-blue);
+}
+
+.theme-toggle__auto {
+  color: var(--ctp-lavender);
+}
+
+// Icon visibility based on current theme setting
+// Sun = light theme, Moon = dark theme, Eclipse = auto/system
+
+// Default: show moon (dark is default)
+.theme-toggle__moon {
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
+}
+
+// When setting is light: show sun
+[data-theme-setting="light"] .theme-toggle {
+  .theme-toggle__moon {
+    opacity: 0;
+    transform: rotate(-90deg) scale(0.5);
+  }
+  .theme-toggle__sun {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+  }
+}
+
+// When setting is dark: show moon
+[data-theme-setting="dark"] .theme-toggle {
+  .theme-toggle__moon {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+  }
+}
+
+// When setting is auto: show eclipse
+[data-theme-setting="auto"] .theme-toggle {
+  .theme-toggle__moon {
+    opacity: 0;
+    transform: rotate(-90deg) scale(0.5);
+  }
+  .theme-toggle__auto {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+  }
+}
+
+// Sparkle animation on toggle
+@keyframes sparkle {
+  0% {
+    transform: scale(0) rotate(0deg);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.2) rotate(180deg);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(0) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+.theme-toggle__sparkle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: var(--ctp-yellow);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: sparkle 0.6s ease-out forwards;
+
+  &:nth-child(1) { top: 0; left: 50%; }
+  &:nth-child(2) { top: 50%; right: 0; }
+  &:nth-child(3) { bottom: 0; left: 50%; }
+  &:nth-child(4) { top: 50%; left: 0; }
+}
+
+// Bounce animation for fun feedback
+@keyframes bounce {
+  0%, 100% { transform: scale(1); }
+  25% { transform: scale(1.15); }
+  50% { transform: scale(0.9); }
+  75% { transform: scale(1.05); }
+}
+
+.theme-toggle.animating {
+  animation: bounce 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}

@@ -1,0 +1,128 @@
+{# =============================================================================
+   Macros: Navigation
+   Reusable navigation components
+   ============================================================================= #}
+
+{# -----------------------------------------------------------------------------
+   Nav Links - Header navigation links
+   Usage: {{ macros::nav_links(nav=config.extra.nav, current_path=current_path) }}
+   ----------------------------------------------------------------------------- #}
+{% macro nav_links(nav, current_path="") %}
+{% if nav %}
+{% for link in nav %}
+    {% if link.children %}
+    <div class="nav-dropdown">
+        <button class="nav-dropdown__trigger" type="button" aria-expanded="false" aria-haspopup="true">
+            {{ link.name }}
+            <svg class="nav-dropdown__chevron" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+        <div class="nav-dropdown__menu" role="menu">
+            {% for child in link.children %}
+            <a href="{{ child.url | safe }}" role="menuitem"{% if child.external %} target="_blank" rel="noopener noreferrer"{% endif %}>
+                {{ child.name }}
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+    {% else %}
+    <a href="{{ link.url | safe }}" class="header__link {% if current_path == link.url %}active{% endif %}"{% if link.external %} target="_blank" rel="noopener noreferrer"{% endif %}>
+        {{ link.name }}
+    </a>
+    {% endif %}
+{% endfor %}
+{% endif %}
+{% endmacro %}
+
+{# -----------------------------------------------------------------------------
+   Sidebar Nav - Hierarchical sidebar navigation
+   Usage: {{ macros::sidebar_nav(pages=section.pages, current_path=current_path) }}
+   ----------------------------------------------------------------------------- #}
+{% macro sidebar_nav(pages, current_path="") %}
+<nav class="sidebar__nav" role="navigation" aria-label="Table of contents">
+    <ul class="nav-list">
+        {% for page in pages %}
+        <li class="nav-item">
+            <a href="{{ page.permalink | safe }}" {% if current_path == page.path %}aria-current="page"{% endif %}>
+                {{ page.title }}
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+</nav>
+{% endmacro %}
+
+{# -----------------------------------------------------------------------------
+   Breadcrumbs - Breadcrumb navigation
+   Usage: {{ macros::breadcrumbs(items=[{name: "Home", url: "/"}, {name: "Blog", url: "/blog/"}]) }}
+   ----------------------------------------------------------------------------- #}
+{% macro breadcrumbs(items) %}
+<nav class="breadcrumbs" aria-label="Breadcrumb">
+    <ol>
+        {% for item in items %}
+        <li>
+            {% if loop.last %}
+            <span aria-current="page">{{ item.name }}</span>
+            {% else %}
+            <a href="{{ item.url | safe }}">{{ item.name }}</a>
+            <span class="separator" aria-hidden="true">/</span>
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ol>
+</nav>
+{% endmacro %}
+
+{# -----------------------------------------------------------------------------
+   Table of Contents - Page TOC from headers
+   Usage: {{ macros::toc(toc=page.toc) }}
+   ----------------------------------------------------------------------------- #}
+{% macro toc(toc, title="On this page") %}
+{% if toc %}
+<nav class="toc" aria-label="Table of contents">
+    {% if title %}
+    <h2 class="toc__title">{{ title }}</h2>
+    {% endif %}
+    <ul class="toc__list">
+        {% for h in toc %}
+        <li class="toc__item toc__item--h{{ h.level }}">
+            <a href="#{{ h.id }}">{{ h.title }}</a>
+            {% if h.children %}
+            <ul class="toc__list toc__list--nested">
+                {% for child in h.children %}
+                <li class="toc__item">
+                    <a href="#{{ child.id }}">{{ child.title }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+</nav>
+{% endif %}
+{% endmacro %}
+
+{# -----------------------------------------------------------------------------
+   Prev/Next Navigation - For sequential content (books, docs)
+   Usage: {{ macros::prev_next(prev=page.lower, next=page.higher) }}
+   ----------------------------------------------------------------------------- #}
+{% macro prev_next(prev, next) %}
+{% if prev or next %}
+<nav class="prev-next" aria-label="Previous and next pages">
+    {% if prev %}
+    <a href="{{ prev.permalink | safe }}" class="prev-next__link prev-next__link--prev">
+        <span class="prev-next__label">Previous</span>
+        <span class="prev-next__title">{{ prev.title }}</span>
+    </a>
+    {% else %}
+    <div class="prev-next__spacer"></div>
+    {% endif %}
+    {% if next %}
+    <a href="{{ next.permalink | safe }}" class="prev-next__link prev-next__link--next">
+        <span class="prev-next__label">Next</span>
+        <span class="prev-next__title">{{ next.title }}</span>
+    </a>
+    {% endif %}
+</nav>
+{% endif %}
+{% endmacro %}

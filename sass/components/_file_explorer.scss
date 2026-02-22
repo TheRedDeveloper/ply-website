@@ -1,0 +1,102 @@
+// =============================================================================
+// Project View — IDE-style file tree + connected code block
+// =============================================================================
+
+.project-view {
+  margin: 1.5rem 0 0;
+  background: #1a1111;
+  border: 1px solid var(--color-border-subtle, var(--color-border));
+  border-bottom: none;
+  border-radius: var(--radius-lg, 12px) var(--radius-lg, 12px) 0 0;
+  overflow: hidden;
+}
+
+// File tree area
+.pv-tree {
+  padding: 0.4rem 0;
+  font-family: var(--font-mono);
+  font-size: 0.84rem;
+  line-height: 1.7;
+  user-select: none;
+}
+
+.pv-item {
+  position: relative;
+}
+
+.pv-entry {
+  display: flex;
+  align-items: center;
+  padding: 0.05rem 1rem;
+  color: var(--ctp-subtext1);
+  transition: background 0.15s ease;
+
+  // Folder styling
+  &.pv-dir {
+    color: var(--ctp-yellow);
+    font-weight: 500;
+
+    &::before {
+      content: "";
+      display: inline-block;
+      width: 15px;
+      height: 12px;
+      margin-right: 0.45rem;
+      flex-shrink: 0;
+      // CSS folder icon
+      background: var(--ctp-yellow);
+      clip-path: polygon(0 15%, 40% 15%, 50% 0, 100% 0, 100% 100%, 0 100%);
+      opacity: 0.7;
+    }
+  }
+
+  // File styling
+  &:not(.pv-dir)::before {
+    content: "";
+    display: inline-block;
+    width: 13px;
+    height: 14px;
+    margin-right: 0.5rem;
+    flex-shrink: 0;
+    // CSS file icon
+    background: var(--ctp-yellow);
+    clip-path: polygon(0 0, 65% 0, 100% 30%, 100% 100%, 0 100%);
+    opacity: 0.5;
+  }
+
+  // Active / highlighted file
+  &.pv-active {
+    background: rgba(255, 195, 44, 0.06);
+    color: var(--ctp-yellow);
+    font-weight: 500;
+    border-left: 2px solid var(--ctp-yellow);
+    padding-left: calc(1rem - 2px);
+
+    &::before {
+      opacity: 0.8;
+      border-color: var(--ctp-yellow);
+    }
+
+
+  }
+}
+
+// Nested children with tree connector lines
+.pv-children {
+  margin-left: 1.1rem;
+  padding-left: 0.8rem;
+  border-left: 1px solid var(--ply-surface1);
+}
+
+// Connected code block: remove gap and top radius
+.project-view + pre {
+  margin-top: 0 !important;
+  border-top: 1px solid var(--ply-surface1) !important;
+  border-top-left-radius: 0 !important;
+  border-top-right-radius: 0 !important;
+}
+
+// Override the language label with the file name
+.project-view + pre[data-lang]::before {
+  content: "src/main.rs";
+}

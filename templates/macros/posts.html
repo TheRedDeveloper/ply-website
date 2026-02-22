@@ -1,0 +1,101 @@
+{# =============================================================================
+   Macros: Posts
+   Reusable components for displaying posts/articles
+   ============================================================================= #}
+
+{# -----------------------------------------------------------------------------
+   Post Row - Simple date | title format
+   Usage: {{ macros::post_row(page=page) }}
+   ----------------------------------------------------------------------------- #}
+{% macro post_row(page, date_format="%b %d") %}
+<article class="post">
+    <a href="{{ page.permalink | safe }}">
+        <div class="post-row">
+            {% if page.date %}
+            <time datetime="{{ page.date }}">{{ page.date | date(format=date_format) }}</time>
+            {% endif %}
+            <h3>{{ page.title }}</h3>
+        </div>
+    </a>
+</article>
+{% endmacro %}
+
+{# -----------------------------------------------------------------------------
+   Post Card - With description and meta
+   Usage: {{ macros::post_card(page=page, show_description=true, show_tags=true) }}
+   ----------------------------------------------------------------------------- #}
+{% macro post_card(page, show_description=true, show_tags=true, max_tags=3) %}
+<article class="blog-card">
+    <div class="blog-card__content">
+        <h2 class="blog-card__title">
+            <a href="{{ page.permalink | safe }}">{{ page.title }}</a>
+        </h2>
+        {% if show_description and page.description %}
+        <p class="blog-card__description">{{ page.description }}</p>
+        {% endif %}
+        <div class="blog-card__meta">
+            {% if page.date %}
+            <time datetime="{{ page.date }}">{{ page.date | date(format="%B %d, %Y") }}</time>
+            {% endif %}
+            {% if show_tags and page.taxonomies.tags %}
+            <div class="blog-card__tags">
+                {% for tag in page.taxonomies.tags | slice(end=max_tags) %}
+                <a href="{{ get_taxonomy_url(kind='tags', name=tag) | safe }}" class="tag">{{ tag }}</a>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</article>
+{% endmacro %}
+
+{# -----------------------------------------------------------------------------
+   Post List - List of post rows
+   Usage: {{ macros::post_list(pages=section.pages, limit=6) }}
+   ----------------------------------------------------------------------------- #}
+{% macro post_list(pages, limit=10, date_format="%b %d") %}
+<div class="posts">
+    {% for page in pages | slice(end=limit) %}
+    {{ self::post_row(page=page, date_format=date_format) }}
+    {% endfor %}
+</div>
+{% endmacro %}
+
+{# -----------------------------------------------------------------------------
+   Post Grid - Grid of post cards
+   Usage: {{ macros::post_grid(pages=section.pages, limit=6) }}
+   ----------------------------------------------------------------------------- #}
+{% macro post_grid(pages, limit=10, show_description=true, show_tags=true) %}
+<div class="blog-posts">
+    {% for page in pages | slice(end=limit) %}
+    {{ self::post_card(page=page, show_description=show_description, show_tags=show_tags) }}
+    {% endfor %}
+</div>
+{% endmacro %}
+
+{# -----------------------------------------------------------------------------
+   Post Meta - Date, reading time, tags
+   Usage: {{ macros::post_meta(page=page) }}
+   ----------------------------------------------------------------------------- #}
+{% macro post_meta(page, show_reading_time=true, show_tags=true) %}
+<div class="post-meta">
+    <div class="meta-line">
+        {% if page.date %}
+        <time datetime="{{ page.date }}">{{ page.date | date(format="%B %d, %Y") }}</time>
+        {% endif %}
+        {% if show_reading_time and page.reading_time %}
+        <span class="separator">&middot;</span>
+        <span class="reading-time">{{ page.reading_time }} min read</span>
+        {% endif %}
+    </div>
+    {% if show_tags and page.taxonomies.tags %}
+    <div class="article-taxonomies">
+        <div class="tags">
+            {% for tag in page.taxonomies.tags %}
+            <a href="{{ get_taxonomy_url(kind='tags', name=tag) | safe }}" class="tag">{{ tag }}</a>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endmacro %}

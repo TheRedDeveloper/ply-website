@@ -1,0 +1,183 @@
+// =============================================================================
+// Pattern: Buttons
+// Reusable button styles
+// =============================================================================
+
+@use "../tokens/spacing" as *;
+
+/// Base button reset
+@mixin button-reset {
+  appearance: none;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: inherit;
+  padding: 0;
+  margin: 0;
+}
+
+/// Base button styles
+@mixin button-base {
+  @include button-reset;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-button-y) var(--space-button-x);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  line-height: 1;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+// =============================================================================
+// Button Variants
+// =============================================================================
+
+/// Primary button (filled accent)
+@mixin button-primary {
+  @include button-base;
+  background: var(--color-accent);
+  color: var(--color-bg);
+
+  &:hover:not(:disabled) {
+    background: var(--color-accent-hover);
+    transform: translateY(-1px);
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(0);
+  }
+}
+
+/// Secondary button (outline)
+@mixin button-secondary {
+  @include button-base;
+  background: transparent;
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+
+  &:hover:not(:disabled) {
+    background: var(--color-bg-elevated);
+    border-color: var(--color-border-muted);
+  }
+}
+
+/// Ghost button (minimal)
+@mixin button-ghost {
+  @include button-base;
+  background: transparent;
+  color: var(--color-text-muted);
+
+  &:hover:not(:disabled) {
+    background: var(--color-bg-elevated);
+    color: var(--color-text);
+  }
+}
+
+/// Pill button (rounded, used for CTAs)
+@mixin button-pill {
+  @include button-base;
+  padding: var(--space-3) var(--space-6);
+  border-radius: 999px;
+  background: var(--color-bg-alt);
+  color: var(--color-accent);
+  font-weight: var(--font-medium);
+
+  &:hover:not(:disabled) {
+    background: var(--color-accent);
+    color: var(--color-bg);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+}
+
+/// Icon button (square, icon only)
+@mixin button-icon($size: 44px) {
+  @include button-base;
+  width: $size;
+  height: $size;
+  padding: 0;
+  border-radius: 8px;
+  background: var(--color-bg-elevated);
+  color: var(--color-text);
+
+  &:hover:not(:disabled) {
+    background: var(--color-bg-hover);
+    color: var(--color-heading);
+  }
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+/// Icon button circular
+@mixin button-icon-circle($size: 44px) {
+  @include button-icon($size);
+  border-radius: 50%;
+}
+
+// =============================================================================
+// Button Sizes
+// =============================================================================
+
+@mixin button-sm {
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--text-xs);
+}
+
+@mixin button-lg {
+  padding: var(--space-4) var(--space-8);
+  font-size: var(--text-base);
+}
+
+// =============================================================================
+// Button Groups
+// =============================================================================
+
+/// Button group container
+@mixin button-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+/// Button group vertical
+@mixin button-group-vertical {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+// =============================================================================
+// Floating Action Button
+// =============================================================================
+
+@mixin fab {
+  @include button-icon-circle(48px);
+  position: fixed;
+  bottom: var(--space-6);
+  right: var(--space-6);
+  z-index: 100;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  }
+
+  @media screen and (min-width: 800px) {
+    bottom: var(--space-8);
+    right: var(--space-8);
+  }
+}

@@ -1,0 +1,168 @@
+{% extends "base.html" %}
+
+{% block title %}{{ config.title }}{% endblock %}
+
+{% block content %}
+<section class="hero hero--landing">
+    <div class="hero__content">
+        <h1 class="hero__title">
+            <span class="hero__icon">tanuki</span>
+        </h1>
+        <p class="hero__subtitle">{{ config.description }}</p>
+        <p class="hero__tagline">Named after the playful Japanese raccoon dog, this theme brings joy and whimsy to your Zola sites.</p>
+    </div>
+</section>
+
+<section class="modes">
+    <div class="container">
+        <h2 class="section__title">Three Modes, One Theme</h2>
+        <p class="section__subtitle">Choose the mode that fits your project</p>
+
+        <div class="mode-grid">
+            <a href="{{ get_url(path='@/docs/_index.md') }}" class="mode-card mode-card--docs">
+                <div class="mode-card__icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/>
+                        <path d="M8 7h6"/>
+                        <path d="M8 11h8"/>
+                    </svg>
+                </div>
+                <h3 class="mode-card__title">Documentation</h3>
+                <p class="mode-card__description">Technical docs with versioning, sidebar navigation, and search. Perfect for API references and guides.</p>
+                <span class="mode-card__cta">Explore Docs</span>
+            </a>
+
+            <a href="{{ get_url(path='@/book/_index.md') }}" class="mode-card mode-card--book">
+                <div class="mode-card__icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+                        <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+                    </svg>
+                </div>
+                <h3 class="mode-card__title">E-Book</h3>
+                <p class="mode-card__description">Long-form content with chapter navigation and reading-optimized layout. Ideal for tutorials and courses.</p>
+                <span class="mode-card__cta">Read Book</span>
+            </a>
+
+            <a href="{{ get_url(path='@/blog/_index.md') }}" class="mode-card mode-card--blog">
+                <div class="mode-card__icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 19l7-7 3 3-7 7-3-3z"/>
+                        <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/>
+                        <path d="M2 2l7.586 7.586"/>
+                        <circle cx="11" cy="11" r="2"/>
+                    </svg>
+                </div>
+                <h3 class="mode-card__title">Blog</h3>
+                <p class="mode-card__description">Posts, articles, and landing pages. Features hero sections, card layouts, and pagination.</p>
+                <span class="mode-card__cta">View Blog</span>
+            </a>
+        </div>
+    </div>
+</section>
+
+<section class="features">
+    <div class="container">
+        <h2 class="section__title">Features</h2>
+
+        <div class="feature-grid">
+            <div class="feature">
+                <div class="feature__icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="4"/>
+                        <path d="M12 2v2"/>
+                        <path d="M12 20v2"/>
+                        <path d="m4.93 4.93 1.41 1.41"/>
+                        <path d="m17.66 17.66 1.41 1.41"/>
+                        <path d="M2 12h2"/>
+                        <path d="M20 12h2"/>
+                        <path d="m6.34 17.66-1.41 1.41"/>
+                        <path d="m19.07 4.93-1.41 1.41"/>
+                    </svg>
+                </div>
+                <h3 class="feature__title">Catppuccin Colors</h3>
+                <p class="feature__description">Beautiful Mocha (dark) and Latte (light) themes with smooth transitions.</p>
+            </div>
+
+            <div class="feature">
+                <div class="feature__icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="4 7 4 4 20 4 20 7"/>
+                        <line x1="9" x2="15" y1="20" y2="20"/>
+                        <line x1="12" x2="12" y1="4" y2="20"/>
+                    </svg>
+                </div>
+                <h3 class="feature__title">Geist Typography</h3>
+                <p class="feature__description">Vercel's beautiful Geist font family for optimal readability.</p>
+            </div>
+
+            <div class="feature">
+                <div class="feature__icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"/>
+                        <path d="m21 21-4.3-4.3"/>
+                    </svg>
+                </div>
+                <h3 class="feature__title">Full-Text Search</h3>
+                <p class="feature__description">Elasticlunr-powered search with keyboard shortcuts.</p>
+            </div>
+
+            <div class="feature">
+                <div class="feature__icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect width="18" height="18" x="3" y="3" rx="2"/>
+                        <path d="m9 12 2 2 4-4"/>
+                    </svg>
+                </div>
+                <h3 class="feature__title">Accessible</h3>
+                <p class="feature__description">WCAG-compliant with keyboard navigation and screen reader support.</p>
+            </div>
+
+            <div class="feature">
+                <div class="feature__icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M6 18h8"/>
+                        <path d="M3 22h18"/>
+                        <path d="M14 22a7 7 0 1 0 0-14h-1"/>
+                        <path d="M9 14h2"/>
+                        <path d="M9 12a2 2 0 0 1-2-2V6h6v4a2 2 0 0 1-2 2Z"/>
+                        <path d="M12 6V3a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v3"/>
+                    </svg>
+                </div>
+                <h3 class="feature__title">Nintendo UX</h3>
+                <p class="feature__description">Whimsical animations and delightful interactions inspired by Nintendo.</p>
+            </div>
+
+            <div class="feature">
+                <div class="feature__icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="6 9 6 2 18 2 18 9"/>
+                        <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/>
+                        <rect width="12" height="8" x="6" y="14"/>
+                    </svg>
+                </div>
+                <h3 class="feature__title">Print Ready</h3>
+                <p class="feature__description">Print documentation or books as a single, beautifully formatted document.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="cta">
+    <div class="container">
+        <h2 class="cta__title">Get Started</h2>
+        <p class="cta__description">Add Tanuki to your Zola project in seconds.</p>
+        <div class="cta__code">
+            <code>git submodule add https://github.com/raskell-io/tanuki themes/tanuki</code>
+        </div>
+        <div class="cta__actions">
+            <a href="https://github.com/raskell-io/tanuki" class="btn btn--primary btn--lg" target="_blank" rel="noopener">
+                View on GitHub
+            </a>
+            <a href="{{ get_url(path='@/docs/_index.md') }}" class="btn btn--secondary btn--lg">
+                Read the Docs
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}

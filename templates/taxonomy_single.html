@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}{{ term.name | title }}{% endblock %}
+
+{% block content %}
+<div class="taxonomy-single">
+    <h1 class="taxonomy-single__title">Posts tagged "{{ term.name }}"</h1>
+
+    <div class="blog-posts">
+        {% for page in term.pages %}
+        <article class="blog-card">
+            <div class="blog-card__content">
+                <h2 class="blog-card__title">
+                    <a href="{{ page.permalink | safe }}">{{ page.title }}</a>
+                </h2>
+                {% if page.description %}
+                <p class="blog-card__description">{{ page.description }}</p>
+                {% endif %}
+                <div class="blog-card__meta">
+                    {% if page.date %}
+                    <time datetime="{{ page.date }}">{{ page.date | date(format="%B %d, %Y") }}</time>
+                    {% endif %}
+                </div>
+            </div>
+        </article>
+        {% endfor %}
+    </div>
+</div>
+
+<a href="{{ get_url(path='tags') }}" class="btn btn--secondary">View all tags</a>
+{% endblock %}

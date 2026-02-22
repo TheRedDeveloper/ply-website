@@ -1,0 +1,243 @@
+// =============================================================================
+// Pattern: Sections
+// Page sections, headers, and layout patterns
+// =============================================================================
+
+@use "../tokens/typography" as *;
+@use "../tokens/spacing" as *;
+
+// =============================================================================
+// Section Containers
+// =============================================================================
+
+/// Generic section
+@mixin section {
+  margin: var(--space-12) 0;
+
+  &:first-child {
+    margin-top: 0;
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+/// Section with alternate background
+@mixin section-alt {
+  @include section;
+  padding: var(--space-12) 0;
+  background: var(--color-bg-alt);
+  margin-left: calc(-1 * var(--container-padding));
+  margin-right: calc(-1 * var(--container-padding));
+  padding-left: var(--container-padding);
+  padding-right: var(--container-padding);
+}
+
+/// Section with top border separator
+@mixin section-bordered {
+  @include section;
+  padding-top: var(--space-12);
+  border-top: 1px solid var(--color-border);
+}
+
+// =============================================================================
+// Section Headers
+// =============================================================================
+
+/// Section header with optional link
+@mixin section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-6);
+  gap: var(--space-4);
+}
+
+/// Section title
+@mixin section-title {
+  font-size: var(--text-2xl);
+  font-weight: var(--font-bold);
+  color: var(--color-heading);
+  margin: 0;
+
+  // Underline style (raskell.io-inspired)
+  @media screen and (min-width: 800px) {
+    border-bottom: 4px solid var(--color-border);
+    padding-bottom: var(--space-2);
+  }
+}
+
+/// Section link (e.g., "View all")
+@mixin section-link {
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  color: var(--color-text);
+  text-decoration: none;
+  padding: var(--space-2) var(--space-3);
+  background: var(--color-bg-alt);
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+
+  &:hover {
+    background: var(--color-bg-elevated);
+    color: var(--color-heading);
+  }
+}
+
+// =============================================================================
+// Hero Sections
+// =============================================================================
+
+/// Hero section (left-aligned, blog style)
+@mixin hero {
+  margin: var(--space-12) 0;
+  padding-bottom: var(--space-10);
+
+  @media screen and (min-width: 800px) {
+    margin: var(--space-16) 0 var(--space-12);
+  }
+}
+
+/// Hero title (intro line)
+@mixin hero-title {
+  font-size: var(--text-xl);
+  font-weight: var(--font-semibold);
+  color: var(--color-heading);
+  margin: 0 0 var(--space-2);
+
+  @media screen and (min-width: 800px) {
+    font-size: var(--text-2xl);
+  }
+}
+
+/// Hero subtitle/description
+@mixin hero-subtitle {
+  font-size: var(--text-lg);
+  font-weight: var(--font-normal);
+  color: var(--color-text);
+  line-height: var(--leading-relaxed);
+  max-width: 800px;
+  margin: 0 0 var(--space-6);
+
+  @media screen and (min-width: 800px) {
+    font-size: var(--text-xl);
+  }
+}
+
+/// Hero centered (landing page style)
+@mixin hero-centered {
+  @include hero;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 50vh;
+  justify-content: center;
+  padding: var(--space-16) var(--space-4);
+}
+
+// =============================================================================
+// Page Headers
+// =============================================================================
+
+/// Article/page header
+@mixin page-header {
+  padding: var(--space-8) 0 var(--space-4);
+
+  @media screen and (min-width: 800px) {
+    padding: var(--space-12) 0 var(--space-6);
+  }
+}
+
+/// Page title (h1)
+@mixin page-title {
+  @include h1;
+  margin: 0 0 var(--space-4);
+
+  @media screen and (min-width: 800px) {
+    font-size: var(--text-4xl);
+  }
+}
+
+/// Page description
+@mixin page-description {
+  font-size: var(--text-lg);
+  color: var(--color-text-muted);
+  line-height: var(--leading-relaxed);
+  margin: 0;
+
+  @media screen and (min-width: 800px) {
+    font-size: var(--text-xl);
+  }
+}
+
+/// Page meta (date, reading time, tags)
+@mixin page-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  align-items: center;
+  margin-top: var(--space-4);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+
+  time {
+    @include text-mono;
+  }
+}
+
+// =============================================================================
+// Content Areas
+// =============================================================================
+
+/// Prose content (articles, docs)
+@mixin prose {
+  font-size: var(--text-md);
+  line-height: var(--leading-loose);
+  color: var(--color-text);
+
+  @media screen and (min-width: 800px) {
+    font-size: var(--text-lg);
+  }
+
+  > * + * {
+    margin-top: var(--space-6);
+  }
+
+  h2, h3, h4, h5, h6 {
+    margin-top: var(--space-10);
+    margin-bottom: var(--space-4);
+  }
+
+  a {
+    @include link-underline;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+
+  blockquote {
+    margin: var(--space-8) 0;
+    padding: var(--space-4) var(--space-6);
+    background: var(--color-bg-alt);
+    border-left: 4px solid var(--color-border);
+    border-radius: 0 8px 8px 0;
+
+    p {
+      margin: 0;
+    }
+  }
+
+  ul, ol {
+    padding-left: var(--space-6);
+  }
+
+  li + li {
+    margin-top: var(--space-2);
+  }
+}

@@ -1,0 +1,159 @@
+{# =============================================================================
+   Macros: UI Components
+   Reusable UI components (tags, buttons, icons, etc.)
+   ============================================================================= #}
+
+{# -----------------------------------------------------------------------------
+   Tag - Single tag pill
+   Usage: {{ macros::tag(name="rust", url="/tags/rust/") }}
+   ----------------------------------------------------------------------------- #}
+{% macro tag(name, url="", size="md") %}
+{% if url %}
+<a href="{{ url | safe }}" class="tag tag--{{ size }}">{{ name }}</a>
+{% else %}
+<span class="tag tag--{{ size }}">{{ name }}</span>
+{% endif %}
+{% endmacro %}
+
+{# -----------------------------------------------------------------------------
+   Tag List - List of tags
+   Usage: {{ macros::tag_list(tags=page.taxonomies.tags, limit=5) }}
+   ----------------------------------------------------------------------------- #}
+{% macro tag_list(tags, limit=0, size="md") %}
+<div class="tag-list">
+    {% set display_tags = tags %}
+    {% if limit > 0 %}
+    {% set display_tags = tags | slice(end=limit) %}
+    {% endif %}
+    {% for tag in display_tags %}
+    <a href="{{ get_taxonomy_url(kind='tags', name=tag) | safe }}" class="tag tag--{{ size }}">{{ tag }}</a>
+    {% endfor %}
+</div>
+{% endmacro %}
+
+{# -----------------------------------------------------------------------------
+   Button - Standard button
+   Usage: {{ macros::button(text="Learn more", url="/about/", variant="primary") }}
+   ----------------------------------------------------------------------------- #}
+{% macro button(text, url="", variant="primary", size="md", icon="") %}
+{% if url %}
+<a href="{{ url | safe }}" class="btn btn--{{ variant }} btn--{{ size }}">
+    {% if icon %}<span class="btn__icon">{{ icon | safe }}</span>{% endif %}
+    {{ text }}
+</a>
+{% else %}
+<button class="btn btn--{{ variant }} btn--{{ size }}">
+    {% if icon %}<span class="btn__icon">{{ icon | safe }}</span>{% endif %}
+    {{ text }}
+</button>
+{% endif %}
+{% endmacro %}
+
+{# -----------------------------------------------------------------------------
+   Pill Button - Rounded CTA button
+   Usage: {{ macros::pill_button(text="View all", url="/blog/") }}
+   ----------------------------------------------------------------------------- #}
+{% macro pill_button(text, url) %}
+<a href="{{ url | safe }}" class="view-all-link">{{ text }}</a>
+{% endmacro %}
+
+{# -----------------------------------------------------------------------------
+   Section Header - Title with optional link
+   Usage: {{ macros::section_header(title="Recent Posts", link_text="View all", link_url="/blog/") }}
+   ----------------------------------------------------------------------------- #}
+{% macro section_header(title, link_text="", link_url="") %}
+<div class="section__header">
+    <h2 class="section__title">{{ title }}</h2>
+    {% if link_text and link_url %}
+    <a href="{{ link_url | safe }}" class="section__link">{{ link_text }}</a>
+    {% endif %}
+</div>
+{% endmacro %}
+
+{# -----------------------------------------------------------------------------
+   Pagination - Previous/Next navigation
+   Usage: {{ macros::pagination(paginator=paginator) }}
+   ----------------------------------------------------------------------------- #}
+{% macro pagination(paginator) %}
+{% if paginator %}
+<nav class="pagination" aria-label="Pagination">
+    {% if paginator.previous %}
+    <a href="{{ paginator.previous }}" class="pagination__link pagination__link--prev">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m15 18-6-6 6-6"/>
+        </svg>
+        Newer
+    </a>
+    {% endif %}
+
+    <span class="pagination__info">
+        Page {{ paginator.current_index }} of {{ paginator.number_pagers }}
+    </span>
+
+    {% if paginator.next %}
+    <a href="{{ paginator.next }}" class="pagination__link pagination__link--next">
+        Older
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m9 18 6-6-6-6"/>
+        </svg>
+    </a>
+    {% endif %}
+</nav>
+{% endif %}
+{% endmacro %}
+
+{# -----------------------------------------------------------------------------
+   Social Links - Social media icon links
+   Usage: {{ macros::social_links(social=config.extra.social) }}
+   ----------------------------------------------------------------------------- #}
+{% macro social_links(social, size=22) %}
+<div class="social-links">
+    {% if social.github %}
+    <a href="{{ social.github }}" target="_blank" rel="noopener" aria-label="GitHub">
+        <svg xmlns="http://www.w3.org/2000/svg" width="{{ size }}" height="{{ size }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/>
+            <path d="M9 18c-4.51 2-5-2-7-2"/>
+        </svg>
+    </a>
+    {% endif %}
+    {% if social.twitter %}
+    <a href="{{ social.twitter }}" target="_blank" rel="noopener" aria-label="Twitter">
+        <svg xmlns="http://www.w3.org/2000/svg" width="{{ size }}" height="{{ size }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/>
+        </svg>
+    </a>
+    {% endif %}
+    {% if social.linkedin %}
+    <a href="{{ social.linkedin }}" target="_blank" rel="noopener" aria-label="LinkedIn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="{{ size }}" height="{{ size }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+            <rect width="4" height="12" x="2" y="9"/>
+            <circle cx="4" cy="4" r="2"/>
+        </svg>
+    </a>
+    {% endif %}
+    {% if social.mastodon %}
+    <a href="{{ social.mastodon }}" target="_blank" rel="noopener me" aria-label="Mastodon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="{{ size }}" height="{{ size }}" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M21.327 8.566c0-4.339-2.843-5.61-2.843-5.61-1.433-.658-3.894-.935-6.451-.956h-.063c-2.557.021-5.016.298-6.45.956 0 0-2.843 1.272-2.843 5.61 0 .993-.019 2.181.012 3.441.103 4.243.778 8.425 4.701 9.463 1.809.479 3.362.579 4.612.51 2.268-.126 3.541-.809 3.541-.809l-.075-1.646s-1.621.511-3.441.449c-1.804-.062-3.707-.194-3.999-2.409a4.523 4.523 0 0 1-.04-.621s1.77.432 4.014.535c1.372.063 2.658-.08 3.965-.236 2.506-.299 4.688-1.843 4.962-3.254.434-2.223.398-5.424.398-5.424zm-3.353 5.59h-2.081V9.057c0-1.075-.452-1.62-1.357-1.62-1 0-1.501.647-1.501 1.927v2.791h-2.069V9.364c0-1.28-.501-1.927-1.502-1.927-.905 0-1.357.545-1.357 1.62v5.099H6.026V8.903c0-1.074.273-1.927.823-2.558.566-.631 1.307-.955 2.228-.955 1.065 0 1.872.409 2.405 1.228l.518.869.519-.869c.533-.819 1.34-1.228 2.405-1.228.92 0 1.662.324 2.228.955.549.631.822 1.484.822 2.558v5.253z"/>
+        </svg>
+    </a>
+    {% endif %}
+    {% if social.email %}
+    <a href="mailto:{{ social.email }}" aria-label="Email">
+        <svg xmlns="http://www.w3.org/2000/svg" width="{{ size }}" height="{{ size }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect width="20" height="16" x="2" y="4" rx="2"/>
+            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+        </svg>
+    </a>
+    {% endif %}
+</div>
+{% endmacro %}
+
+{# -----------------------------------------------------------------------------
+   Avatar - User/author avatar image
+   Usage: {{ macros::avatar(src="/images/avatar.jpg", alt="John Doe", size=80) }}
+   ----------------------------------------------------------------------------- #}
+{% macro avatar(src, alt="", size=80) %}
+<img src="{{ src | safe }}" alt="{{ alt }}" class="avatar" width="{{ size }}" height="{{ size }}" loading="lazy">
+{% endmacro %}

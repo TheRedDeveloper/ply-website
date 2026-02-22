@@ -1,0 +1,186 @@
+// =============================================================================
+// Design Tokens: Typography
+// Font families, sizes, weights, and line heights
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Font Stacks
+// -----------------------------------------------------------------------------
+:root {
+  --font-sans: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo,
+    Consolas, "Liberation Mono", monospace;
+  --font-serif: Georgia, Cambria, "Times New Roman", Times, serif;
+}
+
+// -----------------------------------------------------------------------------
+// Font Sizes (modular scale ~1.25)
+// -----------------------------------------------------------------------------
+:root {
+  --text-xs: 0.75rem;      // 12px
+  --text-sm: 0.875rem;     // 14px
+  --text-base: 1rem;       // 16px
+  --text-md: 1.0625rem;    // 17px (for body copy)
+  --text-lg: 1.125rem;     // 18px
+  --text-xl: 1.25rem;      // 20px
+  --text-2xl: 1.5rem;      // 24px
+  --text-3xl: 1.875rem;    // 30px
+  --text-4xl: 2.25rem;     // 36px
+  --text-5xl: 3rem;        // 48px
+}
+
+// -----------------------------------------------------------------------------
+// Font Weights
+// -----------------------------------------------------------------------------
+:root {
+  --font-normal: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+}
+
+// -----------------------------------------------------------------------------
+// Line Heights
+// -----------------------------------------------------------------------------
+:root {
+  --leading-none: 1;
+  --leading-tight: 1.25;
+  --leading-snug: 1.375;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.625;
+  --leading-loose: 1.75;
+}
+
+// -----------------------------------------------------------------------------
+// Letter Spacing
+// -----------------------------------------------------------------------------
+:root {
+  --tracking-tighter: -0.05em;
+  --tracking-tight: -0.025em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.025em;
+  --tracking-wider: 0.05em;
+  --tracking-widest: 0.1em;
+}
+
+// -----------------------------------------------------------------------------
+// Typography Mixins
+// -----------------------------------------------------------------------------
+
+/// Base body text
+@mixin body-text {
+  font-family: var(--font-sans);
+  font-size: var(--text-md);
+  font-weight: var(--font-normal);
+  line-height: var(--leading-loose);
+  color: var(--color-text);
+}
+
+/// Heading base styles
+@mixin heading-base {
+  font-family: var(--font-sans);
+  font-weight: var(--font-bold);
+  line-height: var(--leading-tight);
+  color: var(--color-heading);
+  letter-spacing: var(--tracking-tight);
+}
+
+/// Heading sizes
+@mixin h1 {
+  @include heading-base;
+  font-size: var(--text-4xl);
+
+  @media screen and (min-width: 800px) {
+    font-size: var(--text-5xl);
+  }
+}
+
+@mixin h2 {
+  @include heading-base;
+  font-size: var(--text-2xl);
+
+  @media screen and (min-width: 800px) {
+    font-size: var(--text-3xl);
+  }
+}
+
+@mixin h3 {
+  @include heading-base;
+  font-size: var(--text-xl);
+
+  @media screen and (min-width: 800px) {
+    font-size: var(--text-2xl);
+  }
+}
+
+@mixin h4 {
+  @include heading-base;
+  font-size: var(--text-lg);
+  font-weight: var(--font-semibold);
+}
+
+@mixin h5 {
+  @include heading-base;
+  font-size: var(--text-base);
+  font-weight: var(--font-semibold);
+}
+
+@mixin h6 {
+  @include heading-base;
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+}
+
+/// Small/caption text
+@mixin text-small {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+/// Monospace/code text
+@mixin text-mono {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  font-variant-numeric: tabular-nums;
+}
+
+/// Link styles
+@mixin link {
+  color: var(--color-link);
+  text-decoration: none;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: var(--color-link-hover);
+  }
+}
+
+/// Underline link (for body text)
+@mixin link-underline {
+  color: var(--color-text);
+  text-decoration: none;
+  box-shadow: 0 -2px 0 var(--color-highlight) inset;
+  transition: box-shadow 0.2s ease;
+
+  &:hover {
+    box-shadow: 0 -1.2em 0 var(--color-highlight) inset;
+  }
+}
+
+/// Truncate text with ellipsis
+@mixin truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/// Clamp text to N lines
+@mixin line-clamp($lines: 2) {
+  display: -webkit-box;
+  -webkit-line-clamp: $lines;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}

@@ -1,0 +1,81 @@
+{# Full-screen navigation overlay for mobile #}
+{% set mode = config.extra.mode | default(value="site") %}
+
+<div id="nav-overlay" class="nav-overlay" aria-hidden="true">
+    <div class="nav-overlay__backdrop"></div>
+    <div class="nav-overlay__panel">
+        <div class="nav-overlay__header">
+            <span class="nav-overlay__title">{{ config.title }}</span>
+            <button class="nav-overlay__close" aria-label="Close navigation">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M18 6 6 18"/>
+                    <path d="m6 6 12 12"/>
+                </svg>
+            </button>
+        </div>
+
+        <nav class="nav-overlay__nav">
+            <ul class="nav-overlay__list">
+                {% if config.extra.nav %}
+                    {% for link in config.extra.nav %}
+                    <li class="nav-overlay__item">
+                        <a href="{{ link.url | safe }}" class="nav-overlay__link {% if current_path is defined and current_path == link.url %}nav-overlay__link--active{% endif %}">
+                            {{ link.name }}
+                        </a>
+                    </li>
+                    {% endfor %}
+                {% elif config.extra.nav_links %}
+                    {% for link in config.extra.nav_links %}
+                        {% if link.children %}
+                        <li class="nav-overlay__group">
+                            <span class="nav-overlay__group-label">{{ link.name }}</span>
+                            <ul class="nav-overlay__sublist">
+                                {% for child in link.children %}
+                                <li class="nav-overlay__item">
+                                    <a href="{{ child.url | safe }}" class="nav-overlay__link {% if current_path is defined and current_path == child.url %}nav-overlay__link--active{% endif %}"{% if child.external %} target="_blank" rel="noopener noreferrer"{% endif %}>
+                                        {{ child.name }}
+                                        {% if child.external %}
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
+                                        {% endif %}
+                                    </a>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </li>
+                        {% else %}
+                        <li class="nav-overlay__item">
+                            <a href="{{ link.url | safe }}" class="nav-overlay__link {% if current_path is defined and current_path == link.url %}nav-overlay__link--active{% endif %}"{% if link.external %} target="_blank" rel="noopener noreferrer"{% endif %}>
+                                {{ link.name }}
+                                {% if link.external %}
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
+                                {% endif %}
+                            </a>
+                        </li>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            </ul>
+        </nav>
+
+        <div class="nav-overlay__footer">
+            {# Theme toggle #}
+            {% if config.extra.show_theme_toggle | default(value=true) %}
+            <div class="nav-overlay__theme">
+                <span class="nav-overlay__theme-label">Theme</span>
+                {% include "partials/theme-toggle.html" %}
+            </div>
+            {% endif %}
+
+            {# GitHub link #}
+            {% if config.extra.github %}
+            <a href="{{ config.extra.github }}" class="nav-overlay__github" target="_blank" rel="noopener">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/>
+                    <path d="M9 18c-4.51 2-5-2-7-2"/>
+                </svg>
+                <span>View on GitHub</span>
+            </a>
+            {% endif %}
+        </div>
+    </div>
+</div>

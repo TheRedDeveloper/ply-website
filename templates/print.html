@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="{{ lang | default(value='en') }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex">
+    <title>{{ config.title }} - Print Version</title>
+
+    <link rel="stylesheet" href="{{ get_url(path='style.css') | safe }}">
+
+    <style>
+        /* Print-specific overrides */
+        body {
+            background: white;
+            color: black;
+        }
+
+        .print-page {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .print-page__header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid #ddd;
+        }
+
+        .print-page__header h1 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .print-page__meta {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .print-page__toc {
+            margin-bottom: 3rem;
+            padding: 1.5rem;
+            background: #f5f5f5;
+            border-radius: 8px;
+        }
+
+        .print-page__toc h2 {
+            margin-top: 0;
+            border-bottom: none;
+        }
+
+        .print-page__toc-section {
+            margin-top: 1rem;
+        }
+
+        .print-page__toc-section-title {
+            font-weight: 600;
+            color: #555;
+            margin-bottom: 0.5rem;
+        }
+
+        .print-page__toc ol {
+            margin: 0;
+            padding-left: 1.5rem;
+        }
+
+        .print-page__toc li {
+            margin: 0.25rem 0;
+        }
+
+        .print-page__section {
+            margin-bottom: 2rem;
+        }
+
+        .print-page__section-title {
+            font-size: 1.5rem;
+            color: #555;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 0.5rem;
+            margin-bottom: 2rem;
+            page-break-after: avoid;
+        }
+
+        .print-page__chapter {
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid #ddd;
+            page-break-after: always;
+        }
+
+        .print-page__chapter:last-child {
+            border-bottom: none;
+            page-break-after: auto;
+        }
+
+        .print-page__chapter h1 {
+            color: #333;
+            page-break-after: avoid;
+        }
+
+        /* Hide interactive elements */
+        .no-print,
+        .code-buttons {
+            display: none !important;
+        }
+
+        @media print {
+            body {
+                font-size: 11pt;
+            }
+
+            .print-page {
+                padding: 0;
+            }
+
+            .print-page__toc {
+                background: none;
+                border: 1px solid #ddd;
+            }
+
+            pre {
+                background: #f5f5f5 !important;
+                border: 1px solid #ddd !important;
+                white-space: pre-wrap;
+                word-wrap: break-word;
+            }
+
+            a {
+                color: #333;
+                text-decoration: underline;
+            }
+
+            @page {
+                margin: 2cm;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="print-page">
+        <header class="print-page__header">
+            <h1>{{ config.title }}</h1>
+            <p class="print-page__meta">
+                {{ config.description }}
+                <br>
+                Generated on {{ now() | date(format="%B %d, %Y") }}
+            </p>
+        </header>
+
+        {# Build Table of Contents #}
+        <nav class="print-page__toc">
+            <h2>Table of Contents</h2>
+
+            {% set root = get_section(path="_index.md") %}
+
+            {# Root pages #}
+            {% if root.pages | length > 0 %}
+            <ol>
+                {% for page in root.pages %}
+                {% if page.extra.hide_from_toc is not defined or not page.extra.hide_from_toc %}
+                {% if page.slug != "print" %}
+                <li><a href="#page-{{ page.slug }}">{{ page.title }}</a></li>
+                {% endif %}
+                {% endif %}
+                {% endfor %}
+            </ol>
+            {% endif %}
+
+            {# Subsections #}
+            {% for subsection_path in root.subsections %}
+            {% set subsection = get_section(path=subsection_path) %}
+            <div class="print-page__toc-section">
+                <div class="print-page__toc-section-title">{{ subsection.title }}</div>
+                <ol>
+                    {% for page in subsection.pages %}
+                    {% if page.extra.hide_from_toc is not defined or not page.extra.hide_from_toc %}
+                    <li><a href="#page-{{ page.slug }}">{{ page.title }}</a></li>
+                    {% endif %}
+                    {% endfor %}
+                </ol>
+            </div>
+            {% endfor %}
+        </nav>
+
+        {# Render all content #}
+        {% set root = get_section(path="_index.md") %}
+
+        {# Root pages first #}
+        {% for page in root.pages %}
+        {% if page.extra.hide_from_toc is not defined or not page.extra.hide_from_toc %}
+        {% if page.slug != "print" %}
+        <article class="print-page__chapter" id="page-{{ page.slug }}">
+            <h1>{{ page.title }}</h1>
+            {{ page.content | safe }}
+        </article>
+        {% endif %}
+        {% endif %}
+        {% endfor %}
+
+        {# Then each subsection #}
+        {% for subsection_path in root.subsections %}
+        {% set subsection = get_section(path=subsection_path) %}
+        <div class="print-page__section">
+            <h2 class="print-page__section-title">{{ subsection.title }}</h2>
+
+            {% for page in subsection.pages %}
+            {% if page.extra.hide_from_toc is not defined or not page.extra.hide_from_toc %}
+            <article class="print-page__chapter" id="page-{{ page.slug }}">
+                <h1>{{ page.title }}</h1>
+                {{ page.content | safe }}
+            </article>
+            {% endif %}
+            {% endfor %}
+        </div>
+        {% endfor %}
+
+        <footer class="print-page__footer">
+            <p>&copy; {{ now() | date(format="%Y") }} {{ config.extra.author | default(value=config.title) }}</p>
+        </footer>
+    </div>
+
+    <script>
+        // Auto-print when page loads (if triggered from print button)
+        if (window.location.search.includes('auto=true')) {
+            window.onload = function() {
+                // Close the tab after print dialog is closed (print or cancel)
+                window.addEventListener('afterprint', function() {
+                    window.close();
+                });
+
+                // Trigger print dialog
+                window.print();
+
+                // Fallback for browsers that don't fire afterprint reliably
+                // Close after a short delay if still open
+                setTimeout(function() {
+                    window.close();
+                }, 1000);
+            };
+        }
+    </script>
+</body>
+</html>

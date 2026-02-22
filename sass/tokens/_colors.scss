@@ -1,0 +1,65 @@
+// =============================================================================
+// Design Tokens: Colors
+// Ply warm palette — derived from the layered logo
+// =============================================================================
+
+$ply-dark: (
+  "dark-red":   #B91414,
+  "salmon":     #FF654D,
+  "yellow":     #FFC32C,
+  "gold":       #FFD469,
+  "goldenrod":  #FFCE53,
+  "green":      #6ECB63,
+  "teal":       #5BB8A9,
+  "sky":        #7EC8E3,
+  "blue":       #6EA8E5,
+  "text":       #E8E0DC,
+  "subtext1":   #C4BBB5,
+  "subtext0":   #9E9590,
+  "overlay2":   #7A726D,
+  "overlay1":   #5E5854,
+  "overlay0":   #4A4440,
+  "surface2":   #3A3533,
+  "surface1":   #2E2A28,
+  "surface0":   #262220,
+  "base":       #1E1B1B,
+  "mantle":     #181515,
+  "crust":      #110F0F,
+);
+
+@mixin apply-theme($palette) {
+  @each $name, $color in $palette {
+    --ply-#{$name}: #{$color};
+  }
+}
+
+:root {
+  @include apply-theme($ply-dark);
+  --color-scheme: dark;
+  color-scheme: dark;
+}
+
+:root {
+  --color-text:           var(--ply-text);
+  --color-text-secondary: var(--ply-subtext1);
+  --color-text-muted:     var(--ply-subtext0);
+  --color-text-subtle:    var(--ply-overlay1);
+  --color-heading:        var(--ply-text);
+  --color-bg:             var(--ply-base);
+  --color-bg-alt:         var(--ply-mantle);
+  --color-bg-surface:     var(--ply-mantle);
+  --color-bg-elevated:    var(--ply-surface0);
+  --color-bg-overlay:     var(--ply-surface1);
+  --color-bg-hover:       var(--ply-surface1);
+  --color-border:         var(--ply-surface0);
+  --color-border-muted:   var(--ply-surface1);
+  --color-accent:         var(--ply-yellow);
+  --color-accent-hover:   var(--ply-gold);
+  --color-link:           var(--ply-yellow);
+  --color-link-hover:     var(--ply-goldenrod);
+  --color-highlight:      var(--ply-salmon);
+  --color-success:        var(--ply-green);
+  --color-warning:        var(--ply-salmon);
+  --color-error:          var(--ply-dark-red);
+  --color-info:           var(--ply-blue);
+}

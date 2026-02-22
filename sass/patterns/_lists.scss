@@ -1,0 +1,259 @@
+// =============================================================================
+// Pattern: Lists
+// Reusable list styles for posts, navigation, etc.
+// =============================================================================
+
+@use "../tokens/typography" as *;
+@use "../tokens/spacing" as *;
+
+/// Base list reset
+@mixin list-reset {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+// =============================================================================
+// Post Row List (date | title format)
+// =============================================================================
+
+/// Post list container
+@mixin post-list {
+  @include list-reset;
+  margin: 0;
+}
+
+/// Post list item
+@mixin post-item {
+  a {
+    display: flex;
+    align-items: center;
+    padding: var(--space-4) 0;
+    border-bottom: 1px solid var(--color-border);
+    text-decoration: none;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+
+    &:hover {
+      transform: translateX(4px);
+    }
+
+    // Desktop: background highlight instead of shift
+    @media screen and (min-width: 800px) {
+      padding: var(--space-5) var(--space-4);
+      border-radius: 12px;
+      margin: 0 calc(-1 * var(--space-4));
+
+      &:hover {
+        background: var(--color-bg-alt);
+        border-color: transparent;
+        transform: none;
+      }
+    }
+  }
+
+  &:last-child a {
+    border-bottom: none;
+  }
+
+  h3 {
+    flex: 1;
+    margin: 0;
+    font-size: var(--text-base);
+    font-weight: var(--font-medium);
+    color: var(--color-heading);
+
+    @media screen and (min-width: 800px) {
+      font-size: var(--text-lg);
+    }
+  }
+
+  time {
+    flex: 0 0 90px;
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    font-variant-numeric: tabular-nums;
+    opacity: 0.8;
+
+    @media screen and (min-width: 800px) {
+      flex: 0 0 110px;
+    }
+  }
+}
+
+// =============================================================================
+// Blog Card List (with description)
+// =============================================================================
+
+/// Blog card in list
+@mixin blog-card-item {
+  padding: var(--space-5) 0;
+  border-bottom: 1px solid var(--color-border);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &:hover {
+    transform: translateX(4px);
+  }
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  // Desktop: card style on hover
+  @media screen and (min-width: 800px) {
+    padding: var(--space-6) var(--space-4);
+    margin: 0 calc(-1 * var(--space-4));
+    border-radius: 12px;
+
+    &:hover {
+      background: var(--color-bg-alt);
+      border-color: transparent;
+      transform: none;
+    }
+  }
+}
+
+/// Blog card title
+@mixin blog-card-title {
+  font-size: var(--text-lg);
+  font-weight: var(--font-medium);
+  margin: 0 0 var(--space-2);
+
+  @media screen and (min-width: 800px) {
+    font-size: var(--text-xl);
+  }
+
+  a {
+    color: var(--color-heading);
+    text-decoration: none;
+
+    &:hover {
+      color: var(--color-accent);
+    }
+  }
+}
+
+/// Blog card description
+@mixin blog-card-description {
+  font-size: var(--text-base);
+  color: var(--color-text-muted);
+  line-height: var(--leading-relaxed);
+  margin: 0 0 var(--space-3);
+}
+
+/// Blog card meta
+@mixin blog-card-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+
+  time {
+    @include text-mono;
+    opacity: 0.8;
+  }
+}
+
+// =============================================================================
+// Navigation Lists
+// =============================================================================
+
+/// Sidebar navigation list
+@mixin nav-list {
+  @include list-reset;
+  @include stack(var(--space-1));
+}
+
+/// Sidebar navigation item
+@mixin nav-item {
+  a {
+    display: block;
+    padding: var(--space-2) var(--space-3);
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    text-decoration: none;
+    border-radius: 6px;
+    transition: all 0.15s ease;
+
+    &:hover {
+      color: var(--color-text);
+      background: var(--color-bg-elevated);
+    }
+
+    &.active,
+    &[aria-current="page"] {
+      color: var(--color-accent);
+      background: var(--color-bg-elevated);
+      font-weight: var(--font-medium);
+    }
+  }
+}
+
+/// Nested navigation list
+@mixin nav-list-nested {
+  margin-left: var(--space-4);
+  padding-left: var(--space-3);
+  border-left: 1px solid var(--color-border);
+}
+
+// =============================================================================
+// Tag Lists
+// =============================================================================
+
+/// Tag list container
+@mixin tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+/// Individual tag
+/// @param {String} $size - 'sm', 'md', or 'lg'
+@mixin tag($size: 'md') {
+  display: inline-block;
+  text-decoration: none;
+  border-radius: 999px;
+  font-weight: var(--font-medium);
+  background: var(--color-bg-alt);
+  color: var(--color-text);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+
+  @if $size == 'sm' {
+    padding: var(--space-1) var(--space-2);
+    font-size: var(--text-xs);
+  } @else if $size == 'lg' {
+    padding: var(--space-3) var(--space-5);
+    font-size: var(--text-base);
+  } @else {
+    padding: var(--space-1) var(--space-3);
+    font-size: var(--text-xs);
+  }
+
+  &:hover {
+    background: var(--color-accent);
+    color: var(--color-bg);
+    transform: translateY(-1px);
+  }
+}
+
+/// Tag with count badge
+@mixin tag-with-count {
+  @include tag('md');
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+
+  .count {
+    background: var(--color-bg-elevated);
+    padding: 0 var(--space-2);
+    border-radius: 999px;
+    font-size: var(--text-xs);
+    min-width: 1.5em;
+    text-align: center;
+  }
+
+  &:hover .count {
+    background: rgba(255, 255, 255, 0.2);
+  }
+}

@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}{{ section.title }}{% endblock %}
+
+{% block content %}
+<div class="blog-header">
+    <h1 class="blog-header__title">{{ section.title }}</h1>
+    {% if section.description %}
+    <p class="blog-header__description">{{ section.description }}</p>
+    {% endif %}
+</div>
+
+<div class="blog-posts">
+    {% set pages = paginator.pages | default(value=section.pages) %}
+    {% for page in pages %}
+    <article class="blog-card">
+        <div class="blog-card__content">
+            <h2 class="blog-card__title">
+                <a href="{{ page.permalink | safe }}">{{ page.title }}</a>
+            </h2>
+            {% if page.description %}
+            <p class="blog-card__description">{{ page.description }}</p>
+            {% endif %}
+            <div class="blog-card__meta">
+                {% if page.date %}
+                <time datetime="{{ page.date }}">{{ page.date | date(format="%B %d, %Y") }}</time>
+                {% endif %}
+                {% if page.taxonomies.tags %}
+                <div class="blog-card__tags">
+                    {% for tag in page.taxonomies.tags | slice(end=3) %}
+                    <a href="{{ get_taxonomy_url(kind='tags', name=tag) | safe }}" class="tag">{{ tag }}</a>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </article>
+    {% endfor %}
+</div>
+
+{% if paginator %}
+<nav class="pagination" aria-label="Pagination">
+    {% if paginator.previous %}
+    <a href="{{ paginator.previous }}" class="pagination__link pagination__link--prev">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m15 18-6-6 6-6"/>
+        </svg>
+        Newer
+    </a>
+    {% endif %}
+
+    <span class="pagination__info">
+        Page {{ paginator.current_index }} of {{ paginator.number_pagers }}
+    </span>
+
+    {% if paginator.next %}
+    <a href="{{ paginator.next }}" class="pagination__link pagination__link--next">
+        Older
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m9 18 6-6-6-6"/>
+        </svg>
+    </a>
+    {% endif %}
+</nav>
+{% endif %}
+{% endblock %}

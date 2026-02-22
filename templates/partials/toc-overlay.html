@@ -1,0 +1,146 @@
+{# Full-screen Table of Contents overlay for docs/book mode #}
+{% set mode = config.extra.mode | default(value="site") %}
+
+<div id="toc-overlay" class="toc-overlay" aria-hidden="true" role="dialog" aria-label="Table of Contents">
+    <div class="toc-overlay__backdrop"></div>
+    <div class="toc-overlay__panel">
+        <div class="toc-overlay__header">
+            <h2 class="toc-overlay__title">{{ config.title }}</h2>
+            <button class="toc-overlay__close" aria-label="Close table of contents">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M18 6 6 18"/>
+                    <path d="m6 6 12 12"/>
+                </svg>
+            </button>
+        </div>
+
+        <nav class="toc-overlay__nav" aria-label="{% if mode == 'docs' %}Table of contents{% else %}Book chapters{% endif %}">
+            {% set root_section = get_section(path="_index.md") %}
+
+            {% if mode == "docs" %}
+            {# Docs mode: numbered chapters #}
+            {% if root_section %}
+            <ul class="toc-overlay__list">
+                {% for pg in root_section.pages %}
+                {% if pg.extra.hide_from_toc is not defined or not pg.extra.hide_from_toc %}
+                <li class="toc-overlay__item">
+                    <a href="{{ pg.permalink | safe }}" class="toc-overlay__link{% if current_path is defined and current_path == pg.path %} toc-overlay__link--active{% endif %}">
+                        <span class="toc-overlay__chapter">{{ loop.index0 }}.</span>
+                        <span class="toc-overlay__page-title">{{ pg.title }}</span>
+                    </a>
+                </li>
+                {% endif %}
+                {% endfor %}
+            </ul>
+
+            {# Subsections - collect and sort by weight #}
+            {% if root_section.subsections %}
+            {% set_global subsection_data = [] %}
+            {% for subsection_path in root_section.subsections %}
+                {% set sec = get_section(path=subsection_path) %}
+                {% set w = sec.weight | default(value=999) %}
+                {# Pad weight to 3 digits for proper string sorting, then concat with path #}
+                {% if w < 10 %}
+                    {% set w_str = "00" ~ w %}
+                {% elif w < 100 %}
+                    {% set w_str = "0" ~ w %}
+                {% else %}
+                    {% set w_str = w %}
+                {% endif %}
+                {% set_global subsection_data = subsection_data | concat(with=[w_str ~ "|" ~ subsection_path]) %}
+            {% endfor %}
+            {% set_global subsection_data = subsection_data | sort %}
+
+            {% for item in subsection_data %}
+            {% set parts = item | split(pat="|") %}
+            {% set subsection = get_section(path=parts.1) %}
+            <div class="toc-overlay__section">
+                <div class="toc-overlay__section-title">{{ subsection.title }}</div>
+                <ul class="toc-overlay__list">
+                    {% for pg in subsection.pages %}
+                    <li class="toc-overlay__item">
+                        <a href="{{ pg.permalink | safe }}" class="toc-overlay__link{% if current_path is defined and current_path == pg.path %} toc-overlay__link--active{% endif %}">
+                            <span class="toc-overlay__page-title">{{ pg.title }}</span>
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endfor %}
+            {% endif %}
+            {% endif %}
+
+            {% else %}
+            {# Book mode: chapters #}
+            {% if root_section %}
+            <ul class="toc-overlay__list">
+                <li class="toc-overlay__item">
+                    <a href="{{ root_section.permalink | safe }}" class="toc-overlay__link toc-overlay__link--section">
+                        {{ root_section.title }}
+                    </a>
+                </li>
+                {% for page in root_section.pages %}
+                {% if page.extra.hide_from_toc is not defined or not page.extra.hide_from_toc %}
+                <li class="toc-overlay__item">
+                    <a href="{{ page.permalink | safe }}" class="toc-overlay__link{% if current_path is defined and current_path == page.path %} toc-overlay__link--active{% endif %}">
+                        <span class="toc-overlay__chapter">Chapter {{ loop.index }}</span>
+                        <span class="toc-overlay__page-title">{{ page.title }}</span>
+                    </a>
+                </li>
+                {% endif %}
+                {% endfor %}
+            </ul>
+            {% endif %}
+            {% endif %}
+        </nav>
+
+        {# Footer with actions #}
+        <div class="toc-overlay__footer">
+            {# Version picker (docs mode only) #}
+            {% if mode == "docs" and config.extra.versions is defined %}
+            <div class="toc-overlay__action">
+                <span class="toc-overlay__action-label">Version</span>
+                <div class="toc-overlay__version">
+                    <span class="toc-overlay__version-current">v{{ config.extra.versions.current }}</span>
+                    {% for v in config.extra.versions.list %}
+                    {% if v.version != config.extra.versions.current %}
+                    <a href="{{ v.url | safe }}" class="toc-overlay__version-link">v{{ v.version }}</a>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            {# Theme toggle #}
+            {% if config.extra.show_theme_toggle | default(value=true) %}
+            <div class="toc-overlay__action">
+                <span class="toc-overlay__action-label">Theme</span>
+                {% include "partials/theme-toggle.html" %}
+            </div>
+            {% endif %}
+
+            {# GitHub link #}
+            {% if config.extra.github %}
+            <a href="{{ config.extra.github }}" class="toc-overlay__github" target="_blank" rel="noopener">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/>
+                    <path d="M9 18c-4.51 2-5-2-7-2"/>
+                </svg>
+                <span>View on GitHub</span>
+            </a>
+            {% endif %}
+
+            {# Print all pages (docs and book modes) #}
+            {% if mode == "docs" or mode == "book" %}
+            <a href="{{ get_url(path='print') | safe }}?auto=true" class="toc-overlay__print" target="_blank">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="6 9 6 2 18 2 18 9"/>
+                    <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/>
+                    <rect width="12" height="8" x="6" y="14"/>
+                </svg>
+                <span>Print all pages</span>
+            </a>
+            {% endif %}
+        </div>
+    </div>
+</div>

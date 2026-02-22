@@ -1,0 +1,531 @@
+// =============================================================================
+// Typography
+// =============================================================================
+
+body {
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  color: var(--color-text);
+  background-color: var(--color-bg);
+}
+
+// Headings
+h1, h2, h3, h4, h5, h6 {
+  font-weight: var(--font-semibold);
+  line-height: var(--leading-tight);
+  color: var(--color-text);
+  letter-spacing: var(--tracking-tight);
+}
+
+// Anchor links (Zola insert_anchor_links)
+// Position hash icon in the left margin, heading text stays aligned
+h1, h2, h3, h4, h5, h6 {
+  position: relative;
+  cursor: pointer;
+
+  .zola-anchor {
+    position: absolute;
+    right: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    padding-right: 0.75rem;
+    text-decoration: none;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    cursor: pointer;
+
+    // Hide the emoji text
+    font-size: 0 !important;
+
+    // Lucide hash icon via mask-image
+    &::before {
+      content: "";
+      display: block;
+      width: 1em;
+      height: 1em;
+      background-color: var(--color-border);
+      mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='4' x2='20' y1='9' y2='9'/%3E%3Cline x1='4' x2='20' y1='15' y2='15'/%3E%3Cline x1='10' x2='8' y1='3' y2='21'/%3E%3Cline x1='16' x2='14' y1='3' y2='21'/%3E%3C/svg%3E");
+      mask-size: contain;
+      mask-repeat: no-repeat;
+      mask-position: center;
+      -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='4' x2='20' y1='9' y2='9'/%3E%3Cline x1='4' x2='20' y1='15' y2='15'/%3E%3Cline x1='10' x2='8' y1='3' y2='21'/%3E%3Cline x1='16' x2='14' y1='3' y2='21'/%3E%3C/svg%3E");
+      -webkit-mask-size: contain;
+      -webkit-mask-repeat: no-repeat;
+      -webkit-mask-position: center;
+      transition: background-color 0.2s ease;
+    }
+
+    &:hover::before {
+      background-color: var(--color-text-muted);
+    }
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
+  // Copied indicator - positioned at right edge of content
+  .anchor-copied {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-success);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+    white-space: nowrap;
+
+    &.show {
+      opacity: 1;
+    }
+  }
+
+  &:hover .zola-anchor {
+    opacity: 1;
+  }
+}
+
+h1 {
+  font-size: var(--text-4xl);
+  font-weight: var(--font-bold);
+  margin-bottom: 1.5rem;
+
+  .zola-anchor::before { width: 2.25rem; height: 2.25rem; }
+
+  @media (min-width: 768px) {
+    font-size: var(--text-5xl);
+    .zola-anchor::before { width: 3rem; height: 3rem; }
+  }
+}
+
+h2 {
+  font-size: var(--text-2xl);
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--color-border);
+
+  .zola-anchor::before { width: 1.5rem; height: 1.5rem; }
+
+  @media (min-width: 768px) {
+    font-size: var(--text-3xl);
+    .zola-anchor::before { width: 1.875rem; height: 1.875rem; }
+  }
+}
+
+h3 {
+  font-size: var(--text-xl);
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+
+  .zola-anchor::before { width: 1.25rem; height: 1.25rem; }
+
+  @media (min-width: 768px) {
+    font-size: var(--text-2xl);
+    .zola-anchor::before { width: 1.5rem; height: 1.5rem; }
+  }
+}
+
+h4 {
+  font-size: var(--text-lg);
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+
+  .zola-anchor::before { width: 1.125rem; height: 1.125rem; }
+}
+
+h5, h6 {
+  font-size: var(--text-base);
+  margin-top: 1.25rem;
+  margin-bottom: 0.5rem;
+
+  .zola-anchor::before { width: 1rem; height: 1rem; }
+}
+
+// Paragraphs
+p {
+  margin-bottom: 1.25rem;
+  line-height: var(--leading-loose);
+}
+
+// Links
+a {
+  color: var(--color-link);
+  text-decoration: none;
+  transition: color 0.2s ease, text-decoration-color 0.2s ease;
+
+  &:hover {
+    color: var(--color-link-hover);
+    text-decoration: underline;
+    text-decoration-color: var(--color-accent);
+  }
+}
+
+// Strong and emphasis
+strong, b {
+  font-weight: var(--font-semibold);
+}
+
+em, i {
+  font-style: italic;
+}
+
+// Code (inline)
+code:not(pre code) {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  padding: 0.2em 0.4em;
+  background: var(--color-bg-surface);
+  border-radius: 4px;
+  color: var(--ctp-mauve);
+}
+
+// Keyboard
+kbd {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  padding: 0.2em 0.5em;
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  box-shadow: 0 2px 0 var(--color-border);
+}
+
+// Blockquotes
+blockquote {
+  margin: 1.5rem 0;
+  padding: 1rem 1.5rem;
+  border-left: 4px solid var(--color-accent);
+  background: var(--color-bg-elevated);
+  border-radius: 0 8px 8px 0;
+  font-style: italic;
+  color: var(--color-text-secondary);
+
+  p:last-child {
+    margin-bottom: 0;
+  }
+}
+
+// Lists
+ul, ol {
+  margin-bottom: 1.25rem;
+  padding-left: 1.5rem;
+}
+
+ul {
+  list-style-type: disc;
+}
+
+ol {
+  list-style-type: decimal;
+}
+
+li {
+  margin-bottom: 0.5rem;
+  line-height: var(--leading-relaxed);
+
+  ul, ol {
+    margin-top: 0.5rem;
+    margin-bottom: 0;
+  }
+}
+
+// Task list / Checkboxes
+// Remove bullet when list item contains a checkbox
+li:has(> input[type="checkbox"]) {
+  list-style: none;
+  margin-left: -1.5rem;
+}
+
+input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 1.125rem;
+  height: 1.125rem;
+  margin-right: 0.5rem;
+  border: 2px solid var(--color-border);
+  border-radius: 4px;
+  background: var(--color-bg-elevated);
+  vertical-align: middle;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.15s ease;
+
+  &:checked {
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+
+    &::after {
+      content: "";
+      position: absolute;
+      left: 4px;
+      top: 1px;
+      width: 5px;
+      height: 9px;
+      border: solid var(--ctp-base);
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+    }
+  }
+
+  &:hover:not(:checked) {
+    border-color: var(--color-accent);
+  }
+}
+
+// Light theme: white checkbox background
+[data-theme="light"] input[type="checkbox"] {
+  background: #fff;
+  border-color: var(--ctp-surface1);
+
+  &:checked {
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+  }
+}
+
+// Horizontal rule
+hr {
+  margin: 2rem 0;
+  border: none;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--color-border),
+    transparent
+  );
+}
+
+// Tables
+table {
+  width: 100%;
+  margin: 1.5rem 0;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: var(--text-sm);
+  border-radius: var(--radius-lg, 12px);
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+}
+
+th, td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--color-border);
+}
+
+th {
+  font-weight: var(--font-semibold);
+  background: var(--color-bg-elevated);
+  color: var(--color-text);
+}
+
+tr:last-child td {
+  border-bottom: none;
+}
+
+tr:hover td {
+  background: var(--color-bg-surface);
+}
+
+// Images
+img {
+  border-radius: 8px;
+}
+
+figure {
+  margin: 1.5rem 0;
+
+  img {
+    margin-bottom: 0.5rem;
+  }
+
+  figcaption {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    text-align: center;
+  }
+}
+
+// Small text
+small {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+// =============================================================================
+// Reference Components (docs-ref, source-ref)
+// Stacked reference links that sit to the right of heading text
+// Usage: Place immediately after a heading - docs-ref first, then source-ref
+// =============================================================================
+
+// Shared base styles for reference components
+%ref-base {
+  position: relative;
+  display: block;
+  float: right;
+  clear: right;
+  padding: 0.5rem 0.625rem 0.25rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  code {
+    font-size: inherit;
+    padding: 0;
+    background: none;
+    color: inherit;
+  }
+}
+
+// Shared tab label styles
+%ref-tab {
+  position: absolute;
+  top: -0.5rem;
+  left: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 0.125rem 0.375rem;
+  border-radius: 3px;
+  line-height: 1;
+}
+
+// =============================================================================
+// Docs Reference - Orange (peach) accent
+// =============================================================================
+.docs-ref {
+  @extend %ref-base;
+  margin-top: -1.75rem;
+
+  &::before {
+    @extend %ref-tab;
+    content: "DOCS";
+    color: var(--ctp-base);
+    background: var(--ctp-peach);
+  }
+
+  a:hover {
+    color: var(--ctp-peach);
+  }
+
+  &:hover {
+    border-color: var(--ctp-peach);
+    color: var(--ctp-peach);
+  }
+
+  // Adjust margin for different heading sizes
+  h2 + & {
+    margin-top: -2.25rem;
+    top: -0.5rem;
+  }
+
+  h4 + & {
+    margin-top: -1.5rem;
+  }
+}
+
+// =============================================================================
+// Source Reference - Purple (mauve) accent
+// =============================================================================
+.source-ref {
+  @extend %ref-base;
+  margin-top: 0.375rem; // Space below docs-ref when stacked
+
+  &::before {
+    @extend %ref-tab;
+    content: "SOURCE";
+    color: var(--ctp-base);
+    background: var(--ctp-mauve);
+  }
+
+  a:hover {
+    color: var(--ctp-mauve);
+  }
+
+  &:hover {
+    border-color: var(--ctp-mauve);
+    color: var(--ctp-mauve);
+  }
+
+  // When source-ref is first (no docs-ref before it)
+  h2 + &,
+  h3 + &,
+  h4 + & {
+    margin-top: -1.75rem;
+  }
+
+  h2 + & {
+    margin-top: -2.25rem;
+    top: -0.5rem;
+  }
+
+  h4 + & {
+    margin-top: -1.5rem;
+  }
+
+  // Clear the float after the last ref element
+  &:last-of-type + * {
+    clear: both;
+  }
+}
+
+// When source-ref follows a list (old pattern), add spacing
+ul + .source-ref,
+ol + .source-ref,
+p + .source-ref {
+  float: none;
+  display: block;
+  clear: none;
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+  width: fit-content;
+}
+
+// Mark (highlight)
+mark {
+  background: rgba(249, 226, 175, 0.3);
+  color: inherit;
+  padding: 0.1em 0.3em;
+  border-radius: 2px;
+}
+
+// Abbreviations
+abbr[title] {
+  text-decoration: underline dotted;
+  cursor: help;
+}
+
+// Superscript and subscript
+sup, sub {
+  font-size: 0.75em;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+sup {
+  top: -0.5em;
+}
+
+sub {
+  bottom: -0.25em;
+}

@@ -1,0 +1,100 @@
+// =============================================================================
+// Design Tokens: Spacing
+// Consistent spacing scale for margins, padding, gaps
+// =============================================================================
+
+:root {
+  // Base spacing unit (4px)
+  --space-unit: 0.25rem;
+
+  // Spacing scale
+  --space-0: 0;
+  --space-1: 0.25rem;   // 4px
+  --space-2: 0.5rem;    // 8px
+  --space-3: 0.75rem;   // 12px
+  --space-4: 1rem;      // 16px
+  --space-5: 1.25rem;   // 20px
+  --space-6: 1.5rem;    // 24px
+  --space-8: 2rem;      // 32px
+  --space-10: 2.5rem;   // 40px
+  --space-12: 3rem;     // 48px
+  --space-16: 4rem;     // 64px
+  --space-20: 5rem;     // 80px
+  --space-24: 6rem;     // 96px
+
+  // Semantic spacing
+  --space-xs: var(--space-1);
+  --space-sm: var(--space-2);
+  --space-md: var(--space-4);
+  --space-lg: var(--space-6);
+  --space-xl: var(--space-8);
+  --space-2xl: var(--space-12);
+  --space-3xl: var(--space-16);
+
+  // Component-specific spacing
+  --space-content-y: var(--space-6);      // Vertical padding for content sections
+  --space-section-y: var(--space-12);     // Vertical padding between sections
+  --space-card-padding: var(--space-6);   // Default card padding
+  --space-input-x: var(--space-4);        // Horizontal padding for inputs
+  --space-input-y: var(--space-3);        // Vertical padding for inputs
+  --space-button-x: var(--space-6);       // Horizontal padding for buttons
+  --space-button-y: var(--space-3);       // Vertical padding for buttons
+
+  // Layout widths
+  --width-content: 830px;                 // Max width for content (blog)
+  --width-content-wide: 1200px;           // Max width for wide content (docs)
+  --width-sidebar: 280px;                 // Sidebar width
+  --width-toc: 240px;                     // Table of contents width
+
+  // Container padding
+  --container-padding: var(--space-6);
+  --container-padding-sm: var(--space-4);
+}
+
+@media screen and (min-width: 800px) {
+  :root {
+    --container-padding: var(--space-8);
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Spacing Mixins
+// -----------------------------------------------------------------------------
+
+/// Apply consistent section spacing
+@mixin section-spacing {
+  margin-top: var(--space-section-y);
+  margin-bottom: var(--space-section-y);
+
+  &:first-child {
+    margin-top: 0;
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+/// Container with max-width and centered
+@mixin container($width: var(--width-content)) {
+  max-width: $width;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--container-padding);
+  padding-right: var(--container-padding);
+}
+
+/// Stack children with consistent gap
+@mixin stack($gap: var(--space-4)) {
+  display: flex;
+  flex-direction: column;
+  gap: $gap;
+}
+
+/// Inline items with consistent gap
+@mixin cluster($gap: var(--space-4)) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $gap;
+  align-items: center;
+}

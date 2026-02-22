@@ -1,0 +1,44 @@
+# Ply Engine — Website & Documentation
+base_url = "https://ply-engine.dev"
+title = "Ply"
+description = "Beautiful UIs in Rust. Cross-platform. Dead simple."
+compile_sass = true
+build_search_index = true
+generate_feeds = false
+
+[markdown]
+insert_anchor_links = "left"
+
+[markdown.highlighting]
+theme = "catppuccin-mocha"
+
+[extra]
+mode = "docs"
+logo = "images/ply_logo.png"
+github = "https://github.com/TheRedDeveloper/ply-engine"
+edit_url = "https://github.com/TheRedDeveloper/ply-website/edit/main/content"
+author = "TheRedDeveloper"
+keywords = "ply, ply-engine, rust, ui, engine, cross-platform, layout, graphics, gamedev"
+favicon = "images/favicon.png"
+show_theme_toggle = false
+color_scheme_toggle = false
+
+[[extra.nav]]
+name = "Docs"
+url = "/docs/getting-started/"
+
+[[extra.nav]]
+name = "Examples"
+url = "/examples/"
+
+[[extra.nav]]
+name = "Blog"
+url = "/blog/"
+
+[extra.hero]
+title = "Ply"
+subtitle = "Beautiful UIs in Rust. Cross-platform. Dead simple."
+install_command = "cargo install plyx"
+
+[extra.social]
+github = "https://github.com/TheRedDeveloper/ply-engine"

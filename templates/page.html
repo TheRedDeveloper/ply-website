@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+
+{% block title %}{{ page.title }}{% endblock %}
+
+{% block body_class %}page-{{ page.slug }}{% endblock %}
+
+{% set mode = config.extra.mode | default(value="site") %}
+
+{% block sidebar %}
+{% if mode == "docs" and current_path is defined and current_path is starting_with("/docs/") %}
+{% include "partials/sidebar.html" %}
+{% endif %}
+{% endblock %}
+
+{% block nav_buttons %}
+{% if mode == "docs" or mode == "book" %}
+{% include "partials/nav-buttons.html" %}
+{% endif %}
+{% endblock %}
+
+{% block content %}
+{% if mode == "site" or mode == "blog" %}
+{# Article page layout #}
+<div class="container">
+    <article>
+        <header class="article-header">
+            <div class="thumb">
+                <div>
+                    <h1>{{ page.title }}</h1>
+                    <div class="post-meta">
+                        <div class="meta-line">
+                            {% if config.extra.author or page.extra.author %}
+                            <span class="author">{{ page.extra.author | default(value=config.extra.author) }}</span>
+                            {% endif %}
+                            {% if page.date %}
+                            {% if config.extra.author or page.extra.author %}<span class="separator">·</span>{% endif %}
+                            <time>{{ page.date | date(format="%B %d, %Y") }}</time>
+                            {% endif %}
+                            {% if page.reading_time %}
+                            {% if page.date or config.extra.author or page.extra.author %}<span class="separator">·</span>{% endif %}
+                            <span class="reading-time">{{ page.reading_time }} min read</span>
+                            {% endif %}
+                        </div>
+                        {% if page.taxonomies.tags or page.taxonomies.series %}
+                        <div class="article-taxonomies">
+                            {% if page.taxonomies.tags %}
+                            <div class="tags">
+                                {% for tag in page.taxonomies.tags %}
+                                <a href="{{ get_taxonomy_url(kind='tags', name=tag) }}" class="tag">{{ tag }}</a>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                            {% if page.taxonomies.series %}
+                            <div class="series-badge">
+                                Series: <a href="{{ get_taxonomy_url(kind='series', name=page.taxonomies.series[0]) }}">{{ page.taxonomies.series[0] }}</a>
+                            </div>
+                            {% endif %}
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% if page.extra.image %}
+            <img src="/{{ page.extra.image }}" alt="{{ page.title }}" class="post-thumbnail" loading="lazy" decoding="async">
+            {% endif %}
+        </header>
+    </article>
+
+    <div class="article-post">
+        {{ page.content | safe }}
+    </div>
+</div>
+
+<div class="container">
+    <nav class="flex container suggested">
+        {% if page.lower %}
+        <a rel="prev" href="{{ page.lower.permalink }}" title="Previous post (older)">
+            <span>← Previous</span>
+            <strong>{{ page.lower.title }}</strong>
+        </a>
+        {% endif %}
+
+        {% if page.higher %}
+        <a rel="next" href="{{ page.higher.permalink }}" title="Next post (newer)">
+            <span>Next →</span>
+            <strong>{{ page.higher.title }}</strong>
+        </a>
+        {% endif %}
+    </nav>
+</div>
+
+{% else %}
+{# Original tanuki page layout for docs/book/product modes #}
+<article class="article" itemscope itemtype="https://schema.org/Article" aria-labelledby="article-title">
+    {# For docs/book mode, show title as visible heading #}
+    <header class="article__header article__header--docs">
+        <h1 id="article-title" itemprop="headline">{{ page.title }}</h1>
+        {% if page.description %}
+        <p class="article__description" itemprop="description">{{ page.description }}</p>
+        {% endif %}
+    </header>
+
+    <div class="article__content" itemprop="articleBody">
+        {{ page.content | safe }}
+    </div>
+
+    {# Hidden metadata for structured data #}
+    {% if config.extra.author is defined and config.extra.author %}
+    <meta itemprop="author" content="{{ config.extra.author }}">
+    {% endif %}
+    {% if page.updated is defined and page.updated %}
+    <meta itemprop="dateModified" content="{{ page.updated | date(format='%Y-%m-%d') }}">
+    {% endif %}
+</article>
+
+{# Bottom navigation for docs/book #}
+{% if mode == "docs" or mode == "book" %}
+<nav class="page-nav" aria-label="Page navigation">
+    {% if page.earlier %}
+    <a href="{{ page.earlier.permalink | safe }}" class="page-nav__link page-nav__link--prev" rel="prev" aria-label="Previous page: {{ page.earlier.title }}">
+        <span class="page-nav__label" aria-hidden="true">Previous</span>
+        <span class="page-nav__title">{{ page.earlier.title }}</span>
+    </a>
+    {% endif %}
+
+    {% if page.later %}
+    <a href="{{ page.later.permalink | safe }}" class="page-nav__link page-nav__link--next" rel="next" aria-label="Next page: {{ page.later.title }}">
+        <span class="page-nav__label" aria-hidden="true">Next</span>
+        <span class="page-nav__title">{{ page.later.title }}</span>
+    </a>
+    {% endif %}
+</nav>
+{% endif %}
+{% endif %}
+{% endblock %}
