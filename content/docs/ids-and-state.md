@@ -1,7 +1,205 @@
 +++
 title = "IDs & State"
-description = "How Ply tracks elements across frames"
 weight = 5
 +++
 
-*Coming soon.*
+Ply rebuilds your UI every frame. IDs are how the engine knows that this frame's
+"submit button" is the same one as last frame's — so it can carry over focus,
+scroll positions, hover state, and text input.
+
+## Automatic IDs
+
+Every element gets an ID automatically, derived from its parent and its position
+among siblings. You don't have to think about it:
+
+```rust
+ui.element().width(grow!()).height(grow!())
+    .layout(|l| l.direction(TopToBottom).gap(8).padding(12))
+    .children(|ui| {
+        // Auto-ID based on parent id + child index 0
+        ui.element().width(grow!()).height(fixed!(40.0))
+            .background_color(0x262220).empty();
+
+        // Auto-ID based on parent id + child index 1
+        ui.element().width(grow!()).height(fixed!(40.0))
+            .background_color(0x3A3533).empty();
+    });
+```
+
+Auto IDs are stable as long as children stay in the same order. For most
+elements this is all you need.
+
+## Explicit IDs
+
+Set an ID with `.id()` when you need to reference an element, or for interactive elements when the parent or child index might change.
+
+<!-- The id label should be editable -->
+```rust
+let sidebar_id = ui.element()
+    .id("sidebar")
+    .width(fixed!(200.0))
+    .height(grow!())
+    .background_color(0x181515)
+    .layout(|l| l.direction(TopToBottom).gap(4).padding(8))
+    .children(|ui| {
+        ui.text("Navigation", |t| t.font_size(14).color(0xFFC32C));
+    });
+
+if let Some(bbox) = ply.bounding_box(sidebar_id) {
+    println!("Sidebar bounding box: {:?}", bbox);
+}
+```
+<!-- TODO: Embedded WASM demo — element with explicit ID, bounding box shown as overlay -->
+
+`.children()` and `.empty()` return the element's `Id`. But anywhere you need to give an id you can also put in the label: `ply.bounding_box("sidebar")` works too.
+<!-- Make the above "sidebar" update with the id label set by the user -->
+
+## Indexed IDs
+
+When you render a list, each item needs a unique ID. Pass a `(&str, u32)` tuple:
+
+<!-- The labels and active index should be editable -->
+```rust
+let items = ["Home", "Settings", "Profile", "About"];
+let active = 0;
+
+ui.element()
+    .width(fixed!(200.0))
+    .height(grow!())
+    .background_color(0x181515)
+    .layout(|l| l.direction(TopToBottom).gap(4).padding(8))
+    .children(|ui| {
+        for (i, label) in items.iter().enumerate() {
+            let bg = if i == active { 0x3A3533 } else { 0x262220 };
+            ui.element()
+                .id(("nav_item", i as u32))
+                .width(grow!())
+                .height(fixed!(36.0))
+                .background_color(bg)
+                .corner_radius(6.0)
+                .layout(|l| l.padding(8).align(Left, CenterY))
+                .children(|ui| {
+                    ui.text(label, |t| t.font_size(14).color(0xE8E0DC));
+                });
+        }
+    });
+```
+<!-- TODO: Embedded WASM demo — nav list with indexed IDs -->
+
+The string `"nav_item"` and the index `i` are hashed together. Each item gets
+a stable ID regardless of how many items are in the list. Whenever you need an indexed ID, just pass a tuple: `ply.set_focus(("nav_item", 2))`. 
+
+## Inline state
+
+You can check the state of the element you are currently building inside its `.children()` closure:
+
+<!-- Not editable -->
+```rust
+ui.element()
+    .width(fit!())
+    .height(fixed!(40.0))
+    .corner_radius(8.0)
+    .children(|ui| {
+        let bg = if ui.pressed() {
+            0xFF654D
+        } else if ui.hovered() {
+            0x3A3533
+        } else {
+            0x262220
+        };
+
+        ui.element()
+            .width(fit!())
+            .height(grow!())
+            .background_color(bg)
+            .corner_radius(8.0)
+            .layout(|l| l.padding((0, 16, 0, 16)).align(CenterX, CenterY))
+            .children(|ui| {
+                ui.text("Hover me", |t| t.font_size(14).color(0xE8E0DC));
+            });
+    });
+```
+<!-- TODO: Embedded WASM demo — button with hover/press state -->
+
+| Method               | What it does                          |
+|----------------------|---------------------------------------|
+| `ui.hovered()`       | Is pointer over this element?         |
+| `ui.pressed()`       | Is pointer held down on this element  |
+| `ui.focused()`       | Does this element have keyboard focus |
+| `ui.scroll_offset()` | What's this element's scroll offset   |
+
+These check the currently open parent element, the one whose `.children()`
+closure you're inside.
+
+## Querying state by ID
+
+When you need to check state from anywhere use `Ply` methods with an ID:
+
+```rust
+let card_id = ui.element()
+    .id("card")
+    .width(fixed!(200.0))
+    .height(fixed!(120.0))
+    .background_color(0x262220)
+    .corner_radius(8.0)
+    .children(|ui| {
+        ui.text("Hello", |t| t.font_size(18).color(0xE8E0DC));
+    });
+
+// Pointer queries
+if ply.pointer_over(card_id) {
+    // pointer is over the card
+}
+
+// Press state
+if ply.is_pressed("card") {
+    // card is being held down
+}
+
+// Set focus to an element
+ply.set_focus("search_box");
+
+// Check what's focused
+if let Some(focused) = ply.focused_element() {
+    // focused is an Id
+}
+
+// Clear focus
+ply.clear_focus();
+
+// Read the current text
+let value = ply.get_text_value("editor");
+
+// Set text programmatically
+ply.set_text_value("editor", "hello world");
+
+// Cursor position
+let pos = ply.get_cursor_pos("editor");
+ply.set_cursor_pos("editor", 5);
+
+// Selection
+if let Some((start, end)) = ply.get_selection_range("editor") {
+    // there's an active selection
+}
+ply.set_selection("editor", 0, 10);  // select first 10 chars
+
+if let Some(data) = ply.scroll_container_data("my_list") {
+    // data.scroll_position, data.content_dimensions, etc.
+}
+```
+
+## Constructing IDs directly
+
+You can create IDs without an element builder:
+
+```rust
+let id = Id::new("my_button");
+let id = Id::new_index("item", 3);
+```
+
+Useful when comparing IDs.
+
+## Next steps
+
+→ [Interactivity](/docs/interactivity/)
+

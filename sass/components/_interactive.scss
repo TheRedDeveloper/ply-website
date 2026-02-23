@@ -1,0 +1,227 @@
+// =============================================================================
+// Interactive Code Examples
+// Code blocks with inline inputs, selects, and color pickers + live preview
+// =============================================================================
+
+// Catppuccin mocha syntax colors for manual highlighting
+$ix-kw: #cba6f7;     // keywords: use, fn, let, mut, loop, async
+$ix-ty: #f9e2af;     // types
+$ix-fn: #89b4fa;     // functions/methods
+$ix-mc: #94e2d5;     // macros
+$ix-st: #a6e3a1;     // strings
+$ix-nu: #fab387;     // numbers
+$ix-cm: #6c7086;     // comments
+$ix-tx: #cdd6f4;     // default text
+
+.interactive-example {
+  margin: 1.5rem 0;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg, 12px);
+  overflow: hidden;
+}
+
+// ── Code panel ──────────────────────────────────────────────────────────────
+
+.ix-code {
+  position: relative;
+  background: #1a1111;
+  padding: 1.25rem;
+  padding-top: 2.8rem;
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  line-height: 1.65;
+  color: $ix-tx;
+  white-space: pre;
+  overflow-x: auto;
+
+  // Language label
+  &::before {
+    content: "rust";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-muted);
+    background: #1a1111;
+    border-bottom: 1px solid var(--ply-surface1);
+  }
+
+  // Syntax token classes
+  .kw { color: $ix-kw; }
+  .ty { color: $ix-ty; }
+  .fn { color: $ix-fn; }
+  .mc { color: $ix-mc; }
+  .st { color: $ix-st; }
+  .nu { color: $ix-nu; }
+  .cm { color: $ix-cm; }
+}
+
+// ── Inline form elements ────────────────────────────────────────────────────
+
+.ix-input {
+  font-family: var(--font-mono);
+  font-size: inherit;
+  line-height: inherit;
+  color: $ix-mc;
+  background: transparent;
+  border: none;
+  border-bottom: 1px dashed rgba($ix-mc, 0.4);
+  padding: 0 2px;
+  outline: none;
+  transition: border-color 0.15s ease, color 0.15s ease;
+
+  &:hover {
+    border-bottom-color: rgba($ix-mc, 0.7);
+  }
+
+  &:focus {
+    border-bottom-color: $ix-mc;
+    color: $ix-tx;
+  }
+
+  &.ix-error {
+    color: #f38ba8;
+    border-bottom-color: #f38ba8;
+  }
+}
+
+// Auto-sized by JS — just set a reasonable minimum
+.ix-input {
+  min-width: 3ch;
+}
+
+.ix-select {
+  font-family: var(--font-mono);
+  font-size: inherit;
+  line-height: inherit;
+  color: $ix-ty;
+  background: transparent;
+  border: none;
+  border-bottom: 1px dashed rgba($ix-ty, 0.4);
+  padding: 0 2px;
+  outline: none;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  transition: border-color 0.15s ease;
+
+  &:hover {
+    border-bottom-color: rgba($ix-ty, 0.7);
+  }
+
+  &:focus {
+    border-bottom-color: $ix-ty;
+  }
+
+  option {
+    background: #1a1111;
+    color: $ix-tx;
+  }
+}
+
+.ix-color {
+  width: 14px;
+  height: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+  padding: 0;
+  cursor: pointer;
+  vertical-align: middle;
+  appearance: none;
+  -webkit-appearance: none;
+
+  &::-webkit-color-swatch-wrapper {
+    padding: 0;
+  }
+
+  &::-webkit-color-swatch {
+    border: none;
+    border-radius: 2px;
+  }
+
+  &::-moz-color-swatch {
+    border: none;
+    border-radius: 2px;
+  }
+}
+
+// Hex value label shown next to color picker
+.ix-color-label {
+  margin-left: 0.35ch;
+}
+
+// Inline error tooltip
+.ix-error-msg {
+  display: none;
+  position: absolute;
+  background: rgba(243, 139, 168, 0.15);
+  border: 1px solid rgba(243, 139, 168, 0.3);
+  border-radius: 6px;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+  color: #f38ba8;
+  white-space: nowrap;
+  margin-top: 0.25rem;
+  z-index: 10;
+
+  &.visible {
+    display: block;
+  }
+}
+
+// ── Preview panel ───────────────────────────────────────────────────────────
+
+.ix-preview {
+  position: relative;
+  border-top: 1px solid var(--ply-surface1);
+  background: var(--ply-mantle);
+  padding: 1rem;
+  min-height: 120px;
+
+  &::before {
+    content: "preview";
+    position: absolute;
+    top: 0.5rem;
+    right: 0.75rem;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-text-muted);
+    opacity: 0.5;
+  }
+}
+
+// The container representing the element being configured
+.ix-element {
+  display: flex;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  min-height: 60px;
+  position: relative;
+}
+
+// Child items inside the element
+.ix-child {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 195, 44, 0.12);
+  border: 1px solid rgba(255, 195, 44, 0.25);
+  border-radius: 4px;
+  padding: 0.4rem 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--ctp-yellow);
+  min-width: 2rem;
+  min-height: 2rem;
+}

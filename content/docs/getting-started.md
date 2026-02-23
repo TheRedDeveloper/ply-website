@@ -90,8 +90,8 @@ fn window_conf() -> macroquad::conf::Conf {
 
 #[macroquad::main(window_conf)]
 async fn main() {
-    let fonts = vec![load_ttf_font("assets/fonts/MyFont.ttf").await.unwrap()];
-    let mut ply = Ply::<()>::new(fonts);
+    static DEFAULT_FONT: FontAsset = FontAsset::Path("assets/fonts/MyFont.ttf");
+    let mut ply = Ply::<()>::new(&DEFAULT_FONT).await;
 
     loop {
         clear_background(MacroquadColor::new(0.0, 0.0, 0.0, 1.0));
@@ -132,7 +132,7 @@ use ply_engine::prelude::*;
 
 One import gives you everything: `Ply`, `Ui`, `Id`, sizing macros (`grow!`, `fit!`, `fixed!`, `percent!`), alignment enums (`CenterX`, `CenterY`, `Left`, `Right`, `Top`, `Bottom`), layout directions (`TopToBottom`, `LeftToRight`), and the full macroquad prelude.
 
-Ply re-exports macroquad's prelude (including `load_ttf_font`, `clear_background`, `next_frame`), but renames `Color` to `MacroquadColor` to avoid conflicts.
+Ply re-exports macroquad's prelude (including `clear_background`, `next_frame`), but renames `Color` to `MacroquadColor` to avoid conflicts.
 
 ### Window configuration
 
@@ -145,11 +145,11 @@ This configures the window title, size, DPI, anti-aliasing, and WebGL version. P
 ### The main loop
 
 ```rust
-let fonts = vec![load_ttf_font("assets/fonts/MyFont.ttf").await.unwrap()];
-let mut ply = Ply::<()>::new(fonts);
+static DEFAULT_FONT: FontAsset = FontAsset::Path("assets/fonts/MyFont.ttf");
+let mut ply = Ply::<()>::new(&DEFAULT_FONT).await;
 ```
 
-`Ply::new(fonts)` creates the engine. The `<()>` type parameter is for adding custom elements. We'll ignore it for now.
+`FontAsset` tells Ply where to find the font file. `Ply::new(&DEFAULT_FONT).await` creates the engine and loads your default font.  The `<()>` type parameter is for adding custom elements. We'll ignore it for now.
 
 ```rust
 loop {
@@ -176,7 +176,7 @@ ui.element().width(grow!()).height(grow!())
     });
 ```
 
-Everything in Ply is an **element**. Elements use a builder pattern:
+Everything in Ply is an element. Elements use a builder pattern:
 - **Sizing**: using sizing macros
 - **Layout**: describes how children are laid out
 - **Children**: a closure where you build nested elements

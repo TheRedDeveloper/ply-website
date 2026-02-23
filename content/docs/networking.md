@@ -1,7 +1,89 @@
 +++
 title = "Networking"
-description = "HTTP requests and WebSocket connections"
 weight = 15
 +++
 
-*Coming soon.*
+Ply apps can make HTTP requests and open WebSocket connections using
+quad-net. We have a fork of quad-net, because the original crate is badly maintained.
+
+## HTTP requests
+
+```rust
+use quad_net::http_request::Request;
+
+// Fire a GET request
+let request = Request::get("https://api.example.com/data");
+```
+
+Requests are non-blocking. Check for a response each frame:
+
+```rust
+if let Some(response) = request.try_recv() {
+    match response {
+        Ok(data) => println!("Response: {}", data),
+        Err(e) => eprintln!("Error: {}", e),
+    }
+}
+```
+
+### POST requests
+
+```rust
+let request = Request::post(
+    "https://api.example.com/submit",
+    "{\"name\":\"ply\"}",
+);
+```
+
+## WebSocket
+
+```rust
+use quad_net::web_socket::WebSocket;
+
+let mut ws = WebSocket::connect("wss://echo.websocket.org").unwrap();
+```
+
+Send and receive:
+
+```rust
+// Send a message
+ws.send_text("hello");
+
+// Check for incoming messages each frame
+while let Some(msg) = ws.try_recv() {
+    println!("Received: {}", msg);
+}
+```
+
+## WASM bundle
+
+When building for web with `plyx web`, the JavaScript bundle
+(`ply_bundle.js`) includes the quad-net bridge automatically. No extra
+configuration needed.
+
+## Chat example
+
+```rust
+let mut ws = WebSocket::connect("wss://chat.example.com").unwrap();
+let mut messages: Vec<String> = Vec::new();
+
+// In your frame loop:
+while let Some(msg) = ws.try_recv() {
+    messages.push(msg);
+}
+
+ui.element()
+    .width(grow!())
+    .height(grow!())
+    .overflow(|o| o.scroll_y())
+    .layout(|l| l.direction(TopToBottom).gap(4).padding(8u16))
+    .children(|ui| {
+        for msg in &messages {
+            ui.text(msg, |t| t.font_size(14).color(0xE8E0DC));
+        }
+    });
+```
+
+## Next steps
+
+→ [Cross-Platform Builds](/docs/cross-platform/)
