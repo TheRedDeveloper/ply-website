@@ -9,7 +9,7 @@ JavaScript accessibility bridge on the web. Keyboard navigation works out of the
 The `native-a11y` feature is enabled by default. It pulls in
 AccessKit for Linux, macOS, Windows, and Android.
 
-Sadly iOS is not supported due to AccessKit's limitations, I'm exploring alternatives for future support.
+Sadly AccessKit's team is still working on iOS support. The adapter has been funded since November 2025. As soon as it comes out we will be supporting iOS.
 
 ## Marking elements
 
@@ -37,15 +37,15 @@ The `.button("Submit")` shorthand sets the role to Button, the label to
 
 Role shortcuts on the builder:
 
-| Shorthand                  | Role         | Auto-focusable |
-|----------------------------|--------------|----------------|
-| `.button("label")`         | Button       | yes            |
-| `.link("label")`           | Link         | yes            |
-| `.heading("label", level)` | Heading(n)   | no             |
-| `.static_text("label")`    | StaticText   | no             |
-| `.checkbox("label")`       | Checkbox     | yes            |
-| `.slider("label")`         | Slider       | yes            |
-| `.image("alt text")`       | Image        | no             |
+| Shorthand                  | Role           | Auto-focusable |
+|----------------------------|----------------|----------------|
+| `.button("label")`         | Button         | yes            |
+| `.link("label")`           | Link           | yes            |
+| `.heading("label", level)` | Heading(level) | no             |
+| `.static_text("label")`    | StaticText     | no             |
+| `.checkbox("label")`       | Checkbox       | yes            |
+| `.slider("label")`         | Slider         | yes            |
+| `.image("alt text")`       | Image          | no             |
 
 For other roles, use `.role()` directly:
 
@@ -124,12 +124,12 @@ Override arrow key focus movement for custom navigation patterns:
 )
 ```
 
-| Method                | Arrow key          |
-|-----------------------|--------------------|
-| `.focus_right(id)`    | Right arrow        |
-| `.focus_left(id)`     | Left arrow         |
-| `.focus_up(id)`       | Up arrow           |
-| `.focus_down(id)`     | Down arrow         |
+| Method             | Arrow key   |
+|--------------------|-------------|
+| `.focus_right(id)` | Right arrow |
+| `.focus_left(id)`  | Left arrow  |
+| `.focus_up(id)`    | Up arrow    |
+| `.focus_down(id)`  | Down arrow  |
 
 ## Focus ring
 
@@ -141,6 +141,8 @@ To hide the ring on a specific element:
 ```rust
 .accessibility(|a| a.focusable().disable_ring())
 ```
+
+<!-- TODO: Add ring styling optioons -->
 
 ## Live regions
 
@@ -164,12 +166,12 @@ ui.element()
 
 These work automatically for focusable elements:
 
-| Key           | Action                           |
-|---------------|----------------------------------|
-| Tab           | Focus next element               |
-| Shift + Tab   | Focus previous element           |
-| Enter / Space | Activate focused element         |
-| Arrow keys    | Directional focus (if configured)|
+| Key           | Action                            |
+|---------------|-----------------------------------|
+| Tab           | Focus next element                |
+| Shift + Tab   | Focus previous element            |
+| Enter / Space | Activate focused element          |
+| Arrow keys    | Directional focus (if configured) |
 
 ## Platform integration
 
@@ -185,11 +187,11 @@ On the web, Ply uses a JavaScript bridge that creates a hidden DOM tree
 mirroring the accessible elements, so screen readers see standard HTML
 semantics.
 
+Look out for iOS support in the future.
+
 ## Checkbox example
 
 ```rust
-let checked = /* your state */;
-
 ui.element()
     .id("accept_terms")
     .width(fixed!(24.0))
@@ -198,7 +200,7 @@ ui.element()
     .corner_radius(4.0)
     .accessibility(|a| a.checkbox("Accept terms").checked(checked))
     .on_press(move |_| {
-        // toggle checked state
+        checked = !checked;
     })
     .children(|ui| {
         if checked {

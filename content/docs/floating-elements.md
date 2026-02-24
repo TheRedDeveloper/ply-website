@@ -3,6 +3,8 @@ title = "Floating Elements"
 weight = 7
 +++
 
+<!-- Almost this entire thing needs to be rewritten and this is completley terrible -->
+
 Floating elements break out of normal layout flow. They position themselves
 relative to a parent, another element, or the root. This is perfect for tooltips, dropdowns, modals, and badges.
 
@@ -11,16 +13,14 @@ relative to a parent, another element, or the root. This is perfect for tooltips
 Add `.floating()` to make an element float relative to where it would normally be:
 
 ```rust
-MISSING EXAMPLE
+REMOVED BECAUSE BAD EXAMPLE
 ```
-<!-- TODO: Embedded WASM demo — floating badge -->
 
 The floating element doesn't affect the layout of its siblings.
 
 ## Anchoring
 
-Anchor points control where the floating element attaches. Each anchor is a pair
-of `(AlignX, AlignY)` — one for the element, one for the parent:
+Control what part of the element attaches where:
 
 ```rust
 .floating(|f| f.anchor(
@@ -34,6 +34,7 @@ This places the element's top-center at the parent's bottom-center.
 ### Badge example
 
 <!-- The anchor points should be editable -->
+<!-- TODO: This example is too long and it also doesn't really fit in with the rest of the file as an explainer althoug iit is a good example -->
 ```rust
 ui.element().width(grow!()).height(grow!()).layout(|l| l.align(CenterX, CenterY))
     .children(|ui| {
@@ -64,11 +65,12 @@ ui.element().width(grow!()).height(grow!()).layout(|l| l.align(CenterX, CenterY)
             });
     });
 ```
-<!-- TODO: Embedded WASM demo — tooltip on hover -->
+<!-- Interactive WASM Example --> - 
 
 ### Tooltip example
 
 <!-- The offset and anchor points should be editable -->
+<!-- TODO: Check if this actually works -->
 ```rust
 ui.element()
     .width(fit!())
@@ -101,6 +103,7 @@ ui.element()
 
 ### Anchor examples
 
+<!-- TODO: Do we really need this? -->
 | Element point        | Parent point        | Result                       |
 |----------------------|---------------------|------------------------------|
 | `(CenterX, Top)`     | `(CenterX, Bottom)` | Tooltip below, centered      |
@@ -116,17 +119,16 @@ By default, floating elements attach to their parent. Use `.attach_root()` for f
 overlays or `.attach_id(id)` to anchor to any element:
 
 ```rust
-// Attach to root — fullscreen modal backdrop
 .floating(|f| f.attach_root().z_index(100))
 
-// Attach to another element by ID
 .floating(|f| f.attach_id("target_element"))
 ```
 
 ### Modal example
 
+<!-- TODO: This example works, but is a bit long. --> 
 ```rust
-// Modal backdrop — fullscreen, attached to root
+// Modal backdrop
 ui.element()
     .width(grow!())
     .height(grow!())
@@ -178,7 +180,7 @@ Control stacking order with `.z_index()`. Higher values render on top:
 `.clip_by_parent()` clips the floating element to its parent's bounds.
 
 ```rust
-MISSING EXAMPLE
+EXAMPLE REMOVED BECAUSE BAD
 ```
 
 ## Pointer passthrough
@@ -187,7 +189,6 @@ MISSING EXAMPLE
 below it. Good for visual overlays that shouldn't block interaction:
 
 ```rust
-// Non-interactive overlay
 ui.element()
     .width(grow!())
     .height(fixed!(40.0))
@@ -197,6 +198,7 @@ ui.element()
         ui.text("v0.5.0-dev", |t| t.font_size(12).color(0x9E9590));
     });
 ```
+<!-- TODO: Check: do presses actually get caught or do they pass through everything? -->
 
 ## Explicit dimensions
 
@@ -209,9 +211,7 @@ Force a floating element's size with `.dimensions()`:
     .dimensions(Dimensions::new(200.0, 300.0))
 )
 ```
-
-This overrides the element's normal sizing. Useful for dropdown menus that need
-a fixed width regardless of content.
+<!-- TODO: Why do we need this? I don't think we want this. -->
 
 ## Next steps
 

@@ -4,14 +4,14 @@ weight = 16
 +++
 
 Ply apps run on Linux, macOS, Windows, Android, iOS, and the web.
-Desktop builds use `cargo run`. Other platforms use the `plyx` CLI.
+Desktop builds use `cargo build`. Other platforms use the `plyx` CLI.
 
 ## Desktop
 
 No special tooling needed:
 
 ```bash
-cargo run
+cargo builld
 ```
 
 Works on Linux, macOS, and Windows. Cross-compile with:
@@ -41,7 +41,7 @@ plyx web --auto
 
 ## Android
 
-Build an APK using Docker:
+Build an APK using Docker, this will download the 4GB docker image (2GB less than macroquad):
 
 ```bash
 plyx apk
@@ -81,14 +81,14 @@ plyx ios --actions
 
 ## plyx CLI reference
 
-| Command              | What it does                          |
-|----------------------|---------------------------------------|
-| `plyx init`          | Scaffold a new Ply project            |
-| `plyx add`           | Add features or fonts interactively   |
-| `plyx web`           | Build for WASM                        |
-| `plyx apk`           | Build Android APK                     |
-| `plyx ios`           | Build for iOS                         |
-| `plyx completions`   | Generate shell completions            |
+| Command            | What it does                        |
+|--------------------|-------------------------------------|
+| `plyx init`        | Scaffold a new Ply project          |
+| `plyx add`         | Add features or fonts interactively |
+| `plyx web`         | Build for WASM                      |
+| `plyx apk`         | Build Android APK                   |
+| `plyx ios`         | Build for iOS                       |
+| `plyx completions` | Generate shell completions          |
 
 ## Next steps
 

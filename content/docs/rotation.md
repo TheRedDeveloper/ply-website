@@ -13,6 +13,7 @@ text are unaffected.
 
 Rotate an element and everything inside it, purely visual:
 
+<!-- editable degrees -->
 ```rust
 ui.element()
     .width(fixed!(120.0))
@@ -37,7 +38,7 @@ By default, rotation is around the center (0.5, 0.5). Change it with
 ```rust
 .rotate_visual(|r| r
     .degrees(30.0)
-    .pivot(0.0, 0.0)  // rotate around top-left
+    .pivot(0.0, 0.0)
 )
 ```
 
@@ -48,13 +49,10 @@ Pivot coordinates are normalized: (0, 0) = top-left, (1, 1) = bottom-right.
 Mirror horizontally or vertically:
 
 ```rust
-// Horizontal mirror
 .rotate_visual(|r| r.flip_x())
 
-// Vertical mirror
 .rotate_visual(|r| r.flip_y())
 
-// Combine: rotate + flip
 .rotate_visual(|r| r.degrees(45.0).flip_x())
 ```
 
@@ -74,19 +72,20 @@ ui.element()
 
 ### Reference
 
-| Method          | What it does                       | Default    |
-|-----------------|------------------------------------|------------|
-| `.degrees(f32)` | Rotation angle in degrees          | 0          |
-| `.radians(f32)` | Rotation angle in radians          | 0          |
-| `.pivot(x, y)`  | Rotation center (0.0–1.0)          | (0.5, 0.5) |
-| `.flip_x()`     | Mirror horizontally                | false      |
-| `.flip_y()`     | Mirror vertically                  | false      |
+| Method          | What it does              | Default    |
+|-----------------|---------------------------|------------|
+| `.degrees(f32)` | Rotation angle in degrees | 0          |
+| `.radians(f32)` | Rotation angle in radians | 0          |
+| `.pivot(x, y)`  | Rotation center (0.0–1.0) | (0.5, 0.5) |
+| `.flip_x()`     | Mirror horizontally       | false      |
+| `.flip_y()`     | Mirror vertically         | false      |
 
 ## Shape rotation
 
 Rotates the element's own geometry (background, border, image) at the
 vertex level. The bounding box adjusts to fit the rotated shape (AABB):
 
+<!-- editable degrees -->
 ```rust
 ui.element()
     .width(fixed!(80.0))
@@ -97,12 +96,13 @@ ui.element()
 ```
 <!-- TODO: Embedded WASM demo — shape rotation diamond -->
 
-What shape rotation does **not** affect:
-- Children (they stay axis-aligned inside the parent)
+What shape rotation does not affect:
+- Children
 - Text
 - Shaders
 
-There is no pivot.
+There is no pivot, because pivots actually only move elements
+and `.rotate_shape()` stays within the layout.
 
 ### Reference
 
@@ -112,16 +112,6 @@ There is no pivot.
 | `.radians(f32)` | Rotation angle in radians | 0       |
 | `.flip_x()`     | Mirror horizontally       | false   |
 | `.flip_y()`     | Mirror vertically         | false   |
-
-## When to use which
-
-| Need                                 | Use                 |
-|--------------------------------------|---------------------|
-| Rotate entire card with children     | `.rotate_visual()`  |
-| Diamond/angled background shape      | `.rotate_shape()`   |
-| Flipped icon                         | Either              |
-| Rotation + shader combo              | `.rotate_visual()`  |
-| Layout-aware rotated bounding box    | `.rotate_shape()`   |
 
 ## Next steps
 

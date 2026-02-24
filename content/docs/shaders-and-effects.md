@@ -5,12 +5,12 @@ weight = 11
 
 Ply lets you apply fragment shaders to individual elements or groups of
 elements. Write standard GLSL ES 3.00, pass uniforms, and get
-per-element post-processing with no boilerplate.
+per-element post-processing without boilerplate.
 
 ## Per-element effects
 
 Use `.effect()` to apply a shader to a single element. The shader
-receives the element's rendered content as `sampler2D Texture`:
+receives the element's rendered content as `sampler2D Texture` <!-- TODO: Does it? -->:
 
 ```rust
 const TINT: ShaderAsset = ShaderAsset::Path("shaders/tint.frag");
@@ -65,11 +65,11 @@ ui.element()
 
 Three ways to provide shader source:
 
-| Variant                                      | Use case                 |
-|----------------------------------------------|--------------------------|
-| `ShaderAsset::Path("shaders/fx.frag")`       | File on disk, hot-reload |
-| `ShaderAsset::Source { file_name, fragment }`| Embedded in binary       |
-| `ShaderAsset::Stored("name")`                | Runtime-updateable       |
+| Variant                                       | Use case           |
+|-----------------------------------------------|--------------------|
+| `ShaderAsset::Path("shaders/fx.frag")`        | File on disk       |
+| `ShaderAsset::Source { file_name, fragment }` | Embedded in binary |
+| `ShaderAsset::Stored("name")`                 | Runtime-updateable |
 
 ### Path
 
@@ -79,7 +79,7 @@ const WAVE: ShaderAsset = ShaderAsset::Path("shaders/wave.frag");
 
 Reads the file each time the material is created.
 
-### Source (embedded)
+### Source
 
 ```rust
 const WAVE: ShaderAsset = ShaderAsset::Source {
@@ -88,7 +88,7 @@ const WAVE: ShaderAsset = ShaderAsset::Source {
 };
 ```
 
-Baked into the binary. No file I/O at runtime.
+Baked into the binary. No file fetch at runtime.
 
 ### Stored (live-editable)
 
@@ -113,14 +113,14 @@ automatically. The next render pass recompiles.
 
 `.uniform()` accepts anything that implements `Into<ShaderUniformValue>`:
 
-| Rust type         | GLSL type |
-|-------------------|-----------|
-| `f32`             | `float`   |
-| `[f32; 2]`        | `vec2`    |
-| `[f32; 3]`        | `vec3`    |
-| `[f32; 4]`        | `vec4`    |
-| `i32`             | `int`     |
-| `[[f32; 4]; 4]`   | `mat4`    |
+| Rust type       | GLSL type |
+|-----------------|-----------|
+| `f32`           | `float`   |
+| `[f32; 2]`      | `vec2`    |
+| `[f32; 3]`      | `vec3`    |
+| `[f32; 4]`      | `vec4`    |
+| `i32`           | `int`     |
+| `[[f32; 4]; 4]` | `mat4`    |
 
 ## Built-in shaders
 
@@ -131,13 +131,9 @@ Enable with the `built-in-shaders` feature:
 ply-engine = { version = "1.0", features = ["built-in-shaders"] }
 ```
 
-```rust
-use ply_engine::built_in_shaders::*;
-```
+Built-in shaders are automatically included in the prelude.
 
 ### FOIL
-
-Metallic shimmer sweep:
 
 ```rust
 .effect(&FOIL, |s| s
@@ -149,8 +145,6 @@ Metallic shimmer sweep:
 
 ### HOLOGRAPHIC
 
-Rainbow diffraction:
-
 ```rust
 .effect(&HOLOGRAPHIC, |s| s
     .uniform("u_time", get_time() as f32)
@@ -160,8 +154,6 @@ Rainbow diffraction:
 ```
 
 ### DISSOLVE
-
-Voronoi noise dissolve with glowing edge:
 
 ```rust
 .effect(&DISSOLVE, |s| s
@@ -174,8 +166,6 @@ Voronoi noise dissolve with glowing edge:
 
 ### GLOW
 
-Outer bloom:
-
 ```rust
 .effect(&GLOW, |s| s
     .uniform("u_glow_color", [0.0f32, 0.5, 1.0, 1.0])
@@ -185,8 +175,6 @@ Outer bloom:
 ```
 
 ### CRT
-
-Retro scanlines:
 
 ```rust
 .effect(&CRT, |s| s
@@ -200,9 +188,9 @@ Retro scanlines:
 
 ```rust
 .effect(&GRADIENT_LINEAR, |s| s
-    .uniform("u_color_a", [0.73f32, 0.08, 0.08, 1.0])  // #B91414
-    .uniform("u_color_b", [1.0f32, 0.76, 0.17, 1.0])   // #FFC32C
-    .uniform("u_angle", 0.0f32)  // left → right
+    .uniform("u_color_a", [0.73f32, 0.08, 0.08, 1.0])
+    .uniform("u_color_b", [1.0f32, 0.76, 0.17, 1.0])
+    .uniform("u_angle", 0.0f32)
 )
 ```
 
@@ -231,7 +219,7 @@ Retro scanlines:
 
 ## Writing a shader
 
-Shaders are GLSL ES 3.00 fragment shaders. The element's content is
+Shaders are GLSL ES 3.00 fragment shaders. The shaded content is
 available as `sampler2D Texture` and the UV coordinates come from the
 bounding box:
 
@@ -266,7 +254,6 @@ ply-engine = { version = "1.0", features = ["shader-build"] }
 ```
 
 ```rust
-// build.rs
 use ply_engine::shader_build::ShaderBuild;
 
 fn main() {
@@ -277,9 +264,8 @@ fn main() {
 }
 ```
 
-This compiles all `.frag` and `.slang` files to GLSL ES 3.00, with
-hash-based incremental rebuilds. Slang files go through SPIR-V
-cross-compilation.
+This compiles all `.hlsl` and `.slang` files to GLSL ES 3.00, with
+hash-based incremental rebuilds. Files go through SPIR-V cross-compilation.
 
 Custom file types can be handled too:
 

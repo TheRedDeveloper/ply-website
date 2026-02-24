@@ -114,6 +114,10 @@ single compiled material.
 The renderer's `TextureManager` caches GPU textures by asset key.
 Textures not used for a configurable number of frames (defaults to 1) are evicted.
 
+## Font caching
+
+<!-- TODO: Write something here -->
+
 ## Debug mode
 
 Toggle debug view programmatically:

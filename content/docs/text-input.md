@@ -52,13 +52,11 @@ and all standard keyboard shortcuts work.
 
 ## Reading text
 
-Use `ply.get_text_value()` with the element's ID:
-
 ```rust
 let username = ply.get_text_value("username");
 ```
 
-Or use callbacks to react to changes:
+or use callbacks to react to changes:
 
 ```rust
 .text_input(|t| t
@@ -74,6 +72,8 @@ Or use callbacks to react to changes:
 
 `.on_changed()` fires after every keystroke. `.on_submit()` fires when Enter is
 pressed (in single-line mode).
+<!-- TODO what happens when you set multiple callbacks? Does that work correctly? -->
+
 
 ## Multiline
 
@@ -97,7 +97,7 @@ ui.element()
 
 In multiline mode:
 - Enter inserts a newline (instead of triggering submit)
-- Up/Down arrows navigate between lines
+- Up/Down arrows navigate between lines (it remembers the x position)
 - The input scrolls vertically when content overflows
 
 ## Password mode
@@ -118,15 +118,14 @@ Characters are displayed as dots. Copy/cut is disabled.
 Manipulate text input state by ID:
 
 ```rust
-// Set text
 ply.set_text_value("editor", "Hello world");
 
-// Move cursor
 ply.set_cursor_pos("editor", 5);
+
 let pos = ply.get_cursor_pos("editor");
 
-// Selection
 ply.set_selection("editor", 0, 5);  // select "Hello"
+
 if let Some((start, end)) = ply.get_selection_range("editor") {
     // active selection from start to end
 }
@@ -146,9 +145,11 @@ All standard text editing shortcuts work out of the box:
 | Ctrl/Cmd + Z          | Undo                     |
 | Ctrl/Cmd + Y          | Redo                     |
 | Double-click          | Select word              |
+<!-- Add triple click to select line? -->
 
 ## Login form example
 
+<!-- TODO: Test this and its als kinda big. -->
 ```rust
 ui.element()
     .width(fixed!(320.0))

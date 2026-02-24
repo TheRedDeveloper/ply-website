@@ -3,9 +3,8 @@ title = "Elements & Layout"
 weight = 2
 +++
 
-Everything in Ply is an **element**. There are no widgets, components, or special layout
-containers, just elements with configurable properties. This single building block
-handles sizing, layout, color, borders, clipping, and nesting.
+Everything in Ply is an element. This single building block
+handles sizing, layout, color, borders, overflow, and nesting.
 
 ## The element builder
 

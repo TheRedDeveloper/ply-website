@@ -3,6 +3,8 @@ title = "Images & Custom Rendering"
 weight = 8
 +++
 
+<!-- TODO: Maybe rename to Images, Vectors & Custom Rendering, so people can find info on how to do vecto stuff quicker -->  
+
 Display images from files, embedded bytes, or custom draw calls.
 
 ## Static assets
@@ -12,8 +14,8 @@ Define image assets as `static GraphicAsset` constants:
 ```rust
 static LOGO: GraphicAsset = GraphicAsset::Path("assets/images/logo.png");
 static ICON: GraphicAsset = GraphicAsset::Bytes {
-    file_name: "icon.png",
-    data: include_bytes!("../assets/images/icon.png"),
+    file_name: "icon.tvg",
+    data: include_bytes!("../assets/images/icon.tvg"),
 };
 ```
 
@@ -47,7 +49,7 @@ ply = { version = "1.0", features = ["tinyvg"] }
 ```
 
 TinyVG assets are resolution-independent and scale seamlessly to any size, the
-engine rasterizes them on-demand at the element's layout dimensions.
+engine rasterizes them on-demand.
 Everything is cached so that when nothing changes, no computation needs to be done.
 
 To convert your existing `.svg` files into the ultra-compact `.tvg` format, use the [official TinyVG tools](https://tinyvg.tech/).
@@ -87,6 +89,7 @@ ui.element()
 ```
 
 This is useful when you load textures yourself or generate them at runtime.
+You can also use Ply's TextureManager to cache your textures.
 
 ## render_to_texture
 
@@ -110,9 +113,7 @@ ui.element()
 ```
 <!-- TODO: Embedded WASM demo — custom render_to_texture chart -->
 
-`render_to_texture` uses 4x MSAA and linear filtering. The closure receives
-the full macroquad drawing API — `draw_line`, `draw_circle`, `draw_text`,
-custom meshes, etc.
+`render_to_texture` uses MSAA (Antialiasing) and linear filtering, just like the rest of Ply.
 
 ## Procedual TinyVG
 
@@ -142,6 +143,7 @@ ui.element()
     .image(image)
     .empty();
 ```
+<!-- TODO: actually try this example -->
 
 TinyVG images are resolution-independent. The engine uses lyon tessellation to
 render filled paths at whatever size the layout gives the element.

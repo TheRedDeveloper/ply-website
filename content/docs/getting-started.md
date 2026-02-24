@@ -15,7 +15,7 @@ cargo install plyx
 
 ## Create a project
 
-Run `plyx init`. The interactive TUI lets you pick a name, select a font, and choose feature flags:
+Run `plyx init`. The interactive TUI lets you pick a name, select a font from Google Fonts, and choose feature flags:
 
 ```bash
 plyx init

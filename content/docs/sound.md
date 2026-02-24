@@ -4,7 +4,13 @@ weight = 14
 +++
 
 Ply uses macroquad's built-in audio system (quad-snd) for sound
-playback.
+playback. Look out for an official Sound API in the future.
+
+You'll need to add quad_snd to your Cargo.toml:
+
+```toml
+TODO
+```
 
 ## Loading sounds
 

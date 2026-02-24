@@ -3,15 +3,13 @@ title = "Networking"
 weight = 15
 +++
 
-Ply apps can make HTTP requests and open WebSocket connections using
-quad-net. We have a fork of quad-net, because the original crate is badly maintained.
+Ply apps can make HTTP requests and open WebSocket connections using `quad-net`.
+We have a fork of `quad-net`, because the original crate is badly maintained.
+<!-- TODO: Integrate quad-net into ply_engine and the prelude --> 
 
 ## HTTP requests
 
 ```rust
-use quad_net::http_request::Request;
-
-// Fire a GET request
 let request = Request::get("https://api.example.com/data");
 ```
 
@@ -25,6 +23,7 @@ if let Some(response) = request.try_recv() {
     }
 }
 ```
+<!-- TODO: Make them async!! -->
 
 ### POST requests
 
@@ -38,8 +37,6 @@ let request = Request::post(
 ## WebSocket
 
 ```rust
-use quad_net::web_socket::WebSocket;
-
 let mut ws = WebSocket::connect("wss://echo.websocket.org").unwrap();
 ```
 
@@ -54,6 +51,7 @@ while let Some(msg) = ws.try_recv() {
     println!("Received: {}", msg);
 }
 ```
+<!-- Make it async! -->
 
 ## WASM bundle
 
@@ -67,7 +65,6 @@ configuration needed.
 let mut ws = WebSocket::connect("wss://chat.example.com").unwrap();
 let mut messages: Vec<String> = Vec::new();
 
-// In your frame loop:
 while let Some(msg) = ws.try_recv() {
     messages.push(msg);
 }

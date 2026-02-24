@@ -4,7 +4,7 @@ weight = 10
 +++
 
 Ply has a built-in rich text system that lets you color, animate, and
-transform individual characters — all from within a single text string.
+transform individual characters.
 
 **Requires the `text-styling` feature flag:**
 
@@ -18,48 +18,54 @@ ply-engine = { version = "1.0", features = ["text-styling"] }
 Wrap styled text in `{tag|content}`. The tag goes before the pipe, the
 content after:
 
+<!-- TODO: editable string -->
 ```rust
-ui.text("{color=red|This text is red}", |t| t.font_size(16));
+ui.text("{color=red|This text is red}", |t| t.font_size(24));
 ```
+<!-- TODO: small wasm preview -->
 
 Use underscores to chain parameters:
 
+<!-- TODO: editable string -->
 ```rust
-ui.text("{wave_a=0.5_f=1.0|Wavy text}", |t| t.font_size(16));
+ui.text("{wave_a=0.5_f=1.0|Wavy text}", |t| t.font_size(24));
 ```
+<!-- TODO: small wasm preview -->
 
 Tags can nest. Inner tags override outer ones if they conflict:
 
+<!-- editable string -->
 ```rust
-ui.text("{color=#FFC32C|Hello {color=#FF654D|world}!}", |t| t.font_size(16));
+ui.text("{color=#FFC32C|Hello {color=#FF654D|world}!}", |t| t.font_size(24));
 ```
+<!-- TODO: small wasm preview -->
 
 **Escaping:** Use `\` to insert literal `{`, `}`, `|`, or `\`:
 
+<!-- editable string -->
 ```rust
-ui.text(r"Price: \{5\}", |t| t.font_size(16));
-// Renders: Price: {5}
+ui.text(r"Price: \{5\}", |t| t.font_size(24));
 ```
+<!-- TODO: small wasm preview -->
 
 ## Properties
 
-Static attributes that set color or opacity on the wrapped text.
+Static attributes on the wrapped text. These are optimized in rendering.
 
 ### color
 
 Sets the text fill color. Accepts hex (`#RRGGBB`), RGB tuples
 (`(r,g,b)`), or named colors.
 
+<!-- TODO: editable strings -->
 ```rust
-// Hex
-ui.text("{color=#FF654D|Salmon text}", |t| t.font_size(16));
+ui.text("{color=#FF654D|Salmon text}", |t| t.font_size(24));
 
-// Named
-ui.text("{color=cyan|Cyan text}", |t| t.font_size(16));
+ui.text("{color=cyan|Cyan text}", |t| t.font_size(24));
 
-// RGB tuple
-ui.text("{color=(255,195,44)|Yellow text}", |t| t.font_size(16));
+ui.text("{color=(255,195,44)|Yellow text}", |t| t.font_size(24));
 ```
+<!-- TODO: small wasm preview -->
 
 Named colors: `white`, `black`, `lightgray`, `darkgray`, `red`, `orange`, `yellow`,
 `lime`, `green`, `cyan`, `lightblue`, `blue`, `purple`, `magenta`, `brown`, `pink` (case
@@ -69,15 +75,19 @@ insensitive).
 
 Makes text semi-transparent:
 
+<!-- TODO: editable string -->
 ```rust
-ui.text("{opacity=0.5|Ghost text}", |t| t.font_size(16));
+ui.text("{opacity=0.5|Ghost text}", |t| t.font_size(24));
 ```
+<!-- TODO: small wasm preview -->
 
 Properties combine, nest opacity inside a color tag:
 
+<!-- TODO: editable string -->
 ```rust
-ui.text("{color=red|{opacity=0.5|Faded red}}", |t| t.font_size(16));
+ui.text("{color=red|{opacity=0.5|Faded red}}", |t| t.font_size(24));
 ```
+<!-- TODO: small wasm preview -->
 
 ## Effects
 
@@ -87,10 +97,12 @@ Per-character visual effects that create movement, shadows, or gradients.
 
 Vertical sine wave:
 
+<!-- TODO: editable string -->
 ```rust
 ui.text("{wave|Bouncing text}", |t| t.font_size(18));
 ```
-<!-- TODO: Embedded WASM demo — wave text -->
+<!-- TODO: small wasm preview -->
+
 
 | Parameter | What it does                       | Default |
 |-----------|------------------------------------|---------|
@@ -101,19 +113,21 @@ ui.text("{wave|Bouncing text}", |t| t.font_size(18));
 | `p`       | Phase offset (0–1)                 | 0       |
 | `r`       | Direction rotation in degrees      | 0       |
 
+<!-- TODO: editable string -->
 ```rust
-// Slow, large wave rotated 45°
-ui.text("{wave_w=5_a=0.6_f=0.2_r=45|Diagonal wave}", |t| t.font_size(18));
+ui.text("{wave_w=5_a=0.6_f=0.2_r=45|Diagonal wave}", |t| t.font_size(24));
 ```
+<!-- TODO: small wasm preview -->
 
 ### pulse
 
 Characters grow and shrink in a wave:
 
+<!-- TODO: editable string -->
 ```rust
-ui.text("{pulse|Pulsing text}", |t| t.font_size(18));
+ui.text("{pulse|Pulsing text}", |t| t.font_size(24));
 ```
-<!-- TODO: Embedded WASM demo — pulse text -->
+<!-- TODO: small wasm preview -->
 
 | Parameter | What it does                       | Default |
 |-----------|------------------------------------|---------|
@@ -127,9 +141,11 @@ ui.text("{pulse|Pulsing text}", |t| t.font_size(18));
 
 Pendulum rotation per character:
 
+<!-- TODO: editable string -->
 ```rust
-ui.text("{swing_a=12|Swinging text}", |t| t.font_size(18));
+ui.text("{swing_a=12|Swinging text}", |t| t.font_size(24));
 ```
+<!-- TODO: small wasm preview -->
 
 | Parameter | What it does                       | Default |
 |-----------|------------------------------------|---------|
@@ -143,9 +159,11 @@ ui.text("{swing_a=12|Swinging text}", |t| t.font_size(18));
 
 Random character displacement:
 
+<!-- TODO: editable string -->
 ```rust
-ui.text("{jitter_radii=0.2,0.2|Shaky text}", |t| t.font_size(18));
+ui.text("{jitter_radii=0.2,0.2|Shaky text}", |t| t.font_size(24));
 ```
+<!-- TODO: small wasm preview -->
 
 | Parameter  | What it does                             | Default   |
 |------------|------------------------------------------|-----------|
@@ -156,17 +174,18 @@ ui.text("{jitter_radii=0.2,0.2|Shaky text}", |t| t.font_size(18));
 
 Cycling color gradient across characters:
 
+<!-- TODO: editable string -->
 ```rust
-ui.text("{gradient|Rainbow text}", |t| t.font_size(18));
+ui.text("{gradient|Rainbow text}", |t| t.font_size(24));
 ```
 <!-- TODO: Embedded WASM demo — gradient text -->
 
 The default is a full rainbow. Custom stops use `position:color` pairs:
 
 ```rust
-// Red-to-yellow gradient
-ui.text("{gradient_stops=0:#FF0000,5:#FFC32C_speed=2|Fire text}", |t| t.font_size(18));
+ui.text("{gradient_stops=0:#FF0000,5:#FFC32C_speed=2|Fire text}", |t| t.font_size(24));
 ```
+<!-- TODO: small wasm preview -->
 
 | Parameter | What it does                    | Default |
 |-----------|---------------------------------|---------|
@@ -177,8 +196,9 @@ ui.text("{gradient_stops=0:#FF0000,5:#FFC32C_speed=2|Fire text}", |t| t.font_siz
 
 Draws a duplicate behind each character:
 
+<!-- TODO: editable string -->
 ```rust
-ui.text("{shadow_color=#000000_offset=-0.1,0.1|Shadowed}", |t| t.font_size(18));
+ui.text("{shadow_color=#000000_offset=-0.1,0.1|Shadowed}", |t| t.font_size(24));
 ```
 
 | Parameter | What it does            | Default   |
@@ -191,11 +211,13 @@ ui.text("{shadow_color=#000000_offset=-0.1,0.1|Shadowed}", |t| t.font_size(18));
 
 Static per-character transform:
 
+<!-- TODO: editable string -->
 ```rust
-ui.text("{transform_translate=0,0.5|Shifted down}", |t| t.font_size(18));
-ui.text("{transform_scale=1.5|Giant text}", |t| t.font_size(18));
-ui.text("{transform_rotate=15|Tilted}", |t| t.font_size(18));
+ui.text("{transform_translate=0,0.5|Shifted down}", |t| t.font_size(24));
+ui.text("{transform_scale=1.5|Giant text}", |t| t.font_size(24));
+ui.text("{transform_rotate=15|Tilted}", |t| t.font_size(24));
 ```
+<!-- TODO: small wasm preview -->
 
 | Parameter   | What it does                    | Default |
 |-------------|---------------------------------|---------|
@@ -208,9 +230,11 @@ ui.text("{transform_rotate=15|Tilted}", |t| t.font_size(18));
 Prevents rendering entirely. Useful for reserving space or with
 animations:
 
+<!-- TODO: editable string -->
 ```rust
 ui.text("{hide|invisible}", |t| t.font_size(18));
 ```
+<!-- TODO: small wasm preview -->
 
 ## Animations
 
@@ -221,10 +245,12 @@ either `in` (appear) or `out` (disappear).
 
 Typewriter reveal:
 
+<!-- TODO: editable string -->
 ```rust
-ui.text("{type_in_id=intro_speed=12|Hello, world!}", |t| t.font_size(18));
+ui.text("{type_in_id=intro_speed=12|Hello, world!}", |t| t.font_size(24));
 ```
-<!-- TODO: Embedded WASM demo — type animation -->
+<!-- TODO: small wasm preview -->
+<!-- TODO: restart button -->
 
 | Parameter | What it does                       | Default |
 |-----------|------------------------------------|---------|
@@ -236,17 +262,23 @@ ui.text("{type_in_id=intro_speed=12|Hello, world!}", |t| t.font_size(18));
 
 Show a blinking cursor while typing:
 
+<!-- TODO: editable string -->
 ```rust
-ui.text("{type_in_id=msg_speed=10_cursor=\\||Loading...}", |t| t.font_size(18));
+ui.text("{type_in_id=msg_speed=10_cursor=\\||Loading...}", |t| t.font_size(24));
 ```
+<!-- TODO: small wasm preview -->
+<!-- TODO: restart button -->
 
 ### fade
 
 Opacity transition, character by character:
 
+<!-- TODO: editable string -->
 ```rust
-ui.text("{fade_in_id=appear_speed=5|Fading in}", |t| t.font_size(18));
+ui.text("{fade_in_id=appear_speed=5|Fading in}", |t| t.font_size(24));
 ```
+<!-- TODO: small wasm preview -->
+<!-- TODO: restart button -->
 
 | Parameter | What it does                       | Default |
 |-----------|------------------------------------|---------|
@@ -260,9 +292,12 @@ ui.text("{fade_in_id=appear_speed=5|Fading in}", |t| t.font_size(18));
 
 Pop-in or pop-out by scaling each character:
 
+<!-- TODO: editable string -->
 ```rust
-ui.text("{scale_in_id=pop_speed=4_trail=5|Popping in!}", |t| t.font_size(18));
+ui.text("{scale_in_id=pop_speed=4_trail=5|Popping in!}", |t| t.font_size(24));
 ```
+<!-- TODO: small wasm preview -->
+<!-- TODO: restart button -->
 
 | Parameter | What it does                       | Default |
 |-----------|------------------------------------|---------|
@@ -277,21 +312,25 @@ ui.text("{scale_in_id=pop_speed=4_trail=5|Popping in!}", |t| t.font_size(18));
 Stack tags to combine effects. Effects compose: transforms accumulate,
 colors override:
 
+<!-- TODO: editable string -->
 ```rust
-// Wavy rainbow text with a typewriter reveal
 ui.text(
     "{type_in_id=hero_speed=15|{wave_a=0.4|{gradient|Welcome to Ply!}}}",
     |t| t.font_size(24)
 );
 ```
+<!-- TODO: small wasm preview -->
+<!-- TODO: restart button -->
 
+<!-- TODO: editable string -->
 ```rust
-// Red pulsing text with shadow
 ui.text(
     "{color=#B91414|{pulse_a=0.2|{shadow_color=#000000|Alert!}}}",
-    |t| t.font_size(20)
+    |t| t.font_size(24)
 );
 ```
+<!-- TODO: small wasm preview -->
+<!-- TODO: restart button -->
 
 ## Styled text input
 
@@ -319,14 +358,12 @@ ui.element()
 ### Live highlighting
 
 Build a highlighter that converts plain text to styled text, then apply
-it on every frame. Use the `styling_cursor` module to preserve cursor
-position through re-highlighting:
+it on every frame. Use the `styling_cursor` module:
 
 ```rust
 use ply_engine::text_input::styling_cursor;
 
 fn highlight(plain: &str) -> String {
-    // Example: wrap words starting with '#' in a color
     plain.split(' ').map(|word| {
         if word.starts_with('#') {
             format!("{{color=#FFC32C|{}}}", styling_cursor::escape_str(word))
@@ -344,8 +381,6 @@ let raw = ply.get_text_value("styled_editor").to_string();
 if !raw.is_empty() {
     let plain = styling_cursor::strip_styling(&raw);
     let highlighted = highlight(&plain);
-    let re_stripped = styling_cursor::strip_styling(&highlighted);
-    assert_eq!(plain, re_stripped); // sanity check
 
     if raw != highlighted {
         let cursor = ply.get_cursor_pos("styled_editor");
@@ -359,15 +394,15 @@ if !raw.is_empty() {
 
 ### styling_cursor functions
 
-| Function                                  | What it does                                               |
-|-------------------------------------------|------------------------------------------------------------|
-| `escape_char(ch)`                         | Escapes a character if it's a style delimiter               |
-| `escape_str(s)`                           | Escapes all style delimiters in a string                    |
-| `strip_styling(s)`                        | Removes all style tags, returning plain content             |
-| `visual_len(s)`                           | Length in visual (cursor) positions                         |
-| `visual_to_content_pos(s, pos)`           | Converts visual cursor pos to content character index       |
-| `content_to_visual_pos(s, pos)`           | Converts content character index to visual cursor pos       |
-| `content_to_visual_pos_no_structural(s, pos)` | Same but skips structural positions (tag boundaries)   |
+| Function                                         | What it does                                          |
+|--------------------------------------------------|-------------------------------------------------------|
+| `escape_str(s)`                                  | Escapes all style delimiters in a string              |
+| `strip_styling(s)`                               | Removes all style tags, returning plain content       |
+| `visual_len(s)`                                  | Length in visual (cursor) positions                   |
+| `visual_to_content_pos(s, pos, skip_structural)` | Converts visual cursor pos to content character index |
+| `content_to_visual_pos(s, pos, skip_structural)` | Converts content character index to visual cursor pos |
+
+<!-- TODO: Add skip_structural argument instead of two separate methods -->
 
 ## Processing order
 
@@ -388,7 +423,7 @@ this order:
 12. color
 13. shadow
 
-Later entries override earlier ones if they affect the same property.
+Later entries override earlier ones if they affect the same property (color, opacity).
 
 ## Next steps
 

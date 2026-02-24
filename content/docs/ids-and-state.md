@@ -136,6 +136,12 @@ closure you're inside.
 When you need to check state from anywhere use `Ply` methods with an ID:
 
 ```rust
+if ply.is_pressed("card") {
+    // card is being held down
+}
+
+let mut ui = ply.begin();
+
 let card_id = ui.element()
     .id("card")
     .width(fixed!(200.0))
@@ -146,42 +152,35 @@ let card_id = ui.element()
         ui.text("Hello", |t| t.font_size(18).color(0xE8E0DC));
     });
 
-// Pointer queries
-if ply.pointer_over(card_id) {
+if ui.pointer_over(card_id) {
     // pointer is over the card
 }
+```
 
-// Press state
-if ply.is_pressed("card") {
-    // card is being held down
-}
+`Ui` is just a `Ply` that has begun, so that you can start making elements.
+You can use these query methods on both `ply` and `ui`.
 
-// Set focus to an element
-ply.set_focus("search_box");
+```
+ui.set_focus("search_box");
 
-// Check what's focused
 if let Some(focused) = ply.focused_element() {
     // focused is an Id
 }
 
-// Clear focus
-ply.clear_focus();
+ui.clear_focus();
 
-// Read the current text
-let value = ply.get_text_value("editor");
+let value = ui.get_text_value("editor");
 
-// Set text programmatically
-ply.set_text_value("editor", "hello world");
+ui.set_text_value("editor", "hello world");
 
-// Cursor position
-let pos = ply.get_cursor_pos("editor");
-ply.set_cursor_pos("editor", 5);
+let pos = ui.get_cursor_pos("editor");
 
-// Selection
-if let Some((start, end)) = ply.get_selection_range("editor") {
-    // there's an active selection
+ui.set_cursor_pos("editor", 5);
+
+if let Some((start, end)) = ui.get_selection_range("editor") {
+    // there's an active selection start to end
 }
-ply.set_selection("editor", 0, 10);  // select first 10 chars
+ui.set_selection("editor", 0, 10);  // select first 10 chars
 
 if let Some(data) = ply.scroll_container_data("my_list") {
     // data.scroll_position, data.content_dimensions, etc.
