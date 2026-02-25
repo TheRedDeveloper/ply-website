@@ -192,7 +192,7 @@ These four macros control how elements are sized:
 | `grow!()`       | Fill all available space |
 | `fit!()`        | Shrink to fit content    |
 | `fixed!(200.0)` | Exactly 200 pixels       |
-| `percent!(50)`  | 50% of parent's size     |
+| `percent!(0.5)` | 50% of parent's size     |
 
 `fit` and `grow` also accept optional min: `fit!(10)` (don't shrink below 10px), and optional max: `grow!(10, 100)` (grow between 10px and 100px)
 

@@ -54,9 +54,9 @@ ui.element().width(grow!()).height(fixed!(80.0))
         println!("Hovering {:?} at ({}, {})", id, pointer.position.x, pointer.position.y);
     })
     .on_press(|id, pointer| {
-        println!("Pressed {:?} at ({}, {})", id, pointer.postion.x, pointer.position.y);
+        println!("Pressed {:?} at ({}, {})", id, pointer.position.x, pointer.position.y);
     })
-    .on_released(|id, pointer| {
+    .on_release(|id, pointer| {
         println!("Released {:?} at ({}, {})", id, pointer.position.x, pointer.position.y);
     })
     .on_focus(|id| {
@@ -73,7 +73,7 @@ ui.element().width(grow!()).height(fixed!(80.0))
 
 ## Pointer queries
 
-As mentioned in [Interactivity](docs/interactivity) you can query state by ID from anywhere:
+As mentioned in [Interactivity](/docs/interactivity) you can query state by ID from anywhere:
 
 ```rust
 // All elements under the pointer, z-sorted

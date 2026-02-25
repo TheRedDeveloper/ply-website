@@ -384,9 +384,9 @@ if !raw.is_empty() {
 
     if raw != highlighted {
         let cursor = ply.get_cursor_pos("styled_editor");
-        let content_pos = styling_cursor::visual_to_content_pos(&raw, cursor);
+        let content_pos = styling_cursor::cursor_to_content(&raw, cursor);
         ply.set_text_value("styled_editor", &highlighted);
-        let new_cursor = styling_cursor::content_to_visual_pos(&highlighted, content_pos);
+        let new_cursor = styling_cursor::content_to_cursor(&highlighted, content_pos, false);
         ply.set_cursor_pos("styled_editor", new_cursor);
     }
 }
@@ -394,15 +394,12 @@ if !raw.is_empty() {
 
 ### styling_cursor functions
 
-| Function                                         | What it does                                          |
-|--------------------------------------------------|-------------------------------------------------------|
-| `escape_str(s)`                                  | Escapes all style delimiters in a string              |
-| `strip_styling(s)`                               | Removes all style tags, returning plain content       |
-| `visual_len(s)`                                  | Length in visual (cursor) positions                   |
-| `visual_to_content_pos(s, pos, skip_structural)` | Converts visual cursor pos to content character index |
-| `content_to_visual_pos(s, pos, skip_structural)` | Converts content character index to visual cursor pos |
-
-<!-- TODO: Add skip_structural argument instead of two separate methods -->
+| Function                                     | What it does                                                                                                                                                            |
+|----------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `escape_str(s)`                              | Escapes all style delimiters in a string                                                                                                                                |
+| `strip_styling(s)`                           | Removes all style tags, returning plain content                                                                                                                         |
+| `cursor_to_content(s, pos)`                  | Converts cursor pos to content character index                                                                                                                          |
+| `content_to_cursor(s, pos, snap_to_content)` | Converts content character index to cursor pos. When `snap_to_content` is true, the cursor skips structural positions like `}` and lands on the next visible character. |
 
 ## Processing order
 

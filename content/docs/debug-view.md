@@ -11,7 +11,7 @@ into the engine. No other Rust UI library has this.
 ```rust
 ply.set_debug_mode(true);
 ```
-<!-- TODO: You would be able to click on the above "true" to toggle it below --->
+<!-- You would be able to click on the above "true" to toggle it below --->
 
 That's it. A full element inspector appears on top of your UI, showing every element
 in your tree, its sizing, layout, colors, borders, and more.

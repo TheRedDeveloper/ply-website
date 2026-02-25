@@ -200,19 +200,6 @@ ui.element()
 ```
 <!-- TODO: Check: do presses actually get caught or do they pass through everything? -->
 
-## Explicit dimensions
-
-Force a floating element's size with `.dimensions()`:
-
-```rust
-.floating(|f| f
-    .attach_parent()
-    .anchor((Left, Top), (Left, Bottom))
-    .dimensions(Dimensions::new(200.0, 300.0))
-)
-```
-<!-- TODO: Why do we need this? I don't think we want this. -->
-
 ## Next steps
 
 → [Images & Custom Rendering](/docs/images-and-rendering/)
