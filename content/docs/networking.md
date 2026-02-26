@@ -1,86 +1,153 @@
 +++
 title = "Networking"
-weight = 15
+weight = 14
 +++
 
-Ply apps can make HTTP requests and open WebSocket connections using `quad-net`.
-We have a fork of `quad-net`, because the original crate is badly maintained.
-<!-- TODO: Integrate quad-net into ply_engine and the prelude --> 
+Ply has built-in HTTP and WebSocket support. Enable it with the `net` feature:
+
+```toml
+ply-engine = { ..., features = ["net"] }
+```
+
+Everything lives in the `net` module, available through the prelude. It works on all platforms. It is optimized to work across the application loop without you needing to store or manage anything, unlike typical networking libraries.
 
 ## HTTP requests
 
+Fire a request with `net::get`, `net::post`, `net::put`, or `net::delete`.
+Each takes a string ID, a URL, and a configuration closure:
+
 ```rust
-let request = Request::get("https://api.example.com/data");
+// GET request
+net::get("users", "https://api.example.com/users", |r| r
+    .header("Authorization", "Bearer token123")
+);
+
+// POST with body
+net::post("submit", "https://api.example.com/submit", |r| r
+    .header("Content-Type", "application/json")
+    .body("{\"name\":\"ply\"}")
+);
 ```
 
-Requests are non-blocking. Check for a response each frame:
+Requests are idempotent: calling `net::get("users", ...)` again while a request with ID `"users"` already exists does nothing.
+
+### Checking the response
+
+Use `net::request()` to get a handle and poll for the response:
 
 ```rust
-if let Some(response) = request.try_recv() {
-    match response {
-        Ok(data) => println!("Response: {}", data),
-        Err(e) => eprintln!("Error: {}", e),
+if let Some(req) = net::request("users") {
+    match req.response() {
+        None => {
+            // Show a loading indicator
+        }
+        Some(Ok(resp)) => {
+            let status = resp.status();   // u16
+            let body = resp.text();       // &str
+            let raw = resp.bytes();       // &[u8]
+        }
+        Some(Err(e)) => {
+            // Request failed (network error, DNS, etc.)
+        }
     }
 }
 ```
-<!-- TODO: Make them async!! -->
 
-### POST requests
+`response()` returns `Arc<Response>`, calling it every frame costs nothing.
+
+### Cancelling
 
 ```rust
-let request = Request::post(
-    "https://api.example.com/submit",
-    "{\"name\":\"ply\"}",
-);
+if let Some(req) = net::request("users") {
+    req.cancel();  // removes the request immediately and consumes the handle
+}
+```
+
+### JSON deserialization
+
+Enable the `net-json` feature to add `.json()`:
+
+```toml
+ply-engine = { ..., features = ["net-json"] }
+```
+
+```rust
+#[derive(serde::Deserialize)]
+struct User { name: String, email: String }
+
+if let Some(req) = net::request("users") {
+    if let Some(Ok(resp)) = req.response() {
+        let users: Vec<User> = resp.json().unwrap();
+    }
+}
 ```
 
 ## WebSocket
 
+### Connecting
+
 ```rust
-let mut ws = WebSocket::connect("wss://echo.websocket.org").unwrap();
+net::ws_connect("chat", "wss://chat.example.com", |w| w
+    .header("Authorization", "Bearer abc")
+);
 ```
 
-Send and receive:
+Like HTTP, `ws_connect` is idempotent.
+
+For dev servers with self-signed certificates:
 
 ```rust
-// Send a message
-ws.send_text("hello");
-
-// Check for incoming messages each frame
-while let Some(msg) = ws.try_recv() {
-    println!("Received: {}", msg);
-}
+net::ws_connect("local", "wss://localhost:8443", |w| w.insecure());
 ```
-<!-- Make it async! -->
 
-## WASM bundle
+`.insecure()` doesn't do anything on WASM because browsers don't allow it.
 
-When building for web with `plyx web`, the JavaScript bundle
-(`ply_bundle.js`) includes the quad-net bridge automatically. No extra
-configuration needed.
-
-## Chat example
+### Sending and receiving
 
 ```rust
-let mut ws = WebSocket::connect("wss://chat.example.com").unwrap();
-let mut messages: Vec<String> = Vec::new();
+if let Some(ws) = net::ws("chat") {
+    ws.send_text("hello");
+    ws.send(b"binary data");
 
-while let Some(msg) = ws.try_recv() {
-    messages.push(msg);
-}
-
-ui.element()
-    .width(grow!())
-    .height(grow!())
-    .overflow(|o| o.scroll_y())
-    .layout(|l| l.direction(TopToBottom).gap(4).padding(8u16))
-    .children(|ui| {
-        for msg in &messages {
-            ui.text(msg, |t| t.font_size(14).color(0xE8E0DC));
+    while let Some(msg) = ws.recv() {
+        match msg {
+            WsMessage::Connected => {
+                // Connection established
+            }
+            WsMessage::Text(s) => {
+                // Text frame
+            }
+            WsMessage::Binary(data) => {
+                // Binary frame
+            }
+            WsMessage::Error(e) => {
+                // Something went wrong
+            }
+            WsMessage::Closed => {
+                // Server closed the connection
+            }
         }
-    });
+    }
+}
 ```
+
+### Closing
+
+```rust
+if let Some(ws) = net::ws("chat") {
+    ws.close();  // graceful close, removes immediately and consumes the handle
+}
+```
+
+## Why polling?
+
+Awaiting a request would freeze the entire UI until it completes.
+Internally, native builds use background threads (HTTP) and
+a tokio runtime (WebSocket). WASM builds use the browser's
+`XMLHttpRequest` and `WebSocket` APIs through the bridge.
+
+Requests and WebSockets are tracked by the global `NET_MANAGER`, you don't need to manage anything. It cleans up your completed requests if you don't access them for 60 frames.
 
 ## Next steps
 
-→ [Cross-Platform Builds](/docs/cross-platform/)
+→ [Sound](/docs/sound/)

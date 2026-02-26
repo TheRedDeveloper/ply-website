@@ -142,7 +142,21 @@ To hide the ring on a specific element:
 .accessibility(|a| a.focusable().disable_ring())
 ```
 
-<!-- TODO: Add ring styling optioons -->
+You can also customize the ring's color and width:
+
+```rust
+.accessibility(|a| a
+    .button("Submit")
+    .ring_color(0x0078FF)
+    .ring_width(3)
+)
+```
+
+| Method            | Default   | Description              |
+|-------------------|-----------|--------------------------|
+| `.ring_color(c)`  | `#FF3C28` | Ring color               |
+| `.ring_width(w)`  | `2`       | Ring thickness in pixels |
+| `.disable_ring()` | —         | Hides the ring entirely  |
 
 ## Live regions
 

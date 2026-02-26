@@ -1,6 +1,6 @@
 +++
 title = "Sound"
-weight = 14
+weight = 15
 +++
 
 Ply uses macroquad's built-in audio system (quad-snd) for sound
@@ -82,4 +82,4 @@ queued before that are played once the context activates.
 
 ## Next steps
 
-→ [Networking](/docs/networking/)
+→ [Cross-Platform Builds](/docs/cross-platform/)
