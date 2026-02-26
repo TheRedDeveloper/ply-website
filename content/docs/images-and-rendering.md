@@ -1,9 +1,7 @@
 +++
-title = "Images & Custom Rendering"
+title = "Images, Vectors & Custom Rendering"
 weight = 8
 +++
-
-<!-- TODO: Maybe rename to Images, Vectors & Custom Rendering, so people can find info on how to do vecto stuff quicker -->  
 
 Display images from files, embedded bytes, or custom draw calls.
 
@@ -35,7 +33,7 @@ automatically.
 
 ### Vector graphics
 
-Ply supports procedural vector graphics via the `tinyvg` feature.
+Ply supports vector graphics via the `tinyvg` feature.
 You can use TinyVG files in GraphicAsset just like PNGs:
 
 ```rust
@@ -45,7 +43,13 @@ static ICON: GraphicAsset = GraphicAsset::Path("assets/images/icon.tvg");
 To use TinyVG, enable the feature in your `Cargo.toml`:
 
 ```toml
-ply = { version = "1.0", features = ["tinyvg"] }
+ply-engine = { version = "1.0", features = ["tinyvg"] }
+```
+
+Or add it with the CLI:
+
+```bash
+plyx add tinyvg
 ```
 
 TinyVG assets are resolution-independent and scale seamlessly to any size, the
@@ -143,7 +147,6 @@ ui.element()
     .image(image)
     .empty();
 ```
-<!-- TODO: actually try this example -->
 
 TinyVG images are resolution-independent. The engine uses lyon tessellation to
 render filled paths at whatever size the layout gives the element.

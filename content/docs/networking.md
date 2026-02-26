@@ -6,7 +6,13 @@ weight = 14
 Ply has built-in HTTP and WebSocket support. Enable it with the `net` feature:
 
 ```toml
-ply-engine = { ..., features = ["net"] }
+ply-engine = { version = "1.0", features = ["net"] }
+```
+
+Or add it with the CLI:
+
+```bash
+plyx add net
 ```
 
 Everything lives in the `net` module, available through the prelude. It works on all platforms. It is optimized to work across the application loop without you needing to store or manage anything, unlike typical networking libraries.
@@ -68,7 +74,13 @@ if let Some(req) = net::request("users") {
 Enable the `net-json` feature to add `.json()`:
 
 ```toml
-ply-engine = { ..., features = ["net-json"] }
+ply-engine = { version = "1.0", features = ["net-json"] }
+```
+
+Or add it with the CLI:
+
+```bash
+plyx add net-json
 ```
 
 ```rust

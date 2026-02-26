@@ -3,24 +3,49 @@ title = "Floating Elements"
 weight = 7
 +++
 
-<!-- Almost this entire thing needs to be rewritten and this is completley terrible -->
-
-Floating elements break out of normal layout flow. They position themselves
-relative to a parent, another element, or the root. This is perfect for tooltips, dropdowns, modals, and badges.
+Floating elements break out of normal layout flow. They position
+themselves relative to a parent, another element, or the root. Use them
+for tooltips, dropdowns, modals, and badges.
 
 ## Basic floating
 
-Add `.floating()` to make an element float relative to where it would normally be:
+Add `.floating()` with an attach target to pull an element out of the
+normal layout flow. You always need to say what the element floats
+relative to:
 
 ```rust
-REMOVED BECAUSE BAD EXAMPLE
-```
+ui.element().width(fixed!(200.0)).height(fixed!(100.0))
+    .background_color(0x2E2A28)
+    .children(|ui| {
+        ui.text("I'm the parent", |t| t.font_size(14).color(0xE8E0DC));
 
-The floating element doesn't affect the layout of its siblings.
+        ui.element()
+            .width(fixed!(80.0))
+            .height(fixed!(30.0))
+            .background_color(0xB91414)
+            .floating(|f| f.attach_parent())
+            .children(|ui| {
+                ui.text("Float!", |t| t.font_size(12).color(0xFFFFFF));
+            });
+    });
+```
+<!-- TODO: Embedded WASM demo -->
+
+## Attach targets
+
+The three attach targets are:
+
+- `.attach_parent()`: float relative to the parent element
+- `.attach_root()`: float relative to the entire window
+- `.attach_id("some_id")`: float relative to any element by ID
+
+Without an attach target, `.floating(|f| f)` does nothing.
 
 ## Anchoring
 
-Control what part of the element attaches where:
+By default, the element's top-left corner sits at the parent's
+top-left corner. Use `.anchor()` to change that. The first tuple is the
+element's attachment point, the second is the parent's:
 
 ```rust
 .floating(|f| f.anchor(
@@ -29,48 +54,72 @@ Control what part of the element attaches where:
 ))
 ```
 
-This places the element's top-center at the parent's bottom-center.
+This places the element's top-center at the parent's bottom-center,
+which is how you'd position a tooltip below something.
 
-### Badge example
+Common anchor combos:
 
-<!-- The anchor points should be editable -->
-<!-- TODO: This example is too long and it also doesn't really fit in with the rest of the file as an explainer althoug iit is a good example -->
+| Element point        | Parent point        | Use case                     |
+|----------------------|---------------------|------------------------------|
+| `(CenterX, Top)`     | `(CenterX, Bottom)` | Tooltip below, centered      |
+| `(CenterX, Bottom)`  | `(CenterX, Top)`    | Tooltip above, centered      |
+| `(Left, Top)`        | `(Left, Bottom)`    | Dropdown below, left-aligned |
+| `(Left, CenterY)`    | `(Right, CenterY)`  | Popover to the right         |
+| `(CenterX, CenterY)` | `(Right, Top)`      | Badge at top-right corner    |
+
+## Offset
+
+Add spacing between the floating element and its anchor point:
+
 ```rust
-ui.element().width(grow!()).height(grow!()).layout(|l| l.align(CenterX, CenterY))
-    .children(|ui| {
-        ui.element()
-            .width(fixed!(280.0))
-            .height(fixed!(160.0))
-            .background_color(0x2E2A28)
-            .corner_radius(12.0)
-            .layout(|l| l.direction(TopToBottom).padding(16).gap(8))
-            .children(|ui| {
-                ui.text("Notification Card", |t| t.font_size(18).color(0xFFFFFF));
-                ui.text("You have 3 new messages", |t| t.font_size(14).color(0x9E9590));
+.floating(|f| f
+    .anchor((CenterX, Top), (CenterX, Bottom))
+    .offset(0.0, 8.0)  // 8px gap below the parent
+)
+```
 
-                // Badge at top-right
-                ui.element()
-                    .width(fixed!(24.0))
-                    .height(fixed!(24.0))
-                    .background_color(0xB91414)
-                    .corner_radius(12.0)
-                    .floating(|f| f
-                        .attach_parent()
-                        .anchor((CenterX, CenterY), (Right, Top))
-                    )
-                    .layout(|l| l.align(CenterX, CenterY))
-                    .children(|ui| {
-                        ui.text("3", |t| t.font_size(12).color(0xFFFFFF));
-                    });
-            });
+## Z-index
+
+Control stacking order with `.z_index()`. Higher values render on top:
+
+```rust
+.floating(|f| f.attach_parent().z_index(10))    // dropdown
+.floating(|f| f.attach_root().z_index(100))     // modal
+.floating(|f| f.attach_root().z_index(200))     // toast notification
+```
+
+## Clipping
+
+`.clip_by_parent()` clips the floating element to its parent's bounds.
+This is useful for elements that should not overflow outside a
+container:
+
+```rust
+.floating(|f| f.attach_parent().clip_by_parent())
+```
+
+## Pointer passthrough
+
+`.passthrough()` lets clicks pass through the floating element to
+whatever is underneath. Use this for visual overlays that shouldn't
+block interaction:
+
+```rust
+ui.element()
+    .width(grow!())
+    .height(fixed!(40.0))
+    .background_color((1.0, 1.0, 1.0, 0.1))
+    .floating(|f| f.attach_root().passthrough())
+    .children(|ui| {
+        ui.text("v0.5.0-dev", |t| t.font_size(12).color(0x9E9590));
     });
 ```
-<!-- Interactive WASM Example --> - 
+<!-- TODO: Embedded WASM demo -->
 
-### Tooltip example
+## Examples
 
-<!-- The offset and anchor points should be editable -->
-<!-- TODO: Check if this actually works -->
+### Tooltip on hover
+
 ```rust
 ui.element()
     .width(fit!())
@@ -99,108 +148,74 @@ ui.element()
         }
     });
 ```
-<!-- TODO: Embedded WASM demo — tooltip on hover -->
+<!-- TODO: Embedded WASM demo -->
 
-### Anchor examples
-
-<!-- TODO: Do we really need this? -->
-| Element point        | Parent point        | Result                       |
-|----------------------|---------------------|------------------------------|
-| `(CenterX, Top)`     | `(CenterX, Bottom)` | Tooltip below, centered      |
-| `(CenterX, Bottom)`  | `(CenterX, Top)`    | Tooltip above, centered      |
-| `(Left, Top)`        | `(Left, Bottom)`    | Dropdown below, left-aligned |
-| `(Left, CenterY)`    | `(Right, CenterY)`  | Popover to the right         |
-| `(CenterX, CenterY)` | `(Right, Top)`      | Badge at top-right corner    |
-| ...                  | ...                 | ...                          |
-
-## Attach targets
-
-By default, floating elements attach to their parent. Use `.attach_root()` for fullscreen
-overlays or `.attach_id(id)` to anchor to any element:
+### Notification badge
 
 ```rust
-.floating(|f| f.attach_root().z_index(100))
-
-.floating(|f| f.attach_id("target_element"))
-```
-
-### Modal example
-
-<!-- TODO: This example works, but is a bit long. --> 
-```rust
-// Modal backdrop
 ui.element()
-    .width(grow!())
-    .height(grow!())
-    .background_color((0.0, 0.0, 0.0, 0.5))
-    .floating(|f| f.attach_root().z_index(100))
-    .layout(|l| l.align(CenterX, CenterY))
+    .width(fixed!(280.0))
+    .height(fixed!(80.0))
+    .background_color(0x2E2A28)
+    .corner_radius(12.0)
+    .layout(|l| l.padding(16).align(Left, CenterY))
     .children(|ui| {
-        // Modal card
-        ui.element()
-            .width(fixed!(400.0))
-            .height(fit!())
-            .background_color(0x2E2A28)
-            .corner_radius(12.0)
-            .layout(|l| l.direction(TopToBottom).padding(24).gap(16))
-            .children(|ui| {
-                ui.text("Delete item?", |t| t.font_size(20).color(0xFFFFFF));
-                ui.text("This action cannot be undone.", |t| t.font_size(14).color(0x9E9590));
+        ui.text("Messages", |t| t.font_size(16).color(0xFFFFFF));
 
-                ui.element()
-                    .width(grow!())
-                    .height(fit!())
-                    .layout(|l| l.direction(LeftToRight).gap(8).align(Right, CenterY))
-                    .children(|ui| {
-                        button(ui, "Cancel", |_| {});
-                        button(ui, "Delete", |_| {});
-                    });
+        ui.element()
+            .width(fixed!(24.0))
+            .height(fixed!(24.0))
+            .background_color(0xB91414)
+            .corner_radius(12.0)
+            .floating(|f| f
+                .attach_parent()
+                .anchor((CenterX, CenterY), (Right, Top))
+            )
+            .layout(|l| l.align(CenterX, CenterY))
+            .children(|ui| {
+                ui.text("3", |t| t.font_size(12).color(0xFFFFFF));
             });
     });
 ```
-<!-- TODO: Embedded WASM demo — modal dialog -->
+<!-- TODO: Embedded WASM demo -->
 
-## Z-index
-
-Control stacking order with `.z_index()`. Higher values render on top:
+### Modal dialog
 
 ```rust
-// Dropdown: above normal content
-.floating(|f| f.attach_parent().z_index(10))
+if show_modal {
+    ui.element()
+        .width(grow!())
+        .height(grow!())
+        .background_color((0.0, 0.0, 0.0, 0.5))
+        .floating(|f| f.attach_root().z_index(100))
+        .layout(|l| l.align(CenterX, CenterY))
+        .children(|ui| {
+            ui.element()
+                .width(fixed!(400.0))
+                .height(fit!())
+                .background_color(0x2E2A28)
+                .corner_radius(12.0)
+                .layout(|l| l.direction(TopToBottom).padding(24).gap(16))
+                .children(|ui| {
+                    ui.text("Delete item?", |t| t.font_size(20).color(0xFFFFFF));
+                    ui.text("This cannot be undone.", |t| t.font_size(14).color(0x9E9590));
 
-// Modal: above everything
-.floating(|f| f.attach_root().z_index(100))
-
-// Toast notification: above modals
-.floating(|f| f.attach_root().z_index(200))
+                    ui.element()
+                        .width(grow!())
+                        .height(fit!())
+                        .layout(|l| l.direction(LeftToRight).gap(8).align(Right, CenterY))
+                        .children(|ui| {
+                            // Let's reuse the same button helper from before
+                            button(ui, "Cancel", |_| {});
+                            button(ui, "Delete", |_| {});
+                        });
+                });
+        });
+}
 ```
-
-## Clipping
-
-`.clip_by_parent()` clips the floating element to its parent's bounds.
-
-```rust
-EXAMPLE REMOVED BECAUSE BAD
-```
-
-## Pointer passthrough
-
-`.passthrough()` makes clicks pass through the floating element to whatever is
-below it. Good for visual overlays that shouldn't block interaction:
-
-```rust
-ui.element()
-    .width(grow!())
-    .height(fixed!(40.0))
-    .background_color((1.0, 1.0, 1.0, 0.1))
-    .floating(|f| f.attach_root().passthrough())
-    .children(|ui| {
-        ui.text("v0.5.0-dev", |t| t.font_size(12).color(0x9E9590));
-    });
-```
-<!-- TODO: Check: do presses actually get caught or do they pass through everything? -->
+<!-- TODO: Embedded WASM demo -->
 
 ## Next steps
 
-→ [Images & Custom Rendering](/docs/images-and-rendering/)
+-> [Images, Vectors & Custom Rendering](/docs/images-and-rendering/)
 

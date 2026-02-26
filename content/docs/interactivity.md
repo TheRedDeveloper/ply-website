@@ -100,9 +100,9 @@ focus from the input. Use `.preserve_focus()`:
 ```rust
 ui.element().width(fixed!(32.0)).height(fixed!(32.0))
     .preserve_focus()
-    .on_press(TODO)
+    .on_press(|_, _| { /* apply formatting */ })
     .children(|ui| {
-        ui.text(Make red, |t| t.font_size(14).color(0xFFFFFF));
+        ui.text("Make red", |t| t.font_size(14).color(0xFFFFFF));
     });
 ```
 <!-- TODO: Interactive WASM example – Text box with make red button --->
@@ -115,7 +115,6 @@ then the {color=red| wouldn't get applied.
 Putting it all together:
 
 <!-- The bg colors, sizing, corner_radius, padding, font_size, and text color should be editable -->
-<!-- TODO: Make a better button -->
 ```rust
 fn button(ui: &mut Ui, label: &str, on_click: impl FnMut(Id) + 'static) {
     ui.element()

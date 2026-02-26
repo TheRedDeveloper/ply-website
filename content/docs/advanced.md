@@ -116,7 +116,10 @@ Textures not used for a configurable number of frames (defaults to 1) are evicte
 
 ## Font caching
 
-<!-- TODO: Write something here -->
+The `FontManager` loads fonts lazily and caches them. If a font isn't
+used for 60 consecutive frames, it gets evicted from the cache. The
+default font (the one you pass to `Ply::new`) is stored separately and
+never evicted.
 
 ## Debug mode
 

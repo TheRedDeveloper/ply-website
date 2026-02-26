@@ -11,7 +11,7 @@ Desktop builds use `cargo build`. Other platforms use the `plyx` CLI.
 No special tooling needed:
 
 ```bash
-cargo builld
+cargo build
 ```
 
 Works on Linux, macOS, and Windows. Cross-compile with:

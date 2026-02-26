@@ -10,7 +10,7 @@ per-element post-processing without boilerplate.
 ## Per-element effects
 
 Use `.effect()` to apply a shader to a single element. The shader
-receives the element's rendered content as `sampler2D Texture` <!-- TODO: Does it? -->:
+receives the element's rendered content as `sampler2D Texture`:
 
 ```rust
 const TINT: ShaderAsset = ShaderAsset::Path("shaders/tint.frag");
@@ -129,6 +129,12 @@ Enable with the `built-in-shaders` feature:
 ```toml
 [dependencies]
 ply-engine = { version = "1.0", features = ["built-in-shaders"] }
+```
+
+Or add it with the CLI:
+
+```bash
+plyx add built-in-shaders
 ```
 
 Built-in shaders are automatically included in the prelude.
@@ -262,6 +268,12 @@ fn main() {
         .output_dir("assets/build/shaders/")
         .build();
 }
+```
+
+Or initialize it with the CLI:
+
+```bash
+plyx add shader-pipeline
 ```
 
 This compiles all `.hlsl` and `.slang` files to GLSL ES 3.00, with

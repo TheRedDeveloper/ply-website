@@ -71,8 +71,8 @@ or use callbacks to react to changes:
 ```
 
 `.on_changed()` fires after every keystroke. `.on_submit()` fires when Enter is
-pressed (in single-line mode).
-<!-- TODO what happens when you set multiple callbacks? Does that work correctly? -->
+pressed (in single-line mode). If you call either method more than once, the
+last callback wins.
 
 
 ## Multiline
@@ -145,11 +145,9 @@ All standard text editing shortcuts work out of the box:
 | Ctrl/Cmd + Z          | Undo                     |
 | Ctrl/Cmd + Y          | Redo                     |
 | Double-click          | Select word              |
-<!-- Add triple click to select line? -->
 
 ## Login form example
 
-<!-- TODO: Test this and its als kinda big. -->
 ```rust
 ui.element()
     .width(fixed!(320.0))
