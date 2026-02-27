@@ -1,0 +1,5 @@
+public/
+static/demo/app-*.wasm
+static/demo/ply_bundle.js
+static/demo/codemirror-bundle.js
+static/demo/assets/

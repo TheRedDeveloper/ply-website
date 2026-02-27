@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Ply Interactive Demo</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { height: 100%; background: #1e1b1b; overflow: hidden; }
+
+        .demo-container {
+            display: flex;
+            height: 100%;
+            gap: 0;
+        }
+
+        .editor-pane {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+            border-right: 1px solid #313244;
+        }
+
+        .editor-header {
+            background: #181825;
+            color: #6c7086;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-size: 12px;
+            padding: 6px 12px;
+            border-bottom: 1px solid #313244;
+            user-select: none;
+        }
+
+        #editor-container {
+            flex: 1;
+            overflow: auto;
+        }
+
+        /* CodeMirror overrides to fill the pane */
+        #editor-container .cm-editor {
+            height: 100%;
+        }
+        #editor-container .cm-scroller {
+            overflow: auto;
+        }
+
+        .canvas-pane {
+            flex: 1;
+            display: flex;
+            align-items: stretch;
+            min-width: 0;
+        }
+
+        canvas {
+            width: 100% !important;
+            height: 100% !important;
+        }
+
+        /* Fallback textarea while CodeMirror loads */
+        #fallback-editor {
+            width: 100%;
+            height: 100%;
+            background: #1e1e2e;
+            color: #cdd6f4;
+            font-family: 'Fira Code', 'Cascadia Code', 'JetBrains Mono', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            padding: 12px;
+            border: none;
+            outline: none;
+            resize: none;
+            tab-size: 4;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <div class="editor-pane">
+            <div class="editor-header">editor</div>
+            <div id="editor-container">
+                <textarea id="fallback-editor" spellcheck="false"></textarea>
+            </div>
+        </div>
+        <div class="canvas-pane">
+            <canvas id="glcanvas" tabindex="-1"></canvas>
+        </div>
+    </div>
+
+    <script>
+        // Default code shown in the editor on load.
+        var DEFAULT_CODE = [
+            '// Try editing this code!',
+            'ui.element()',
+            '  .width(grow!())',
+            '  .height(grow!())',
+            '  .background_color(0x1E1E2E)',
+            '  .layout(|l| l.direction(TopToBottom).padding(24).gap(16).align(CenterX, Top))',
+            '  .children(|ui| {',
+            '    ui.text("Hello, Ply!", |t| t.font_size(32).color(0xCDD6F4));',
+            '',
+            '    ui.element()',
+            '      .width(grow!())',
+            '      .height(fit!())',
+            '      .layout(|l| l.direction(LeftToRight).gap(16))',
+            '      .children(|ui| {',
+            '        ui.element()',
+            '          .width(fixed!(180.0))',
+            '          .height(fixed!(100.0))',
+            '          .background_color(0xCBA6F7)',
+            '          .corner_radius(12.0)',
+            '          .layout(|l| l.align(CenterX, CenterY))',
+            '          .children(|ui| {',
+            '            ui.text("Card 1", |t| t.font_size(18).color(0x1E1E2E));',
+            '          });',
+            '',
+            '        ui.element()',
+            '          .width(fixed!(180.0))',
+            '          .height(fixed!(100.0))',
+            '          .background_color(0xA6E3A1)',
+            '          .corner_radius(12.0)',
+            '          .border(|b| b.color(0x1E1E2E).all(2))',
+            '          .layout(|l| l.align(CenterX, CenterY))',
+            '          .children(|ui| {',
+            '            ui.text("Card 2", |t| t.font_size(18).color(0x1E1E2E));',
+            '          });',
+            '',
+            '        ui.element()',
+            '          .width(fixed!(180.0))',
+            '          .height(fixed!(100.0))',
+            '          .background_color(0x89B4FA)',
+            '          .corner_radius((20.0, 0.0, 20.0, 0.0))',
+            '          .layout(|l| l.align(CenterX, CenterY))',
+            '          .children(|ui| {',
+            '            ui.text("Card 3", |t| t.font_size(18).color(0x1E1E2E));',
+            '          });',
+            '      });',
+            '',
+            '    ui.element()',
+            '      .width(grow!())',
+            '      .height(fixed!(4.0))',
+            '      .background_color(0x585B70)',
+            '      .corner_radius(2.0)',
+            '      .empty();',
+            '',
+            '    ui.text("Edit the code on the left to see changes here.", |t| t.font_size(14).color(0x6C7086));',
+            '  });',
+        ].join('\n');
+
+        // Set the code immediately so WASM gets it on first frame.
+        window.demo_code = DEFAULT_CODE;
+    </script>
+
+    <!-- miniquad GL loader + ply_demo plugin -->
+    <script src="ply_bundle.js"></script>
+
+    <script>
+        // Register service worker for WASM caching
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js');
+        }
+
+        // Load WASM
+        load("app-v1.wasm");
+    </script>
+
+    <!-- CodeMirror 6 (bundled locally via esbuild) -->
+    <script src="codemirror-bundle.js"></script>
+    <script>
+        // Remove fallback textarea and set up CodeMirror
+        var fb = document.getElementById('fallback-editor');
+        if (fb) fb.remove();
+
+        var view = new CM.EditorView({
+            state: CM.EditorState.create({
+                doc: DEFAULT_CODE,
+                extensions: [
+                    ...CM.minimalSetup,
+                    CM.rust(),
+                    CM.oneDark,
+                    CM.EditorView.updateListener.of(function (update) {
+                        if (update.docChanged) {
+                            ply_demo_set_code(update.state.doc.toString());
+                        }
+                    }),
+                ],
+            }),
+            parent: document.getElementById('editor-container'),
+        });
+    </script>
+</body>
+</html>

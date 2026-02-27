@@ -6,7 +6,7 @@ weight = 13
 Ply has built-in screen reader support via AccessKit on desktop and a
 JavaScript accessibility bridge on the web. Keyboard navigation works out of the box.
 
-The `native-a11y` feature is enabled by default. It pulls in
+The `a11y` feature is enabled by default. It pulls in
 AccessKit for Linux, macOS, Windows, and Android.
 
 Sadly AccessKit's team is still working on iOS support. The adapter has been funded since November 2025. As soon as it comes out we will be supporting iOS.

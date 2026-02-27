@@ -65,11 +65,8 @@ ui.element().width(grow!()).height(fixed!(80.0))
     .on_unfocus(|id| {
         println!("Unfocused {:?}", id);
     })
-    .children(|ui| {
-        ui.text("Move your pointer around", |t| t.font_size(14).color(0xE8E0DC));
-    });
+    .empty();
 ```
-<!-- TODO: Embedded WASM demo — reacts to cursor and tabbing -->
 
 ## Pointer queries
 

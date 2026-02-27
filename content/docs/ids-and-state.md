@@ -160,7 +160,7 @@ if ui.pointer_over(card_id) {
 `Ui` is just a `Ply` that has begun, so that you can start making elements.
 You can use these query methods on both `ply` and `ui`.
 
-```
+```rust
 ui.set_focus("search_box");
 
 if let Some(focused) = ply.focused_element() {
