@@ -66,7 +66,7 @@
 
   function isInputFocused() {
     const active = document.activeElement;
-    return active && (active.tagName === 'INPUT' || active.tagName === 'TEXTAREA' || active.isContentEditable);
+    return active && (active.tagName === 'INPUT' || active.tagName === 'TEXTAREA' || active.tagName === 'IFRAME' || active.isContentEditable);
   }
 
   function openSearch() {

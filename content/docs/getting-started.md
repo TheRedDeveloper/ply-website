@@ -94,7 +94,7 @@ async fn main() {
   let mut ply = Ply::<()>::new(&DEFAULT_FONT).await;
 
   loop {
-    clear_background(MacroquadColor::new(0.0, 0.0, 0.0, 1.0));
+    clear_background(BLACK);
 
     let mut ui = ply.begin();
 
@@ -153,7 +153,7 @@ let mut ply = Ply::<()>::new(&DEFAULT_FONT).await;
 
 ```rust
 loop {
-  clear_background(MacroquadColor::new(0.0, 0.0, 0.0, 1.0));
+  clear_background(BLACK);
   let mut ui = ply.begin();
   // ... build your UI here ...
   ui.show(|_| {}).await;

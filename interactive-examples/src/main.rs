@@ -55,7 +55,7 @@ fn get_example_params_raw() -> String {
 
 #[cfg(not(target_arch = "wasm32"))]
 fn get_demo_code() -> String {
-    include_str!("default_code.ply").to_owned()
+    String::new()
 }
 
 #[cfg(not(target_arch = "wasm32"))]

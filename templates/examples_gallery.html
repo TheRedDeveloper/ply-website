@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}{{ section.title }}{% endblock %}
+
+{% block content %}
+<div class="examples-gallery">
+    <header class="examples-gallery__header">
+        <h1>{{ section.title }}</h1>
+        {% if section.description %}
+        <p>{{ section.description }}</p>
+        {% endif %}
+    </header>
+
+    <div class="examples-gallery__grid">
+        {% for page in section.pages | sort(attribute="weight") %}
+        <a href="{{ page.permalink | safe }}" class="example-card">
+            <div class="example-card__thumb">
+                {% if page.extra.thumb %}
+                <img src="{{ page.extra.thumb }}" alt="{{ page.title }}" loading="lazy" decoding="async">
+                {% endif %}
+            </div>
+            <div class="example-card__info">
+                <h3>{{ page.title }}</h3>
+                {% if page.description %}
+                <p>{{ page.description }}</p>
+                {% endif %}
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

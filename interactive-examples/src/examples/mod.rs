@@ -1,5 +1,7 @@
 use ply_engine::prelude::*;
 
+mod shader_playground;
+
 /// A parsed parameter: (key, value) pair, preserving order and duplicates.
 pub type Params = Vec<(String, String)>;
 
@@ -68,6 +70,7 @@ pub fn run(id: &str, params: &Params, ui: &mut Ui<'_, ()>) {
         "image_demo" => image_demo(ui, params),
         "tiger_demo" => tiger_demo(ui, params),
         "tint_shader_demo" => tint_shader_demo(ui, params),
+        "shader_playground" => shader_playground::run(ui),
         _ => unknown(ui, id),
     }
 }
@@ -719,8 +722,8 @@ fn preserve_focus_demo(ui: &mut Ui<'_, ()>, _params: &Params) {
             if start != end {
                 let (vis_lo, vis_hi) = if start < end { (start, end) } else { (end, start) };
                 // Convert visual cursor positions to raw char positions
-                let raw_lo = styling_cursor::cursor_to_raw(&raw, vis_lo);
-                let raw_hi = styling_cursor::cursor_to_raw(&raw, vis_hi);
+                let raw_lo = styling::cursor_to_raw(&raw, vis_lo);
+                let raw_hi = styling::cursor_to_raw(&raw, vis_hi);
                 // Convert raw char positions to byte offsets
                 let chars: Vec<(usize, char)> = raw.char_indices().collect();
                 let lo_byte = chars.get(raw_lo).map(|c| c.0).unwrap_or(raw.len());

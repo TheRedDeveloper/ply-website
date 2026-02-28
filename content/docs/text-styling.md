@@ -277,17 +277,17 @@ ui.element()
 ### Live highlighting
 
 Build a highlighter that converts plain text to styled text, then apply
-it on every frame. Use the `styling_cursor` module:
+it on every frame. Use the `styling` module:
 
 ```rust
-use ply_engine::text_input::styling_cursor;
+use ply_engine::text_input::styling;
 
 fn highlight(plain: &str) -> String {
   plain.split(' ').map(|word| {
     if word.starts_with('#') {
-      format!("{{color=#FFC32C|{}}}", styling_cursor::escape_str(word))
+      format!("{{color=#FFC32C|{}}}", styling::escape_str(word))
     } else {
-      styling_cursor::escape_str(word)
+      styling::escape_str(word)
     }
   }).collect::<Vec<_>>().join(" ")
 }
@@ -298,20 +298,20 @@ Apply each frame:
 ```rust
 let raw = ply.get_text_value("styled_editor").to_string();
 if !raw.is_empty() {
-  let plain = styling_cursor::strip_styling(&raw);
+  let plain = styling::strip_styling(&raw);
   let highlighted = highlight(&plain);
 
   if raw != highlighted {
     let cursor = ply.get_cursor_pos("styled_editor");
-    let content_pos = styling_cursor::cursor_to_content(&raw, cursor);
+    let content_pos = styling::cursor_to_content(&raw, cursor);
     ply.set_text_value("styled_editor", &highlighted);
-    let new_cursor = styling_cursor::content_to_cursor(&highlighted, content_pos, false);
+    let new_cursor = styling::content_to_cursor(&highlighted, content_pos, false);
     ply.set_cursor_pos("styled_editor", new_cursor);
   }
 }
 ```
 
-### styling_cursor functions
+### styling functions
 
 | Function                                     | What it does                                                                                                                                                            |
 |----------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
