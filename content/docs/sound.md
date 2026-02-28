@@ -47,11 +47,11 @@ For more control over volume and looping:
 
 ```rust
 play_sound(
-    &click_sound,
-    PlaySoundParams {
-        looped: false,
-        volume: 0.8,
-    },
+  &click_sound,
+  PlaySoundParams {
+    looped: false,
+    volume: 0.8,
+  },
 );
 ```
 
@@ -61,11 +61,11 @@ play_sound(
 let music = load_sound("assets/music.ogg").await.unwrap();
 
 play_sound(
-    &music,
-    PlaySoundParams {
-        looped: true,
-        volume: 0.5,
-    },
+  &music,
+  PlaySoundParams {
+    looped: true,
+    volume: 0.5,
+  },
 );
 ```
 

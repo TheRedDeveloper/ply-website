@@ -15,14 +15,14 @@ Rotate an element and everything inside it, purely visual:
 
 {% example(id="visual_rotation", height=400) %}
 ui.element()
-    .width(fixed!(120.0))
-    .height(fixed!(80.0))
-    .background_color(0xFFC32C)
-    .corner_radius(8.0)
-    .rotate_visual(|r| r.degrees([[degrees]]))
-    .children(|ui| {
-        ui.text("Tilted!", |t| t.font_size(14).color(0x181515));
-    });
+  .width(fixed!(120.0))
+  .height(fixed!(80.0))
+  .background_color(0xFFC32C)
+  .corner_radius(8.0)
+  .rotate_visual(|r| r.degrees([[degrees]]))
+  .children(|ui| {
+    ui.text("Tilted!", |t| t.font_size(14).color(0x181515));
+  });
 ---
 n.degrees = 15
 {% end %}
@@ -37,8 +37,8 @@ By default, rotation is around the center (0.5, 0.5). Change it with
 
 ```rust
 .rotate_visual(|r| r
-    .degrees(30.0)
-    .pivot(0.0, 0.0)
+  .degrees(30.0)
+  .pivot(0.0, 0.0)
 )
 ```
 
@@ -63,11 +63,11 @@ When you use both, there's no extra GPU cost:
 
 ```rust
 ui.element()
-    .shader(&FOIL, |s| s.uniform("u_time", get_time() as f32))
-    .rotate_visual(|r| r.degrees(5.0))
-    .children(|ui| {
-        ui.text("Shiny + tilted", |t| t.font_size(16).color(0xFFFFFF));
-    });
+  .shader(&FOIL, |s| s.uniform("u_time", get_time() as f32))
+  .rotate_visual(|r| r.degrees(5.0))
+  .children(|ui| {
+    ui.text("Shiny + tilted", |t| t.font_size(16).color(0xFFFFFF));
+  });
 ```
 
 ### Reference
@@ -87,11 +87,11 @@ vertex level. The bounding box adjusts to fit the rotated shape (AABB):
 
 {% example(id="shape_rotation", height=333) %}
 ui.element()
-    .width(fixed!(80.0))
-    .height(fixed!(80.0))
-    .background_color(0xFF654D)
-    .rotate_shape(|r| r.degrees([[degrees]]))
-    .empty();
+  .width(fixed!(80.0))
+  .height(fixed!(80.0))
+  .background_color(0xFF654D)
+  .rotate_shape(|r| r.degrees([[degrees]]))
+  .empty();
 ---
 n.degrees = 45
 {% end %}

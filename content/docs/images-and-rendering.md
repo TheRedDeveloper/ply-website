@@ -20,10 +20,10 @@ static ICON: GraphicAsset = GraphicAsset::Bytes {
 Display them with `.image()`:
 {% example(id="image_demo", height=360) %}
 ui.element()
-    .width(fixed!([[width]]))
-    .height(fixed!([[height]]))
-    .image(&LOGO)
-    .empty();
+  .width(fixed!([[width]]))
+  .height(fixed!([[height]]))
+  .image(&LOGO)
+  .empty();
 ---
 n.width=200
 n.height=200
@@ -65,15 +65,15 @@ Here is a cool tiger, just 27kB (the SVG is 100kB):
 
 {% example(id="tiger_demo", height=470) %}
 static TIGER: GraphicAsset = GraphicAsset::Bytes {
-    file_name: "tiger.tvg",
-    data: include_bytes!("tiger.tvg"),
+  file_name: "tiger.tvg",
+  data: include_bytes!("tiger.tvg"),
 };
 
 ui.element()
-    .width(fixed!([[width]]))
-    .height(fixed!([[height]]))
-    .image(&TIGER)
-    .empty();
+  .width(fixed!([[width]]))
+  .height(fixed!([[height]]))
+  .image(&TIGER)
+  .empty();
 ---
 n.width=200
 n.height=200
@@ -88,10 +88,10 @@ let tex = load_texture("assets/photo.png").await.unwrap();
 tex.set_filter(FilterMode::Linear);
 
 ui.element()
-    .width(fixed!(300.0))
-    .height(fixed!(200.0))
-    .image(tex)
-    .empty();
+  .width(fixed!(300.0))
+  .height(fixed!(200.0))
+  .image(tex)
+  .empty();
 ```
 
 This is useful when you load textures yourself or generate them at runtime.
@@ -103,21 +103,21 @@ Draw arbitrary macroquad geometry into a texture,
 
 ```rust
 let chart = render_to_texture(w, h, || {
-    clear_background(BLACK);
-    let data = [0.2, 0.5, 0.3, 0.8, 0.6, 0.9, 0.4, 0.7];
-    let step = w / (data.len() - 1) as f32;
-    for i in 0..data.len() - 1 {
-        let x1 = step * i as f32;
-        let y1 = h - data[i] as f32 * h;
-        let x2 = step * (i + 1) as f32;
-        let y2 = h - data[i + 1] as f32 * h;
-        draw_line(x1, y1, x2, y2, 2.0, GREEN);
-    }
-    for (i, &val) in data.iter().enumerate() {
-        let x = step * i as f32;
-        let y = h - val as f32 * h;
-        draw_circle(x, y, 4.0, RED);
-    }
+  clear_background(BLACK);
+  let data = [0.2, 0.5, 0.3, 0.8, 0.6, 0.9, 0.4, 0.7];
+  let step = w / (data.len() - 1) as f32;
+  for i in 0..data.len() - 1 {
+    let x1 = step * i as f32;
+    let y1 = h - data[i] as f32 * h;
+    let x2 = step * (i + 1) as f32;
+    let y2 = h - data[i + 1] as f32 * h;
+    draw_line(x1, y1, x2, y2, 2.0, GREEN);
+  }
+  for (i, &val) in data.iter().enumerate() {
+    let x = step * i as f32;
+    let y = h - val as f32 * h;
+    draw_circle(x, y, 4.0, RED);
+  }
 });
 ```
 
@@ -126,10 +126,10 @@ then use it as an element's image:
 let mut ui = ply.begin();
 
 ui.element()
-    .width(fixed!([[width]]))
-    .height(fixed!([[height]]))
-    .image(chart)
-    .empty();
+  .width(fixed!([[width]]))
+  .height(fixed!([[height]]))
+  .image(chart)
+  .empty();
 ---
 n.width=400
 n.height=200
@@ -145,24 +145,24 @@ rasterize at the element's layout size each frame:
 ```rust
 let tvg_bytes = include_bytes!("../assets/icon.tvg");
 let image = tinyvg::Decoder::new(std::io::Cursor::new(tvg_bytes))
-    .decode()
-    .unwrap();
+  .decode()
+  .unwrap();
 
 image.commands.push(tinyvg::format::Command::FillPolygon {
-    polygon: vec![
-        tinyvg::format::Point { x: 50.0, y: 10.0 },
-        tinyvg::format::Point { x: 90.0, y: 190.0 },
-        tinyvg::format::Point { x: 10.0, y: 190.0 },
-    ],
-    fill_style: tinyvg::format::Style::FlatColor(0),
-    outline: None,
+  polygon: vec![
+    tinyvg::format::Point { x: 50.0, y: 10.0 },
+    tinyvg::format::Point { x: 90.0, y: 190.0 },
+    tinyvg::format::Point { x: 10.0, y: 190.0 },
+  ],
+  fill_style: tinyvg::format::Style::FlatColor(0),
+  outline: None,
 });
 
 ui.element()
-    .width(fixed!(64.0))
-    .height(fixed!(64.0))
-    .image(image)
-    .empty();
+  .width(fixed!(64.0))
+  .height(fixed!(64.0))
+  .image(image)
+  .empty();
 ```
 
 TinyVG images are resolution-independent. The engine uses lyon tessellation to

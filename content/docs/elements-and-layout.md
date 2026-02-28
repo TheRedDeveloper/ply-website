@@ -13,12 +13,12 @@ finalize with `.children()` or `.empty()`:
 
 ```rust
 ui.element()
-    .width(grow!())
-    .height(fixed!(200.0))
-    .background_color(0x262220)
-    .children(|ui| {
-        ui.text("Hello!", |t| t.font_size(24).color(0xFFFFFF));
-    });
+  .width(grow!())
+  .height(fixed!(200.0))
+  .background_color(0x262220)
+  .children(|ui| {
+    ui.text("Hello!", |t| t.font_size(24).color(0xFFFFFF));
+  });
 ```
 
 ## Sizing
@@ -38,18 +38,18 @@ Every element has a width and height, set with four sizing macros:
 
 {% example(id="layout_card", height=500) %}
 ui.element().width(grow!()).height(grow!())
-    .background_color([[bg]])
-    .layout(|l| l
-        .direction([[direction]])
-        .gap([[gap]])
-        .padding([[padding]])
-        .align([[align_x]], [[align_y]])
-    )
-    .children(|ui| {
-        ui.text("A", |t| t.font_size(24));
-        ui.text("B", |t| t.font_size(24));
-        ui.text("C", |t| t.font_size(24));
-    });
+  .background_color([[bg]])
+  .layout(|l| l
+    .direction([[direction]])
+    .gap([[gap]])
+    .padding([[padding]])
+    .align([[align_x]], [[align_y]])
+  )
+  .children(|ui| {
+    ui.text("A", |t| t.font_size(24));
+    ui.text("B", |t| t.font_size(24));
+    ui.text("C", |t| t.font_size(24));
+  });
 ---
 c.bg = 0x262220
 e.direction = LeftToRight ; TopToBottom
@@ -65,10 +65,10 @@ The `.layout()` closure configures how children are arranged:
 
 ```rust
 .layout(|l| l
-    .direction(LeftToRight)   // or TopToBottom (default)
-    .gap(16)                  // pixels between children
-    .padding(12)              // inner padding on all sides
-    .align(CenterX, CenterY)  // child alignment
+  .direction(LeftToRight)   // or TopToBottom (default)
+  .gap(16)                  // pixels between children
+  .padding(12)              // inner padding on all sides
+  .align(CenterX, CenterY)  // child alignment
 )
 ```
 
@@ -129,9 +129,9 @@ Configure per-side border widths, color, and child dividers:
 
 ```rust
 .border(|b| b
-    .all(2)                  // 2px on all sides
-    .color(0x4A4440)         // border color
-    .between_children(1)     // 1px dividers between children
+  .all(2)                  // 2px on all sides
+  .color(0x4A4440)         // border color
+  .between_children(1)     // 1px dividers between children
 )
 ```
 
@@ -175,16 +175,16 @@ Pass Ui to functions for modular UI:
 
 ```rust
 fn nav_item(ui: &mut Ui, label: &str, active: bool) {
-    let bg = if active { 0x3A3533 } else { 0x262220 };
-    ui.element()
-        .width(grow!())
-        .height(fixed!(36.0))
-        .background_color(bg)
-        .corner_radius(6.0)
-        .layout(|l| l.padding(8).align(Left, CenterY))
-        .children(|ui| {
-            ui.text(label, |t| t.font_size(14).color(0xE8E0DC));
-        });
+  let bg = if active { 0x3A3533 } else { 0x262220 };
+  ui.element()
+    .width(grow!())
+    .height(fixed!(36.0))
+    .background_color(bg)
+    .corner_radius(6.0)
+    .layout(|l| l.padding(8).align(Left, CenterY))
+    .children(|ui| {
+      ui.text(label, |t| t.font_size(14).color(0xE8E0DC));
+    });
 }
 ```
 
@@ -192,13 +192,13 @@ Then call it wherever you need it:
 
 {% example(id="sidebar_nav", height=495, base_height=300, height_per_item=65, list_param="items") %}
 ui.element()
-    .width(fixed!(200.0))
-    .height(grow!())
-    .background_color([[bg]])
-    .layout(|l| l.direction(TopToBottom).gap(4).padding(8))
-    .children(|ui| {
-[[items:        nav_item(ui, "$", false);]]
-    });
+  .width(fixed!(200.0))
+  .height(grow!())
+  .background_color([[bg]])
+  .layout(|l| l.direction(TopToBottom).gap(4).padding(8))
+  .children(|ui| {
+[[items:    nav_item(ui, "$", false);]]
+  });
 ---
 c.bg = 0x181515
 l.items = Home|Settings|About

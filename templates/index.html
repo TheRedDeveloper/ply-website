@@ -1,82 +1,93 @@
 {% extends "base.html" %}
 
 {% block title %}{{ config.title }} — {{ config.description }}{% endblock %}
+{% block body_class %}landing{% endblock %}
 
 {% block content %}
-{# Hero Section #}
-<section class="hero hero--landing">
-    <div class="container">
-        <div class="hero__content" style="text-align: center;">
-            <img src="{{ get_url(path='images/ply_logo.png') | safe }}" alt="Ply logo" style="max-width: 280px; margin: 0 auto 2rem;">
-            <p class="hero__subtitle">{{ config.description }}</p>
-            <div class="hero__install" style="margin-top: 2rem;">
-                <code style="
-                    display: inline-block;
-                    background: var(--color-bg-elevated);
-                    border: 1px solid var(--color-border);
-                    border-radius: var(--radius-md);
-                    padding: 0.75rem 1.5rem;
-                    font-family: var(--font-mono);
-                    font-size: var(--text-lg);
-                    color: var(--color-accent);
-                ">$ cargo install plyx</code>
-            </div>
-            <div class="hero__actions" style="margin-top: 2rem;">
-                <a href="{{ get_url(path='@/docs/getting-started.md') | safe }}" class="btn btn--primary btn--lg">Get Started</a>
-                <a href="{{ config.extra.social.github }}" class="btn btn--secondary btn--lg" target="_blank" rel="noopener">GitHub</a>
-            </div>
+{# Hero #}
+<section class="landing-hero">
+    <div class="landing-hero__inner">
+        <img src="{{ get_url(path='images/ply_logo.png') | safe }}" alt="Ply logo" class="landing-hero__logo">
+        <p class="landing-hero__tagline">{{ config.description }}</p>
+        <div class="landing-hero__row">
+            <code class="landing-hero__install">cargo install plyx</code>
+            <a href="{{ get_url(path='@/docs/getting-started.md') | safe }}" class="btn btn--primary btn--lg">Get Started</a>
         </div>
     </div>
 </section>
 
-{# Interactive Demo #}
-<section style="padding: 2rem 0 4rem;">
-    <div class="container" style="max-width: 960px; margin: 0 auto;">
-        <iframe src="{{ get_url(path='demo/index.html') | safe }}"
-                style="width: 100%; height: 480px; border: 1px solid var(--color-border); border-radius: 8px;"
-                loading="eager"
-                title="Interactive Ply demo"></iframe>
-    </div>
+{# Playground — edge-to-edge #}
+<section class="landing-playground">
+    <iframe src="{{ get_url(path='demo/index.html') | safe }}"
+            loading="eager"
+            title="Interactive Ply playground"></iframe>
 </section>
 
-{# Features Section #}
-<section style="padding: 4rem 0;">
-    <div class="container">
-        <div class="card-grid">
-            <div class="card">
-                <h3>Dead Simple API</h3>
-                <p>Builder pattern, closure-based children, zero boilerplate. If you can write Rust, you can build UIs.</p>
+{# Features #}
+<section class="landing-features">
+    <h2 class="landing-section-title">Everything you need</h2>
+    <div class="landing-features__grid">
+        <div class="landing-feature">
+            <div class="landing-feature__icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg>
             </div>
-            <div class="card">
-                <h3>Cross-Platform</h3>
-                <p>One codebase → web, desktop, Android, iOS. No platform-specific code required.</p>
+            <h3>Dead Simple API</h3>
+            <p>Builder pattern, closure-based children, zero boilerplate. If you can write Rust, you can build UIs.</p>
+        </div>
+        <div class="landing-feature">
+            <div class="landing-feature__icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></svg>
             </div>
-            <div class="card">
-                <h3>Shaders & Effects</h3>
-                <p>Per-element and group shaders, visual rotation, built-in effects. GPU-powered beauty.</p>
+            <h3>Cross-Platform</h3>
+            <p>One codebase for web, desktop, Android, and iOS. No platform-specific code required.</p>
+        </div>
+        <div class="landing-feature">
+            <div class="landing-feature__icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m8 11 4 4 4-4"/><path d="M8 5H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-4"/></svg>
             </div>
-            <div class="card">
-                <h3>Accessibility</h3>
-                <p>AccessKit integration, keyboard navigation, screen reader support. Built in, not bolted on.</p>
+            <h3>Shaders &amp; Effects</h3>
+            <p>GLSL shaders, rotation and built-in effects powered by the GPU.</p>
+        </div>
+        <div class="landing-feature">
+            <div class="landing-feature__icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
             </div>
-            <div class="card">
-                <h3>Debug View</h3>
-                <p>Browser DevTools-style inspector built right into the engine. No other Rust UI library has this.</p>
+            <h3>Accessibility</h3>
+            <p>AccessKit integration and JS bridge. Keyboard navigation & screen reader support built in.</p>
+        </div>
+        <div class="landing-feature">
+            <div class="landing-feature__icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
             </div>
-            <div class="card">
-                <h3>Text Input</h3>
-                <p>Full text editing: cursor, selection, undo/redo, multiline, styled text, virtual keyboard.</p>
+            <h3>Text</h3>
+            <p>Text editing with selection, undo/redo, multiline, styled text, and virtual keyboard.</p>
+        </div>
+        <div class="landing-feature">
+            <div class="landing-feature__icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
             </div>
+            <h3>Debug View</h3>
+            <p>Browser DevTools-like inspector built right into the engine.</p>
+        </div>
+        <div class="landing-feature">
+            <div class="landing-feature__icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+            </div>
+            <h3>Layout Engine</h3>
+            <p>Flexbox-like layout: Padding, gaps, alignment, grow, fixed, fit, scroll, floating...</p>
+        </div>
+        <div class="landing-feature">
+            <div class="landing-feature__icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+            </div>
+            <h3>Interactive Docs</h3>
+            <p>Documented through live, editable examples. Tweak and see results instantly in the browser.</p>
         </div>
     </div>
 </section>
 
-{# License Section #}
-<section style="padding: 2rem 0 4rem; text-align: center;">
-    <div class="container">
-        <p style="color: var(--color-text-muted); font-size: var(--text-lg);">
-            <strong style="color: var(--color-accent);">Zero-Clause BSD</strong> — use it for anything, no attribution required.
-        </p>
-    </div>
+{# License #}
+<section class="landing-license">
+    <p>Ply is free and open source, released under the <a href="https://github.com/TheRedDeveloper/ply-engine/blob/main/LICENSE.md">0-Clause BSD license</a>. Use it for anything. No attribution required.</p>
 </section>
 {% endblock %}

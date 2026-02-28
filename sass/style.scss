@@ -16,7 +16,6 @@
 // Reset, fonts, and base element styling
 // -----------------------------------------------------------------------------
 @import "base/fonts";
-@import "base/catppuccin"; // Compatibility shim: maps --ctp-* → --ply-*
 @import "base/reset";
 @import "base/typography";
 

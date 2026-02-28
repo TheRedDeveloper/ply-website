@@ -90,15 +90,15 @@
 
 // Icon colors
 .theme-toggle__sun {
-  color: var(--ctp-yellow);
+  color: var(--ply-yellow);
 }
 
 .theme-toggle__moon {
-  color: var(--ctp-blue);
+  color: var(--ply-blue);
 }
 
 .theme-toggle__auto {
-  color: var(--ctp-lavender);
+  color: var(--ply-gold);
 }
 
 // Icon visibility based on current theme setting
@@ -162,7 +162,7 @@
   position: absolute;
   width: 6px;
   height: 6px;
-  background: var(--ctp-yellow);
+  background: var(--ply-yellow);
   border-radius: 50%;
   pointer-events: none;
   animation: sparkle 0.6s ease-out forwards;

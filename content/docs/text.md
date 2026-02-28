@@ -10,8 +10,8 @@ text is created with its own `ui.text()` call and configured through a dedicated
 
 ```rust
 ui.text("Hello, Ply!", |t| t
-    .font_size(24)
-    .color(0xFFFFFF)
+  .font_size(24)
+  .color(0xFFFFFF)
 );
 ```
 
@@ -131,10 +131,10 @@ Fine-tune text with `.letter_spacing()` and `.line_height()`:
 
 ```rust
 ui.text("Spaced out", |t| t
-    .font_size(16)
-    .color(0xE8E0DC)
-    .letter_spacing(4)  // 4px extra between characters
-    .line_height(28)    // 28px per line
+  .font_size(16)
+  .color(0xE8E0DC)
+  .letter_spacing(4)  // 4px extra between characters
+  .line_height(28)    // 28px per line
 );
 ```
 
@@ -147,9 +147,9 @@ Mark text as accessible so screen readers can announce it:
 
 ```rust
 ui.text("Welcome back, Alice", |t| t
-    .font_size(18)
-    .color(0xE8E0DC)
-    .accessible()
+  .font_size(18)
+  .color(0xE8E0DC)
+  .accessible()
 );
 ```
 

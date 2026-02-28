@@ -15,19 +15,19 @@ relative to:
 
 ```rust
 ui.element().width(fixed!(200.0)).height(fixed!(100.0))
-    .background_color(0x2E2A28)
-    .children(|ui| {
-        ui.text("I'm the parent", |t| t.font_size(14).color(0xE8E0DC));
+  .background_color(0x2E2A28)
+  .children(|ui| {
+    ui.text("I'm the parent", |t| t.font_size(14).color(0xE8E0DC));
 
-        ui.element()
-            .width(fixed!(80.0))
-            .height(fixed!(30.0))
-            .background_color(0xB91414)
-            .floating(|f| f.attach_parent())
-            .children(|ui| {
-                ui.text("Float!", |t| t.font_size(12).color(0xFFFFFF));
-            });
-    });
+    ui.element()
+      .width(fixed!(80.0))
+      .height(fixed!(30.0))
+      .background_color(0xB91414)
+      .floating(|f| f.attach_parent())
+      .children(|ui| {
+        ui.text("Float!", |t| t.font_size(12).color(0xFFFFFF));
+      });
+  });
 ```
 {{ demo(id="basic_float", height=160) }}
 
@@ -106,13 +106,13 @@ block interaction:
 
 ```rust
 ui.element()
-    .width(grow!())
-    .height(grow!())
-    .background_color((1.0, 1.0, 1.0, 0.1))
-    .floating(|f| f.attach_root().passthrough())
-    .children(|ui| {
-        ui.text("v0.5.0-dev", |t| t.font_size(12).color(0x9E9590));
-    });
+  .width(grow!())
+  .height(grow!())
+  .background_color((1.0, 1.0, 1.0, 0.1))
+  .floating(|f| f.attach_root().passthrough())
+  .children(|ui| {
+    ui.text("v0.5.0-dev", |t| t.font_size(12).color(0x9E9590));
+  });
 ```
 {{ demo(id="passthrough_overlay", height=40) }}
 
@@ -122,52 +122,52 @@ ui.element()
 
 ```rust
 ui.element()
-    .width(fit!())
-    .height(fixed!(36.0))
-    .background_color(0x3A3533)
-    .corner_radius(6.0)
-    .layout(|l| l.padding((0, 12, 0, 12)).align(CenterX, CenterY))
-    .children(|ui| {
-        ui.text("Hover for tooltip", |t| t.font_size(14).color(0xE8E0DC));
+  .width(fit!())
+  .height(fixed!(36.0))
+  .background_color(0x3A3533)
+  .corner_radius(6.0)
+  .layout(|l| l.padding((0, 12, 0, 12)).align(CenterX, CenterY))
+  .children(|ui| {
+    ui.text("Hover for tooltip", |t| t.font_size(14).color(0xE8E0DC));
 
-        if ui.hovered() {
-            ui.element()
-                .width(fit!())
-                .height(fit!())
-                .background_color(0x1E1B1B)
-                .corner_radius(4.0)
-                .floating(|f| f
-                    .attach_parent()
-                    .anchor((CenterX, Top), (CenterX, Bottom))
-                    .offset(0.0, 4.0)
-                )
-                .layout(|l| l.padding(8))
-                .children(|ui| {
-                    ui.text("Extra information here", |t| t.font_size(12).color(0x9E9590));
-                });
-        }
-    });
+    if ui.hovered() {
+      ui.element()
+        .width(fit!())
+        .height(fit!())
+        .background_color(0x1E1B1B)
+        .corner_radius(4.0)
+        .floating(|f| f
+          .attach_parent()
+          .anchor((CenterX, Top), (CenterX, Bottom))
+          .offset(0.0, 4.0)
+        )
+        .layout(|l| l.padding(8))
+        .children(|ui| {
+          ui.text("Extra information here", |t| t.font_size(12).color(0x9E9590));
+        });
+    }
+  });
 ```
 {% example(id="tooltip_demo", height=600) %}
 ui.element()
-    .width(fit!()).height(fit!())
-    .background_color(0x2E2A28)
-    .corner_radius(8.0)
-    .children(|ui| {
-        ui.text("[[label]]", |t| t.font_size(14).color(0xE8E0DC));
+  .width(fit!()).height(fit!())
+  .background_color(0x2E2A28)
+  .corner_radius(8.0)
+  .children(|ui| {
+    ui.text("[[label]]", |t| t.font_size(14).color(0xE8E0DC));
 
-        if ui.hovered() {
-            ui.element()
-                .floating(|f| f
-                    .attach_parent()
-                    .anchor((CenterX, Top), (CenterX, Bottom))
-                    .offset(0.0, 4.0)
-                )
-                .children(|ui| {
-                    ui.text("[[tooltip]]", |t| t.font_size(12).color(0x9E9590));
-                });
-        }
-    });
+    if ui.hovered() {
+      ui.element()
+        .floating(|f| f
+          .attach_parent()
+          .anchor((CenterX, Top), (CenterX, Bottom))
+          .offset(0.0, 4.0)
+        )
+        .children(|ui| {
+          ui.text("[[tooltip]]", |t| t.font_size(12).color(0x9E9590));
+        });
+    }
+  });
 ---
 label = Hover me for info
 tooltip = Extra information here
@@ -177,49 +177,49 @@ tooltip = Extra information here
 
 ```rust
 ui.element()
-    .width(fixed!(280.0))
-    .height(fixed!(80.0))
-    .background_color(0x2E2A28)
-    .corner_radius(12.0)
-    .layout(|l| l.padding(16).align(Left, CenterY))
-    .children(|ui| {
-        ui.text("Messages", |t| t.font_size(16).color(0xFFFFFF));
+  .width(fixed!(280.0))
+  .height(fixed!(80.0))
+  .background_color(0x2E2A28)
+  .corner_radius(12.0)
+  .layout(|l| l.padding(16).align(Left, CenterY))
+  .children(|ui| {
+    ui.text("Messages", |t| t.font_size(16).color(0xFFFFFF));
 
-        ui.element()
-            .width(fixed!(24.0))
-            .height(fixed!(24.0))
-            .background_color(0xB91414)
-            .corner_radius(12.0)
-            .floating(|f| f
-                .attach_parent()
-                .anchor((CenterX, CenterY), (Right, Top))
-            )
-            .layout(|l| l.align(CenterX, CenterY))
-            .children(|ui| {
-                ui.text("3", |t| t.font_size(12).color(0xFFFFFF));
-            });
-    });
+    ui.element()
+      .width(fixed!(24.0))
+      .height(fixed!(24.0))
+      .background_color(0xB91414)
+      .corner_radius(12.0)
+      .floating(|f| f
+        .attach_parent()
+        .anchor((CenterX, CenterY), (Right, Top))
+      )
+      .layout(|l| l.align(CenterX, CenterY))
+      .children(|ui| {
+        ui.text("3", |t| t.font_size(12).color(0xFFFFFF));
+      });
+  });
 ```
 {% example(id="notification_badge", height=600) %}
 ui.element()
-    .width(fixed!(280.0)).height(fixed!(80.0))
-    .background_color(0x2E2A28)
-    .corner_radius(12.0)
-    .children(|ui| {
-        ui.text("Messages", |t| t.font_size(16).color(0xFFFFFF));
+  .width(fixed!(280.0)).height(fixed!(80.0))
+  .background_color(0x2E2A28)
+  .corner_radius(12.0)
+  .children(|ui| {
+    ui.text("Messages", |t| t.font_size(16).color(0xFFFFFF));
 
-        ui.element()
-            .width(fixed!(24.0)).height(fixed!(24.0))
-            .background_color([[badge_color]])
-            .corner_radius(12.0)
-            .floating(|f| f
-                .attach_parent()
-                .anchor((CenterX, CenterY), (Right, Top))
-            )
-            .children(|ui| {
-                ui.text("[[count]]", |t| t.font_size(12).color(0xFFFFFF));
-            });
-    });
+    ui.element()
+      .width(fixed!(24.0)).height(fixed!(24.0))
+      .background_color([[badge_color]])
+      .corner_radius(12.0)
+      .floating(|f| f
+        .attach_parent()
+        .anchor((CenterX, CenterY), (Right, Top))
+      )
+      .children(|ui| {
+        ui.text("[[count]]", |t| t.font_size(12).color(0xFFFFFF));
+      });
+  });
 ---
 c.badge_color = 0xB91414
 count = 3
@@ -229,34 +229,34 @@ count = 3
 
 ```rust
 if show_modal {
-    ui.element()
-        .width(grow!())
-        .height(grow!())
-        .background_color((0.0, 0.0, 0.0, 0.5))
-        .floating(|f| f.attach_root().z_index(100))
-        .layout(|l| l.align(CenterX, CenterY))
+  ui.element()
+    .width(grow!())
+    .height(grow!())
+    .background_color((0.0, 0.0, 0.0, 0.5))
+    .floating(|f| f.attach_root().z_index(100))
+    .layout(|l| l.align(CenterX, CenterY))
+    .children(|ui| {
+      ui.element()
+        .width(fixed!(400.0))
+        .height(fit!())
+        .background_color(0x2E2A28)
+        .corner_radius(12.0)
+        .layout(|l| l.direction(TopToBottom).padding(24).gap(16))
         .children(|ui| {
-            ui.element()
-                .width(fixed!(400.0))
-                .height(fit!())
-                .background_color(0x2E2A28)
-                .corner_radius(12.0)
-                .layout(|l| l.direction(TopToBottom).padding(24).gap(16))
-                .children(|ui| {
-                    ui.text("Delete item?", |t| t.font_size(20).color(0xFFFFFF));
-                    ui.text("This cannot be undone.", |t| t.font_size(14).color(0x9E9590));
+          ui.text("Delete item?", |t| t.font_size(20).color(0xFFFFFF));
+          ui.text("This cannot be undone.", |t| t.font_size(14).color(0x9E9590));
 
-                    ui.element()
-                        .width(grow!())
-                        .height(fit!())
-                        .layout(|l| l.direction(LeftToRight).gap(8).align(Right, CenterY))
-                        .children(|ui| {
-                            // Let's reuse the same button helper from before
-                            button(ui, "Cancel", |_| {});
-                            button(ui, "Delete", |_| {});
-                        });
-                });
+          ui.element()
+            .width(grow!())
+            .height(fit!())
+            .layout(|l| l.direction(LeftToRight).gap(8).align(Right, CenterY))
+            .children(|ui| {
+              // Let's reuse the same button helper from before
+              button(ui, "Cancel", |_| {});
+              button(ui, "Delete", |_| {});
+            });
         });
+    });
 }
 ```
 {{ demo(id="modal_dialog", height=200) }}

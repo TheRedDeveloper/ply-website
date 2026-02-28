@@ -18,16 +18,16 @@ technology:
 
 ```rust
 ui.element()
-    .id("submit")
-    .width(fixed!(120.0))
-    .height(fixed!(40.0))
-    .background_color(0xB91414)
-    .corner_radius(6.0)
-    .accessibility(|a| a.button("Submit"))
-    .on_press(|_| { /* handle click */ })
-    .children(|ui| {
-        ui.text("Submit", |t| t.font_size(14).color(0xFFFFFF));
-    });
+  .id("submit")
+  .width(fixed!(120.0))
+  .height(fixed!(40.0))
+  .background_color(0xB91414)
+  .corner_radius(6.0)
+  .accessibility(|a| a.button("Submit"))
+  .on_press(|_| { /* handle click */ })
+  .children(|ui| {
+    ui.text("Submit", |t| t.font_size(14).color(0xFFFFFF));
+  });
 ```
 
 The `.button("Submit")` shorthand sets the role to Button, the label to
@@ -51,8 +51,8 @@ For other roles, use `.role()` directly:
 
 ```rust
 .accessibility(|a| a
-    .role(AccessibilityRole::Dialog)
-    .label("Settings")
+  .role(AccessibilityRole::Dialog)
+  .label("Settings")
 )
 ```
 
@@ -66,11 +66,11 @@ Available roles: `None`, `Button`, `Link`, `Heading`, `Label`,
 
 ```rust
 .accessibility(|a| a
-    .slider("Volume")
-    .description("Adjusts the master volume from 0 to 100")
-    .value("75")
-    .value_min(0.0)
-    .value_max(100.0)
+  .slider("Volume")
+  .description("Adjusts the master volume from 0 to 100")
+  .value("75")
+  .value_min(0.0)
+  .value_max(100.0)
 )
 ```
 
@@ -102,14 +102,14 @@ By default, focusable elements are tabbed in insertion order. Use
 
 ```rust
 ui.element()
-    .id("second")
-    .accessibility(|a| a.button("Second").tab_index(2))
-    .empty();
+  .id("second")
+  .accessibility(|a| a.button("Second").tab_index(2))
+  .empty();
 
 ui.element()
-    .id("first")
-    .accessibility(|a| a.button("First").tab_index(1))
-    .empty();
+  .id("first")
+  .accessibility(|a| a.button("First").tab_index(1))
+  .empty();
 ```
 
 ## Directional focus
@@ -118,9 +118,9 @@ Override arrow key focus movement for custom navigation patterns:
 
 ```rust
 .accessibility(|a| a
-    .button("Item A")
-    .focus_right("item_b")
-    .focus_down("item_c")
+  .button("Item A")
+  .focus_right("item_b")
+  .focus_down("item_c")
 )
 ```
 
@@ -146,9 +146,9 @@ You can also customize the ring's color and width:
 
 ```rust
 .accessibility(|a| a
-    .button("Submit")
-    .ring_color(0x0078FF)
-    .ring_width(3)
+  .button("Submit")
+  .ring_color(0x0078FF)
+  .ring_width(3)
 )
 ```
 
@@ -165,15 +165,15 @@ Announce dynamic content changes to the screen reader:
 ```rust
 // Polite: waits for current speech to finish
 ui.element()
-    .id("status")
-    .accessibility(|a| a.static_text("3 items loaded").live_region_polite())
-    .empty();
+  .id("status")
+  .accessibility(|a| a.static_text("3 items loaded").live_region_polite())
+  .empty();
 
 // Assertive: interrupts immediately
 ui.element()
-    .id("error")
-    .accessibility(|a| a.static_text("Connection lost").live_region_assertive())
-    .empty();
+  .id("error")
+  .accessibility(|a| a.static_text("Connection lost").live_region_assertive())
+  .empty();
 ```
 
 ## Keyboard navigation
@@ -207,20 +207,20 @@ Look out for iOS support in the future.
 
 ```rust
 ui.element()
-    .id("accept_terms")
-    .width(fixed!(24.0))
-    .height(fixed!(24.0))
-    .background_color(if checked { 0xFFC32C } else { 0x3A3533 })
-    .corner_radius(4.0)
-    .accessibility(|a| a.checkbox("Accept terms").checked(checked))
-    .on_press(move |_| {
-        checked = !checked;
-    })
-    .children(|ui| {
-        if checked {
-            ui.text("✓", |t| t.font_size(16).color(0x181515));
-        }
-    });
+  .id("accept_terms")
+  .width(fixed!(24.0))
+  .height(fixed!(24.0))
+  .background_color(if checked { 0xFFC32C } else { 0x3A3533 })
+  .corner_radius(4.0)
+  .accessibility(|a| a.checkbox("Accept terms").checked(checked))
+  .on_press(move |_| {
+    checked = !checked;
+  })
+  .children(|ui| {
+    if checked {
+      ui.text("✓", |t| t.font_size(16).color(0x181515));
+    }
+  });
 ```
 
 ## Next steps

@@ -1,7 +1,7 @@
 # Ply Engine — Website & Documentation
 base_url = "https://ply-engine.dev"
 title = "Ply"
-description = "Beautiful UIs in Rust. Cross-platform. Dead simple."
+description = "Beautiful apps in Rust. Cross-platform. Dead simple."
 compile_sass = true
 build_search_index = true
 generate_feeds = false

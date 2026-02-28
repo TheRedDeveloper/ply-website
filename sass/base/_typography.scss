@@ -180,7 +180,7 @@ code:not(pre code) {
   padding: 0.2em 0.4em;
   background: var(--color-bg-surface);
   border-radius: 4px;
-  color: var(--ctp-mauve);
+  color: var(--ply-yellow);
 }
 
 // Keyboard
@@ -265,7 +265,7 @@ input[type="checkbox"] {
       top: 1px;
       width: 5px;
       height: 9px;
-      border: solid var(--ctp-base);
+      border: solid var(--ply-base);
       border-width: 0 2px 2px 0;
       transform: rotate(45deg);
     }
@@ -279,7 +279,7 @@ input[type="checkbox"] {
 // Light theme: white checkbox background
 [data-theme="light"] input[type="checkbox"] {
   background: #fff;
-  border-color: var(--ctp-surface1);
+  border-color: var(--ply-surface1);
 
   &:checked {
     background: var(--color-accent);
@@ -419,17 +419,17 @@ small {
   &::before {
     @extend %ref-tab;
     content: "DOCS";
-    color: var(--ctp-base);
-    background: var(--ctp-peach);
+    color: var(--ply-base);
+    background: var(--ply-salmon);
   }
 
   a:hover {
-    color: var(--ctp-peach);
+    color: var(--ply-salmon);
   }
 
   &:hover {
-    border-color: var(--ctp-peach);
-    color: var(--ctp-peach);
+    border-color: var(--ply-salmon);
+    color: var(--ply-salmon);
   }
 
   // Adjust margin for different heading sizes

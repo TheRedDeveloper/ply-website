@@ -5,8 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Ply Interactive Demo</title>
     <style>
+        @font-face {
+            font-family: 'Geist Mono';
+            font-style: normal;
+            font-weight: 100 900;
+            src: url('../fonts/GeistMono-Variable.woff2') format('woff2-variations'),
+                 url('../fonts/GeistMono-Variable.woff2') format('woff2');
+            font-display: swap;
+        }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        html, body { height: 100%; background: #1e1b1b; overflow: hidden; }
+        html, body { height: 100%; background: #1a1111; overflow: hidden; }
 
         .demo-container {
             display: flex;
@@ -19,16 +27,16 @@
             display: flex;
             flex-direction: column;
             min-width: 0;
-            border-right: 1px solid #313244;
+            border-right: 1px solid #2E2A28;
         }
 
         .editor-header {
-            background: #181825;
-            color: #6c7086;
+            background: #181515;
+            color: #9E9590;
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             font-size: 12px;
             padding: 6px 12px;
-            border-bottom: 1px solid #313244;
+            border-bottom: 1px solid #2E2A28;
             user-select: none;
         }
 
@@ -61,9 +69,9 @@
         #fallback-editor {
             width: 100%;
             height: 100%;
-            background: #1e1e2e;
-            color: #cdd6f4;
-            font-family: 'Fira Code', 'Cascadia Code', 'JetBrains Mono', monospace;
+            background: #1a1111;
+            color: #E8E0DC;
+            font-family: 'Geist Mono', 'Fira Code', 'Cascadia Code', 'JetBrains Mono', monospace;
             font-size: 14px;
             line-height: 1.6;
             padding: 12px;
@@ -71,6 +79,40 @@
             outline: none;
             resize: none;
             tab-size: 4;
+        }
+
+        /* Warm Ply theme overrides for CodeMirror */
+        .cm-editor {
+            background: #1a1111 !important;
+        }
+        .cm-editor .cm-scroller {
+            font-family: 'Geist Mono', 'Fira Code', 'Cascadia Code', 'JetBrains Mono', monospace;
+        }
+        .cm-editor .cm-gutters {
+            background: #1a1111 !important;
+            border-right: 1px solid #2E2A28 !important;
+            color: #5E5854 !important;
+        }
+        .cm-editor .cm-activeLineGutter {
+            background: rgba(255, 101, 77, 0.08) !important;
+        }
+        .cm-editor .cm-activeLine {
+            background: rgba(255, 101, 77, 0.06) !important;
+        }
+        .cm-editor .cm-cursor, .cm-editor .cm-dropCursor {
+            border-left-color: #FF654D !important;
+        }
+        .cm-editor .cm-selectionBackground,
+        .cm-editor.cm-focused .cm-selectionBackground,
+        .cm-editor ::selection {
+            background: rgba(255, 101, 77, 0.2) !important;
+        }
+        .cm-editor .cm-selectionMatch {
+            background: rgba(255, 195, 44, 0.12) !important;
+        }
+        .cm-editor .cm-matchingBracket {
+            background: rgba(255, 195, 44, 0.2) !important;
+            color: #FFC32C !important;
         }
     </style>
 </head>
@@ -90,60 +132,218 @@
     <script>
         // Default code shown in the editor on load.
         var DEFAULT_CODE = [
-            '// Try editing this code!',
             'ui.element()',
             '  .width(grow!())',
             '  .height(grow!())',
-            '  .background_color(0x1E1E2E)',
-            '  .layout(|l| l.direction(TopToBottom).padding(24).gap(16).align(CenterX, Top))',
+            '  .background_color(0x1E1B1B)',
+            '  .layout(|l| l.direction(TopToBottom))',
             '  .children(|ui| {',
-            '    ui.text("Hello, Ply!", |t| t.font_size(32).color(0xCDD6F4));',
-            '',
+            '    // Header bar',
             '    ui.element()',
             '      .width(grow!())',
-            '      .height(fit!())',
-            '      .layout(|l| l.direction(LeftToRight).gap(16))',
+            '      .height(fixed!(48.0))',
+            '      .background_color(0x262220)',
+            '      .layout(|l| l.direction(LeftToRight).padding(12).gap(12).align(Left, CenterY))',
             '      .children(|ui| {',
             '        ui.element()',
-            '          .width(fixed!(180.0))',
-            '          .height(fixed!(100.0))',
-            '          .background_color(0xCBA6F7)',
-            '          .corner_radius(12.0)',
-            '          .layout(|l| l.align(CenterX, CenterY))',
-            '          .children(|ui| {',
-            '            ui.text("Card 1", |t| t.font_size(18).color(0x1E1E2E));',
-            '          });',
-            '',
-            '        ui.element()',
-            '          .width(fixed!(180.0))',
-            '          .height(fixed!(100.0))',
-            '          .background_color(0xA6E3A1)',
-            '          .corner_radius(12.0)',
-            '          .border(|b| b.color(0x1E1E2E).all(2))',
-            '          .layout(|l| l.align(CenterX, CenterY))',
-            '          .children(|ui| {',
-            '            ui.text("Card 2", |t| t.font_size(18).color(0x1E1E2E));',
-            '          });',
-            '',
-            '        ui.element()',
-            '          .width(fixed!(180.0))',
-            '          .height(fixed!(100.0))',
-            '          .background_color(0x89B4FA)',
-            '          .corner_radius((20.0, 0.0, 20.0, 0.0))',
-            '          .layout(|l| l.align(CenterX, CenterY))',
-            '          .children(|ui| {',
-            '            ui.text("Card 3", |t| t.font_size(18).color(0x1E1E2E));',
-            '          });',
+            '          .width(fixed!(18.0))',
+            '          .height(fixed!(18.0))',
+            '          .background_color(0xFFC32C)',
+            '          .corner_radius(6.0)',
+            '          .rotate_shape(|r| r.degrees(45))',
+            '          .empty();',
+            '        ui.text("My App", |t| t.font_size(18).color(0xE8E0DC));',
             '      });',
             '',
+            '    // Scrollable content area',
             '    ui.element()',
             '      .width(grow!())',
-            '      .height(fixed!(4.0))',
-            '      .background_color(0x585B70)',
-            '      .corner_radius(2.0)',
-            '      .empty();',
+            '      .height(grow!())',
+            '      .layout(|l| l.direction(TopToBottom).padding(20).gap(16))',
+            '      .overflow(|o| o.scroll_y())',
+            '      .children(|ui| {',
+            '        ui.text("Welcome back!", |t| t.font_size(28).color(0xE8E0DC));',
+            '        ui.text("Here is what is happening today.", |t| t.font_size(14).color(0x9E9590));',
             '',
-            '    ui.text("Edit the code on the left to see changes here.", |t| t.font_size(14).color(0x6C7086));',
+            '        // Stat cards row',
+            '        ui.element()',
+            '          .width(grow!())',
+            '          .height(fit!())',
+            '          .layout(|l| l.direction(LeftToRight).gap(12))',
+            '          .children(|ui| {',
+            '            ui.element()',
+            '              .width(grow!())',
+            '              .height(fixed!(80.0))',
+            '              .background_color(0xFFC32C)',
+            '              .corner_radius(12.0)',
+            '              .layout(|l| l.direction(TopToBottom).padding(14).gap(4))',
+            '              .children(|ui| {',
+            '                ui.text("Revenue", |t| t.font_size(12).color(0x1E1B1B));',
+            '                ui.text("$12,480", |t| t.font_size(22).color(0x1E1B1B));',
+            '              });',
+            '            ui.element()',
+            '              .width(grow!())',
+            '              .height(fixed!(80.0))',
+            '              .background_color(0x2E2A28)',
+            '              .corner_radius(12.0)',
+            '              .border(|b| b.color(0x3A3533).all(1))',
+            '              .layout(|l| l.direction(TopToBottom).padding(14).gap(4))',
+            '              .children(|ui| {',
+            '                ui.text("Users", |t| t.font_size(12).color(0x9E9590));',
+            '                ui.text("3,842", |t| t.font_size(22).color(0xE8E0DC));',
+            '              });',
+            '            ui.element()',
+            '              .width(grow!())',
+            '              .height(fixed!(80.0))',
+            '              .background_color(0x2E2A28)',
+            '              .corner_radius(12.0)',
+            '              .border(|b| b.color(0x3A3533).all(1))',
+            '              .layout(|l| l.direction(TopToBottom).padding(14).gap(4))',
+            '              .children(|ui| {',
+            '                ui.text("Growth", |t| t.font_size(12).color(0x9E9590));',
+            '                ui.text("+24%", |t| t.font_size(22).color(0x6ECB63));',
+            '              });',
+            '          });',
+            '',
+            '        // Activity list',
+            '        ui.element()',
+            '          .width(grow!())',
+            '          .height(fit!())',
+            '          .background_color(0x262220)',
+            '          .corner_radius(12.0)',
+            '          .layout(|l| l.direction(TopToBottom))',
+            '          .children(|ui| {',
+            '            ui.element()',
+            '              .width(grow!())',
+            '              .height(fit!())',
+            '              .layout(|l| l.padding(16))',
+            '              .children(|ui| {',
+            '                ui.text("Recent Activity", |t| t.font_size(14).color(0x9E9590));',
+            '              });',
+            '            ui.element()',
+            '              .width(grow!())',
+            '              .height(fixed!(1.0))',
+            '              .background_color(0x3A3533)',
+            '              .empty();',
+            '            ui.element()',
+            '              .width(grow!())',
+            '              .height(fit!())',
+            '              .layout(|l| l.direction(LeftToRight).padding(16).gap(12).align(Left, CenterY))',
+            '              .children(|ui| {',
+            '                ui.element()',
+            '                  .width(fixed!(8.0))',
+            '                  .height(fixed!(8.0))',
+            '                  .background_color(0x6ECB63)',
+            '                  .corner_radius(4.0)',
+            '                  .empty();',
+            '                ui.text("New signup from Tokyo", |t| t.font_size(13).color(0xE8E0DC));',
+            '              });',
+            '            ui.element()',
+            '              .width(grow!())',
+            '              .height(fit!())',
+            '              .layout(|l| l.direction(LeftToRight).padding(16).gap(12).align(Left, CenterY))',
+            '              .children(|ui| {',
+            '                ui.element()',
+            '                  .width(fixed!(8.0))',
+            '                  .height(fixed!(8.0))',
+            '                  .background_color(0xFFC32C)',
+            '                  .corner_radius(4.0)',
+            '                  .empty();',
+            '                ui.text("Payment received: $240", |t| t.font_size(13).color(0xE8E0DC));',
+            '              });',
+            '            ui.element()',
+            '              .width(grow!())',
+            '              .height(fit!())',
+            '              .layout(|l| l.direction(LeftToRight).padding(16).gap(12).align(Left, CenterY))',
+            '              .children(|ui| {',
+            '                ui.element()',
+            '                  .width(fixed!(8.0))',
+            '                  .height(fixed!(8.0))',
+            '                  .background_color(0xFF654D)',
+            '                  .corner_radius(4.0)',
+            '                  .empty();',
+            '                ui.text("Server alert resolved", |t| t.font_size(13).color(0xE8E0DC));',
+            '              });',
+            '            ui.element()',
+            '              .width(grow!())',
+            '              .height(fit!())',
+            '              .layout(|l| l.direction(LeftToRight).padding(16).gap(12).align(Left, CenterY))',
+            '              .children(|ui| {',
+            '                ui.element()',
+            '                  .width(fixed!(8.0))',
+            '                  .height(fixed!(8.0))',
+            '                  .background_color(0x6ECB63)',
+            '                  .corner_radius(4.0)',
+            '                  .empty();',
+            '                ui.text("Order #1042 shipped", |t| t.font_size(13).color(0xE8E0DC));',
+            '              });',
+            '            ui.element()',
+            '              .width(grow!())',
+            '              .height(fit!())',
+            '              .layout(|l| l.direction(LeftToRight).padding(16).gap(12).align(Left, CenterY))',
+            '              .children(|ui| {',
+            '                ui.element()',
+            '                  .width(fixed!(8.0))',
+            '                  .height(fixed!(8.0))',
+            '                  .background_color(0xFFC32C)',
+            '                  .corner_radius(4.0)',
+            '                  .empty();',
+            '                ui.text("New review: 5 stars", |t| t.font_size(13).color(0xE8E0DC));',
+            '              });',
+            '            ui.element()',
+            '              .width(grow!())',
+            '              .height(fit!())',
+            '              .layout(|l| l.direction(LeftToRight).padding(16).gap(12).align(Left, CenterY))',
+            '              .children(|ui| {',
+            '                ui.element()',
+            '                  .width(fixed!(8.0))',
+            '                  .height(fixed!(8.0))',
+            '                  .background_color(0xFF654D)',
+            '                  .corner_radius(4.0)',
+            '                  .empty();',
+            '                ui.text("Failed login attempt", |t| t.font_size(13).color(0xE8E0DC));',
+            '              });',
+            '            ui.element()',
+            '              .width(grow!())',
+            '              .height(fit!())',
+            '              .layout(|l| l.direction(LeftToRight).padding(16).gap(12).align(Left, CenterY))',
+            '              .children(|ui| {',
+            '                ui.element()',
+            '                  .width(fixed!(8.0))',
+            '                  .height(fixed!(8.0))',
+            '                  .background_color(0x6ECB63)',
+            '                  .corner_radius(4.0)',
+            '                  .empty();',
+            '                ui.text("Backup completed", |t| t.font_size(13).color(0xE8E0DC));',
+            '              });',
+            '            ui.element()',
+            '              .width(grow!())',
+            '              .height(fit!())',
+            '              .layout(|l| l.direction(LeftToRight).padding(16).gap(12).align(Left, CenterY))',
+            '              .children(|ui| {',
+            '                ui.element()',
+            '                  .width(fixed!(8.0))',
+            '                  .height(fixed!(8.0))',
+            '                  .background_color(0xFFC32C)',
+            '                  .corner_radius(4.0)',
+            '                  .empty();',
+            '                ui.text("New signup from Berlin", |t| t.font_size(13).color(0xE8E0DC));',
+            '              });',
+            '            ui.element()',
+            '              .width(grow!())',
+            '              .height(fit!())',
+            '              .layout(|l| l.direction(LeftToRight).padding(16).gap(12).align(Left, CenterY))',
+            '              .children(|ui| {',
+            '                ui.element()',
+            '                  .width(fixed!(8.0))',
+            '                  .height(fixed!(8.0))',
+            '                  .background_color(0x6ECB63)',
+            '                  .corner_radius(4.0)',
+            '                  .empty();',
+            '                ui.text("Payment received: $89", |t| t.font_size(13).color(0xE8E0DC));',
+            '              });',
+            '          });',
+            '      });',
             '  });',
         ].join('\n');
 
@@ -157,7 +357,7 @@
     <script>
         // Register service worker for WASM caching
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('/sw.js');
+            navigator.serviceWorker.register('/sw.js', { scope: '/demo/' });
         }
 
         // Load WASM

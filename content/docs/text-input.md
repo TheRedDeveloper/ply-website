@@ -13,16 +13,16 @@ the engine can persist input state across frames:
 
 {% example(id="basic_input", height=350) %}
 ui.element()
-    .id("username")
-    .width(fixed!(300.0)).height(fixed!(36.0))
-    .background_color(0x262220)
-    .corner_radius(6.0)
-    .text_input(|t| t
-        .placeholder("[[placeholder]]")
-        .font_size([[font_size]])
-        .text_color([[text_color]])
-    )
-    .empty();
+  .id("username")
+  .width(fixed!(300.0)).height(fixed!(36.0))
+  .background_color(0x262220)
+  .corner_radius(6.0)
+  .text_input(|t| t
+    .placeholder("[[placeholder]]")
+    .font_size([[font_size]])
+    .text_color([[text_color]])
+  )
+  .empty();
 ---
 placeholder = Enter username
 n.font_size = 14
@@ -58,13 +58,13 @@ or use callbacks to react to changes:
 
 ```rust
 .text_input(|t| t
-    .font_size(14)
-    .on_changed(|text| {
-        println!("Text changed: {}", text);
-    })
-    .on_submit(|text| {
-        println!("Submitted: {}", text);
-    })
+  .font_size(14)
+  .on_changed(|text| {
+    println!("Text changed: {}", text);
+  })
+  .on_submit(|text| {
+    println!("Submitted: {}", text);
+  })
 )
 ```
 
@@ -79,17 +79,17 @@ Enable with `.multiline(true)`:
 
 ```rust
 ui.element()
-    .id("editor")
-    .width(grow!())
-    .height(grow!())
-    .background_color(0x262220)
-    .corner_radius(8.0)
-    .text_input(|t| t
-        .multiline(true)
-        .font_size(14)
-        .text_color(0xE8E0DC)
-    )
-    .empty();
+  .id("editor")
+  .width(grow!())
+  .height(grow!())
+  .background_color(0x262220)
+  .corner_radius(8.0)
+  .text_input(|t| t
+    .multiline(true)
+    .font_size(14)
+    .text_color(0xE8E0DC)
+  )
+  .empty();
 ```
 {{ demo(id="multiline_editor", height=150) }}
 
@@ -102,9 +102,9 @@ In multiline mode:
 
 ```rust
 .text_input(|t| t
-    .password(true)
-    .font_size(14)
-    .placeholder("Enter password")
+  .password(true)
+  .font_size(14)
+  .placeholder("Enter password")
 )
 ```
 {{ demo(id="password_input", height=80) }}
@@ -148,47 +148,47 @@ All standard text editing shortcuts work out of the box:
 
 ```rust
 ui.element()
-    .width(fixed!(320.0))
-    .height(fit!())
-    .background_color(0x2E2A28)
-    .corner_radius(12.0)
-    .layout(|l| l.direction(TopToBottom).padding(24).gap(16))
-    .children(|ui| {
-        ui.text("Sign In", |t| t.font_size(20).color(0xFFFFFF));
+  .width(fixed!(320.0))
+  .height(fit!())
+  .background_color(0x2E2A28)
+  .corner_radius(12.0)
+  .layout(|l| l.direction(TopToBottom).padding(24).gap(16))
+  .children(|ui| {
+    ui.text("Sign In", |t| t.font_size(20).color(0xFFFFFF));
 
-        ui.element()
-            .id("email")
-            .width(grow!())
-            .height(fixed!(36.0))
-            .background_color(0x262220)
-            .corner_radius(6.0)
-            .text_input(|t| t
-                .placeholder("Email")
-                .font_size(14)
-                .text_color(0xE8E0DC)
-                .placeholder_color(0x6E6560)
-            )
-            .empty();
+    ui.element()
+      .id("email")
+      .width(grow!())
+      .height(fixed!(36.0))
+      .background_color(0x262220)
+      .corner_radius(6.0)
+      .text_input(|t| t
+        .placeholder("Email")
+        .font_size(14)
+        .text_color(0xE8E0DC)
+        .placeholder_color(0x6E6560)
+      )
+      .empty();
 
-        ui.element()
-            .id("password")
-            .width(grow!())
-            .height(fixed!(36.0))
-            .background_color(0x262220)
-            .corner_radius(6.0)
-            .text_input(|t| t
-                .password(true)
-                .placeholder("Password")
-                .font_size(14)
-                .text_color(0xE8E0DC)
-                .placeholder_color(0x6E6560)
-            )
-            .empty();
+    ui.element()
+      .id("password")
+      .width(grow!())
+      .height(fixed!(36.0))
+      .background_color(0x262220)
+      .corner_radius(6.0)
+      .text_input(|t| t
+        .password(true)
+        .placeholder("Password")
+        .font_size(14)
+        .text_color(0xE8E0DC)
+        .placeholder_color(0x6E6560)
+      )
+      .empty();
 
-        button(ui, "Sign In", |_| {
-            // ply.get_text_value("email"), ply.get_text_value("password")
-        });
+    button(ui, "Sign In", |_| {
+      // ply.get_text_value("email"), ply.get_text_value("password")
     });
+  });
 ```
 {{ demo(id="login_form", height=270) }}
 

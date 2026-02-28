@@ -14,16 +14,16 @@ among siblings. You don't have to think about it:
 
 ```rust
 ui.element().width(grow!()).height(grow!())
-    .layout(|l| l.direction(TopToBottom).gap(8).padding(12))
-    .children(|ui| {
-        // Auto-ID based on parent id + child index 0
-        ui.element().width(grow!()).height(fixed!(40.0))
-            .background_color(0x262220).empty();
+  .layout(|l| l.direction(TopToBottom).gap(8).padding(12))
+  .children(|ui| {
+    // Auto-ID based on parent id + child index 0
+    ui.element().width(grow!()).height(fixed!(40.0))
+      .background_color(0x262220).empty();
 
-        // Auto-ID based on parent id + child index 1
-        ui.element().width(grow!()).height(fixed!(40.0))
-            .background_color(0x3A3533).empty();
-    });
+    // Auto-ID based on parent id + child index 1
+    ui.element().width(grow!()).height(fixed!(40.0))
+      .background_color(0x3A3533).empty();
+  });
 ```
 
 Auto IDs are stable as long as children stay in the same order. For most
@@ -35,17 +35,17 @@ Set an ID with `.id()` when you need to reference an element, or for interactive
 
 ```rust
 let sidebar_id = ui.element()
-    .id("sidebar")
-    .width(fixed!(200.0))
-    .height(grow!())
-    .background_color(0x181515)
-    .layout(|l| l.direction(TopToBottom).gap(4).padding(8))
-    .children(|ui| {
-        ui.text("Navigation", |t| t.font_size(14).color(0xFFC32C));
-    });
+  .id("sidebar")
+  .width(fixed!(200.0))
+  .height(grow!())
+  .background_color(0x181515)
+  .layout(|l| l.direction(TopToBottom).gap(4).padding(8))
+  .children(|ui| {
+    ui.text("Navigation", |t| t.font_size(14).color(0xFFC32C));
+  });
 
 if let Some(bbox) = ui.bounding_box(sidebar_id) {
-    println!("Sidebar bounding box: {:?}", bbox);
+  println!("Sidebar bounding box: {:?}", bbox);
 }
 ```
 {{ demo(id="explicit_id_demo", height=200) }}
@@ -58,22 +58,22 @@ When you render a list, each item needs a unique ID. Pass a `(&str, u32)` tuple:
 
 {% example(id="indexed_nav_demo", height=785, base_height=525, height_per_item=65, list_param="items") %}
 let items = [
-[[items:    "$",]]
+[[items:  "$",]]
 ];
 let active = [[active]];
 
 for (i, label) in items.iter().enumerate() {
-    let bg = if i == active { 0x3A3533 } else { 0x262220 };
-    ui.element()
-        .id(("nav_item", i as u32))
-        .width(grow!())
-        .height(fixed!(36.0))
-        .background_color(bg)
-        .corner_radius(6.0)
-        .layout(|l| l.padding(8).align(Left, CenterY))
-        .children(|ui| {
-            ui.text(label, |t| t.font_size(14).color(0xE8E0DC));
-        });
+  let bg = if i == active { 0x3A3533 } else { 0x262220 };
+  ui.element()
+    .id(("nav_item", i as u32))
+    .width(grow!())
+    .height(fixed!(36.0))
+    .background_color(bg)
+    .corner_radius(6.0)
+    .layout(|l| l.padding(8).align(Left, CenterY))
+    .children(|ui| {
+      ui.text(label, |t| t.font_size(14).color(0xE8E0DC));
+    });
 }
 ---
 l.items=Home|Settings|Profile|About
@@ -89,28 +89,28 @@ You can check the state of the element you are currently building inside its `.c
 
 {% example(id="hover_press_demo", height=650) %}
 ui.element()
-    .width(fit!())
-    .height(fixed!(40.0))
-    .corner_radius(8.0)
-    .children(|ui| {
-        let bg = if ui.pressed() {
-            [[press_color]]
-        } else if ui.hovered() {
-            [[hover_color]]
-        } else {
-            [[default_color]]
-        };
+  .width(fit!())
+  .height(fixed!(40.0))
+  .corner_radius(8.0)
+  .children(|ui| {
+    let bg = if ui.pressed() {
+      [[press_color]]
+    } else if ui.hovered() {
+      [[hover_color]]
+    } else {
+      [[default_color]]
+    };
 
-        ui.element()
-            .width(fit!())
-            .height(grow!())
-            .background_color(bg)
-            .corner_radius(8.0)
-            .layout(|l| l.padding((0, 16, 0, 16)).align(CenterX, CenterY))
-            .children(|ui| {
-                ui.text("Hover me", |t| t.font_size(14).color(0xE8E0DC));
-            });
-    });
+    ui.element()
+      .width(fit!())
+      .height(grow!())
+      .background_color(bg)
+      .corner_radius(8.0)
+      .layout(|l| l.padding((0, 16, 0, 16)).align(CenterX, CenterY))
+      .children(|ui| {
+        ui.text("Hover me", |t| t.font_size(14).color(0xE8E0DC));
+      });
+  });
 ---
 c.press_color=0xFF654D
 c.hover_color=0x3A3533
@@ -133,23 +133,23 @@ When you need to check state from anywhere use `Ply` methods with an ID:
 
 ```rust
 if ply.is_pressed("card") {
-    // card is being held down
+  // card is being held down
 }
 
 let mut ui = ply.begin();
 
 let card_id = ui.element()
-    .id("card")
-    .width(fixed!(200.0))
-    .height(fixed!(120.0))
-    .background_color(0x262220)
-    .corner_radius(8.0)
-    .children(|ui| {
-        ui.text("Hello", |t| t.font_size(18).color(0xE8E0DC));
-    });
+  .id("card")
+  .width(fixed!(200.0))
+  .height(fixed!(120.0))
+  .background_color(0x262220)
+  .corner_radius(8.0)
+  .children(|ui| {
+    ui.text("Hello", |t| t.font_size(18).color(0xE8E0DC));
+  });
 
 if ui.pointer_over(card_id) {
-    // pointer is over the card
+  // pointer is over the card
 }
 ```
 

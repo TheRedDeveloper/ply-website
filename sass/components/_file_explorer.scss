@@ -28,12 +28,12 @@
   display: flex;
   align-items: center;
   padding: 0.05rem 1rem;
-  color: var(--ctp-subtext1);
+  color: var(--ply-subtext1);
   transition: background 0.15s ease;
 
   // Folder styling
   &.pv-dir {
-    color: var(--ctp-yellow);
+    color: var(--ply-yellow);
     font-weight: 500;
 
     &::before {
@@ -44,7 +44,7 @@
       margin-right: 0.45rem;
       flex-shrink: 0;
       // CSS folder icon
-      background: var(--ctp-yellow);
+      background: var(--ply-yellow);
       clip-path: polygon(0 15%, 40% 15%, 50% 0, 100% 0, 100% 100%, 0 100%);
       opacity: 0.7;
     }
@@ -59,7 +59,7 @@
     margin-right: 0.5rem;
     flex-shrink: 0;
     // CSS file icon
-    background: var(--ctp-yellow);
+    background: var(--ply-yellow);
     clip-path: polygon(0 0, 65% 0, 100% 30%, 100% 100%, 0 100%);
     opacity: 0.5;
   }
@@ -67,14 +67,14 @@
   // Active / highlighted file
   &.pv-active {
     background: rgba(255, 195, 44, 0.06);
-    color: var(--ctp-yellow);
+    color: var(--ply-yellow);
     font-weight: 500;
-    border-left: 2px solid var(--ctp-yellow);
+    border-left: 2px solid var(--ply-yellow);
     padding-left: calc(1rem - 2px);
 
     &::before {
       opacity: 0.8;
-      border-color: var(--ctp-yellow);
+      border-color: var(--ply-yellow);
     }
 
 

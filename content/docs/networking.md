@@ -25,13 +25,13 @@ Each takes a string ID, a URL, and a configuration closure:
 ```rust
 // GET request
 net::get("users", "https://api.example.com/users", |r| r
-    .header("Authorization", "Bearer token123")
+  .header("Authorization", "Bearer token123")
 );
 
 // POST with body
 net::post("submit", "https://api.example.com/submit", |r| r
-    .header("Content-Type", "application/json")
-    .body("{\"name\":\"ply\"}")
+  .header("Content-Type", "application/json")
+  .body("{\"name\":\"ply\"}")
 );
 ```
 
@@ -43,19 +43,19 @@ Use `net::request()` to get a handle and poll for the response:
 
 ```rust
 if let Some(req) = net::request("users") {
-    match req.response() {
-        None => {
-            // Show a loading indicator
-        }
-        Some(Ok(resp)) => {
-            let status = resp.status();   // u16
-            let body = resp.text();       // &str
-            let raw = resp.bytes();       // &[u8]
-        }
-        Some(Err(e)) => {
-            // Request failed (network error, DNS, etc.)
-        }
+  match req.response() {
+    None => {
+      // Show a loading indicator
     }
+    Some(Ok(resp)) => {
+      let status = resp.status();   // u16
+      let body = resp.text();       // &str
+      let raw = resp.bytes();       // &[u8]
+    }
+    Some(Err(e)) => {
+      // Request failed (network error, DNS, etc.)
+    }
+  }
 }
 ```
 
@@ -65,7 +65,7 @@ if let Some(req) = net::request("users") {
 
 ```rust
 if let Some(req) = net::request("users") {
-    req.cancel();  // removes the request immediately and consumes the handle
+  req.cancel();  // removes the request immediately and consumes the handle
 }
 ```
 
@@ -88,9 +88,9 @@ plyx add net-json
 struct User { name: String, email: String }
 
 if let Some(req) = net::request("users") {
-    if let Some(Ok(resp)) = req.response() {
-        let users: Vec<User> = resp.json().unwrap();
-    }
+  if let Some(Ok(resp)) = req.response() {
+    let users: Vec<User> = resp.json().unwrap();
+  }
 }
 ```
 
@@ -100,7 +100,7 @@ if let Some(req) = net::request("users") {
 
 ```rust
 net::ws_connect("chat", "wss://chat.example.com", |w| w
-    .header("Authorization", "Bearer abc")
+  .header("Authorization", "Bearer abc")
 );
 ```
 
@@ -118,28 +118,28 @@ net::ws_connect("local", "wss://localhost:8443", |w| w.insecure());
 
 ```rust
 if let Some(ws) = net::ws("chat") {
-    ws.send_text("hello");
-    ws.send(b"binary data");
+  ws.send_text("hello");
+  ws.send(b"binary data");
 
-    while let Some(msg) = ws.recv() {
-        match msg {
-            WsMessage::Connected => {
-                // Connection established
-            }
-            WsMessage::Text(s) => {
-                // Text frame
-            }
-            WsMessage::Binary(data) => {
-                // Binary frame
-            }
-            WsMessage::Error(e) => {
-                // Something went wrong
-            }
-            WsMessage::Closed => {
-                // Server closed the connection
-            }
-        }
+  while let Some(msg) = ws.recv() {
+    match msg {
+      WsMessage::Connected => {
+        // Connection established
+      }
+      WsMessage::Text(s) => {
+        // Text frame
+      }
+      WsMessage::Binary(data) => {
+        // Binary frame
+      }
+      WsMessage::Error(e) => {
+        // Something went wrong
+      }
+      WsMessage::Closed => {
+        // Server closed the connection
+      }
     }
+  }
 }
 ```
 
@@ -147,7 +147,7 @@ if let Some(ws) = net::ws("chat") {
 
 ```rust
 if let Some(ws) = net::ws("chat") {
-    ws.close();  // graceful close, removes immediately and consumes the handle
+  ws.close();  // graceful close, removes immediately and consumes the handle
 }
 ```
 

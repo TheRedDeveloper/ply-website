@@ -93,7 +93,7 @@ button {
   z-index: 9999;
   padding: var(--space-sm) var(--space-lg);
   background: var(--color-accent);
-  color: var(--ctp-base);
+  color: var(--ply-base);
   font-weight: 600;
   text-decoration: none;
   border-radius: 0 0 var(--radius-md) var(--radius-md);
@@ -102,7 +102,7 @@ button {
 
   &:focus {
     top: 0;
-    outline: 2px solid var(--ctp-text);
+    outline: 2px solid var(--ply-text);
     outline-offset: 2px;
   }
 }
@@ -122,8 +122,8 @@ button {
 
 // Selection
 ::selection {
-  background: var(--ctp-mauve);
-  color: var(--ctp-base);
+  background: var(--ply-yellow);
+  color: var(--ply-base);
 }
 
 // Scrollbar styling (WebKit)
@@ -137,16 +137,16 @@ button {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--ctp-surface2);
+  background: var(--ply-surface2);
   border-radius: 4px;
 
   &:hover {
-    background: var(--ctp-overlay0);
+    background: var(--ply-overlay0);
   }
 }
 
 // Firefox scrollbar
 * {
   scrollbar-width: thin;
-  scrollbar-color: var(--ctp-surface2) var(--color-bg-elevated);
+  scrollbar-color: var(--ply-surface2) var(--color-bg-elevated);
 }

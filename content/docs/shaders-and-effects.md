@@ -16,14 +16,14 @@ receives the element's rendered content as `sampler2D Texture`:
 const TINT: ShaderAsset = ShaderAsset::Path("shaders/tint.frag");
 
 ui.element()
-    .width(fixed!(200.0))
-    .height(fixed!(100.0))
-    .background_color(0xE8E0DC)
-    .effect(&TINT, |s| s
-        .uniform("u_time", get_time() as f32)
-        .uniform("u_tint", [1.0f32, 0.3, 0.2, 0.5])
-    )
-    .empty();
+  .width(fixed!(200.0))
+  .height(fixed!(100.0))
+  .background_color(0xE8E0DC)
+  .effect(&TINT, |s| s
+    .uniform("u_time", get_time() as f32)
+    .uniform("u_tint", [1.0f32, 0.3, 0.2, 0.5])
+  )
+  .empty();
 ```
 {{ demo(id="tint_shader_demo", height=150) }}
 
@@ -38,27 +38,27 @@ offscreen buffer, then apply the shader as post-processing:
 
 ```rust
 ui.element()
-    .shader(&FOIL, |s| s
-        .uniform("u_time", get_time() as f32)
-        .uniform("u_speed", 1.5f32)
-    )
-    .children(|ui| {
-        ui.text("Shiny card", |t| t.font_size(18).color(0xFFFFFF));
-        ui.element()
-            .width(grow!())
-            .height(fixed!(60.0))
-            .background_color(0x3A3533)
-            .empty();
-    });
+  .shader(&FOIL, |s| s
+    .uniform("u_time", get_time() as f32)
+    .uniform("u_speed", 1.5f32)
+  )
+  .children(|ui| {
+    ui.text("Shiny card", |t| t.font_size(18).color(0xFFFFFF));
+    ui.element()
+      .width(grow!())
+      .height(fixed!(60.0))
+      .background_color(0x3A3533)
+      .empty();
+  });
 ```
 
 Multiple `.shader()` calls nest, the first is innermost (closest to the content), later ones wrap previous:
 
 ```rust
 ui.element()
-    .shader(&BLUR_SHADER, |s| s.uniform("u_radius", 4.0f32))
-    .shader(&COLOR_GRADE, |s| s.uniform("u_contrast", 1.2f32))
-    .children(|ui| { /* ... */ });
+  .shader(&BLUR_SHADER, |s| s.uniform("u_radius", 4.0f32))
+  .shader(&COLOR_GRADE, |s| s.uniform("u_contrast", 1.2f32))
+  .children(|ui| { /* ... */ });
 ```
 
 ## ShaderAsset
@@ -102,8 +102,8 @@ set_shader_source("live_shader", &editor_text);
 const LIVE: ShaderAsset = ShaderAsset::Stored("live_shader");
 
 ui.element()
-    .effect(&LIVE, |s| s.uniform("u_time", get_time() as f32))
-    .empty();
+  .effect(&LIVE, |s| s.uniform("u_time", get_time() as f32))
+  .empty();
 ```
 
 When the source changes, the old compiled material is evicted
@@ -143,9 +143,9 @@ Built-in shaders are automatically included in the prelude.
 
 ```rust
 .effect(&FOIL, |s| s
-    .uniform("u_time", get_time() as f32)
-    .uniform("u_speed", 1.0f32)
-    .uniform("u_intensity", 0.3f32)
+  .uniform("u_time", get_time() as f32)
+  .uniform("u_speed", 1.0f32)
+  .uniform("u_intensity", 0.3f32)
 )
 ```
 
@@ -153,9 +153,9 @@ Built-in shaders are automatically included in the prelude.
 
 ```rust
 .effect(&HOLOGRAPHIC, |s| s
-    .uniform("u_time", get_time() as f32)
-    .uniform("u_speed", 1.0f32)
-    .uniform("u_saturation", 0.7f32)
+  .uniform("u_time", get_time() as f32)
+  .uniform("u_speed", 1.0f32)
+  .uniform("u_saturation", 0.7f32)
 )
 ```
 
@@ -163,10 +163,10 @@ Built-in shaders are automatically included in the prelude.
 
 ```rust
 .effect(&DISSOLVE, |s| s
-    .uniform("u_threshold", progress)
-    .uniform("u_edge_color", [1.0f32, 0.5, 0.0, 1.0])
-    .uniform("u_edge_width", 0.05f32)
-    .uniform("u_seed", 42.0f32)
+  .uniform("u_threshold", progress)
+  .uniform("u_edge_color", [1.0f32, 0.5, 0.0, 1.0])
+  .uniform("u_edge_width", 0.05f32)
+  .uniform("u_seed", 42.0f32)
 )
 ```
 
@@ -174,9 +174,9 @@ Built-in shaders are automatically included in the prelude.
 
 ```rust
 .effect(&GLOW, |s| s
-    .uniform("u_glow_color", [0.0f32, 0.5, 1.0, 1.0])
-    .uniform("u_glow_radius", 0.05f32)
-    .uniform("u_glow_intensity", 1.0f32)
+  .uniform("u_glow_color", [0.0f32, 0.5, 1.0, 1.0])
+  .uniform("u_glow_radius", 0.05f32)
+  .uniform("u_glow_intensity", 1.0f32)
 )
 ```
 
@@ -184,9 +184,9 @@ Built-in shaders are automatically included in the prelude.
 
 ```rust
 .effect(&CRT, |s| s
-    .uniform("u_line_count", 100.0f32)
-    .uniform("u_intensity", 0.3f32)
-    .uniform("u_time", get_time() as f32)
+  .uniform("u_line_count", 100.0f32)
+  .uniform("u_intensity", 0.3f32)
+  .uniform("u_time", get_time() as f32)
 )
 ```
 
@@ -194,9 +194,9 @@ Built-in shaders are automatically included in the prelude.
 
 ```rust
 .effect(&GRADIENT_LINEAR, |s| s
-    .uniform("u_color_a", [0.73f32, 0.08, 0.08, 1.0])
-    .uniform("u_color_b", [1.0f32, 0.76, 0.17, 1.0])
-    .uniform("u_angle", 0.0f32)
+  .uniform("u_color_a", [0.73f32, 0.08, 0.08, 1.0])
+  .uniform("u_color_b", [1.0f32, 0.76, 0.17, 1.0])
+  .uniform("u_angle", 0.0f32)
 )
 ```
 
@@ -204,10 +204,10 @@ Built-in shaders are automatically included in the prelude.
 
 ```rust
 .effect(&GRADIENT_RADIAL, |s| s
-    .uniform("u_color_a", [1.0f32, 0.4, 0.3, 1.0])
-    .uniform("u_color_b", [0.15f32, 0.13, 0.12, 1.0])
-    .uniform("u_center", [0.5f32, 0.5])
-    .uniform("u_radius", 0.5f32)
+  .uniform("u_color_a", [1.0f32, 0.4, 0.3, 1.0])
+  .uniform("u_color_b", [0.15f32, 0.13, 0.12, 1.0])
+  .uniform("u_center", [0.5f32, 0.5])
+  .uniform("u_radius", 0.5f32)
 )
 ```
 
@@ -215,11 +215,11 @@ Built-in shaders are automatically included in the prelude.
 
 ```rust
 .effect(&GRADIENT_CONIC, |s| s
-    .uniform("u_color_a", [1.0f32, 0.76, 0.17, 1.0])
-    .uniform("u_color_b", [0.73f32, 0.08, 0.08, 1.0])
-    .uniform("u_center", [0.5f32, 0.5])
-    .uniform("u_offset", 0.0f32)
-    .uniform("u_hardness", 0.0f32)
+  .uniform("u_color_a", [1.0f32, 0.76, 0.17, 1.0])
+  .uniform("u_color_b", [0.73f32, 0.08, 0.08, 1.0])
+  .uniform("u_center", [0.5f32, 0.5])
+  .uniform("u_offset", 0.0f32)
+  .uniform("u_hardness", 0.0f32)
 )
 ```
 
@@ -263,10 +263,10 @@ ply-engine = { version = "1.0", features = ["shader-build"] }
 use ply_engine::shader_build::ShaderBuild;
 
 fn main() {
-    ShaderBuild::new()
-        .source_dir("shaders/")
-        .output_dir("assets/build/shaders/")
-        .build();
+  ShaderBuild::new()
+    .source_dir("shaders/")
+    .output_dir("assets/build/shaders/")
+    .build();
 }
 ```
 
@@ -283,11 +283,11 @@ Custom file types can be handled too:
 
 ```rust
 ShaderBuild::new()
-    .override_file_type_handler(".wgsl", |file_path, output_dir| {
-        // Custom compilation logic
-        vec!["shaders/includes/**/*.wgsl".to_string()]
-    })
-    .build();
+  .override_file_type_handler(".wgsl", |file_path, output_dir| {
+    // Custom compilation logic
+    vec!["shaders/includes/**/*.wgsl".to_string()]
+  })
+  .build();
 ```
 
 ## Next steps

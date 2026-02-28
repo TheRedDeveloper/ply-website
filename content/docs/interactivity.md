@@ -14,23 +14,23 @@ we explained this in the last section:
 
 {% example(id="hover_highlight", height=550) %}
 ui.element().width(fit!()).height(fixed!(40.0))
-    .children(|ui| {
-        let bg = if ui.pressed() {
-            [[press_color]]
-        } else if ui.hovered() || ui.focused() {
-            [[hover_color]]
-        } else {
-            [[default_color]]
-        };
+  .children(|ui| {
+    let bg = if ui.pressed() {
+      [[press_color]]
+    } else if ui.hovered() || ui.focused() {
+      [[hover_color]]
+    } else {
+      [[default_color]]
+    };
 
-        ui.element().width(fit!()).height(grow!())
-            .background_color(bg)
-            .corner_radius(8.0)
-            .layout(|l| l.padding((0, 16, 0, 16)).align(CenterX, CenterY))
-            .children(|ui| {
-                ui.text("Hover me", |t| t.font_size(14).color(0xE8E0DC));
-            });
-    });
+    ui.element().width(fit!()).height(grow!())
+      .background_color(bg)
+      .corner_radius(8.0)
+      .layout(|l| l.padding((0, 16, 0, 16)).align(CenterX, CenterY))
+      .children(|ui| {
+        ui.text("Hover me", |t| t.font_size(14).color(0xE8E0DC));
+      });
+  });
 ---
 c.press_color = 0xFF654D
 c.hover_color = 0x3A3533
@@ -51,23 +51,23 @@ It gives you the element's `Id` and (for the pointer ones) a `PointerData` with 
 
 ```rust
 ui.element().width(grow!()).height(fixed!(80.0))
-    .background_color(0x262220)
-    .on_hover(|id, pointer| {
-        println!("Hovering {:?} at ({}, {})", id, pointer.position.x, pointer.position.y);
-    })
-    .on_press(|id, pointer| {
-        println!("Pressed {:?} at ({}, {})", id, pointer.position.x, pointer.position.y);
-    })
-    .on_release(|id, pointer| {
-        println!("Released {:?} at ({}, {})", id, pointer.position.x, pointer.position.y);
-    })
-    .on_focus(|id| {
-        println!("Focused {:?}", id);
-    })
-    .on_unfocus(|id| {
-        println!("Unfocused {:?}", id);
-    })
-    .empty();
+  .background_color(0x262220)
+  .on_hover(|id, pointer| {
+    println!("Hovering {:?} at ({}, {})", id, pointer.position.x, pointer.position.y);
+  })
+  .on_press(|id, pointer| {
+    println!("Pressed {:?} at ({}, {})", id, pointer.position.x, pointer.position.y);
+  })
+  .on_release(|id, pointer| {
+    println!("Released {:?} at ({}, {})", id, pointer.position.x, pointer.position.y);
+  })
+  .on_focus(|id| {
+    println!("Focused {:?}", id);
+  })
+  .on_unfocus(|id| {
+    println!("Unfocused {:?}", id);
+  })
+  .empty();
 ```
 
 ## Pointer queries
@@ -81,13 +81,13 @@ let hovered = ply.pointer_over_ids();
 let mut ui = ply.begin();
 
 if ui.is_pressed("submit") {
-    // add active state "submit" element
+  // add active state "submit" element
 } else {
-    // add inactive state "submit" element
+  // add inactive state "submit" element
 }
 
 if ui.pointer_over("tooltip_trigger") {
-    // show tooltip
+  // show tooltip
 }
 ```
 
@@ -98,11 +98,11 @@ focus from the input. Use `.preserve_focus()`:
 
 ```rust
 ui.element().width(fixed!(32.0)).height(fixed!(32.0))
-    .preserve_focus()
-    .on_press(|_, _| { /* apply formatting */ })
-    .children(|ui| {
-        ui.text("Make red", |t| t.font_size(14).color(0xFFFFFF));
-    });
+  .preserve_focus()
+  .on_press(|_, _| { /* apply formatting */ })
+  .children(|ui| {
+    ui.text("Make red", |t| t.font_size(14).color(0xFFFFFF));
+  });
 ```
 {{ demo(id="preserve_focus_demo", height=80) }}
 
@@ -115,28 +115,28 @@ Putting it all together:
 
 ```rust
 fn button(ui: &mut Ui, label: &str, on_click: impl FnMut(Id) + 'static) {
-    ui.element()
-        .width(fit!())
-        .height(fixed!(36.0))
-        .corner_radius(6.0)
-        .on_press(on_click)
-        .children(|ui| {
-            let bg = if ui.pressed() {
-                0xB91414
-            } else if ui.hovered() || ui.focused() {
-                0xFF654D
-            } else {
-                0x3A3533
-            };
+  ui.element()
+    .width(fit!())
+    .height(fixed!(36.0))
+    .corner_radius(6.0)
+    .on_press(on_click)
+    .children(|ui| {
+      let bg = if ui.pressed() {
+        0xB91414
+      } else if ui.hovered() || ui.focused() {
+        0xFF654D
+      } else {
+        0x3A3533
+      };
 
-            ui.element().width(fit!()).height(grow!())
-                .background_color(bg)
-                .corner_radius(6.0)
-                .layout(|l| l.padding((0, 16, 0, 16)).align(CenterX, CenterY))
-                .children(|ui| {
-                    ui.text(label, |t| t.font_size(14).color(0xFFFFFF));
-                });
+      ui.element().width(fit!()).height(grow!())
+        .background_color(bg)
+        .corner_radius(6.0)
+        .layout(|l| l.padding((0, 16, 0, 16)).align(CenterX, CenterY))
+        .children(|ui| {
+          ui.text(label, |t| t.font_size(14).color(0xFFFFFF));
         });
+    });
 }
 ```
 
@@ -144,14 +144,14 @@ Use it:
 
 ```rust
 ui.element()
-    .width(grow!())
-    .height(grow!())
-    .layout(|l| l.direction(LeftToRight).gap(8).padding(16).align(Left, Top))
-    .children(|ui| {
-        button(ui, "Save", |_| { println!("Saved!"); });
-        button(ui, "Cancel", |_| { println!("Cancelled!"); });
-        button(ui, "Delete", |_| { println!("Deleted!"); });
-    });
+  .width(grow!())
+  .height(grow!())
+  .layout(|l| l.direction(LeftToRight).gap(8).padding(16).align(Left, Top))
+  .children(|ui| {
+    button(ui, "Save", |_| { println!("Saved!"); });
+    button(ui, "Cancel", |_| { println!("Cancelled!"); });
+    button(ui, "Delete", |_| { println!("Deleted!"); });
+  });
 ```
 {{ demo(id="button_row", height=130) }}
 <!-- Little console for the wasm to print to -->

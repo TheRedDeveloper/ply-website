@@ -11,10 +11,10 @@ attach arbitrary data to elements and handle it in your own renderer:
 ```rust
 #[derive(Clone, Default, Debug)]
 enum MyCustom {
-    #[default]
-    None,
-    Chart { data: Vec<f32> },
-    Canvas { id: u32 },
+  #[default]
+  None,
+  Chart { data: Vec<f32> },
+  Canvas { id: u32 },
 }
 ```
 
@@ -22,10 +22,10 @@ Attach it to an element:
 
 ```rust
 ui.element()
-    .width(grow!())
-    .height(fixed!(200.0))
-    .custom_element(MyCustom::Chart { data: values.clone() })
-    .empty();
+  .width(grow!())
+  .height(fixed!(200.0))
+  .custom_element(MyCustom::Chart { data: values.clone() })
+  .empty();
 ```
 
 This spits out a `Custom<CustomElementData>` render command in the `Ui::show(|command| { println!("{:?}", command); })` callback.
@@ -43,8 +43,8 @@ You'll need to provide a text measurement function:
 
 ```rust
 ply.set_measure_text_function(|text, font_size| {
-    // Return (width, height) based on your font metrics
-    (text.len() as f32 * font_size * 0.6, font_size)
+  // Return (width, height) based on your font metrics
+  (text.len() as f32 * font_size * 0.6, font_size)
 });
 ```
 
@@ -87,39 +87,11 @@ If you're using Ply's engine without macroquad's renderer (which we don't reccom
 
 ```rust
 ply.set_measure_text_function(|text, font_size| {
-    let width = my_font.measure(text, font_size);
-    let height = font_size;
-    (width, height)
+  let width = my_font.measure(text, font_size);
+  let height = font_size;
+  (width, height)
 });
 ```
-
-Or with user data:
-
-```rust
-ply.set_measure_text_function_user_data(my_font_atlas, |atlas, text, font_size| {
-    let width = atlas.measure(text, font_size);
-    (width, font_size)
-});
-```
-
-## Material caching
-
-Shader materials are cached in a global `MaterialManager`. Materials
-that haven't been used for 60 frames are automatically evicted. The
-cache is keyed by fragment source string, identical shaders share a
-single compiled material.
-
-## Texture caching
-
-The renderer's `TextureManager` caches GPU textures by asset key.
-Textures not used for a configurable number of frames (defaults to 1) are evicted.
-
-## Font caching
-
-The `FontManager` loads fonts lazily and caches them. If a font isn't
-used for 60 consecutive frames, it gets evicted from the cache. The
-default font (the one you pass to `Ply::new`) is stored separately and
-never evicted.
 
 ## Debug mode
 
@@ -144,8 +116,8 @@ Update the layout viewport (e.g. on window resize):
 
 ```rust
 ply.set_layout_dimensions(Dimensions {
-    width: screen_width(),
-    height: screen_height(),
+  width: screen_width(),
+  height: screen_height(),
 });
 ```
 
@@ -157,3 +129,7 @@ Query the raw pointer state:
 let state = ply.pointer_state();
 // state.position, state.is_down, etc.
 ```
+
+## Manager Globals
+
+Ply has different manager globals like `TEXTURE_MANAGER`, `MATERIAL_MANAGER`, `FONT_MANAGER` and `NET_MANAGER`. You can configure their eviction sensitivity.

@@ -49,32 +49,32 @@ You'll immediately see if it's being clamped, if the parent is too small, or if 
 
 {% example(id="sizing_bug_demo", height=1060) %}
 ui.element()
-    .width([[parent_width]]())
-    .height(grow!())
-    .background_color(0x1E1B1B)
-    .layout(|l| l.direction(LeftToRight))
-    .children(|ui| {
-        // Sidebar
-        ui.element()
-            .width(percent!(0.25))
-            .height(grow!())
-            .background_color(0x262220)
-            .layout(|l| l.direction(TopToBottom).gap(8).padding(12))
-            .children(|ui| {
-                ui.text("Sidebar", |t| t.font_size(16).color(0xFFC32C));
-                ui.text("Home", |t| t.font_size(14).color(0xE8E0DC));
-                ui.text("Settings", |t| t.font_size(14).color(0xE8E0DC));
-            });
+  .width([[parent_width]]())
+  .height(grow!())
+  .background_color(0x1E1B1B)
+  .layout(|l| l.direction(LeftToRight))
+  .children(|ui| {
+    // Sidebar
+    ui.element()
+      .width(percent!(0.25))
+      .height(grow!())
+      .background_color(0x262220)
+      .layout(|l| l.direction(TopToBottom).gap(8).padding(12))
+      .children(|ui| {
+        ui.text("Sidebar", |t| t.font_size(16).color(0xFFC32C));
+        ui.text("Home", |t| t.font_size(14).color(0xE8E0DC));
+        ui.text("Settings", |t| t.font_size(14).color(0xE8E0DC));
+      });
 
-        // Content
-        ui.element()
-            .width(grow!()).height(grow!())
-            .layout(|l| l.align(CenterX, CenterY))
-            .children(|ui| {
-                // This text is crunched into two lines
-                ui.text("Why is everything crushed?", |t| t.font_size(24).color(0xFFFFFF));
-            });
-    });
+    // Content
+    ui.element()
+      .width(grow!()).height(grow!())
+      .layout(|l| l.align(CenterX, CenterY))
+      .children(|ui| {
+        // This text is crunched into two lines
+        ui.text("Why is everything crushed?", |t| t.font_size(24).color(0xFFFFFF));
+      });
+  });
 ---
 e.parent_width=fit!;grow!
 {% end %}
@@ -89,17 +89,17 @@ If an element is highlighted but invisible, check the clip settings.
 
 {% example(id="clipped_list_demo", height=600) %}
 ui.element()
-    .width(fit!())
-    .height(fixed!([[height]]))
-    .background_color(0x2E2A28)
-    .corner_radius(8.0)
-    .overflow(|o| o.[[overflow]]())
-    .layout(|l| l.direction(TopToBottom).padding(8).gap(8))
-    .children(|ui| {
-        for name in ["Alice", "Bob", "Charlie", "Diana", "Eve"] {
-            ui.text(name, |t| t.font_size(30).color(0xE8E0DC));
-        }
-    });
+  .width(fit!())
+  .height(fixed!([[height]]))
+  .background_color(0x2E2A28)
+  .corner_radius(8.0)
+  .overflow(|o| o.[[overflow]]())
+  .layout(|l| l.direction(TopToBottom).padding(8).gap(8))
+  .children(|ui| {
+    for name in ["Alice", "Bob", "Charlie", "Diana", "Eve"] {
+      ui.text(name, |t| t.font_size(30).color(0xE8E0DC));
+    }
+  });
 ---
 n.height=41
 e.overflow=clip;scroll
@@ -116,8 +116,8 @@ You can ship it in development builds and toggle it with a keybind:
 
 ```rust
 if is_key_pressed(KeyCode::F12) {
-    let current = ply.is_debug_mode();
-    ply.set_debug_mode(!current);
+  let current = ply.is_debug_mode();
+  ply.set_debug_mode(!current);
 }
 ```
 
