@@ -33,7 +33,6 @@ elements this is all you need.
 
 Set an ID with `.id()` when you need to reference an element, or for interactive elements when the parent or child index might change.
 
-<!-- The id label should be editable -->
 ```rust
 let sidebar_id = ui.element()
     .id("sidebar")
@@ -45,46 +44,41 @@ let sidebar_id = ui.element()
         ui.text("Navigation", |t| t.font_size(14).color(0xFFC32C));
     });
 
-if let Some(bbox) = ply.bounding_box(sidebar_id) {
+if let Some(bbox) = ui.bounding_box(sidebar_id) {
     println!("Sidebar bounding box: {:?}", bbox);
 }
 ```
-<!-- TODO: Embedded WASM demo — element with explicit ID, bounding box shown as overlay -->
+{{ demo(id="explicit_id_demo", height=200) }}
 
-`.children()` and `.empty()` return the element's `Id`. But anywhere you need to give an id you can also put in the label: `ply.bounding_box("sidebar")` works too.
-<!-- Make the above "sidebar" update with the id label set by the user -->
+`.children()` and `.empty()` return the element's `Id`. But anywhere you need to give an id you can also put in the label: `ui.bounding_box("sidebar")` works too.
 
 ## Indexed IDs
 
 When you render a list, each item needs a unique ID. Pass a `(&str, u32)` tuple:
 
-<!-- The labels and active index should be editable -->
-```rust
-let items = ["Home", "Settings", "Profile", "About"];
-let active = 0;
+{% example(id="indexed_nav_demo", height=785, base_height=525, height_per_item=65, list_param="items") %}
+let items = [
+[[items:    "$",]]
+];
+let active = [[active]];
 
-ui.element()
-    .width(fixed!(200.0))
-    .height(grow!())
-    .background_color(0x181515)
-    .layout(|l| l.direction(TopToBottom).gap(4).padding(8))
-    .children(|ui| {
-        for (i, label) in items.iter().enumerate() {
-            let bg = if i == active { 0x3A3533 } else { 0x262220 };
-            ui.element()
-                .id(("nav_item", i as u32))
-                .width(grow!())
-                .height(fixed!(36.0))
-                .background_color(bg)
-                .corner_radius(6.0)
-                .layout(|l| l.padding(8).align(Left, CenterY))
-                .children(|ui| {
-                    ui.text(label, |t| t.font_size(14).color(0xE8E0DC));
-                });
-        }
-    });
-```
-<!-- TODO: Embedded WASM demo — nav list with indexed IDs -->
+for (i, label) in items.iter().enumerate() {
+    let bg = if i == active { 0x3A3533 } else { 0x262220 };
+    ui.element()
+        .id(("nav_item", i as u32))
+        .width(grow!())
+        .height(fixed!(36.0))
+        .background_color(bg)
+        .corner_radius(6.0)
+        .layout(|l| l.padding(8).align(Left, CenterY))
+        .children(|ui| {
+            ui.text(label, |t| t.font_size(14).color(0xE8E0DC));
+        });
+}
+---
+l.items=Home|Settings|Profile|About
+n.active=0
+{% end %}
 
 The string `"nav_item"` and the index `i` are hashed together. Each item gets
 a stable ID regardless of how many items are in the list. Whenever you need an indexed ID, just pass a tuple: `ply.set_focus(("nav_item", 2))`. 
@@ -93,19 +87,18 @@ a stable ID regardless of how many items are in the list. Whenever you need an i
 
 You can check the state of the element you are currently building inside its `.children()` closure:
 
-<!-- Not editable -->
-```rust
+{% example(id="hover_press_demo", height=650) %}
 ui.element()
     .width(fit!())
     .height(fixed!(40.0))
     .corner_radius(8.0)
     .children(|ui| {
         let bg = if ui.pressed() {
-            0xFF654D
+            [[press_color]]
         } else if ui.hovered() {
-            0x3A3533
+            [[hover_color]]
         } else {
-            0x262220
+            [[default_color]]
         };
 
         ui.element()
@@ -118,8 +111,11 @@ ui.element()
                 ui.text("Hover me", |t| t.font_size(14).color(0xE8E0DC));
             });
     });
-```
-<!-- TODO: Embedded WASM demo — button with hover/press state -->
+---
+c.press_color=0xFF654D
+c.hover_color=0x3A3533
+c.default_color=0x262220
+{% end %}
 
 | Method               | What it does                          |
 |----------------------|---------------------------------------|

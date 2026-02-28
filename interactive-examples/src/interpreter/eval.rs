@@ -208,10 +208,23 @@ fn exec_element_chain(
                     "Images aren't available in the demo. Check out the images docs!",
                 ));
             }
-            "rotate_visual" | "rotate_shape" => {
-                return Err(InterpreterError::unsupported(
-                    "Rotation isn't available in the demo yet!",
-                ));
+            "rotate_visual" => {
+                expect_args(&call.name, &call.args, 1)?;
+                let (_params, body) = expect_closure(&call.args[0])?;
+                let rot_calls = flatten_closure_chain(&body)?;
+                builder = builder.rotate_visual(|r| {
+                    apply_visual_rotation_calls(r, &rot_calls);
+                    r
+                });
+            }
+            "rotate_shape" => {
+                expect_args(&call.name, &call.args, 1)?;
+                let (_params, body) = expect_closure(&call.args[0])?;
+                let rot_calls = flatten_closure_chain(&body)?;
+                builder = builder.rotate_shape(|r| {
+                    apply_shape_rotation_calls(r, &rot_calls);
+                    r
+                });
             }
             "accessibility" => {
                 return Err(InterpreterError::unsupported(
@@ -477,6 +490,65 @@ fn apply_overflow_calls(
     }
 }
 
+// ── VisualRotationBuilder ──────────────────────────────────────────
+
+fn apply_visual_rotation_calls(
+    r: &mut ply_engine::elements::VisualRotationBuilder,
+    calls: &[FlatCall],
+) {
+    for call in calls {
+        match call.name.as_str() {
+            "degrees" => {
+                if let Ok(d) = eval_f32(&call.args[0]) {
+                    r.degrees(d);
+                }
+            }
+            "radians" => {
+                if let Ok(d) = eval_f32(&call.args[0]) {
+                    r.radians(d);
+                }
+            }
+            "pivot" => {
+                if call.args.len() >= 2 {
+                    if let (Ok(x), Ok(y)) =
+                        (eval_f32(&call.args[0]), eval_f32(&call.args[1]))
+                    {
+                        r.pivot(x, y);
+                    }
+                }
+            }
+            "flip_x" => { r.flip_x(); }
+            "flip_y" => { r.flip_y(); }
+            _ => {}
+        }
+    }
+}
+
+// ── ShapeRotationBuilder ───────────────────────────────────────────
+
+fn apply_shape_rotation_calls(
+    r: &mut ply_engine::elements::ShapeRotationBuilder,
+    calls: &[FlatCall],
+) {
+    for call in calls {
+        match call.name.as_str() {
+            "degrees" => {
+                if let Ok(d) = eval_f32(&call.args[0]) {
+                    r.degrees(d);
+                }
+            }
+            "radians" => {
+                if let Ok(d) = eval_f32(&call.args[0]) {
+                    r.radians(d);
+                }
+            }
+            "flip_x" => { r.flip_x(); }
+            "flip_y" => { r.flip_y(); }
+            _ => {}
+        }
+    }
+}
+
 // ── TextConfig ──────────────────────────────────────────────────────
 
 fn apply_text_config_calls(
@@ -492,7 +564,7 @@ fn apply_text_config_calls(
             }
             "font_size" => {
                 if let Ok(s) = eval_u16(&call.args[0]) {
-                    t.font_size(s);
+                    t.font_size(s.min(500));
                 }
             }
             "letter_spacing" => {

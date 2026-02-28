@@ -22,6 +22,7 @@ function wrap_js {
 
 cat "$SCRIPT_DIR/.build/gl.js" > "$SCRIPT_DIR/.build/bundle.js"
 wrap_js "$STATIC_DEMO/ply_demo.js"
+wrap_js "$STATIC_DEMO/ply_example.js"
 
 npx minify@9.2.0 "$SCRIPT_DIR/.build/bundle.js" > "$STATIC_DEMO/ply_bundle.js"
 

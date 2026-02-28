@@ -12,16 +12,15 @@ a children closure, and callback-based events on the element builder.
 Check `ui.pressed()`, `ui.hovered()` and `ui.focused()` inside a `.children()` closure,
 we explained this in the last section:
 
-<!-- The bg colors should be editable -->
-```rust
+{% example(id="hover_highlight", height=550) %}
 ui.element().width(fit!()).height(fixed!(40.0))
     .children(|ui| {
         let bg = if ui.pressed() {
-            0xFF654D
+            [[press_color]]
         } else if ui.hovered() || ui.focused() {
-            0x3A3533
+            [[hover_color]]
         } else {
-            0x262220
+            [[default_color]]
         };
 
         ui.element().width(fit!()).height(grow!())
@@ -32,8 +31,11 @@ ui.element().width(fit!()).height(fixed!(40.0))
                 ui.text("Hover me", |t| t.font_size(14).color(0xE8E0DC));
             });
     });
-```
-<!-- TODO: Embedded WASM demo — hover highlight -->
+---
+c.press_color = 0xFF654D
+c.hover_color = 0x3A3533
+c.default_color = 0x262220
+{% end %}
 
 ## Callback
 
@@ -102,7 +104,7 @@ ui.element().width(fixed!(32.0)).height(fixed!(32.0))
         ui.text("Make red", |t| t.font_size(14).color(0xFFFFFF));
     });
 ```
-<!-- TODO: Interactive WASM example – Text box with make red button --->
+{{ demo(id="preserve_focus_demo", height=80) }}
 
 Without `.preserve_focus()`, clicking the button would unfocus the text input,
 then the {color=red| wouldn't get applied.
@@ -111,7 +113,6 @@ then the {color=red| wouldn't get applied.
 
 Putting it all together:
 
-<!-- The bg colors, sizing, corner_radius, padding, font_size, and text color should be editable -->
 ```rust
 fn button(ui: &mut Ui, label: &str, on_click: impl FnMut(Id) + 'static) {
     ui.element()
@@ -152,7 +153,7 @@ ui.element()
         button(ui, "Delete", |_| { println!("Deleted!"); });
     });
 ```
-<!-- TODO: Embedded WASM demo — row of buttons with hover/press states -->
+{{ demo(id="button_row", height=130) }}
 <!-- Little console for the wasm to print to -->
 
 ## Next steps

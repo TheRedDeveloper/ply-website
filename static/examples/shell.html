@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Ply Example</title>
+    <style>
+        @font-face {
+            font-family: 'Geist Mono';
+            font-style: normal;
+            font-weight: 100 900;
+            font-display: swap;
+            src: url('../fonts/GeistMono-Variable.woff2') format('woff2-variations'),
+                 url('../fonts/GeistMono-Variable.woff2') format('woff2');
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { height: 100%; background: #000; overflow: hidden; }
+        body { display: flex; flex-direction: column; }
+
+        /* Code block with inline editors */
+        .code-block {
+            background: #1a1111;
+            color: #e8e0dc;
+            font-family: 'Geist Mono', 'Fira Code', 'Cascadia Code', 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+            line-height: 1.6;
+            padding: 1.25rem;
+            border-bottom: 1px solid #262220;
+            white-space: pre;
+            overflow-x: auto;
+            display: none;
+            position: relative;
+        }
+
+        /* Inline text/number input */
+        .code-block .slot {
+            background: transparent;
+            border: none;
+            border-bottom: 1px dashed #585b70;
+            color: inherit;
+            font-family: inherit;
+            font-size: inherit;
+            line-height: inherit;
+            padding: 0;
+            outline: none;
+            min-width: 16px;
+        }
+        .code-block .slot:focus {
+            border-bottom-color: #89b4fa;
+        }
+
+        /* Inline dropdown */
+        .code-block .slot-select {
+            background: transparent;
+            border: none;
+            border-bottom: 1px dashed #585b70;
+            color: #f9e2af;
+            font-family: inherit;
+            font-size: inherit;
+            font-style: italic;
+            padding: 0;
+            outline: none;
+            cursor: pointer;
+            overflow: visible;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+        .code-block .slot-select:focus {
+            border-bottom-color: #89b4fa;
+        }
+
+        /* Syntax colors */
+        .s-str   { color: #a6e3a1; }
+        .s-num   { color: #fab387; }
+        .s-meth  { color: #89b4fa; font-style: italic; }
+        .s-kw    { color: #cba6f7; }
+        .s-comm  { color: #9399b2; font-style: italic; }
+        .s-bool  { color: #f38ba8; }
+        .s-enum  { color: #f9e2af; font-style: italic; }
+        .s-const { color: #fab387; }
+        .s-op    { color: #89dceb; }
+        .s-punc  { color: #9399b2; }
+        .s-dot   { color: #94e2d5; }
+        .s-pipe  { color: #94e2d5; }
+
+        /* Inline color picker */
+        .code-block .slot-color {
+            width: 16px;
+            height: 14px;
+            border: 1px solid #585b70;
+            border-radius: 2px;
+            padding: 0;
+            cursor: pointer;
+            vertical-align: middle;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+        .code-block .slot-color::-webkit-color-swatch-wrapper { padding: 0; }
+        .code-block .slot-color::-webkit-color-swatch { border: none; border-radius: 1px; }
+        .code-block .slot-color::-moz-color-swatch { border: none; }
+
+        /* List param +/- buttons */
+        .code-block .list-btn {
+            display: inline-block;
+            background: transparent;
+            border: 1px solid #585b70;
+            color: #a6adc8;
+            font-size: 11px;
+            width: 18px;
+            height: 16px;
+            line-height: 14px;
+            text-align: center;
+            border-radius: 3px;
+            cursor: pointer;
+            margin-left: 6px;
+            vertical-align: middle;
+            padding: 0;
+        }
+        .code-block .list-btn:hover { border-color: #89b4fa; color: #89b4fa; }
+
+        /* Copy button */
+        .code-block .copy-button {
+            position: absolute;
+            top: 0.375rem;
+            right: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+            background: transparent;
+            border: 1px solid #262220;
+            color: #9E9590;
+            font-family: inherit;
+            font-size: 0.75rem;
+            font-weight: 500;
+            line-height: inherit;
+            padding: 0.25rem 0.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            opacity: 0;
+            transition: all 0.2s ease;
+            z-index: 5;
+        }
+        .code-block:hover .copy-button { opacity: 1; }
+        .code-block .copy-button:hover { background: #262220; border-color: #FFC32C; color: #FFC32C; }
+        .code-block .copy-button.copied { background: rgba(166, 227, 161, 0.15); border-color: #a6e3a1; color: #a6e3a1; }
+        .code-block .copy-button svg { width: 14px; height: 14px; }
+
+        /* Console output panel (below canvas in layout flow) */
+        .console-panel {
+            background: #11111b;
+            color: #a6adc8;
+            font-family: 'Geist Mono', 'Fira Code', 'Cascadia Code', monospace;
+            font-size: 11px;
+            line-height: 1.5;
+            padding: 4px 8px;
+            border-top: 1px solid #313244;
+            max-height: 60px;
+            overflow-y: auto;
+            display: none;
+            white-space: pre-wrap;
+            flex-shrink: 0;
+        }
+
+        /* Canvas */
+        .canvas-container { flex: 1; display: flex; min-height: 0; position: relative; }
+        canvas { width: 100% !important; height: 100% !important; }
+
+        /* Refresh/replay button */
+        .refresh-btn {
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            z-index: 10;
+            background: rgba(30, 30, 46, 0.6);
+            border: none;
+            color: #cdd6f4;
+            font-size: 14px;
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.2s;
+            line-height: 24px;
+            text-align: center;
+            padding: 0;
+        }
+        .canvas-container:hover .refresh-btn { opacity: 0.7; }
+        .refresh-btn:hover { opacity: 1 !important; background: rgba(30, 30, 46, 0.9); }
+    </style>
+</head>
+<body>
+    <div id="code-block" class="code-block"></div>
+    <div class="canvas-container">
+        <button class="refresh-btn" onclick="replayExample()" title="Replay">↻</button>
+        <canvas id="glcanvas" tabindex="-1"></canvas>
+    </div>
+    <div id="console-panel" class="console-panel"></div>
+
+    <script>
+        // Prevent canvas from stealing parent-page focus on WASM init.
+        document.getElementById('glcanvas').focus = function () {};
+
+        // Only show refresh button for animated examples
+        if (new URLSearchParams(location.search).get('replay') !== '1') {
+            document.querySelector('.refresh-btn').style.display = 'none';
+        }
+
+        // Resize canvas buffer when container size changes
+        (function() {
+            var container = document.querySelector('.canvas-container');
+            new ResizeObserver(function() {
+                // Trigger miniquad's resize handler
+                window.dispatchEvent(new Event('resize'));
+            }).observe(container);
+        })();
+
+        // ----- Parse hash: code template + params separated by "---" -----
+        var raw = '';
+        try { raw = decodeURIComponent(location.hash.slice(1)); } catch(e) {}
+
+        var codeTemplate = '';
+        var paramLines = '';
+        var sepIdx = raw.indexOf('---');
+        if (sepIdx >= 0) {
+            codeTemplate = raw.substring(0, sepIdx).trim();
+            paramLines = raw.substring(sepIdx + 3).trim();
+        } else {
+            paramLines = raw.trim();
+        }
+
+        // ----- Parse param definitions -----
+        var paramDefs = {};     // name -> {value, type, hidden}
+        var paramOrder = [];    // preserve insertion order
+        paramLines.split('\n').forEach(function (line) {
+            line = line.trim();
+            if (!line) return;
+            var eq = line.indexOf('=');
+            if (eq < 0) return;
+
+            var key = line.substring(0, eq).trim();
+            var value = line.substring(eq + 1).trim();
+
+            var hidden = key.charAt(0) === '_';
+            if (hidden) key = key.substring(1);
+
+            var type = 'text';
+            if (/^e\./.test(key)) { type = 'enum'; key = key.substring(2); }
+            else if (/^n\./.test(key)) { type = 'number'; key = key.substring(2); }
+            else if (/^c\./.test(key)) { type = 'color'; key = key.substring(2); }
+            else if (/^l\./.test(key)) { type = 'list'; key = key.substring(2); }
+
+            // For enums, store full options list and set initial value to first option
+            var enumOptions = null;
+            if (type === 'enum' && value.indexOf(';') >= 0) {
+                enumOptions = value;
+                value = value.split(';')[0].trim();
+            }
+
+            paramDefs[key] = { value: value, type: type, hidden: hidden, enumOptions: enumOptions };
+            paramOrder.push(key);
+        });
+
+        // ----- Build code display with inline editors -----
+        var codeBlock = document.getElementById('code-block');
+
+        if (codeTemplate) {
+            codeBlock.style.display = 'block';
+
+            // Add copy button
+            var copyBtn = document.createElement('button');
+            copyBtn.className = 'copy-button';
+            copyBtn.setAttribute('aria-label', 'Copy code');
+            copyBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg><span>Copy</span>';
+            copyBtn.addEventListener('click', function() {
+                // Build display text from code template, substituting current param values
+                var display = codeTemplate.replace(/\[\[\w+(?::[^\]]*)?\]\]/g, function(match) {
+                    var inner = match.slice(2, -2);
+                    var colonIdx = inner.indexOf(':');
+                    var name = colonIdx >= 0 ? inner.substring(0, colonIdx) : inner;
+                    var p = paramDefs[name];
+                    return p ? p.value : match;
+                });
+                navigator.clipboard.writeText(display).then(function() {
+                    copyBtn.classList.add('copied');
+                    copyBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Copied!</span>';
+                    setTimeout(function() {
+                        copyBtn.classList.remove('copied');
+                        copyBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg><span>Copy</span>';
+                    }, 2000);
+                });
+            });
+            codeBlock.appendChild(copyBtn);
+
+            // Split on [[param_name]] markers
+            var tokens = codeTemplate.split(/\[\[(\w+(?::[^\]]*)?)\]\]/);
+
+            tokens.forEach(function (tok, i) {
+                if (i % 2 === 0) {
+                    // Static code with syntax highlighting
+                    codeBlock.appendChild(highlightChunk(tok));
+                } else {
+                    // Editable param slot — may have :template for list types
+                    var colonIdx = tok.indexOf(':');
+                    var paramName = colonIdx >= 0 ? tok.substring(0, colonIdx) : tok;
+                    var listTpl = colonIdx >= 0 ? tok.substring(colonIdx + 1) : null;
+                    var param = paramDefs[paramName];
+                    if (!param) {
+                        codeBlock.appendChild(document.createTextNode('[[' + tok + ']]'));
+                        return;
+                    }
+                    if (param.type === 'list' && listTpl) {
+                        var listEl = document.createElement('span');
+                        var tplParts = listTpl.split('$');
+                        var rebuildList = function() {
+                            listEl.innerHTML = '';
+                            var arr = param.value.split('|');
+                            arr.forEach(function(item, idx) {
+                                if (tplParts[0]) listEl.appendChild(highlightChunk(tplParts[0]));
+                                var inp = document.createElement('input');
+                                inp.type = 'text';
+                                inp.className = 'slot';
+                                inp.style.color = '#a6e3a1';
+                                inp.value = item;
+                                inp.style.width = (item.length + 0.5) + 'ch';
+                                (function(ii) {
+                                    inp.addEventListener('input', function() {
+                                        this.style.width = (this.value.length + 0.5) + 'ch';
+                                        var a = param.value.split('|');
+                                        a[ii] = this.value;
+                                        param.value = a.join('|');
+                                        pushParams();
+                                    });
+                                })(idx);
+                                listEl.appendChild(inp);
+                                if (tplParts[1]) listEl.appendChild(highlightChunk(tplParts[1]));
+                                if (arr.length > 1) {
+                                    var rm = document.createElement('button');
+                                    rm.className = 'list-btn';
+                                    rm.textContent = '\u2212';
+                                    rm.title = 'Remove';
+                                    (function(ii) {
+                                        rm.addEventListener('click', function() {
+                                            var a = param.value.split('|');
+                                            a.splice(ii, 1);
+                                            param.value = a.join('|');
+                                            pushParams();
+                                            rebuildList();
+                                        });
+                                    })(idx);
+                                    listEl.appendChild(rm);
+                                }
+                                listEl.appendChild(document.createTextNode('\n'));
+                            });
+                            var indent = listTpl.match(/^(\s*)/)[0];
+                            listEl.appendChild(document.createTextNode(indent));
+                            var add = document.createElement('button');
+                            add.className = 'list-btn';
+                            add.textContent = '+';
+                            add.title = 'Add item';
+                            add.addEventListener('click', function() {
+                                param.value += '|Item';
+                                pushParams();
+                                rebuildList();
+                            });
+                            listEl.appendChild(add);
+                        };
+                        rebuildList();
+                        codeBlock.appendChild(listEl);
+                    } else if (param.type === 'enum') {
+                        var sel = document.createElement('select');
+                        sel.className = 'slot-select';
+                        var opts = (param.enumOptions || param.value).split(';');
+                        // Color dropdown by content type
+                        var firstOpt = opts[0].trim();
+                        if (/^(true|false)$/.test(firstOpt)) {
+                            sel.style.color = '#f38ba8'; // boolean pink
+                        } else if (/^[a-z]/.test(firstOpt) || firstOpt.indexOf('!') >= 0) {
+                            sel.style.color = '#89b4fa'; // method/macro blue
+                        }
+                        // else: default #f9e2af from CSS (enum yellow)
+                        opts.forEach(function (opt, j) {
+                            var o = document.createElement('option');
+                            o.value = opt.trim();
+                            o.textContent = opt.trim();
+                            if (opt.trim() === param.value) o.selected = true;
+                            sel.appendChild(o);
+                        });
+                        sel.addEventListener('change', function () {
+                            param.value = this.value;
+                            pushParams();
+                        });
+                        codeBlock.appendChild(sel);
+                    } else if (param.type === 'color') {
+                        // Convert 0xRRGGBB to #RRGGBB for the swatch
+                        var hexVal = param.value.replace(/^0x/i, '#');
+                        if (hexVal.charAt(0) !== '#') hexVal = '#' + hexVal;
+                        // Editable hex code
+                        var inp = document.createElement('input');
+                        inp.type = 'text';
+                        inp.className = 'slot';
+                        inp.style.color = '#fab387';
+                        inp.value = param.value;
+                        inp.style.width = (param.value.length + 0.5) + 'ch';
+                        // Color swatch preview (click to open picker)
+                        var cp = document.createElement('input');
+                        cp.type = 'color';
+                        cp.className = 'slot-color';
+                        cp.value = hexVal;
+                        inp.addEventListener('input', function () {
+                            this.style.width = (this.value.length + 0.5) + 'ch';
+                            param.value = this.value;
+                            var h = this.value.replace(/^0x/i, '#');
+                            if (h.charAt(0) !== '#') h = '#' + h;
+                            if (/^#[0-9a-f]{6}$/i.test(h)) cp.value = h;
+                            pushParams();
+                        });
+                        cp.addEventListener('input', function () {
+                            param.value = '0x' + this.value.substring(1).toUpperCase();
+                            inp.value = param.value;
+                            inp.style.width = (param.value.length + 0.5) + 'ch';
+                            pushParams();
+                        });
+                        codeBlock.appendChild(inp);
+                        codeBlock.appendChild(cp);
+                    } else {
+                        var inp = document.createElement('input');
+                        inp.type = 'text';
+                        inp.className = 'slot';
+                        inp.value = param.value;
+                        // Color: green for strings, orange for numbers
+                        if (param.type === 'number') inp.style.color = '#fab387';
+                        else inp.style.color = '#a6e3a1';
+                        // Auto-resize
+                        inp.style.width = (param.value.length + 0.5) + 'ch';
+                        inp.addEventListener('input', function () {
+                            this.style.width = (this.value.length + 0.5) + 'ch';
+                            param.value = this.value;
+                            pushParams();
+                        });
+                        if (param.type === 'number') {
+                            inp.addEventListener('blur', function () {
+                                var n = parseFloat(this.value);
+                                if (!isNaN(n) && n > 500) {
+                                    this.value = '500';
+                                    param.value = '500';
+                                    this.style.width = '4ch';
+                                    pushParams();
+                                }
+                            });
+                        }
+                        codeBlock.appendChild(inp);
+                    }
+                }
+            });
+        }
+
+        // ----- Simple syntax highlighter -----
+        function highlightChunk(code) {
+            var frag = document.createDocumentFragment();
+            var re = /(\/\/[^\n]*)|("(?:[^"\\\n]|\\.)*"|")|(\b(?:0x[0-9a-fA-F]+|\d+\.?\d*)\b)|(\.(?:element|text|font_size|color|width|height|background_color|corner_radius|layout|children|empty|floating|attach_parent|attach_root|attach_id|anchor|offset|z_index|clip_by_parent|passthrough|border|overflow|id|aspect_ratio|direction|gap|padding|align|multiline|text_color|no_styles_movement|text_input|rotate_visual|rotate_shape|degrees|radians|pivot|flip_x|flip_y|placeholder|placeholder_color|password|cursor_color|selection_color|on_press|on_release|on_hover|on_focus|on_unfocus|preserve_focus|focused|hovered|pressed|wrap_mode|alignment|letter_spacing|line_height|clip|clip_x|clip_y|scroll|scroll_x|scroll_y|image|effect|shader|accessible|on_changed|on_submit|max_length|font|begin|iter|enumerate|parse|ok|unwrap_or)\b)|(\b(?:grow|fit|fixed|percent|include_bytes|println|format|vec)!)|(\b(?:render_to_texture|draw_line|draw_circle|draw_rectangle|draw_text|clear_background|nav_item|button)\b)|(\b(?:true|false)\b)|(\b(?:CenterX|CenterY|Left|Right|Top|Bottom|LeftToRight|TopToBottom|Words|Newline|Letters|None|WrapMode|GraphicAsset|Bytes|Path|Source|Some|Ok|Err)\b)|(\b[A-Z][A-Z0-9_]+\b)|(\b(?:let|fn|if|else|mut|pub|use|mod|struct|impl|for|in|as|static|const|u8|u16|u32|u64|i8|i16|i32|i64|f32|f64|usize|bool|String)\b)|(\|)|(::|->|=>|\.\.|[=&])|([(){};\[\],])/g;
+            var last = 0;
+            var m;
+
+            while ((m = re.exec(code)) !== null) {
+                if (m.index > last) {
+                    frag.appendChild(document.createTextNode(code.substring(last, m.index)));
+                }
+                if (m[1]) {
+                    var span = document.createElement('span');
+                    span.className = 's-comm'; span.textContent = m[1];
+                    frag.appendChild(span);
+                } else if (m[2]) {
+                    var span = document.createElement('span');
+                    span.className = 's-str'; span.textContent = m[2];
+                    frag.appendChild(span);
+                } else if (m[3]) {
+                    // Number — split dot as grey punctuation
+                    var numText = m[3];
+                    var dotPos = numText.indexOf('.');
+                    if (dotPos >= 0 && !numText.startsWith('0x')) {
+                        var intPart = document.createElement('span');
+                        intPart.className = 's-num'; intPart.textContent = numText.substring(0, dotPos);
+                        frag.appendChild(intPart);
+                        var dotPart = document.createElement('span');
+                        dotPart.className = 's-punc'; dotPart.textContent = '.';
+                        frag.appendChild(dotPart);
+                        var decPart = document.createElement('span');
+                        decPart.className = 's-num'; decPart.textContent = numText.substring(dotPos + 1);
+                        frag.appendChild(decPart);
+                    } else {
+                        var span = document.createElement('span');
+                        span.className = 's-num'; span.textContent = numText;
+                        frag.appendChild(span);
+                    }
+                } else if (m[4]) {
+                    // Method call: split dot (teal) from name (blue italic)
+                    var dot = document.createElement('span');
+                    dot.className = 's-dot'; dot.textContent = '.';
+                    frag.appendChild(dot);
+                    var name = document.createElement('span');
+                    name.className = 's-meth'; name.textContent = m[4].substring(1);
+                    frag.appendChild(name);
+                } else if (m[5]) {
+                    var span = document.createElement('span');
+                    span.className = 's-meth'; span.textContent = m[5];
+                    frag.appendChild(span);
+                } else if (m[6]) {
+                    var span = document.createElement('span');
+                    span.className = 's-meth'; span.textContent = m[6];
+                    frag.appendChild(span);
+                } else if (m[7]) {
+                    var span = document.createElement('span');
+                    span.className = 's-bool'; span.textContent = m[7];
+                    frag.appendChild(span);
+                } else if (m[8]) {
+                    var span = document.createElement('span');
+                    span.className = 's-enum'; span.textContent = m[8];
+                    frag.appendChild(span);
+                } else if (m[9]) {
+                    var span = document.createElement('span');
+                    span.className = 's-const'; span.textContent = m[9];
+                    frag.appendChild(span);
+                } else if (m[10]) {
+                    var span = document.createElement('span');
+                    span.className = 's-kw'; span.textContent = m[10];
+                    frag.appendChild(span);
+                } else if (m[11]) {
+                    var span = document.createElement('span');
+                    span.className = 's-pipe'; span.textContent = m[11];
+                    frag.appendChild(span);
+                } else if (m[12]) {
+                    var span = document.createElement('span');
+                    span.className = 's-op'; span.textContent = m[12];
+                    frag.appendChild(span);
+                } else if (m[13]) {
+                    var span = document.createElement('span');
+                    span.className = 's-punc'; span.textContent = m[13];
+                    frag.appendChild(span);
+                }
+                last = m.index + m[0].length;
+            }
+
+            if (last < code.length) {
+                frag.appendChild(document.createTextNode(code.substring(last)));
+            }
+            return frag;
+        }
+
+        // ----- Push params to WASM -----
+        function pushParams() {
+            var lines = [];
+            var listCounts = {};
+            paramOrder.forEach(function (key) {
+                var p = paramDefs[key];
+                lines.push(key + '=' + p.value);
+                if (p.type === 'list') {
+                    listCounts[key] = p.value.split('|').length;
+                }
+            });
+            window.example_params = lines.join('\n');
+            // Notify parent page of list item counts for dynamic height
+            if (Object.keys(listCounts).length > 0 && window.parent !== window) {
+                window.parent.postMessage({
+                    type: 'ply-resize',
+                    id: window.example_id,
+                    listCounts: listCounts
+                }, '*');
+            }
+        }
+
+        // ----- Replay: persist current values in hash, then reload -----
+        function replayExample() {
+            var lines = [];
+            paramOrder.forEach(function (key) {
+                var p = paramDefs[key];
+                var prefix = p.hidden ? '_' : '';
+                if (p.type === 'enum') prefix += 'e.';
+                else if (p.type === 'number') prefix += 'n.';
+                else if (p.type === 'color') prefix += 'c.';
+                else if (p.type === 'list') prefix += 'l.';
+                lines.push(prefix + key + ' = ' + p.value);
+            });
+            var newHash = (codeTemplate ? codeTemplate + '\n---\n' : '') + lines.join('\n');
+            location.hash = encodeURIComponent(newHash);
+            location.reload();
+        }
+
+        window.example_id = new URLSearchParams(location.search).get('id') || '';
+        pushParams();
+
+        // Accept param updates from parent page (for clickable code blocks)
+        window.addEventListener('message', function(ev) {
+            if (ev.data && ev.data.type === 'setParam' && ev.data.key) {
+                var p = paramDefs[ev.data.key];
+                if (p) {
+                    p.value = ev.data.value;
+                    pushParams();
+                    // Sync any dropdown in the code panel
+                    var selects = codeBlock.querySelectorAll('select.slot-select');
+                    selects.forEach(function(sel) {
+                        for (var i = 0; i < sel.options.length; i++) {
+                            if (sel.options[i].value === ev.data.value) {
+                                sel.selectedIndex = i;
+                                break;
+                            }
+                        }
+                    });
+                }
+            }
+        });
+    </script>
+
+    <!-- Same JS bundle and WASM binary as the home page demo -->
+    <script src="/demo/ply_bundle.js"></script>
+    <script>load("/demo/app-v1.wasm");</script>
+</body>
+</html>

@@ -29,7 +29,7 @@ ui.element().width(fixed!(200.0)).height(fixed!(100.0))
             });
     });
 ```
-<!-- TODO: Embedded WASM demo -->
+{{ demo(id="basic_float", height=160) }}
 
 ## Attach targets
 
@@ -107,14 +107,14 @@ block interaction:
 ```rust
 ui.element()
     .width(grow!())
-    .height(fixed!(40.0))
+    .height(grow!())
     .background_color((1.0, 1.0, 1.0, 0.1))
     .floating(|f| f.attach_root().passthrough())
     .children(|ui| {
         ui.text("v0.5.0-dev", |t| t.font_size(12).color(0x9E9590));
     });
 ```
-<!-- TODO: Embedded WASM demo -->
+{{ demo(id="passthrough_overlay", height=40) }}
 
 ## Examples
 
@@ -148,7 +148,30 @@ ui.element()
         }
     });
 ```
-<!-- TODO: Embedded WASM demo -->
+{% example(id="tooltip_demo", height=600) %}
+ui.element()
+    .width(fit!()).height(fit!())
+    .background_color(0x2E2A28)
+    .corner_radius(8.0)
+    .children(|ui| {
+        ui.text("[[label]]", |t| t.font_size(14).color(0xE8E0DC));
+
+        if ui.hovered() {
+            ui.element()
+                .floating(|f| f
+                    .attach_parent()
+                    .anchor((CenterX, Top), (CenterX, Bottom))
+                    .offset(0.0, 4.0)
+                )
+                .children(|ui| {
+                    ui.text("[[tooltip]]", |t| t.font_size(12).color(0x9E9590));
+                });
+        }
+    });
+---
+label = Hover me for info
+tooltip = Extra information here
+{% end %}
 
 ### Notification badge
 
@@ -177,7 +200,30 @@ ui.element()
             });
     });
 ```
-<!-- TODO: Embedded WASM demo -->
+{% example(id="notification_badge", height=600) %}
+ui.element()
+    .width(fixed!(280.0)).height(fixed!(80.0))
+    .background_color(0x2E2A28)
+    .corner_radius(12.0)
+    .children(|ui| {
+        ui.text("Messages", |t| t.font_size(16).color(0xFFFFFF));
+
+        ui.element()
+            .width(fixed!(24.0)).height(fixed!(24.0))
+            .background_color([[badge_color]])
+            .corner_radius(12.0)
+            .floating(|f| f
+                .attach_parent()
+                .anchor((CenterX, CenterY), (Right, Top))
+            )
+            .children(|ui| {
+                ui.text("[[count]]", |t| t.font_size(12).color(0xFFFFFF));
+            });
+    });
+---
+c.badge_color = 0xB91414
+count = 3
+{% end %}
 
 ### Modal dialog
 
@@ -213,7 +259,7 @@ if show_modal {
         });
 }
 ```
-<!-- TODO: Embedded WASM demo -->
+{{ demo(id="modal_dialog", height=200) }}
 
 ## Next steps
 

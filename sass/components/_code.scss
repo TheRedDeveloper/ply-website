@@ -455,3 +455,16 @@ pre code {
   background: var(--ctp-base);
   border-bottom-color: var(--color-border);
 }
+
+// Demo iframes that follow a code block should visually attach to it
+pre:has(+ .demo-iframe) {
+  border-radius: var(--radius-lg, 12px) var(--radius-lg, 12px) 0 0 !important;
+  margin-bottom: 0 !important;
+  border-bottom: none !important;
+}
+
+.demo-iframe {
+  border-radius: 0 0 12px 12px !important;
+  margin-top: 0 !important;
+  border-top: none !important;
+}

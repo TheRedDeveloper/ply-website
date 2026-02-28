@@ -4,8 +4,8 @@ weight = 11
 +++
 
 Ply lets you apply fragment shaders to individual elements or groups of
-elements. Write standard GLSL ES 3.00, pass uniforms, and get
-per-element post-processing without boilerplate.
+elements. Write standard GLSL ES 1.00 (compatible with both WebGL 1 and 2),
+pass uniforms, and get per-element post-processing without boilerplate.
 
 ## Per-element effects
 
@@ -25,7 +25,7 @@ ui.element()
     )
     .empty();
 ```
-<!-- TODO: Embedded WASM demo — per-element effect -->
+{{ demo(id="tint_shader_demo", height=150) }}
 
 Every shader automatically gets two uniforms:
 - `u_resolution`: element width and height in pixels (`vec2`)
@@ -225,16 +225,16 @@ Built-in shaders are automatically included in the prelude.
 
 ## Writing a shader
 
-Shaders are GLSL ES 3.00 fragment shaders. The shaded content is
-available as `sampler2D Texture` and the UV coordinates come from the
-bounding box:
+Shaders are GLSL ES 1.00 fragment shaders. Ply's default vertex shader is
+`#version 100`, so your fragment shaders must also be `#version 100`.
+The shaded content is available as `sampler2D Texture` and the UV coordinates
+come from the bounding box:
 
 ```glsl
-#version 300 es
+#version 100
 precision highp float;
 
-in vec2 uv;
-out vec4 fragColor;
+varying lowp vec2 uv;
 
 uniform sampler2D Texture;
 uniform vec2 u_resolution;
@@ -242,10 +242,10 @@ uniform vec2 u_position;
 uniform float u_time;
 
 void main() {
-    vec4 color = texture(Texture, uv);
+    vec4 color = texture2D(Texture, uv);
     // Tint red based on time
     color.r = mix(color.r, 1.0, sin(u_time) * 0.5 + 0.5);
-    fragColor = color;
+    gl_FragColor = color;
 }
 ```
 
@@ -276,7 +276,7 @@ Or initialize it with the CLI:
 plyx add shader-pipeline
 ```
 
-This compiles all `.hlsl` and `.slang` files to GLSL ES 3.00, with
+This compiles all `.hlsl` and `.slang` files to GLSL ES 1.00, with
 hash-based incremental rebuilds. Files go through SPIR-V cross-compilation.
 
 Custom file types can be handled too:

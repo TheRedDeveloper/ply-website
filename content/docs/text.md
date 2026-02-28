@@ -33,19 +33,24 @@ Here's everything you can set on a text element:
 
 ## Font size and color
 
-<!-- The font_size, label and color should be editable -->
-```rust
-ui.text("Big and red", |t| t
-    .font_size(48)
-    .color(0xB91414)
+{% example(id="text_color_demo", height=350) %}
+ui.text("[[label1]]", |t| t
+    .font_size([[font_size1]])
+    .color([[color1]])
 );
 
-ui.text("Small and gold", |t| t
-    .font_size(12)
-    .color(0xFFC32C)
+ui.text("[[label2]]", |t| t
+    .font_size([[font_size2]])
+    .color([[color2]])
 );
-```
-<!-- TODO: Embedded WASM demo — text with editable font_size and color -->
+---
+label1=Big and red
+n.font_size1=32
+c.color1=0xB91414
+label2=Small and gold
+n.font_size2=12
+c.color2=0xFFC32C
+{% end %}
 
 Color accepts the same formats as `.background_color()`: hex integers,
 RGB float tuples, or RGBA float tuples.
@@ -84,23 +89,20 @@ Text wraps by default. Three wrap modes are available:
 | `WrapMode::None`    | Never wraps, will overflow the parent |
 
 
-<!-- The wrap_mode and container width should be editable -->
-```rust
+{% example(id="text_wrap_demo", height=350) %}
 ui.element()
-    .width(fixed!(200.0))
-    .height(fit!())
-    .background_color(0x262220)
-    .corner_radius(8.0)
-    .layout(|l| l.padding(12))
+    .width(fixed!([[width]]))
     .children(|ui| {
         ui.text("This text will wrap at word boundaries when it runs out of space.", |t| t
             .font_size(14)
             .color(0xE8E0DC)
-            .wrap_mode(WrapMode::Words)
+            .wrap_mode([[wrap_mode]])
         );
     });
-```
-<!-- TODO: Embedded WASM demo — text wrapping with editable wrap_mode and container width -->
+---
+n.width=200
+e.wrap_mode=Words;Newline;None
+{% end %}
 
 ## Alignment
 
@@ -112,15 +114,16 @@ Text alignment controls where text sits within its available width:
 | `CenterX` | Centered               |
 | `Right`   | Right-aligned          |
 
-<!-- The alignment should be editable -->
-```rust
-ui.text("Centered heading", |t| t
-    .font_size(24)
+{% example(id="text_align_demo", height=300) %}
+ui.text("Aligned heading", |t| t
+    .font_size([[font_size]])
     .color(0xFFFFFF)
-    .alignment(CenterX)
+    .alignment([[alignment]])
 );
-```
-<!-- TODO: Embedded WASM demo — text with editable alignment -->
+---
+e.alignment=Left;CenterX;Right
+n.font_size=24
+{% end %}
 
 ## Letter spacing and line height
 

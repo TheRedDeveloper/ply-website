@@ -18,35 +18,19 @@ ply-engine = { version = "1.0", features = ["text-styling"] }
 Wrap styled text in `{tag|content}`. The tag goes before the pipe, the
 content after:
 
-<!-- TODO: editable string -->
-```rust
-ui.text("{color=red|This text is red}", |t| t.font_size(24));
-```
-<!-- TODO: small wasm preview -->
+{% text_example() %}{color=red|This text is red}{% end %}
 
 Use underscores to chain parameters:
 
-<!-- TODO: editable string -->
-```rust
-ui.text("{wave_a=0.5_f=1.0|Wavy text}", |t| t.font_size(24));
-```
-<!-- TODO: small wasm preview -->
+{% text_example() %}{wave_a=0.5_f=1.0|Wavy text}{% end %}
 
 Tags can nest. Inner tags override outer ones if they conflict:
 
-<!-- editable string -->
-```rust
-ui.text("{color=#FFC32C|Hello {color=#FF654D|world}!}", |t| t.font_size(24));
-```
-<!-- TODO: small wasm preview -->
+{% text_example() %}{color=#FFC32C|Hello {color=#FF654D|world}!}{% end %}
 
 **Escaping:** Use `\` to insert literal `{`, `}`, `|`, or `\`:
 
-<!-- editable string -->
-```rust
-ui.text(r"Price: \{5\}", |t| t.font_size(24));
-```
-<!-- TODO: small wasm preview -->
+{% text_example() %}Price: \{5\}{% end %}
 
 ## Properties
 
@@ -57,15 +41,18 @@ Static attributes on the wrapped text. These are optimized in rendering.
 Sets the text fill color. Accepts hex (`#RRGGBB`), RGB tuples
 (`(r,g,b)`), or named colors.
 
-<!-- TODO: editable strings -->
-```rust
-ui.text("{color=#FF654D|Salmon text}", |t| t.font_size(24));
-
-ui.text("{color=cyan|Cyan text}", |t| t.font_size(24));
-
-ui.text("{color=(255,195,44)|Yellow text}", |t| t.font_size(24));
-```
-<!-- TODO: small wasm preview -->
+{% example(id="text_preview", height=220) %}
+ui.text("[[text1]]", |t| t.font_size([[font_size1]]));
+ui.text("[[text2]]", |t| t.font_size([[font_size2]]));
+ui.text("[[text3]]", |t| t.font_size([[font_size3]]));
+---
+text1 = {color=#FF654D|Salmon text}
+text2 = {color=cyan|Cyan text}
+text3 = {color=(255,195,44)|Yellow text}
+n.font_size1 = 24
+n.font_size2 = 24
+n.font_size3 = 24
+{% end %}
 
 Named colors: `white`, `black`, `lightgray`, `darkgray`, `red`, `orange`, `yellow`,
 `lime`, `green`, `cyan`, `lightblue`, `blue`, `purple`, `magenta`, `brown`, `pink` (case
@@ -75,19 +62,11 @@ insensitive).
 
 Makes text semi-transparent:
 
-<!-- TODO: editable string -->
-```rust
-ui.text("{opacity=0.5|Ghost text}", |t| t.font_size(24));
-```
-<!-- TODO: small wasm preview -->
+{% text_example() %}{opacity=0.5|Ghost text}{% end %}
 
 Properties combine, nest opacity inside a color tag:
 
-<!-- TODO: editable string -->
-```rust
-ui.text("{color=red|{opacity=0.5|Faded red}}", |t| t.font_size(24));
-```
-<!-- TODO: small wasm preview -->
+{% text_example() %}{color=red|{opacity=0.5|Faded red}}{% end %}
 
 ## Effects
 
@@ -97,11 +76,7 @@ Per-character visual effects that create movement, shadows, or gradients.
 
 Vertical sine wave:
 
-<!-- TODO: editable string -->
-```rust
-ui.text("{wave|Bouncing text}", |t| t.font_size(18));
-```
-<!-- TODO: small wasm preview -->
+{% text_example() %}{wave|Bouncing text}{% end %}
 
 
 | Parameter | What it does                       | Default |
@@ -113,21 +88,13 @@ ui.text("{wave|Bouncing text}", |t| t.font_size(18));
 | `p`       | Phase offset (0–1)                 | 0       |
 | `r`       | Direction rotation in degrees      | 0       |
 
-<!-- TODO: editable string -->
-```rust
-ui.text("{wave_w=5_a=0.6_f=0.2_r=45|Diagonal wave}", |t| t.font_size(24));
-```
-<!-- TODO: small wasm preview -->
+{% text_example() %}{wave_w=5_a=0.6_f=0.2_r=45|Diagonal wave}{% end %}
 
 ### pulse
 
 Characters grow and shrink in a wave:
 
-<!-- TODO: editable string -->
-```rust
-ui.text("{pulse|Pulsing text}", |t| t.font_size(24));
-```
-<!-- TODO: small wasm preview -->
+{% text_example() %}{pulse|Pulsing text}{% end %}
 
 | Parameter | What it does                       | Default |
 |-----------|------------------------------------|---------|
@@ -141,11 +108,7 @@ ui.text("{pulse|Pulsing text}", |t| t.font_size(24));
 
 Pendulum rotation per character:
 
-<!-- TODO: editable string -->
-```rust
-ui.text("{swing_a=12|Swinging text}", |t| t.font_size(24));
-```
-<!-- TODO: small wasm preview -->
+{% text_example() %}{swing_a=12|Swinging text}{% end %}
 
 | Parameter | What it does                       | Default |
 |-----------|------------------------------------|---------|
@@ -159,11 +122,7 @@ ui.text("{swing_a=12|Swinging text}", |t| t.font_size(24));
 
 Random character displacement:
 
-<!-- TODO: editable string -->
-```rust
-ui.text("{jitter_radii=0.2,0.2|Shaky text}", |t| t.font_size(24));
-```
-<!-- TODO: small wasm preview -->
+{% text_example() %}{jitter_radii=0.2,0.2|Shaky text}{% end %}
 
 | Parameter  | What it does                             | Default   |
 |------------|------------------------------------------|-----------|
@@ -174,18 +133,14 @@ ui.text("{jitter_radii=0.2,0.2|Shaky text}", |t| t.font_size(24));
 
 Cycling color gradient across characters:
 
-<!-- TODO: editable string -->
-```rust
-ui.text("{gradient|Rainbow text}", |t| t.font_size(24));
-```
-<!-- TODO: Embedded WASM demo — gradient text -->
+{% text_example() %}{gradient|Rainbow text}{% end %}
 
 The default is a full rainbow. Custom stops use `position:color` pairs:
 
 ```rust
 ui.text("{gradient_stops=0:#FF0000,5:#FFC32C_speed=2|Fire text}", |t| t.font_size(24));
 ```
-<!-- TODO: small wasm preview -->
+{% text_example() %}{gradient_stops=0:#FF0000,5:#FFC32C_speed=2|Fire text}{% end %}
 
 | Parameter | What it does                    | Default |
 |-----------|---------------------------------|---------|
@@ -196,7 +151,6 @@ ui.text("{gradient_stops=0:#FF0000,5:#FFC32C_speed=2|Fire text}", |t| t.font_siz
 
 Draws a duplicate behind each character:
 
-<!-- TODO: editable string -->
 ```rust
 ui.text("{shadow_color=#000000_offset=-0.1,0.1|Shadowed}", |t| t.font_size(24));
 ```
@@ -211,13 +165,18 @@ ui.text("{shadow_color=#000000_offset=-0.1,0.1|Shadowed}", |t| t.font_size(24));
 
 Static per-character transform:
 
-<!-- TODO: editable string -->
-```rust
-ui.text("{transform_translate=0,0.5|Shifted down}", |t| t.font_size(24));
-ui.text("{transform_scale=1.5|Giant text}", |t| t.font_size(24));
-ui.text("{transform_rotate=15|Tilted}", |t| t.font_size(24));
-```
-<!-- TODO: small wasm preview -->
+{% example(id="text_preview", height=220) %}
+ui.text("[[text1]]", |t| t.font_size([[font_size1]]));
+ui.text("[[text2]]", |t| t.font_size([[font_size2]]));
+ui.text("[[text3]]", |t| t.font_size([[font_size3]]));
+---
+text1 = {transform_translate=0,0.5|Shifted down}
+text2 = {transform_scale=1.5|Giant text}
+text3 = {transform_rotate=15|Tilted}
+n.font_size1 = 24
+n.font_size2 = 24
+n.font_size3 = 24
+{% end %}
 
 | Parameter   | What it does                    | Default |
 |-------------|---------------------------------|---------|
@@ -230,11 +189,7 @@ ui.text("{transform_rotate=15|Tilted}", |t| t.font_size(24));
 Prevents rendering entirely. Useful for reserving space or with
 animations:
 
-<!-- TODO: editable string -->
-```rust
-ui.text("{hide|invisible}", |t| t.font_size(18));
-```
-<!-- TODO: small wasm preview -->
+{% text_example() %}{hide|invisible}{% end %}
 
 ## Animations
 
@@ -245,12 +200,7 @@ either `in` (appear) or `out` (disappear).
 
 Typewriter reveal:
 
-<!-- TODO: editable string -->
-```rust
-ui.text("{type_in_id=intro_speed=12|Hello, world!}", |t| t.font_size(24));
-```
-<!-- TODO: small wasm preview -->
-<!-- TODO: restart button -->
+{% text_example(replay=true) %}{type_in_id=intro_speed=12|Hello, world!}{% end %}
 
 | Parameter | What it does                       | Default |
 |-----------|------------------------------------|---------|
@@ -262,23 +212,13 @@ ui.text("{type_in_id=intro_speed=12|Hello, world!}", |t| t.font_size(24));
 
 Show a blinking cursor while typing:
 
-<!-- TODO: editable string -->
-```rust
-ui.text("{type_in_id=msg_speed=10_cursor=\\||Loading...}", |t| t.font_size(24));
-```
-<!-- TODO: small wasm preview -->
-<!-- TODO: restart button -->
+{% text_example(replay=true) %}{type_in_id=msg_speed=10_cursor=\||Loading...}{% end %}
 
 ### fade
 
 Opacity transition, character by character:
 
-<!-- TODO: editable string -->
-```rust
-ui.text("{fade_in_id=appear_speed=5|Fading in}", |t| t.font_size(24));
-```
-<!-- TODO: small wasm preview -->
-<!-- TODO: restart button -->
+{% text_example(replay=true) %}{fade_in_id=appear_speed=5|Fading in}{% end %}
 
 | Parameter | What it does                       | Default |
 |-----------|------------------------------------|---------|
@@ -292,12 +232,7 @@ ui.text("{fade_in_id=appear_speed=5|Fading in}", |t| t.font_size(24));
 
 Pop-in or pop-out by scaling each character:
 
-<!-- TODO: editable string -->
-```rust
-ui.text("{scale_in_id=pop_speed=4_trail=5|Popping in!}", |t| t.font_size(24));
-```
-<!-- TODO: small wasm preview -->
-<!-- TODO: restart button -->
+{% text_example(replay=true) %}{scale_in_id=pop_speed=4_trail=5|Popping in!}{% end %}
 
 | Parameter | What it does                       | Default |
 |-----------|------------------------------------|---------|
@@ -312,25 +247,9 @@ ui.text("{scale_in_id=pop_speed=4_trail=5|Popping in!}", |t| t.font_size(24));
 Stack tags to combine effects. Effects compose: transforms accumulate,
 colors override:
 
-<!-- TODO: editable string -->
-```rust
-ui.text(
-    "{type_in_id=hero_speed=15|{wave_a=0.4|{gradient|Welcome to Ply!}}}",
-    |t| t.font_size(24)
-);
-```
-<!-- TODO: small wasm preview -->
-<!-- TODO: restart button -->
+{% text_example(replay=true) %}{type_in_id=hero_speed=15|{wave_a=0.4|{gradient|Welcome to Ply!}}}{% end %}
 
-<!-- TODO: editable string -->
-```rust
-ui.text(
-    "{color=#B91414|{pulse_a=0.2|{shadow_color=#000000|Alert!}}}",
-    |t| t.font_size(24)
-);
-```
-<!-- TODO: small wasm preview -->
-<!-- TODO: restart button -->
+{% text_example() %}{color=#B91414|{pulse_a=0.2|{shadow_color=#000000|Alert!}}}{% end %}
 
 ## Styled text input
 

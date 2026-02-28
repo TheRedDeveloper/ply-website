@@ -8,15 +8,10 @@ into the engine. No other Rust UI library has this.
 
 ## Turning it on
 
-```rust
-ply.set_debug_mode(true);
-```
-<!-- You would be able to click on the above "true" to toggle it below --->
+{{ toggle_example(id="debug_mode_demo", height=700, params='e.debug=true;false', code='ply<span style="color:#94e2d5">.</span><span style="color:#89b4fa;font-style:italic">set_debug_mode</span><span style="color:#9399b2">(</span>$$<span style="color:#9399b2">);</span>', param_key="debug", on="true", off="false") }}
 
 That's it. A full element inspector appears on top of your UI, showing every element
 in your tree, its sizing, layout, colors, borders, and more.
-
-<!-- TODO: Embedded WASM demo showing debug mode toggled on/off -->
 
 ## What you get
 
@@ -52,10 +47,9 @@ When you select an element, the detail panel shows everything about it:
 Select the element in the tree. The detail panel shows its sizing type.
 You'll immediately see if it's being clamped, if the parent is too small, or if a sibling is eating the available space.
 
-<!-- All the sizings in the below should be interactive like in the Elements & Layout -->
-```rust
+{% example(id="sizing_bug_demo", height=1060) %}
 ui.element()
-    .width(fit!())
+    .width([[parent_width]]())
     .height(grow!())
     .background_color(0x1E1B1B)
     .layout(|l| l.direction(LeftToRight))
@@ -81,8 +75,9 @@ ui.element()
                 ui.text("Why is everything crushed?", |t| t.font_size(24).color(0xFFFFFF));
             });
     });
-```
-<!-- TODO: Embedded WASM demo — a UI with a sizing bug, debug mode reveals it -->
+---
+e.parent_width=fit!;grow!
+{% end %}
 
 The parent uses `fit!()`, so it sizes itself to the only thing it knows the size of "Why is everything crushed?" which is 320 px wide. Then the sidebar asks for 25 % of that: 320 × 0.25 = 80 px, so it crushes the text onto two lines. Do you know how to fix this? Edit the sizings above.
 
@@ -92,22 +87,23 @@ Hover over rows in the tree. Each row highlights the corresponding element's bou
 If an element exists in the tree but has no visible highlight, check its dimensions.
 If an element is highlighted but invisible, check the clip settings.
 
-<!-- All the "fixed!(41.0)" should be interactive and the "clip" should be a dropdown -->
-```rust
+{% example(id="clipped_list_demo", height=600) %}
 ui.element()
     .width(fit!())
-    .height(fixed!(41.0))
+    .height(fixed!([[height]]))
     .background_color(0x2E2A28)
     .corner_radius(8.0)
-    .overflow(|o| o.clip())
+    .overflow(|o| o.[[overflow]]())
     .layout(|l| l.direction(TopToBottom).padding(8).gap(8))
     .children(|ui| {
         for name in ["Alice", "Bob", "Charlie", "Diana", "Eve"] {
             ui.text(name, |t| t.font_size(30).color(0xE8E0DC));
         }
     });
-```
-<!-- TODO: Embedded WASM demo — a UI with a clipped element -->
+---
+n.height=41
+e.overflow=clip;scroll
+{% end %}
 
 All five text elements appear in the element tree. Hovering each one highlights its bounding box. The parent's `.overflow(|o| o.clip())` hides anything that overflows. Do you know how to fix this? Edit the code above.
 

@@ -1,0 +1,12 @@
+{#
+  Embed a pure-canvas Ply example with no editable params.
+
+  Usage: {{ demo(id="basic_float", height=160) }}
+#}
+{% set h = height | default(value=80) %}
+<iframe
+  class="demo-iframe"
+  src="/examples/shell.html?id={{ id }}"
+  style="width: 100%; height: {{ h }}px; border: 1px solid #262220; border-radius: 12px; margin: 1.5rem 0;"
+  loading="lazy"
+  tabindex="-1"></iframe>

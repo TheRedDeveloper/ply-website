@@ -2,7 +2,7 @@
 // WASM uses versioned filenames (app-v1.wasm, app-v2.wasm) for cache busting.
 // JS files are cached by URL and updated when the SW is reinstalled.
 
-var CACHE = 'ply-demo-v1';
+var CACHE = 'ply-demo-v2';
 
 self.addEventListener('install', function (event) {
     self.skipWaiting();

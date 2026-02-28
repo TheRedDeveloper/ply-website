@@ -1,0 +1,26 @@
+{#
+  Shortcut for text-styling examples. Shows the code with an inline
+  editable text slot, plus the rendered preview below.
+
+  Usage:
+    {% text_example(height=100, font_size=24) %}{color=red|This text is red}{% end %}
+    {% text_example(height=100, font_size=24, replay=true) %}{type_in_id=foo|Hello}{% end %}
+
+  Args:
+    height    — iframe height in px (default 100)
+    font_size — font size passed to ui.text (default 24)
+    replay    — show replay button (default false, set true for animations)
+#}
+{%- set h = height | default(value=130) -%}
+{%- set fs = font_size | default(value="24") -%}
+{%- set rp = replay | default(value=false) -%}
+{%- set code = 'ui.text("[[text]]", |t| t.font_size([[font_size]]));' -%}
+{%- set hash = code ~ "
+---
+text = " ~ body ~ "
+n.font_size = " ~ fs -%}
+<iframe
+  src="/examples/shell.html?id=text_preview{% if rp %}&amp;replay=1{% endif %}#{{ hash | urlencode_strict | safe }}"
+  style="width: 100%; height: {{ h }}px; border: 1px solid #262220; border-radius: 12px; margin: 1.5rem 0;"
+  loading="lazy"
+  tabindex="-1"></iframe>

@@ -18,15 +18,16 @@ static ICON: GraphicAsset = GraphicAsset::Bytes {
 ```
 
 Display them with `.image()`:
-
-```rust
+{% example(id="image_demo", height=360) %}
 ui.element()
-    .width(fixed!(200.0))
-    .height(fixed!(200.0))
+    .width(fixed!([[width]]))
+    .height(fixed!([[height]]))
     .image(&LOGO)
     .empty();
-```
-<!-- TODO: Embedded WASM demo — image from asset -->
+---
+n.width=200
+n.height=200
+{% end %}
 
 The image scales to fill the element. The texture is loaded and cached
 automatically.
@@ -62,20 +63,21 @@ the file size compared to PNG or SVG.
 
 Here is a cool tiger, just 27kB (the SVG is 100kB):
 
-<!-- Width and height should be editable -->
-```rust
+{% example(id="tiger_demo", height=470) %}
 static TIGER: GraphicAsset = GraphicAsset::Bytes {
     file_name: "tiger.tvg",
-    data: include_bytes!("../assets/images/tiger.tvg"),
+    data: include_bytes!("tiger.tvg"),
 };
 
 ui.element()
-    .width(fixed!(300.0))
-    .height(fixed!(200.0))
+    .width(fixed!([[width]]))
+    .height(fixed!([[height]]))
     .image(&TIGER)
     .empty();
-```
-<!-- TODO: Embedded WASM demo — procedural TinyVG image with editable width and height -->
+---
+n.width=200
+n.height=200
+{% end %}
 
 ## Texture2D
 
@@ -97,25 +99,41 @@ You can also use Ply's TextureManager to cache your textures.
 
 ## render_to_texture
 
-Draw arbitrary macroquad geometry into a texture, then use it as an element's image.
+Draw arbitrary macroquad geometry into a texture,
 
 ```rust
-let chart = render_to_texture(400.0, 200.0, || {
-    clear_background(BLANK);
-    draw_line(10.0, 180.0, 390.0, 20.0, 2.0, GREEN);
-    draw_circle(200.0, 100.0, 30.0, RED);
+let chart = render_to_texture(w, h, || {
+    clear_background(BLACK);
+    let data = [0.2, 0.5, 0.3, 0.8, 0.6, 0.9, 0.4, 0.7];
+    let step = w / (data.len() - 1) as f32;
+    for i in 0..data.len() - 1 {
+        let x1 = step * i as f32;
+        let y1 = h - data[i] as f32 * h;
+        let x2 = step * (i + 1) as f32;
+        let y2 = h - data[i + 1] as f32 * h;
+        draw_line(x1, y1, x2, y2, 2.0, GREEN);
+    }
+    for (i, &val) in data.iter().enumerate() {
+        let x = step * i as f32;
+        let y = h - val as f32 * h;
+        draw_circle(x, y, 4.0, RED);
+    }
 });
+```
 
+then use it as an element's image:
+{% example(id="chart_demo", height=530) %}
 let mut ui = ply.begin();
 
 ui.element()
-    .width(fixed!(400.0))
-    .height(fixed!(200.0))
-    .corner_radius(8.0)
+    .width(fixed!([[width]]))
+    .height(fixed!([[height]]))
     .image(chart)
     .empty();
-```
-<!-- TODO: Embedded WASM demo — custom render_to_texture chart -->
+---
+n.width=400
+n.height=200
+{% end %}
 
 `render_to_texture` uses MSAA (Antialiasing) and linear filtering, just like the rest of Ply.
 
@@ -125,7 +143,6 @@ With the `tinyvg` feature, you can display procedural vector graphics that
 rasterize at the element's layout size each frame:
 
 ```rust
-// Decode from embedded bytes
 let tvg_bytes = include_bytes!("../assets/icon.tvg");
 let image = tinyvg::Decoder::new(std::io::Cursor::new(tvg_bytes))
     .decode()

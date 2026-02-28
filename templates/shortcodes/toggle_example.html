@@ -1,0 +1,53 @@
+{#
+  A code block with a clickable boolean toggle that controls the example below.
+
+  Usage:
+    {{ toggle_example(
+        id="debug_mode_demo",
+        height=380,
+        params='e.debug=true;false',
+        code='ply.set_debug_mode($$);',
+        param_key="debug",
+        on="true",
+        off="false"
+    ) }}
+
+  The $$ in `code` is replaced with a clickable <span> that toggles between `on/off`.
+  Clicking it sends a postMessage to the example iframe to update the param.
+
+  Args:
+    id        - example function name in the Rust registry
+    height    - iframe height in px (default 380)
+    params    - param string passed to the example (same format as example shortcode)
+    code      - code template with $$ as the toggle placeholder
+    param_key - which param key to update when toggled
+    on        - the "on" value (default "true")
+    off       - the "off" value (default "false")
+#}
+{% set h = height | default(value=380) %}
+{% set on_val = on | default(value="true") %}
+{% set off_val = off | default(value="false") %}
+{% set key = param_key | default(value="debug") %}
+
+<div class="toggle-code-block" style="border:1px solid #262220;border-radius:12px;overflow:hidden;margin:1.5rem 0">
+<pre style="background:#1a1111;color:#e8e0dc;font-family:'Geist Mono','Fira Code','Cascadia Code','JetBrains Mono',monospace;font-size:0.875rem;line-height:1.6;padding:1.25rem;margin:0;border:none;border-radius:0;white-space:pre;overflow-x:auto">{% set parts = code | split(pat="$$") %}<code style="padding:0;display:inline">{{ parts[0] | safe }}<span class="toggle-bool" style="color:#f38ba8;cursor:pointer;border-bottom:1px dashed #585b70;user-select:none" data-on="{{ on_val }}" data-off="{{ off_val }}">{{ on_val }}</span>{{ parts[1] | safe }}</code></pre>
+<iframe
+  class="toggle-iframe"
+  src="/examples/shell.html?id={{ id }}#{{ params | urlencode_strict | safe }}"
+  style="width:100%;height:{{ h }}px;border:none;display:block"
+  loading="lazy"
+  tabindex="-1"></iframe>
+<script>
+(function(){
+  var c=document.currentScript.parentElement;
+  var s=c.querySelector('.toggle-bool');
+  var f=c.querySelector('.toggle-iframe');
+  var key='{{ key }}';
+  s.addEventListener('click',function(){
+    var next=s.textContent.trim()===s.dataset.on?s.dataset.off:s.dataset.on;
+    s.textContent=next;
+    f.contentWindow.postMessage({type:'setParam',key:key,value:next},'*');
+  });
+})();
+</script>
+</div>

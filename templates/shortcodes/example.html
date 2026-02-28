@@ -1,0 +1,64 @@
+{#
+  Embed an interactive Ply example.
+
+  Usage (params only):
+    {% example(id="text_preview", height=80) %}
+    text = {color=red|This text is red}
+    _font_size = 24
+    {% end %}
+
+  Usage (code template + params after ---):
+    {% example(id="sizing_bug_demo", height=300) %}
+    ui.element()
+        .width([[parent_width]]!())
+    ---
+    e.parent_width=fit;grow
+    {% end %}
+
+  The body is either just param lines, or a code template with [[slot]] markers
+  followed by a --- separator and param lines.
+
+  Param prefixes:
+    _  — hidden from controls (still passed to WASM)
+    e. — enum dropdown (options separated by ;)
+    n. — number input
+    c. — color picker (hex, e.g. 0xFF0000)
+    l. — list (items separated by |)
+    (none) — text input
+
+  Args:
+    id              — example function name in the Rust registry
+    height          — iframe height in px (default 80)
+    base_height     — (optional) base height for dynamic resizing
+    height_per_item — (optional) extra px per list item
+    list_param      — (optional) name of the list param to count items from
+#}
+{% set h = height | default(value=80) %}
+{% set bh = base_height | default(value=0) %}
+{% set hpi = height_per_item | default(value=0) %}
+{% set lp = list_param | default(value="") %}
+{% if bh > 0 and lp != "" %}
+<iframe
+  id="ply-frame-{{ id }}"
+  src="/examples/shell.html?id={{ id }}#{{ body | urlencode_strict | safe }}"
+  style="width: 100%; height: {{ h }}px; border: 1px solid #262220; border-radius: 12px; margin: 1.5rem 0;"
+  loading="lazy"
+  tabindex="-1"></iframe>
+<script>
+(function(){
+  var frame = document.getElementById('ply-frame-{{ id }}');
+  window.addEventListener('message', function(ev) {
+    if (ev.data && ev.data.type === 'ply-resize' && ev.data.id === '{{ id }}') {
+      var count = (ev.data.listCounts && ev.data.listCounts['{{ lp }}']) || 0;
+      frame.style.height = ({{ bh }} + {{ hpi }} * count) + 'px';
+    }
+  });
+})();
+</script>
+{% else %}
+<iframe
+  src="/examples/shell.html?id={{ id }}#{{ body | urlencode_strict | safe }}"
+  style="width: 100%; height: {{ h }}px; border: 1px solid #262220; border-radius: 12px; margin: 1.5rem 0;"
+  loading="lazy"
+  tabindex="-1"></iframe>
+{% endif %}

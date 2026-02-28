@@ -36,26 +36,28 @@ Every element has a width and height, set with four sizing macros:
 - `fit!(100.0)`: fit content, but don't shrink below 100px
 - `grow!(100.0, 500.0)`: grow within 100-500px range
 
-<!-- The width, height, background_color, corner_radius, direction, gap, padding, and alignment should all be editable -->
-```rust
-ui.element()
-    .width(grow!())
-    .height(fixed!(200.0))
-    .background_color(0x262220)
-    .corner_radius(8.0)
+{% example(id="layout_card", height=500) %}
+ui.element().width(grow!()).height(grow!())
+    .background_color([[bg]])
     .layout(|l| l
-        .direction(LeftToRight)
-        .gap(12)
-        .padding(16)
-        .align(CenterX, CenterY)
+        .direction([[direction]])
+        .gap([[gap]])
+        .padding([[padding]])
+        .align([[align_x]], [[align_y]])
     )
     .children(|ui| {
-        ui.text("A", |t| t.font_size(24).color(0xFFFFFF));
-        ui.text("B", |t| t.font_size(24).color(0xFFFFFF));
-        ui.text("C", |t| t.font_size(24).color(0xFFFFFF));
+        ui.text("A", |t| t.font_size(24));
+        ui.text("B", |t| t.font_size(24));
+        ui.text("C", |t| t.font_size(24));
     });
-```
-<!-- TODO: Embedded WASM demo — interactive element with editable sizing, layout, and color properties -->
+---
+c.bg = 0x262220
+e.direction = LeftToRight ; TopToBottom
+n.gap = 12
+padding = 16
+e.align_x = CenterX ; Left ; Right
+e.align_y = CenterY ; Top ; Bottom
+{% end %}
 
 ## Layout
 
@@ -171,7 +173,6 @@ The engine fills in whichever dimension is unset. If both height and width are e
 
 Pass Ui to functions for modular UI:
 
-<!-- The bg colors, sizing, corner_radius, padding, alignment, font_size, and text color should be editable -->
 ```rust
 fn nav_item(ui: &mut Ui, label: &str, active: bool) {
     let bg = if active { 0x3A3533 } else { 0x262220 };
@@ -189,21 +190,19 @@ fn nav_item(ui: &mut Ui, label: &str, active: bool) {
 
 Then call it wherever you need it:
 
-<!-- The width, background_color, direction, gap, padding, labels, and active states should be editable, there should be a "-" next to the nav_item calls so you can remove them and a "+" below the nav_item calls so you can add new ones -->
-```rust
+{% example(id="sidebar_nav", height=495, base_height=300, height_per_item=65, list_param="items") %}
 ui.element()
     .width(fixed!(200.0))
     .height(grow!())
-    .background_color(0x181515)
+    .background_color([[bg]])
     .layout(|l| l.direction(TopToBottom).gap(4).padding(8))
     .children(|ui| {
-        nav_item(ui, "Home", true);
-        nav_item(ui, "Settings", false);
-        nav_item(ui, "About", false);
+[[items:        nav_item(ui, "$", false);]]
     });
-```
-
-<!-- TODO: Embedded WASM demo — sidebar with reusable nav_item function -->
+---
+c.bg = 0x181515
+l.items = Home|Settings|About
+{% end %}
 
 ## Next steps
 

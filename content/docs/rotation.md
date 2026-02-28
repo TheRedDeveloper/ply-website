@@ -13,19 +13,19 @@ text are unaffected.
 
 Rotate an element and everything inside it, purely visual:
 
-<!-- editable degrees -->
-```rust
+{% example(id="visual_rotation", height=400) %}
 ui.element()
     .width(fixed!(120.0))
     .height(fixed!(80.0))
     .background_color(0xFFC32C)
     .corner_radius(8.0)
-    .rotate_visual(|r| r.degrees(15.0))
+    .rotate_visual(|r| r.degrees([[degrees]]))
     .children(|ui| {
         ui.text("Tilted!", |t| t.font_size(14).color(0x181515));
     });
-```
-<!-- TODO: Embedded WASM demo — visual rotation -->
+---
+n.degrees = 15
+{% end %}
 
 The layout stays axis-aligned, surrounding elements don't see the
 rotation.
@@ -85,16 +85,16 @@ ui.element()
 Rotates the element's own geometry (background, border, image) at the
 vertex level. The bounding box adjusts to fit the rotated shape (AABB):
 
-<!-- editable degrees -->
-```rust
+{% example(id="shape_rotation", height=333) %}
 ui.element()
     .width(fixed!(80.0))
     .height(fixed!(80.0))
     .background_color(0xFF654D)
-    .rotate_shape(|r| r.degrees(45.0))
+    .rotate_shape(|r| r.degrees([[degrees]]))
     .empty();
-```
-<!-- TODO: Embedded WASM demo — shape rotation diamond -->
+---
+n.degrees = 45
+{% end %}
 
 What shape rotation does not affect:
 - Children

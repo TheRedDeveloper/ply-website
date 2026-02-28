@@ -11,25 +11,23 @@ multiline editing, password mode, and click-to-position.
 Add `.text_input()` to an element. The element needs an explicit `.id()` so
 the engine can persist input state across frames:
 
-<!-- The font_size, text_color, and placeholder should be editable -->
-```rust
+{% example(id="basic_input", height=350) %}
 ui.element()
     .id("username")
-    .width(fixed!(300.0))
-    .height(fixed!(36.0))
+    .width(fixed!(300.0)).height(fixed!(36.0))
     .background_color(0x262220)
     .corner_radius(6.0)
     .text_input(|t| t
-        .placeholder("Enter username")
-        .font_size(14)
-        .text_color(0xE8E0DC)
-        .placeholder_color(0x6E6560)
-        .cursor_color(0xFFC32C)
-        .selection_color((0.27, 0.51, 0.71, 0.5))
+        .placeholder("[[placeholder]]")
+        .font_size([[font_size]])
+        .text_color([[text_color]])
     )
     .empty();
-```
-<!-- TODO: Embedded WASM demo — basic text input -->
+---
+placeholder = Enter username
+n.font_size = 14
+c.text_color = 0xE8E0DC
+{% end %}
 
 Click to focus, type to enter text. The cursor blinks, selection highlights,
 and all standard keyboard shortcuts work.
@@ -83,7 +81,7 @@ Enable with `.multiline(true)`:
 ui.element()
     .id("editor")
     .width(grow!())
-    .height(fixed!(200.0))
+    .height(grow!())
     .background_color(0x262220)
     .corner_radius(8.0)
     .text_input(|t| t
@@ -93,7 +91,7 @@ ui.element()
     )
     .empty();
 ```
-<!-- TODO: Embedded WASM demo — multiline text editor -->
+{{ demo(id="multiline_editor", height=150) }}
 
 In multiline mode:
 - Enter inserts a newline (instead of triggering submit)
@@ -109,7 +107,7 @@ In multiline mode:
     .placeholder("Enter password")
 )
 ```
-<!-- TODO: Embedded WASM demo — password input -->
+{{ demo(id="password_input", height=80) }}
 
 Characters are displayed as dots. Copy/cut is disabled.
 
@@ -192,7 +190,7 @@ ui.element()
         });
     });
 ```
-<!-- TODO: Embedded WASM demo — login form -->
+{{ demo(id="login_form", height=270) }}
 
 ## Next steps
 

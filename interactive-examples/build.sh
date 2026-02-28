@@ -27,6 +27,18 @@ echo "Copying assets..."
 mkdir -p "$STATIC_DEMO/assets/fonts"
 cp "$SCRIPT_DIR/assets/fonts/lexend.ttf" "$STATIC_DEMO/assets/fonts/lexend.ttf"
 
+# Copy image assets (if any)
+if [ -d "$SCRIPT_DIR/assets/images" ]; then
+    mkdir -p "$STATIC_DEMO/assets/images"
+    cp -r "$SCRIPT_DIR/assets/images/"* "$STATIC_DEMO/assets/images/" 2>/dev/null || true
+fi
+
+# Copy shader assets (if any)
+if [ -d "$SCRIPT_DIR/assets/shaders" ]; then
+    mkdir -p "$STATIC_DEMO/assets/shaders"
+    cp -r "$SCRIPT_DIR/assets/shaders/"* "$STATIC_DEMO/assets/shaders/" 2>/dev/null || true
+fi
+
 # 4. Build WASM
 echo "Building WASM ($PROFILE)..."
 if [ "$PROFILE" = "dev" ]; then
