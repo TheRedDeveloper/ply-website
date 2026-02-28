@@ -98,6 +98,14 @@
             line-height: 1.4;
         }
     }
+
+    &__lines {
+        display: inline-block;
+        margin-top: 0.5rem;
+        font-size: 0.75rem;
+        color: var(--color-text-muted);
+        font-variant-numeric: tabular-nums;
+    }
 }
 
 // -- Example Page (fullscreen iframe) -----------------------------------------
@@ -164,6 +172,19 @@
             border-color: var(--ply-yellow);
             background: var(--ply-surface0);
         }
+    }
+
+    &__meta {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.625rem;
+    }
+
+    &__lines {
+        font-size: 0.8125rem;
+        color: var(--color-text-muted);
+        font-variant-numeric: tabular-nums;
+        white-space: nowrap;
     }
 
     &__frame {

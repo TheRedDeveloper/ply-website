@@ -1,5 +1,6 @@
 +++
 title = "Examples"
 description = "Interactive examples with live WASM demos"
-template = "section.html"
+sort_by = "weight"
+template = "examples_gallery.html"
 +++

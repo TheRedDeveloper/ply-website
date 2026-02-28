@@ -166,7 +166,7 @@ pub fn run(ui: &mut Ui<'_, ()>) {
     .width(grow!())
     .height(grow!())
     .background_color(0x1E1B1B)
-    .layout(|l| l.direction(LayoutDirection::LeftToRight))
+    .layout(|l| l.direction(LeftToRight))
     .children(|ui| {
       // Editor panel (padding wrapper around the text input)
       ui.element()

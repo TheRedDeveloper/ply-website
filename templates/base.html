@@ -308,8 +308,8 @@
             {% include "partials/header.html" %}
             {% endblock %}
 
-            {# Scroll Progress Indicator - all pages (used for WASM loading) #}
-            {% if mode == "docs" %}
+            {# Scroll Progress Indicator - docs pages and blog posts only #}
+            {% if mode == "docs" and current_path is defined and (current_path is starting_with("/docs/") or (current_path is starting_with("/blog/") and page is defined)) %}
             <div class="scroll-progress" aria-hidden="true">
                 <div class="scroll-progress__bar"></div>
                 <span class="scroll-progress__percent">0%</span>

@@ -12,7 +12,7 @@
     </header>
 
     <div class="examples-gallery__grid">
-        {% for page in section.pages | sort(attribute="weight") %}
+        {% for page in section.pages %}
         <a href="{{ page.permalink | safe }}" class="example-card">
             <div class="example-card__thumb">
                 {% if page.extra.thumb %}
@@ -23,6 +23,9 @@
                 <h3>{{ page.title }}</h3>
                 {% if page.description %}
                 <p>{{ page.description }}</p>
+                {% endif %}
+                {% if page.extra.lines %}
+                <span class="example-card__lines">{{ page.extra.lines }} lines</span>
                 {% endif %}
             </div>
         </a>

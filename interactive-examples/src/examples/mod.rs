@@ -1,6 +1,8 @@
 use ply_engine::prelude::*;
 
 mod shader_playground;
+mod todo_list;
+mod snake;
 
 /// A parsed parameter: (key, value) pair, preserving order and duplicates.
 pub type Params = Vec<(String, String)>;
@@ -71,6 +73,8 @@ pub fn run(id: &str, params: &Params, ui: &mut Ui<'_, ()>) {
         "tiger_demo" => tiger_demo(ui, params),
         "tint_shader_demo" => tint_shader_demo(ui, params),
         "shader_playground" => shader_playground::run(ui),
+        "todo_list" => todo_list::run(ui),
+        "snake" => snake::run(ui),
         _ => unknown(ui, id),
     }
 }

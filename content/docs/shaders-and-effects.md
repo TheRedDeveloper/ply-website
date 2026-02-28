@@ -256,7 +256,7 @@ and `.slang` files via a `build.rs` script:
 
 ```toml
 [build-dependencies]
-ply-engine = { version = "1.0", features = ["shader-build"] }
+ply-engine = { version = "1.0", default_features = false, features = ["shader-build"] }
 ```
 
 ```rust
