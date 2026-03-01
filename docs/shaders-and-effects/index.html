@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" prefix="og: https://ogp.me/ns#">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="dark">
+
+    
+    <title>Shaders &amp; Effects | Ply</title>
+
+    
+    
+    <meta name="description" content="Beautiful apps in Rust. Cross-platform. Dead simple.">
+    
+
+    
+    
+    <meta name="keywords" content="ply, ply-engine, rust, ui, engine, cross-platform, layout, graphics, gamedev">
+    
+
+    
+    
+    <meta name="author" content="TheRedDeveloper">
+    
+
+    
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+
+    
+    
+    <link rel="canonical" href="https://plyx.iz.rs/docs/shaders-and-effects/">
+    <link rel="alternate" hreflang="en" href="https://plyx.iz.rs/docs/shaders-and-effects/">
+    <link rel="alternate" hreflang="x-default" href="https://plyx.iz.rs/docs/shaders-and-effects/">
+    
+
+    
+    <meta property="og:type" content="article">
+    
+    <meta property="og:url" content="https://plyx.iz.rs/docs/shaders-and-effects/">
+    
+    
+    <meta property="og:title" content="Shaders &amp; Effects">
+    
+    
+    <meta property="og:description" content="">
+    
+    
+    <meta property="og:site_name" content="Ply">
+    <meta property="og:locale" content="en">
+
+    
+    
+    
+    
+    
+    
+
+    
+    <meta name="twitter:card" content="summary_large_image">
+    
+    <meta name="twitter:url" content="https://plyx.iz.rs/docs/shaders-and-effects/">
+    
+    
+    <meta name="twitter:title" content="Shaders &amp; Effects">
+    
+    
+    <meta name="twitter:description" content="">
+    
+    
+    
+
+    
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "WebSite",
+                "@id": "https://plyx.iz.rs#website",
+                "url": "https://plyx.iz.rs",
+                "name": "Ply",
+                "description": "Beautiful apps in Rust. Cross-platform. Dead simple.",
+                "publisher": {
+                    "@id": "https://plyx.iz.rs/#organization"
+                },
+                "inLanguage": "en",
+                "potentialAction": {
+                    "@type": "SearchAction",
+                    "target": {
+                        "@type": "EntryPoint",
+                        "urlTemplate": "https://plyx.iz.rs?q={search_term_string}"
+                    },
+                    "query-input": "required name=search_term_string"
+                }
+            },
+            {
+                "@type": "Organization",
+                "@id": "https://plyx.iz.rs/#organization",
+                "name": "TheRedDeveloper",
+                "url": "https://plyx.iz.rs"
+            },
+            {
+                "@type": "WebPage",
+                "@id": "https://plyx.iz.rs/docs/shaders-and-effects/#webpage",
+                "url": "https://plyx.iz.rs/docs/shaders-and-effects/",
+                "name": "Shaders &amp; Effects",
+                "isPartOf": {
+                    "@id": "https://plyx.iz.rs#website"
+                },
+                "description": "",
+                "inLanguage": "en"
+                
+                
+            }
+            
+            ,{
+                "@type": "Article",
+                "@id": "https://plyx.iz.rs/docs/shaders-and-effects/#article",
+                "isPartOf": {
+                    "@id": "https://plyx.iz.rs/docs/shaders-and-effects/#webpage"
+                },
+                "headline": "Shaders &amp; Effects",
+                
+                
+                
+                "author": {
+                    "@id": "https://plyx.iz.rs/#organization"
+                },
+                "publisher": {
+                    "@id": "https://plyx.iz.rs/#organization"
+                },
+                
+                
+                "wordCount": 359,
+                
+                "inLanguage": "en"
+            }
+            
+        ]
+    }
+    </script>
+
+    
+    
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Ply",
+                "item": "https://plyx.iz.rs"
+            }
+            
+            
+            
+            ,{
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Ply",
+                "item": "https://plyx.iz.rs/"
+            }
+            
+            
+            
+            ,{
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Documentation",
+                "item": "https://plyx.iz.rs/docs/"
+            }
+            
+            
+            ,{
+                "@type": "ListItem",
+                "position": 4,
+                "name": "Shaders &amp; Effects",
+                "item": "https://plyx.iz.rs/docs/shaders-and-effects/"
+            }
+        ]
+    }
+    </script>
+    
+
+    
+    <link rel="stylesheet" href="https://plyx.iz.rs/style.css">
+
+    
+
+    
+    <link rel="preload" href="https://plyx.iz.rs/fonts/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="https://plyx.iz.rs/fonts/GeistMono-Variable.woff2" as="font" type="font/woff2" crossorigin>
+
+    
+    
+    <link rel="icon" href="https://plyx.iz.rs/images/favicon.png">
+    
+    
+
+    
+    
+
+    
+    
+    
+    <script>
+        (function() {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            document.documentElement.dataset.userColorScheme = 'dark';
+            // Pre-apply sidebar collapsed state
+            if (localStorage.getItem('tanuki-sidebar-collapsed') === 'true') {
+                document.documentElement.classList.add('sidebar-start-collapsed');
+            }
+            // Pre-apply saved sidebar width
+            var savedWidth = localStorage.getItem('tanuki-sidebar-width');
+            if (savedWidth) {
+                document.documentElement.style.setProperty('--sidebar-width', savedWidth + 'px');
+                var s = document.createElement('style');
+                s.id = 'sidebar-width-preload';
+                s.textContent = '.sidebar { --sidebar-width: ' + savedWidth + 'px !important; }';
+                document.head.appendChild(s);
+            }
+        })();
+    </script>
+    <style>
+        /* Prevent sidebar transition on initial page load when user had it collapsed */
+        .sidebar-start-collapsed .sidebar {
+            width: 0 !important;
+            min-width: 0 !important;
+            border-right: none !important;
+            overflow: hidden !important;
+            transition: none !important;
+        }
+    </style>
+
+    
+</head>
+<body class="page-shaders-and-effects">
+    
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    
+    
+
+    
+    
+        
+    
+
+    
+    <div class="layout layout--docs layout--fixed-header" data-mode="docs">
+        
+
+
+<aside id="sidebar" class="sidebar" role="complementary" aria-labelledby="sidebar-title">
+    
+    <div class="sidebar__resize-handle" aria-hidden="true" title="Drag to resize sidebar width"></div>
+
+    <div class="sidebar__header">
+        <span id="sidebar-title" class="sidebar__title">Table of contents</span>
+        <button class="sidebar__close" type="button" aria-label="Close sidebar" title="Close">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M18 6 6 18"/>
+                <path d="m6 6 12 12"/>
+            </svg>
+        </button>
+    </div>
+
+    <nav class="sidebar__content" aria-label="Documentation navigation">
+        <div class="toc">
+            
+            
+
+            
+            <div class="toc__section">
+                <ol class="toc__list toc__list--numbered" start="1">
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/getting-started/" class="toc__link ">
+                            <span class="toc__number">1.</span>
+                            Getting Started
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/elements-and-layout/" class="toc__link ">
+                            <span class="toc__number">2.</span>
+                            Elements &amp; Layout
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/debug-view/" class="toc__link ">
+                            <span class="toc__number">3.</span>
+                            Debug View
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/text/" class="toc__link ">
+                            <span class="toc__number">4.</span>
+                            Text
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/ids-and-state/" class="toc__link ">
+                            <span class="toc__number">5.</span>
+                            IDs &amp; State
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/interactivity/" class="toc__link ">
+                            <span class="toc__number">6.</span>
+                            Interactivity
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/floating-elements/" class="toc__link ">
+                            <span class="toc__number">7.</span>
+                            Floating Elements
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/images-and-rendering/" class="toc__link ">
+                            <span class="toc__number">8.</span>
+                            Images, Vectors &amp; Custom Rendering
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/text-input/" class="toc__link ">
+                            <span class="toc__number">9.</span>
+                            Text Input
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/text-styling/" class="toc__link ">
+                            <span class="toc__number">10.</span>
+                            Text Styling
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/shaders-and-effects/" class="toc__link active">
+                            <span class="toc__number">11.</span>
+                            Shaders &amp; Effects
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/rotation/" class="toc__link ">
+                            <span class="toc__number">12.</span>
+                            Rotation
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/accessibility/" class="toc__link ">
+                            <span class="toc__number">13.</span>
+                            Accessibility
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/networking/" class="toc__link ">
+                            <span class="toc__number">14.</span>
+                            Networking
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/sound/" class="toc__link ">
+                            <span class="toc__number">15.</span>
+                            Sound
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/cross-platform/" class="toc__link ">
+                            <span class="toc__number">16.</span>
+                            Cross-Platform Builds
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/advanced/" class="toc__link ">
+                            <span class="toc__number">17.</span>
+                            Advanced Topics
+                        </a>
+                    </li>
+                    
+                    
+                </ol>
+            </div>
+
+            
+            
+            
+        </div>
+    </nav>
+
+    <div class="sidebar__footer">
+        
+        <div class="sidebar__actions-mobile">
+            
+            
+
+            
+            
+
+            
+            
+            <a href="https:&#x2F;&#x2F;github.com&#x2F;TheRedDeveloper&#x2F;ply-engine" class="sidebar__github" target="_blank" rel="noopener noreferrer" aria-label="View project on GitHub (opens in new tab)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/>
+                    <path d="M9 18c-4.51 2-5-2-7-2"/>
+                </svg>
+                <span>View on GitHub</span>
+            </a>
+            
+        </div>
+    </div>
+</aside>
+
+
+
+
+        <div class="layout__main">
+            
+            
+
+
+
+
+<header class="header" role="banner">
+    <div class="header__left">
+        
+        
+        <button class="sidebar-toggle" type="button" aria-label="Toggle sidebar navigation" aria-expanded="true" aria-controls="sidebar" title="Toggle sidebar">
+            <svg class="sidebar-toggle__icon sidebar-toggle__icon--open" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect width="18" height="18" x="3" y="3" rx="2"/>
+                <path d="M9 3v18"/>
+                <path d="m16 15-3-3 3-3"/>
+            </svg>
+            <svg class="sidebar-toggle__icon sidebar-toggle__icon--closed" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect width="18" height="18" x="3" y="3" rx="2"/>
+                <path d="M9 3v18"/>
+                <path d="m14 9 3 3-3 3"/>
+            </svg>
+        </button>
+        
+
+        
+        
+        <button class="toc-toggle toc-toggle--docs" type="button" aria-label="Open table of contents" aria-expanded="false" aria-controls="sidebar" title="Table of contents">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect width="18" height="18" x="3" y="3" rx="2"/>
+                <path d="M9 3v18"/>
+                <path d="m16 15-3-3 3-3"/>
+            </svg>
+        </button>
+        
+
+        
+        
+
+        
+        
+
+        
+        <a href="https://plyx.iz.rs" class="header__logo" aria-label="Ply - Go to homepage">
+            
+            
+            
+            <img src="https://plyx.iz.rs/images/ply_logo.png" alt="Ply" class="header__logo-img">
+            
+        </a>
+    </div>
+
+    
+    <nav class="header__nav" role="navigation" aria-label="Main navigation">
+        
+            
+            <a href="/docs/getting-started/" class="header__link ">
+                Docs
+            </a>
+            
+            <a href="/examples/" class="header__link ">
+                Examples
+            </a>
+            
+            <a href="/blog/" class="header__link ">
+                Blog
+            </a>
+            
+        
+    </nav>
+
+    
+    <div class="header__actions" role="group" aria-label="Site actions">
+        
+        
+        <button class="search-toggle" type="button" aria-label="Open search dialog" aria-keyshortcuts="/" aria-haspopup="dialog" title="Search (press /)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="11" cy="11" r="8"/>
+                <path d="m21 21-4.3-4.3"/>
+            </svg>
+        </button>
+        
+
+        
+        <div class="header__actions-desktop">
+            
+            
+
+            
+            
+
+            
+            
+            <a href="https:&#x2F;&#x2F;github.com&#x2F;TheRedDeveloper&#x2F;ply-website&#x2F;edit&#x2F;main&#x2F;content/docs&#x2F;shaders-and-effects.md" class="btn btn--icon btn--ghost" aria-label="Edit this page on GitHub (opens in new tab)" target="_blank" rel="noopener noreferrer" title="Edit this page">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/>
+                    <path d="m15 5 4 4"/>
+                </svg>
+            </a>
+            
+
+            
+            
+            <a href="https:&#x2F;&#x2F;github.com&#x2F;TheRedDeveloper&#x2F;ply-engine" class="btn btn--icon btn--ghost" aria-label="View project on GitHub (opens in new tab)" target="_blank" rel="noopener noreferrer" title="GitHub">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/>
+                    <path d="M9 18c-4.51 2-5-2-7-2"/>
+                </svg>
+            </a>
+            
+        </div>
+    </div>
+</header>
+
+
+            
+
+            
+            
+            <div class="scroll-progress" aria-hidden="true">
+                <div class="scroll-progress__bar"></div>
+                <span class="scroll-progress__percent">0%</span>
+            </div>
+            
+
+            
+
+
+
+
+
+
+    
+
+
+    
+
+
+<nav class="nav-buttons" aria-label="Page navigation">
+    
+    
+    <a href="https://plyx.iz.rs/docs/text-styling/" class="nav-button nav-button--prev" aria-label="Previous: Text Styling">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m15 18-6-6 6-6"/>
+        </svg>
+        <span class="nav-button__label">
+            Text Styling
+            <span class="nav-button__shortcut">←</span>
+        </span>
+    </a>
+    
+
+    
+    
+    <a href="https://plyx.iz.rs/docs/rotation/" class="nav-button nav-button--next" aria-label="Next: Rotation">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m9 18 6-6-6-6"/>
+        </svg>
+        <span class="nav-button__label">
+            Rotation
+            <span class="nav-button__shortcut">→</span>
+        </span>
+    </a>
+    
+</nav>
+
+
+
+
+
+            <div class="layout__content-area">
+                <main id="main-content" class="main-content" role="main" aria-label="Main content">
+                    
+
+
+<article class="article" itemscope itemtype="https://schema.org/Article" aria-labelledby="article-title">
+    
+    <header class="article__header article__header--docs">
+        <h1 id="article-title" itemprop="headline">Shaders &amp; Effects</h1>
+        
+    </header>
+
+    <div class="article__content" itemprop="articleBody">
+        <p>Ply lets you apply fragment shaders to individual elements or groups of
+elements. Write standard GLSL ES 1.00 (compatible with both WebGL 1 and 2),
+pass uniforms, and get per-element post-processing without boilerplate.</p>
+<h2 id="per-element-effects"><a class="zola-anchor" href="#per-element-effects" aria-label="Anchor link for: per-element-effects">🔗</a>Per-element effects</h2>
+<p>Use <code>.effect()</code> to apply a shader to a single element. The shader
+receives the element's rendered content as <code>sampler2D Texture</code>:</p>
+<pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="rust"><span class="giallo-l"><span style="color: #CBA6F7;">const</span><span style="color: #FAB387;"> TINT</span><span style="color: #94E2D5;">:</span><span style="color: #F9E2AF;font-style: italic;"> ShaderAsset</span><span style="color: #94E2D5;"> =</span><span style="color: #F9E2AF;font-style: italic;"> ShaderAsset</span><span style="color: #94E2D5;">::</span><span style="color: #89B4FA;font-style: italic;">Path</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;shaders/tint.frag&quot;</span><span style="color: #9399B2;">);</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span>ui</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">element</span><span style="color: #9399B2;">()</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">width</span><span style="color: #9399B2;">(</span><span style="color: #89B4FA;font-style: italic;">fixed!</span><span style="color: #9399B2;">(</span><span style="color: #FAB387;">200</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #9399B2;">))</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">height</span><span style="color: #9399B2;">(</span><span style="color: #89B4FA;font-style: italic;">fixed!</span><span style="color: #9399B2;">(</span><span style="color: #FAB387;">100</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #9399B2;">))</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">background_color</span><span style="color: #9399B2;">(</span><span style="color: #FAB387;">0xE8E0DC</span><span style="color: #9399B2;">)</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">effect</span><span style="color: #9399B2;">(</span><span style="color: #94E2D5;">&amp;</span><span style="color: #FAB387;">TINT</span><span style="color: #9399B2;">,</span><span style="color: #94E2D5;"> |</span><span>s</span><span style="color: #94E2D5;">|</span><span> s</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">    .</span><span style="color: #89B4FA;font-style: italic;">uniform</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;u_time&quot;</span><span style="color: #9399B2;">,</span><span style="color: #89B4FA;font-style: italic;"> get_time</span><span style="color: #9399B2;">()</span><span style="color: #CBA6F7;"> as f32</span><span style="color: #9399B2;">)</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">    .</span><span style="color: #89B4FA;font-style: italic;">uniform</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;u_tint&quot;</span><span style="color: #9399B2;">, [</span><span style="color: #FAB387;">1</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #CBA6F7;">f32</span><span style="color: #9399B2;">,</span><span style="color: #FAB387;"> 0</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">3</span><span style="color: #9399B2;">,</span><span style="color: #FAB387;"> 0</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">2</span><span style="color: #9399B2;">,</span><span style="color: #FAB387;"> 0</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">5</span><span style="color: #9399B2;">])</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">  )</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">empty</span><span style="color: #9399B2;">();</span></span></code></pre>
+
+<iframe
+  class="demo-iframe"
+  src="/examples/shell.html?id=tint_shader_demo"
+  style="width: 100%; height: 150px; border: 1px solid #262220; border-radius: 12px; margin: 1.5rem 0;"
+  loading="lazy"
+  tabindex="-1"></iframe>
+<p>Every shader automatically gets two uniforms:</p>
+<ul>
+<li><code>u_resolution</code>: element width and height in pixels (<code>vec2</code>)</li>
+<li><code>u_position</code>: element position in screen space (<code>vec2</code>)</li>
+</ul>
+<h2 id="group-shaders"><a class="zola-anchor" href="#group-shaders" aria-label="Anchor link for: group-shaders">🔗</a>Group shaders</h2>
+<p>Use <code>.shader()</code> to capture an element and all its children into an
+offscreen buffer, then apply the shader as post-processing:</p>
+<pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="rust"><span class="giallo-l"><span>ui</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">element</span><span style="color: #9399B2;">()</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">shader</span><span style="color: #9399B2;">(</span><span style="color: #94E2D5;">&amp;</span><span style="color: #FAB387;">FOIL</span><span style="color: #9399B2;">,</span><span style="color: #94E2D5;"> |</span><span>s</span><span style="color: #94E2D5;">|</span><span> s</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">    .</span><span style="color: #89B4FA;font-style: italic;">uniform</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;u_time&quot;</span><span style="color: #9399B2;">,</span><span style="color: #89B4FA;font-style: italic;"> get_time</span><span style="color: #9399B2;">()</span><span style="color: #CBA6F7;"> as f32</span><span style="color: #9399B2;">)</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">    .</span><span style="color: #89B4FA;font-style: italic;">uniform</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;u_speed&quot;</span><span style="color: #9399B2;">,</span><span style="color: #FAB387;"> 1</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">5</span><span style="color: #CBA6F7;">f32</span><span style="color: #9399B2;">)</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">  )</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">children</span><span style="color: #9399B2;">(</span><span style="color: #94E2D5;">|</span><span>ui</span><span style="color: #94E2D5;">|</span><span style="color: #9399B2;"> {</span></span>
+<span class="giallo-l"><span>    ui</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">text</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;Shiny card&quot;</span><span style="color: #9399B2;">,</span><span style="color: #94E2D5;"> |</span><span>t</span><span style="color: #94E2D5;">|</span><span> t</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">font_size</span><span style="color: #9399B2;">(</span><span style="color: #FAB387;">18</span><span style="color: #9399B2;">)</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">color</span><span style="color: #9399B2;">(</span><span style="color: #FAB387;">0xFFFFFF</span><span style="color: #9399B2;">));</span></span>
+<span class="giallo-l"><span>    ui</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">element</span><span style="color: #9399B2;">()</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">      .</span><span style="color: #89B4FA;font-style: italic;">width</span><span style="color: #9399B2;">(</span><span style="color: #89B4FA;font-style: italic;">grow!</span><span style="color: #9399B2;">())</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">      .</span><span style="color: #89B4FA;font-style: italic;">height</span><span style="color: #9399B2;">(</span><span style="color: #89B4FA;font-style: italic;">fixed!</span><span style="color: #9399B2;">(</span><span style="color: #FAB387;">60</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #9399B2;">))</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">      .</span><span style="color: #89B4FA;font-style: italic;">background_color</span><span style="color: #9399B2;">(</span><span style="color: #FAB387;">0x3A3533</span><span style="color: #9399B2;">)</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">      .</span><span style="color: #89B4FA;font-style: italic;">empty</span><span style="color: #9399B2;">();</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">  });</span></span></code></pre>
+<p>Multiple <code>.shader()</code> calls nest, the first is innermost (closest to the content), later ones wrap previous:</p>
+<pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="rust"><span class="giallo-l"><span>ui</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">element</span><span style="color: #9399B2;">()</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">shader</span><span style="color: #9399B2;">(</span><span style="color: #94E2D5;">&amp;</span><span style="color: #FAB387;">BLUR_SHADER</span><span style="color: #9399B2;">,</span><span style="color: #94E2D5;"> |</span><span>s</span><span style="color: #94E2D5;">|</span><span> s</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">uniform</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;u_radius&quot;</span><span style="color: #9399B2;">,</span><span style="color: #FAB387;"> 4</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #CBA6F7;">f32</span><span style="color: #9399B2;">))</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">shader</span><span style="color: #9399B2;">(</span><span style="color: #94E2D5;">&amp;</span><span style="color: #FAB387;">COLOR_GRADE</span><span style="color: #9399B2;">,</span><span style="color: #94E2D5;"> |</span><span>s</span><span style="color: #94E2D5;">|</span><span> s</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">uniform</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;u_contrast&quot;</span><span style="color: #9399B2;">,</span><span style="color: #FAB387;"> 1</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">2</span><span style="color: #CBA6F7;">f32</span><span style="color: #9399B2;">))</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">children</span><span style="color: #9399B2;">(</span><span style="color: #94E2D5;">|</span><span>ui</span><span style="color: #94E2D5;">|</span><span style="color: #9399B2;"> {</span><span style="color: #9399B2;font-style: italic;"> /* ... */</span><span style="color: #9399B2;"> });</span></span></code></pre><h2 id="shaderasset"><a class="zola-anchor" href="#shaderasset" aria-label="Anchor link for: shaderasset">🔗</a>ShaderAsset</h2>
+<p>Three ways to provide shader source:</p>
+<table><thead><tr><th>Variant</th><th>Use case</th></tr></thead><tbody>
+<tr><td><code>ShaderAsset::Path("shaders/fx.frag")</code></td><td>File on disk</td></tr>
+<tr><td><code>ShaderAsset::Source { file_name, fragment }</code></td><td>Embedded in binary</td></tr>
+<tr><td><code>ShaderAsset::Stored("name")</code></td><td>Runtime-updateable</td></tr>
+</tbody></table>
+<h3 id="path"><a class="zola-anchor" href="#path" aria-label="Anchor link for: path">🔗</a>Path</h3>
+<pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="rust"><span class="giallo-l"><span style="color: #CBA6F7;">const</span><span style="color: #FAB387;"> WAVE</span><span style="color: #94E2D5;">:</span><span style="color: #F9E2AF;font-style: italic;"> ShaderAsset</span><span style="color: #94E2D5;"> =</span><span style="color: #F9E2AF;font-style: italic;"> ShaderAsset</span><span style="color: #94E2D5;">::</span><span style="color: #89B4FA;font-style: italic;">Path</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;shaders/wave.frag&quot;</span><span style="color: #9399B2;">);</span></span></code></pre>
+<p>Reads the file each time the material is created.</p>
+<h3 id="source"><a class="zola-anchor" href="#source" aria-label="Anchor link for: source">🔗</a>Source</h3>
+<pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="rust"><span class="giallo-l"><span style="color: #CBA6F7;">const</span><span style="color: #FAB387;"> WAVE</span><span style="color: #94E2D5;">:</span><span style="color: #F9E2AF;font-style: italic;"> ShaderAsset</span><span style="color: #94E2D5;"> =</span><span style="color: #F9E2AF;font-style: italic;"> ShaderAsset</span><span style="color: #94E2D5;">::</span><span style="color: #F9E2AF;font-style: italic;">Source</span><span style="color: #9399B2;"> {</span></span>
+<span class="giallo-l"><span>    file_name</span><span style="color: #94E2D5;">:</span><span style="color: #A6E3A1;"> &quot;wave&quot;</span><span style="color: #9399B2;">,</span></span>
+<span class="giallo-l"><span>    fragment</span><span style="color: #94E2D5;">:</span><span style="color: #89B4FA;font-style: italic;"> include_str!</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;../shaders/wave.frag&quot;</span><span style="color: #9399B2;">),</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">};</span></span></code></pre>
+<p>Baked into the binary. No file fetch at runtime.</p>
+<h3 id="stored-live-editable"><a class="zola-anchor" href="#stored-live-editable" aria-label="Anchor link for: stored-live-editable">🔗</a>Stored (live-editable)</h3>
+<pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="rust"><span class="giallo-l"><span style="color: #CBA6F7;">use</span><span style="color: #F9E2AF;"> ply_engine</span><span style="color: #94E2D5;">::</span><span style="color: #F9E2AF;">renderer</span><span style="color: #94E2D5;">::</span><span>set_shader_source</span><span style="color: #9399B2;">;</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #9399B2;font-style: italic;">// Update the source at any time:</span></span>
+<span class="giallo-l"><span style="color: #89B4FA;font-style: italic;">set_shader_source</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;live_shader&quot;</span><span style="color: #9399B2;">,</span><span style="color: #94E2D5;"> &amp;</span><span>editor_text</span><span style="color: #9399B2;">);</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #9399B2;font-style: italic;">// Reference it:</span></span>
+<span class="giallo-l"><span style="color: #CBA6F7;">const</span><span style="color: #FAB387;"> LIVE</span><span style="color: #94E2D5;">:</span><span style="color: #F9E2AF;font-style: italic;"> ShaderAsset</span><span style="color: #94E2D5;"> =</span><span style="color: #F9E2AF;font-style: italic;"> ShaderAsset</span><span style="color: #94E2D5;">::</span><span style="color: #89B4FA;font-style: italic;">Stored</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;live_shader&quot;</span><span style="color: #9399B2;">);</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span>ui</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">element</span><span style="color: #9399B2;">()</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">effect</span><span style="color: #9399B2;">(</span><span style="color: #94E2D5;">&amp;</span><span style="color: #FAB387;">LIVE</span><span style="color: #9399B2;">,</span><span style="color: #94E2D5;"> |</span><span>s</span><span style="color: #94E2D5;">|</span><span> s</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">uniform</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;u_time&quot;</span><span style="color: #9399B2;">,</span><span style="color: #89B4FA;font-style: italic;"> get_time</span><span style="color: #9399B2;">()</span><span style="color: #CBA6F7;"> as f32</span><span style="color: #9399B2;">))</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">empty</span><span style="color: #9399B2;">();</span></span></code></pre>
+<p>When the source changes, the old compiled material is evicted
+automatically. The next render pass recompiles.</p>
+<h2 id="uniform-types"><a class="zola-anchor" href="#uniform-types" aria-label="Anchor link for: uniform-types">🔗</a>Uniform types</h2>
+<p><code>.uniform()</code> accepts anything that implements <code>Into&lt;ShaderUniformValue&gt;</code>:</p>
+<table><thead><tr><th>Rust type</th><th>GLSL type</th></tr></thead><tbody>
+<tr><td><code>f32</code></td><td><code>float</code></td></tr>
+<tr><td><code>[f32; 2]</code></td><td><code>vec2</code></td></tr>
+<tr><td><code>[f32; 3]</code></td><td><code>vec3</code></td></tr>
+<tr><td><code>[f32; 4]</code></td><td><code>vec4</code></td></tr>
+<tr><td><code>i32</code></td><td><code>int</code></td></tr>
+<tr><td><code>[[f32; 4]; 4]</code></td><td><code>mat4</code></td></tr>
+</tbody></table>
+<h2 id="built-in-shaders"><a class="zola-anchor" href="#built-in-shaders" aria-label="Anchor link for: built-in-shaders">🔗</a>Built-in shaders</h2>
+<p>Enable with the <code>built-in-shaders</code> feature:</p>
+<pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="toml"><span class="giallo-l"><span style="color: #9399B2;">[</span><span>dependencies</span><span style="color: #9399B2;">]</span></span>
+<span class="giallo-l"><span>ply-engine</span><span style="color: #94E2D5;"> =</span><span style="color: #9399B2;"> {</span><span> version</span><span style="color: #94E2D5;"> =</span><span style="color: #A6E3A1;"> &quot;1.0&quot;</span><span style="color: #9399B2;">,</span><span> features</span><span style="color: #94E2D5;"> =</span><span style="color: #9399B2;"> [</span><span style="color: #A6E3A1;">&quot;built-in-shaders&quot;</span><span style="color: #9399B2;">] }</span></span></code></pre>
+<p>Or add it with the CLI:</p>
+<pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="shellscript"><span class="giallo-l"><span style="color: #89B4FA;font-style: italic;">plyx</span><span style="color: #A6E3A1;"> add built-in-shaders</span></span></code></pre>
+<p>Built-in shaders are automatically included in the prelude.</p>
+<h3 id="foil"><a class="zola-anchor" href="#foil" aria-label="Anchor link for: foil">🔗</a>FOIL</h3>
+<pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="rust"><span class="giallo-l"><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">effect</span><span style="color: #9399B2;">(</span><span style="color: #94E2D5;">&amp;</span><span style="color: #FAB387;">FOIL</span><span style="color: #9399B2;">,</span><span style="color: #94E2D5;"> |</span><span>s</span><span style="color: #94E2D5;">|</span><span> s</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">uniform</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;u_time&quot;</span><span style="color: #9399B2;">,</span><span style="color: #89B4FA;font-style: italic;"> get_time</span><span style="color: #9399B2;">()</span><span style="color: #CBA6F7;"> as f32</span><span style="color: #9399B2;">)</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">uniform</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;u_speed&quot;</span><span style="color: #9399B2;">,</span><span style="color: #FAB387;"> 1</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #CBA6F7;">f32</span><span style="color: #9399B2;">)</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">uniform</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;u_intensity&quot;</span><span style="color: #9399B2;">,</span><span style="color: #FAB387;"> 0</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">3</span><span style="color: #CBA6F7;">f32</span><span style="color: #9399B2;">)</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">)</span></span></code></pre><h3 id="holographic"><a class="zola-anchor" href="#holographic" aria-label="Anchor link for: holographic">🔗</a>HOLOGRAPHIC</h3>
+<pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="rust"><span class="giallo-l"><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">effect</span><span style="color: #9399B2;">(</span><span style="color: #94E2D5;">&amp;</span><span style="color: #FAB387;">HOLOGRAPHIC</span><span style="color: #9399B2;">,</span><span style="color: #94E2D5;"> |</span><span>s</span><span style="color: #94E2D5;">|</span><span> s</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">uniform</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;u_time&quot;</span><span style="color: #9399B2;">,</span><span style="color: #89B4FA;font-style: italic;"> get_time</span><span style="color: #9399B2;">()</span><span style="color: #CBA6F7;"> as f32</span><span style="color: #9399B2;">)</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">uniform</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;u_speed&quot;</span><span style="color: #9399B2;">,</span><span style="color: #FAB387;"> 1</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #CBA6F7;">f32</span><span style="color: #9399B2;">)</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">uniform</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;u_saturation&quot;</span><span style="color: #9399B2;">,</span><span style="color: #FAB387;"> 0</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">7</span><span style="color: #CBA6F7;">f32</span><span style="color: #9399B2;">)</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">)</span></span></code></pre><h3 id="dissolve"><a class="zola-anchor" href="#dissolve" aria-label="Anchor link for: dissolve">🔗</a>DISSOLVE</h3>
+<pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="rust"><span class="giallo-l"><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">effect</span><span style="color: #9399B2;">(</span><span style="color: #94E2D5;">&amp;</span><span style="color: #FAB387;">DISSOLVE</span><span style="color: #9399B2;">,</span><span style="color: #94E2D5;"> |</span><span>s</span><span style="color: #94E2D5;">|</span><span> s</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">uniform</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;u_threshold&quot;</span><span style="color: #9399B2;">,</span><span> progress</span><span style="color: #9399B2;">)</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">uniform</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;u_edge_color&quot;</span><span style="color: #9399B2;">, [</span><span style="color: #FAB387;">1</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #CBA6F7;">f32</span><span style="color: #9399B2;">,</span><span style="color: #FAB387;"> 0</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">5</span><span style="color: #9399B2;">,</span><span style="color: #FAB387;"> 0</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #9399B2;">,</span><span style="color: #FAB387;"> 1</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #9399B2;">])</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">uniform</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;u_edge_width&quot;</span><span style="color: #9399B2;">,</span><span style="color: #FAB387;"> 0</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">05</span><span style="color: #CBA6F7;">f32</span><span style="color: #9399B2;">)</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">uniform</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;u_seed&quot;</span><span style="color: #9399B2;">,</span><span style="color: #FAB387;"> 42</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #CBA6F7;">f32</span><span style="color: #9399B2;">)</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">)</span></span></code></pre><h3 id="glow"><a class="zola-anchor" href="#glow" aria-label="Anchor link for: glow">🔗</a>GLOW</h3>
+<pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="rust"><span class="giallo-l"><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">effect</span><span style="color: #9399B2;">(</span><span style="color: #94E2D5;">&amp;</span><span style="color: #FAB387;">GLOW</span><span style="color: #9399B2;">,</span><span style="color: #94E2D5;"> |</span><span>s</span><span style="color: #94E2D5;">|</span><span> s</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">uniform</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;u_glow_color&quot;</span><span style="color: #9399B2;">, [</span><span style="color: #FAB387;">0</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #CBA6F7;">f32</span><span style="color: #9399B2;">,</span><span style="color: #FAB387;"> 0</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">5</span><span style="color: #9399B2;">,</span><span style="color: #FAB387;"> 1</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #9399B2;">,</span><span style="color: #FAB387;"> 1</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #9399B2;">])</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">uniform</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;u_glow_radius&quot;</span><span style="color: #9399B2;">,</span><span style="color: #FAB387;"> 0</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">05</span><span style="color: #CBA6F7;">f32</span><span style="color: #9399B2;">)</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">uniform</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;u_glow_intensity&quot;</span><span style="color: #9399B2;">,</span><span style="color: #FAB387;"> 1</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #CBA6F7;">f32</span><span style="color: #9399B2;">)</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">)</span></span></code></pre><h3 id="crt"><a class="zola-anchor" href="#crt" aria-label="Anchor link for: crt">🔗</a>CRT</h3>
+<pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="rust"><span class="giallo-l"><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">effect</span><span style="color: #9399B2;">(</span><span style="color: #94E2D5;">&amp;</span><span style="color: #FAB387;">CRT</span><span style="color: #9399B2;">,</span><span style="color: #94E2D5;"> |</span><span>s</span><span style="color: #94E2D5;">|</span><span> s</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">uniform</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;u_line_count&quot;</span><span style="color: #9399B2;">,</span><span style="color: #FAB387;"> 100</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #CBA6F7;">f32</span><span style="color: #9399B2;">)</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">uniform</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;u_intensity&quot;</span><span style="color: #9399B2;">,</span><span style="color: #FAB387;"> 0</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">3</span><span style="color: #CBA6F7;">f32</span><span style="color: #9399B2;">)</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">uniform</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;u_time&quot;</span><span style="color: #9399B2;">,</span><span style="color: #89B4FA;font-style: italic;"> get_time</span><span style="color: #9399B2;">()</span><span style="color: #CBA6F7;"> as f32</span><span style="color: #9399B2;">)</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">)</span></span></code></pre><h3 id="gradient-linear"><a class="zola-anchor" href="#gradient-linear" aria-label="Anchor link for: gradient-linear">🔗</a>GRADIENT_LINEAR</h3>
+<pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="rust"><span class="giallo-l"><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">effect</span><span style="color: #9399B2;">(</span><span style="color: #94E2D5;">&amp;</span><span style="color: #FAB387;">GRADIENT_LINEAR</span><span style="color: #9399B2;">,</span><span style="color: #94E2D5;"> |</span><span>s</span><span style="color: #94E2D5;">|</span><span> s</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">uniform</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;u_color_a&quot;</span><span style="color: #9399B2;">, [</span><span style="color: #FAB387;">0</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">73</span><span style="color: #CBA6F7;">f32</span><span style="color: #9399B2;">,</span><span style="color: #FAB387;"> 0</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">08</span><span style="color: #9399B2;">,</span><span style="color: #FAB387;"> 0</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">08</span><span style="color: #9399B2;">,</span><span style="color: #FAB387;"> 1</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #9399B2;">])</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">uniform</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;u_color_b&quot;</span><span style="color: #9399B2;">, [</span><span style="color: #FAB387;">1</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #CBA6F7;">f32</span><span style="color: #9399B2;">,</span><span style="color: #FAB387;"> 0</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">76</span><span style="color: #9399B2;">,</span><span style="color: #FAB387;"> 0</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">17</span><span style="color: #9399B2;">,</span><span style="color: #FAB387;"> 1</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #9399B2;">])</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">uniform</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;u_angle&quot;</span><span style="color: #9399B2;">,</span><span style="color: #FAB387;"> 0</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #CBA6F7;">f32</span><span style="color: #9399B2;">)</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">)</span></span></code></pre><h3 id="gradient-radial"><a class="zola-anchor" href="#gradient-radial" aria-label="Anchor link for: gradient-radial">🔗</a>GRADIENT_RADIAL</h3>
+<pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="rust"><span class="giallo-l"><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">effect</span><span style="color: #9399B2;">(</span><span style="color: #94E2D5;">&amp;</span><span style="color: #FAB387;">GRADIENT_RADIAL</span><span style="color: #9399B2;">,</span><span style="color: #94E2D5;"> |</span><span>s</span><span style="color: #94E2D5;">|</span><span> s</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">uniform</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;u_color_a&quot;</span><span style="color: #9399B2;">, [</span><span style="color: #FAB387;">1</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #CBA6F7;">f32</span><span style="color: #9399B2;">,</span><span style="color: #FAB387;"> 0</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">4</span><span style="color: #9399B2;">,</span><span style="color: #FAB387;"> 0</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">3</span><span style="color: #9399B2;">,</span><span style="color: #FAB387;"> 1</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #9399B2;">])</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">uniform</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;u_color_b&quot;</span><span style="color: #9399B2;">, [</span><span style="color: #FAB387;">0</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">15</span><span style="color: #CBA6F7;">f32</span><span style="color: #9399B2;">,</span><span style="color: #FAB387;"> 0</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">13</span><span style="color: #9399B2;">,</span><span style="color: #FAB387;"> 0</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">12</span><span style="color: #9399B2;">,</span><span style="color: #FAB387;"> 1</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #9399B2;">])</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">uniform</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;u_center&quot;</span><span style="color: #9399B2;">, [</span><span style="color: #FAB387;">0</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">5</span><span style="color: #CBA6F7;">f32</span><span style="color: #9399B2;">,</span><span style="color: #FAB387;"> 0</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">5</span><span style="color: #9399B2;">])</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">uniform</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;u_radius&quot;</span><span style="color: #9399B2;">,</span><span style="color: #FAB387;"> 0</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">5</span><span style="color: #CBA6F7;">f32</span><span style="color: #9399B2;">)</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">)</span></span></code></pre><h3 id="gradient-conic"><a class="zola-anchor" href="#gradient-conic" aria-label="Anchor link for: gradient-conic">🔗</a>GRADIENT_CONIC</h3>
+<pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="rust"><span class="giallo-l"><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">effect</span><span style="color: #9399B2;">(</span><span style="color: #94E2D5;">&amp;</span><span style="color: #FAB387;">GRADIENT_CONIC</span><span style="color: #9399B2;">,</span><span style="color: #94E2D5;"> |</span><span>s</span><span style="color: #94E2D5;">|</span><span> s</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">uniform</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;u_color_a&quot;</span><span style="color: #9399B2;">, [</span><span style="color: #FAB387;">1</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #CBA6F7;">f32</span><span style="color: #9399B2;">,</span><span style="color: #FAB387;"> 0</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">76</span><span style="color: #9399B2;">,</span><span style="color: #FAB387;"> 0</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">17</span><span style="color: #9399B2;">,</span><span style="color: #FAB387;"> 1</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #9399B2;">])</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">uniform</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;u_color_b&quot;</span><span style="color: #9399B2;">, [</span><span style="color: #FAB387;">0</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">73</span><span style="color: #CBA6F7;">f32</span><span style="color: #9399B2;">,</span><span style="color: #FAB387;"> 0</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">08</span><span style="color: #9399B2;">,</span><span style="color: #FAB387;"> 0</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">08</span><span style="color: #9399B2;">,</span><span style="color: #FAB387;"> 1</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #9399B2;">])</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">uniform</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;u_center&quot;</span><span style="color: #9399B2;">, [</span><span style="color: #FAB387;">0</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">5</span><span style="color: #CBA6F7;">f32</span><span style="color: #9399B2;">,</span><span style="color: #FAB387;"> 0</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">5</span><span style="color: #9399B2;">])</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">uniform</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;u_offset&quot;</span><span style="color: #9399B2;">,</span><span style="color: #FAB387;"> 0</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #CBA6F7;">f32</span><span style="color: #9399B2;">)</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">uniform</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;u_hardness&quot;</span><span style="color: #9399B2;">,</span><span style="color: #FAB387;"> 0</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #CBA6F7;">f32</span><span style="color: #9399B2;">)</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">)</span></span></code></pre><h2 id="writing-a-shader"><a class="zola-anchor" href="#writing-a-shader" aria-label="Anchor link for: writing-a-shader">🔗</a>Writing a shader</h2>
+<p>Shaders are GLSL ES 1.00 fragment shaders. Ply's default vertex shader is
+<code>#version 100</code>, so your fragment shaders must also be <code>#version 100</code>.
+The shaded content is available as <code>sampler2D Texture</code> and the UV coordinates
+come from the bounding box:</p>
+<pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="glsl"><span class="giallo-l"><span>#version </span><span style="color: #FAB387;">100</span></span>
+<span class="giallo-l"><span>precision highp </span><span style="color: #CBA6F7;">float</span><span style="color: #9399B2;">;</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #CBA6F7;">varying</span><span> lowp </span><span style="color: #CBA6F7;">vec2</span><span> uv</span><span style="color: #9399B2;">;</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #CBA6F7;">uniform sampler2D</span><span> Texture</span><span style="color: #9399B2;">;</span></span>
+<span class="giallo-l"><span style="color: #CBA6F7;">uniform vec2</span><span> u_resolution</span><span style="color: #9399B2;">;</span></span>
+<span class="giallo-l"><span style="color: #CBA6F7;">uniform vec2</span><span> u_position</span><span style="color: #9399B2;">;</span></span>
+<span class="giallo-l"><span style="color: #CBA6F7;">uniform float</span><span> u_time</span><span style="color: #9399B2;">;</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #CBA6F7;">void</span><span style="color: #89B4FA;font-style: italic;"> main</span><span style="color: #9399B2;">() {</span></span>
+<span class="giallo-l"><span>    vec4 color </span><span style="color: #94E2D5;">=</span><span style="color: #89B4FA;font-style: italic;"> texture2D</span><span style="color: #9399B2;">(</span><span>Texture</span><span style="color: #9399B2;">,</span><span> uv</span><span style="color: #9399B2;">);</span></span>
+<span class="giallo-l"><span style="color: #9399B2;font-style: italic;">    // Tint red based on time</span></span>
+<span class="giallo-l"><span>    color</span><span style="color: #9399B2;">.</span><span>r</span><span style="color: #94E2D5;"> =</span><span style="color: #89B4FA;font-style: italic;"> mix</span><span style="color: #9399B2;">(</span><span>color</span><span style="color: #9399B2;">.</span><span>r</span><span style="color: #9399B2;">,</span><span style="color: #FAB387;"> 1.0</span><span style="color: #9399B2;">,</span><span style="color: #89B4FA;font-style: italic;"> sin</span><span style="color: #9399B2;">(</span><span>u_time</span><span style="color: #9399B2;">)</span><span style="color: #94E2D5;"> *</span><span style="color: #FAB387;"> 0.5</span><span style="color: #94E2D5;"> +</span><span style="color: #FAB387;"> 0.5</span><span style="color: #9399B2;">);</span></span>
+<span class="giallo-l"><span>    gl_FragColor </span><span style="color: #94E2D5;">=</span><span> color</span><span style="color: #9399B2;">;</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">}</span></span></code></pre><h2 id="shader-build-pipeline"><a class="zola-anchor" href="#shader-build-pipeline" aria-label="Anchor link for: shader-build-pipeline">🔗</a>Shader build pipeline</h2>
+<p>For larger projects, use the <code>shader-build</code> feature to compile <code>.frag</code>
+and <code>.slang</code> files via a <code>build.rs</code> script:</p>
+<pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="toml"><span class="giallo-l"><span style="color: #9399B2;">[</span><span>build-dependencies</span><span style="color: #9399B2;">]</span></span>
+<span class="giallo-l"><span>ply-engine</span><span style="color: #94E2D5;"> =</span><span style="color: #9399B2;"> {</span><span> version</span><span style="color: #94E2D5;"> =</span><span style="color: #A6E3A1;"> &quot;1.0&quot;</span><span style="color: #9399B2;">,</span><span> default_features</span><span style="color: #94E2D5;"> =</span><span style="color: #FAB387;"> false</span><span style="color: #9399B2;">,</span><span> features</span><span style="color: #94E2D5;"> =</span><span style="color: #9399B2;"> [</span><span style="color: #A6E3A1;">&quot;shader-build&quot;</span><span style="color: #9399B2;">] }</span></span></code></pre><pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="rust"><span class="giallo-l"><span style="color: #CBA6F7;">use</span><span style="color: #F9E2AF;"> ply_engine</span><span style="color: #94E2D5;">::</span><span style="color: #F9E2AF;">shader_build</span><span style="color: #94E2D5;">::</span><span style="color: #F9E2AF;font-style: italic;">ShaderBuild</span><span style="color: #9399B2;">;</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #CBA6F7;">fn</span><span style="color: #89B4FA;font-style: italic;"> main</span><span style="color: #9399B2;">() {</span></span>
+<span class="giallo-l"><span style="color: #F9E2AF;font-style: italic;">  ShaderBuild</span><span style="color: #94E2D5;">::</span><span style="color: #89B4FA;font-style: italic;">new</span><span style="color: #9399B2;">()</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">    .</span><span style="color: #89B4FA;font-style: italic;">source_dir</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;shaders/&quot;</span><span style="color: #9399B2;">)</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">    .</span><span style="color: #89B4FA;font-style: italic;">output_dir</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;assets/build/shaders/&quot;</span><span style="color: #9399B2;">)</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">    .</span><span style="color: #89B4FA;font-style: italic;">build</span><span style="color: #9399B2;">();</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">}</span></span></code></pre>
+<p>Or initialize it with the CLI:</p>
+<pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="shellscript"><span class="giallo-l"><span style="color: #89B4FA;font-style: italic;">plyx</span><span style="color: #A6E3A1;"> add shader-pipeline</span></span></code></pre>
+<p>This compiles all <code>.hlsl</code> and <code>.slang</code> files to GLSL ES 1.00, with
+hash-based incremental rebuilds. Files go through SPIR-V cross-compilation.</p>
+<p>Custom file types can be handled too:</p>
+<pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="rust"><span class="giallo-l"><span style="color: #F9E2AF;font-style: italic;">ShaderBuild</span><span style="color: #94E2D5;">::</span><span style="color: #89B4FA;font-style: italic;">new</span><span style="color: #9399B2;">()</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">override_file_type_handler</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;.wgsl&quot;</span><span style="color: #9399B2;">,</span><span style="color: #94E2D5;"> |</span><span>file_path</span><span style="color: #9399B2;">,</span><span> output_dir</span><span style="color: #94E2D5;">|</span><span style="color: #9399B2;"> {</span></span>
+<span class="giallo-l"><span style="color: #9399B2;font-style: italic;">    // Custom compilation logic</span></span>
+<span class="giallo-l"><span style="color: #89B4FA;font-style: italic;">    vec!</span><span style="color: #9399B2;">[</span><span style="color: #A6E3A1;">&quot;shaders/includes/**/*.wgsl&quot;</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">to_string</span><span style="color: #9399B2;">()]</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">  })</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">build</span><span style="color: #9399B2;">();</span></span></code></pre><h2 id="next-steps"><a class="zola-anchor" href="#next-steps" aria-label="Anchor link for: next-steps">🔗</a>Next steps</h2>
+<p>→ <a href="/docs/rotation/">Rotation</a></p>
+
+    </div>
+
+    
+    
+    <meta itemprop="author" content="TheRedDeveloper">
+    
+    
+</article>
+
+
+
+<nav class="page-nav" aria-label="Page navigation">
+    
+
+    
+</nav>
+
+
+
+                </main>
+
+                
+                
+                
+
+
+
+
+<aside id="page-toc-panel" class="page-toc-panel" aria-hidden="true" aria-label="On this page">
+    <div class="page-toc-panel__content">
+        <div class="page-toc-panel__header">
+            <span class="page-toc-panel__title">On this page</span>
+            <button class="page-toc-panel__close" type="button" aria-label="Close table of contents">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M18 6 6 18"/>
+                    <path d="m6 6 12 12"/>
+                </svg>
+            </button>
+        </div>
+        <nav class="page-toc-panel__nav" aria-label="Page sections">
+            <ul class="page-toc-panel__list">
+                
+                <li class="page-toc-panel__item">
+                    <a href="#per-element-effects" class="page-toc-panel__link">
+                        Per-element effects
+                    </a>
+                    
+                </li>
+                
+                <li class="page-toc-panel__item">
+                    <a href="#group-shaders" class="page-toc-panel__link">
+                        Group shaders
+                    </a>
+                    
+                </li>
+                
+                <li class="page-toc-panel__item">
+                    <a href="#shaderasset" class="page-toc-panel__link">
+                        ShaderAsset
+                    </a>
+                    
+                    <ul class="page-toc-panel__list page-toc-panel__list--nested">
+                        
+                        <li class="page-toc-panel__item">
+                            <a href="#path" class="page-toc-panel__link">
+                                Path
+                            </a>
+                        </li>
+                        
+                        <li class="page-toc-panel__item">
+                            <a href="#source" class="page-toc-panel__link">
+                                Source
+                            </a>
+                        </li>
+                        
+                        <li class="page-toc-panel__item">
+                            <a href="#stored-live-editable" class="page-toc-panel__link">
+                                Stored (live-editable)
+                            </a>
+                        </li>
+                        
+                    </ul>
+                    
+                </li>
+                
+                <li class="page-toc-panel__item">
+                    <a href="#uniform-types" class="page-toc-panel__link">
+                        Uniform types
+                    </a>
+                    
+                </li>
+                
+                <li class="page-toc-panel__item">
+                    <a href="#built-in-shaders" class="page-toc-panel__link">
+                        Built-in shaders
+                    </a>
+                    
+                    <ul class="page-toc-panel__list page-toc-panel__list--nested">
+                        
+                        <li class="page-toc-panel__item">
+                            <a href="#foil" class="page-toc-panel__link">
+                                FOIL
+                            </a>
+                        </li>
+                        
+                        <li class="page-toc-panel__item">
+                            <a href="#holographic" class="page-toc-panel__link">
+                                HOLOGRAPHIC
+                            </a>
+                        </li>
+                        
+                        <li class="page-toc-panel__item">
+                            <a href="#dissolve" class="page-toc-panel__link">
+                                DISSOLVE
+                            </a>
+                        </li>
+                        
+                        <li class="page-toc-panel__item">
+                            <a href="#glow" class="page-toc-panel__link">
+                                GLOW
+                            </a>
+                        </li>
+                        
+                        <li class="page-toc-panel__item">
+                            <a href="#crt" class="page-toc-panel__link">
+                                CRT
+                            </a>
+                        </li>
+                        
+                        <li class="page-toc-panel__item">
+                            <a href="#gradient-linear" class="page-toc-panel__link">
+                                GRADIENT_LINEAR
+                            </a>
+                        </li>
+                        
+                        <li class="page-toc-panel__item">
+                            <a href="#gradient-radial" class="page-toc-panel__link">
+                                GRADIENT_RADIAL
+                            </a>
+                        </li>
+                        
+                        <li class="page-toc-panel__item">
+                            <a href="#gradient-conic" class="page-toc-panel__link">
+                                GRADIENT_CONIC
+                            </a>
+                        </li>
+                        
+                    </ul>
+                    
+                </li>
+                
+                <li class="page-toc-panel__item">
+                    <a href="#writing-a-shader" class="page-toc-panel__link">
+                        Writing a shader
+                    </a>
+                    
+                </li>
+                
+                <li class="page-toc-panel__item">
+                    <a href="#shader-build-pipeline" class="page-toc-panel__link">
+                        Shader build pipeline
+                    </a>
+                    
+                </li>
+                
+                <li class="page-toc-panel__item">
+                    <a href="#next-steps" class="page-toc-panel__link">
+                        Next steps
+                    </a>
+                    
+                </li>
+                
+            </ul>
+        </nav>
+    </div>
+</aside>
+
+
+                
+            </div>
+
+            
+            
+            
+        </div>
+    </div>
+
+    
+    <div class="sidebar-overlay" aria-hidden="true"></div>
+
+    
+    
+    
+<div class="search-overlay" role="dialog" aria-modal="true" aria-labelledby="search-title" aria-describedby="search-description">
+    <div class="search">
+        <h2 id="search-title" class="sr-only">Search documentation</h2>
+        <p id="search-description" class="sr-only">Type to search. Use arrow keys to navigate results, Enter to select, Escape to close.</p>
+
+        <div class="search__input-wrapper">
+            <span class="search__icon" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"/>
+                    <path d="m21 21-4.3-4.3"/>
+                </svg>
+            </span>
+            <input
+                type="search"
+                class="search__input"
+                placeholder="Search documentation..."
+                autocomplete="off"
+                autofocus
+                aria-label="Search query"
+                aria-controls="search-results"
+                aria-autocomplete="list"
+            >
+            <span class="search__shortcut" aria-hidden="true">/</span>
+            <button class="search__close" type="button" aria-label="Close search dialog" title="Close (Esc)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M18 6 6 18"/>
+                    <path d="m6 6 12 12"/>
+                </svg>
+            </button>
+        </div>
+
+        <div id="search-results" class="search__results" role="listbox" aria-label="Search results">
+            
+        </div>
+
+        <footer class="search__footer">
+            <nav class="search__hints" aria-label="Keyboard shortcuts">
+                <span class="search__hint">
+                    <kbd aria-label="Up and down arrows">↑</kbd><kbd aria-hidden="true">↓</kbd> <span>Navigate</span>
+                </span>
+                <span class="search__hint">
+                    <kbd aria-label="Enter">↵</kbd> <span>Select</span>
+                </span>
+                <span class="search__hint">
+                    <kbd aria-label="Escape">esc</kbd> <span>Close</span>
+                </span>
+            </nav>
+            <span class="search__powered-by">Powered by <a href="https://github.com/weixsong/elasticlunr.js" target="_blank" rel="noopener noreferrer" aria-label="elasticlunr.js on GitHub (opens in new tab)">elasticlunr</a></span>
+        </footer>
+    </div>
+</div>
+
+    
+
+    
+    
+
+    
+    
+
+    
+    
+    
+    <button class="page-toc-toggle" type="button" aria-label="Toggle table of contents" aria-expanded="false" aria-controls="page-toc-panel" title="On this page">
+        <svg class="page-toc-toggle__icon page-toc-toggle__icon--list" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M16 5H3"/>
+            <path d="M16 12H3"/>
+            <path d="M16 19H3"/>
+            <path d="M21 5h.01"/>
+            <path d="M21 12h.01"/>
+            <path d="M21 19h.01"/>
+        </svg>
+        <svg class="page-toc-toggle__icon page-toc-toggle__icon--close" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M18 6 6 18"/>
+            <path d="m6 6 12 12"/>
+        </svg>
+    </button>
+    
+
+    
+    
+    <button class="fab scroll-to-top" aria-label="Scroll to top" title="Scroll to top">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="m18 15-6-6-6 6"/>
+        </svg>
+    </button>
+    
+
+    
+    
+    
+    <script src="https://plyx.iz.rs/js/theme.js" defer></script>
+    <script src="https://plyx.iz.rs/js/navigation.js" defer></script>
+    <script src="https://plyx.iz.rs/js/code.js" defer></script>
+    <script src="https://plyx.iz.rs/js/interactive.js" defer></script>
+
+    
+    <script src="https://plyx.iz.rs/elasticlunr.min.js"></script>
+    <script src="https://plyx.iz.rs/search_index.en.js"></script>
+    <script src="https://plyx.iz.rs/js/search.js" defer></script>
+    
+    
+
+    
+</body>
+</html>

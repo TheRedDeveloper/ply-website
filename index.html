@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" prefix="og: https://ogp.me/ns#">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="dark">
+
+    
+    <title>Ply — Beautiful apps in Rust. Cross-platform. Dead simple. | Ply</title>
+
+    
+    
+    <meta name="description" content="Beautiful UIs in Rust. Cross-platform. Dead simple.">
+    
+
+    
+    
+    <meta name="keywords" content="ply, ply-engine, rust, ui, engine, cross-platform, layout, graphics, gamedev">
+    
+
+    
+    
+    <meta name="author" content="TheRedDeveloper">
+    
+
+    
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+
+    
+    
+    <link rel="canonical" href="https://plyx.iz.rs/">
+    <link rel="alternate" hreflang="en" href="https://plyx.iz.rs/">
+    <link rel="alternate" hreflang="x-default" href="https://plyx.iz.rs/">
+    
+
+    
+    <meta property="og:type" content="website">
+    
+    <meta property="og:url" content="https://plyx.iz.rs/">
+    
+    
+    <meta property="og:title" content="Ply">
+    
+    
+    <meta property="og:description" content="Beautiful UIs in Rust. Cross-platform. Dead simple.">
+    
+    
+    <meta property="og:site_name" content="Ply">
+    <meta property="og:locale" content="en">
+
+    
+    
+
+    
+    <meta name="twitter:card" content="summary_large_image">
+    
+    <meta name="twitter:url" content="https://plyx.iz.rs/">
+    
+    
+    <meta name="twitter:title" content="Ply">
+    
+    
+    <meta name="twitter:description" content="Beautiful UIs in Rust. Cross-platform. Dead simple.">
+    
+    
+    
+
+    
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "WebSite",
+                "@id": "https://plyx.iz.rs#website",
+                "url": "https://plyx.iz.rs",
+                "name": "Ply",
+                "description": "Beautiful apps in Rust. Cross-platform. Dead simple.",
+                "publisher": {
+                    "@id": "https://plyx.iz.rs/#organization"
+                },
+                "inLanguage": "en",
+                "potentialAction": {
+                    "@type": "SearchAction",
+                    "target": {
+                        "@type": "EntryPoint",
+                        "urlTemplate": "https://plyx.iz.rs?q={search_term_string}"
+                    },
+                    "query-input": "required name=search_term_string"
+                }
+            },
+            {
+                "@type": "Organization",
+                "@id": "https://plyx.iz.rs/#organization",
+                "name": "TheRedDeveloper",
+                "url": "https://plyx.iz.rs"
+            },
+            {
+                "@type": "WebPage",
+                "@id": "https://plyx.iz.rs/#webpage",
+                "url": "https://plyx.iz.rs/",
+                "name": "Ply",
+                "isPartOf": {
+                    "@id": "https://plyx.iz.rs#website"
+                },
+                "description": "Beautiful UIs in Rust. Cross-platform. Dead simple.",
+                "inLanguage": "en"
+                
+                
+            }
+            
+        ]
+    }
+    </script>
+
+    
+    
+
+    
+    <link rel="stylesheet" href="https://plyx.iz.rs/style.css">
+
+    
+
+    
+    <link rel="preload" href="https://plyx.iz.rs/fonts/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="https://plyx.iz.rs/fonts/GeistMono-Variable.woff2" as="font" type="font/woff2" crossorigin>
+
+    
+    
+    <link rel="icon" href="https://plyx.iz.rs/images/favicon.png">
+    
+    
+
+    
+    
+
+    
+    
+    
+    <script>
+        (function() {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            document.documentElement.dataset.userColorScheme = 'dark';
+            // Pre-apply sidebar collapsed state
+            if (localStorage.getItem('tanuki-sidebar-collapsed') === 'true') {
+                document.documentElement.classList.add('sidebar-start-collapsed');
+            }
+            // Pre-apply saved sidebar width
+            var savedWidth = localStorage.getItem('tanuki-sidebar-width');
+            if (savedWidth) {
+                document.documentElement.style.setProperty('--sidebar-width', savedWidth + 'px');
+                var s = document.createElement('style');
+                s.id = 'sidebar-width-preload';
+                s.textContent = '.sidebar { --sidebar-width: ' + savedWidth + 'px !important; }';
+                document.head.appendChild(s);
+            }
+        })();
+    </script>
+    <style>
+        /* Prevent sidebar transition on initial page load when user had it collapsed */
+        .sidebar-start-collapsed .sidebar {
+            width: 0 !important;
+            min-width: 0 !important;
+            border-right: none !important;
+            overflow: hidden !important;
+            transition: none !important;
+        }
+    </style>
+
+    
+</head>
+<body class="landing">
+    
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    
+    
+
+    
+    
+        
+    
+
+    
+    <div class="layout layout--docs layout--fixed-header" data-mode="docs">
+        
+
+        <div class="layout__main">
+            
+            
+
+
+
+
+<header class="header" role="banner">
+    <div class="header__left">
+        
+        
+
+        
+        
+
+        
+        
+
+        
+        
+
+        
+        <a href="https://plyx.iz.rs" class="header__logo" aria-label="Ply - Go to homepage">
+            
+            
+            
+            <img src="https://plyx.iz.rs/images/ply_logo.png" alt="Ply" class="header__logo-img">
+            
+        </a>
+    </div>
+
+    
+    <nav class="header__nav" role="navigation" aria-label="Main navigation">
+        
+            
+            <a href="/docs/getting-started/" class="header__link ">
+                Docs
+            </a>
+            
+            <a href="/examples/" class="header__link ">
+                Examples
+            </a>
+            
+            <a href="/blog/" class="header__link ">
+                Blog
+            </a>
+            
+        
+    </nav>
+
+    
+    <div class="header__actions" role="group" aria-label="Site actions">
+        
+        
+        <button class="search-toggle" type="button" aria-label="Open search dialog" aria-keyshortcuts="/" aria-haspopup="dialog" title="Search (press /)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="11" cy="11" r="8"/>
+                <path d="m21 21-4.3-4.3"/>
+            </svg>
+        </button>
+        
+
+        
+        <div class="header__actions-desktop">
+            
+            
+
+            
+            
+
+            
+            
+
+            
+            
+            <a href="https:&#x2F;&#x2F;github.com&#x2F;TheRedDeveloper&#x2F;ply-engine" class="btn btn--icon btn--ghost" aria-label="View project on GitHub (opens in new tab)" target="_blank" rel="noopener noreferrer" title="GitHub">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/>
+                    <path d="M9 18c-4.51 2-5-2-7-2"/>
+                </svg>
+            </a>
+            
+        </div>
+    </div>
+</header>
+
+
+            
+
+            
+            
+
+            
+
+            <div class="layout__content-area">
+                <main id="main-content" class="main-content" role="main" aria-label="Main content">
+                    
+
+<section class="landing-hero">
+    <div class="landing-hero__inner">
+        <img src="https://plyx.iz.rs/images/ply_logo.png" alt="Ply logo" class="landing-hero__logo">
+        <p class="landing-hero__tagline">Beautiful apps in Rust. Cross-platform. Dead simple.</p>
+        <div class="landing-hero__row">
+            <code class="landing-hero__install">cargo install plyx</code>
+            <a href="https://plyx.iz.rs/docs/getting-started/" class="btn btn--primary btn--lg">Get Started</a>
+        </div>
+    </div>
+</section>
+
+
+<section class="landing-playground">
+    <iframe src="https://plyx.iz.rs/demo/index.html"
+            loading="eager"
+            title="Interactive Ply playground"></iframe>
+</section>
+
+
+<section class="landing-features">
+    <h2 class="landing-section-title">Everything you need</h2>
+    <div class="landing-features__grid">
+        <div class="landing-feature">
+            <div class="landing-feature__icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 16 4-4-4-4"/><path d="m6 8-4 4 4 4"/><path d="m14.5 4-5 16"/></svg>
+            </div>
+            <h3>Dead Simple API</h3>
+            <p>Builder pattern, closure-based children, zero boilerplate. If you can write Rust, you can build UIs.</p>
+        </div>
+        <div class="landing-feature">
+            <div class="landing-feature__icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></svg>
+            </div>
+            <h3>Cross-Platform</h3>
+            <p>One codebase for web, desktop, Android, and iOS. No platform-specific code required.</p>
+        </div>
+        <div class="landing-feature">
+            <div class="landing-feature__icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m8 11 4 4 4-4"/><path d="M8 5H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-4"/></svg>
+            </div>
+            <h3>Shaders &amp; Effects</h3>
+            <p>GLSL shaders, rotation and built-in effects powered by the GPU.</p>
+        </div>
+        <div class="landing-feature">
+            <div class="landing-feature__icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+            </div>
+            <h3>Accessibility</h3>
+            <p>AccessKit integration and JS bridge. Keyboard navigation & screen reader support built in.</p>
+        </div>
+        <div class="landing-feature">
+            <div class="landing-feature__icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+            </div>
+            <h3>Text</h3>
+            <p>Text editing with selection, undo/redo, multiline, styled text, and virtual keyboard.</p>
+        </div>
+        <div class="landing-feature">
+            <div class="landing-feature__icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
+            </div>
+            <h3>Debug View</h3>
+            <p>Browser DevTools-like inspector built right into the engine.</p>
+        </div>
+        <div class="landing-feature">
+            <div class="landing-feature__icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+            </div>
+            <h3>Layout Engine</h3>
+            <p>Flexbox-like layout: Padding, gaps, alignment, grow, fixed, fit, scroll, floating...</p>
+        </div>
+        <div class="landing-feature">
+            <div class="landing-feature__icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+            </div>
+            <h3>Interactive Docs</h3>
+            <p>Documented through live, editable examples. Tweak and see results instantly in the browser.</p>
+        </div>
+    </div>
+</section>
+
+
+<section class="landing-license">
+    <p>Ply is free and open source, released under the <a href="https://github.com/TheRedDeveloper/ply-engine/blob/main/LICENSE.md">0-Clause BSD license</a>. Use it for anything. No attribution required.</p>
+    <p><a href="/impressum/">Impressum</a></p>
+</section>
+
+                </main>
+
+                
+                
+            </div>
+
+            
+            
+            
+        </div>
+    </div>
+
+    
+    <div class="sidebar-overlay" aria-hidden="true"></div>
+
+    
+    
+    
+<div class="search-overlay" role="dialog" aria-modal="true" aria-labelledby="search-title" aria-describedby="search-description">
+    <div class="search">
+        <h2 id="search-title" class="sr-only">Search documentation</h2>
+        <p id="search-description" class="sr-only">Type to search. Use arrow keys to navigate results, Enter to select, Escape to close.</p>
+
+        <div class="search__input-wrapper">
+            <span class="search__icon" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"/>
+                    <path d="m21 21-4.3-4.3"/>
+                </svg>
+            </span>
+            <input
+                type="search"
+                class="search__input"
+                placeholder="Search documentation..."
+                autocomplete="off"
+                autofocus
+                aria-label="Search query"
+                aria-controls="search-results"
+                aria-autocomplete="list"
+            >
+            <span class="search__shortcut" aria-hidden="true">/</span>
+            <button class="search__close" type="button" aria-label="Close search dialog" title="Close (Esc)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M18 6 6 18"/>
+                    <path d="m6 6 12 12"/>
+                </svg>
+            </button>
+        </div>
+
+        <div id="search-results" class="search__results" role="listbox" aria-label="Search results">
+            
+        </div>
+
+        <footer class="search__footer">
+            <nav class="search__hints" aria-label="Keyboard shortcuts">
+                <span class="search__hint">
+                    <kbd aria-label="Up and down arrows">↑</kbd><kbd aria-hidden="true">↓</kbd> <span>Navigate</span>
+                </span>
+                <span class="search__hint">
+                    <kbd aria-label="Enter">↵</kbd> <span>Select</span>
+                </span>
+                <span class="search__hint">
+                    <kbd aria-label="Escape">esc</kbd> <span>Close</span>
+                </span>
+            </nav>
+            <span class="search__powered-by">Powered by <a href="https://github.com/weixsong/elasticlunr.js" target="_blank" rel="noopener noreferrer" aria-label="elasticlunr.js on GitHub (opens in new tab)">elasticlunr</a></span>
+        </footer>
+    </div>
+</div>
+
+    
+
+    
+    
+
+    
+    
+
+    
+    
+    
+
+    
+    
+    <button class="fab scroll-to-top" aria-label="Scroll to top" title="Scroll to top">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="m18 15-6-6-6 6"/>
+        </svg>
+    </button>
+    
+
+    
+    
+    
+    <script src="https://plyx.iz.rs/js/theme.js" defer></script>
+    <script src="https://plyx.iz.rs/js/navigation.js" defer></script>
+    <script src="https://plyx.iz.rs/js/code.js" defer></script>
+    <script src="https://plyx.iz.rs/js/interactive.js" defer></script>
+
+    
+    <script src="https://plyx.iz.rs/elasticlunr.min.js"></script>
+    <script src="https://plyx.iz.rs/search_index.en.js"></script>
+    <script src="https://plyx.iz.rs/js/search.js" defer></script>
+    
+    
+
+    
+</body>
+</html>

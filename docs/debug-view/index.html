@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" prefix="og: https://ogp.me/ns#">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="dark">
+
+    
+    <title>Debug View | Ply</title>
+
+    
+    
+    <meta name="description" content="Beautiful apps in Rust. Cross-platform. Dead simple.">
+    
+
+    
+    
+    <meta name="keywords" content="ply, ply-engine, rust, ui, engine, cross-platform, layout, graphics, gamedev">
+    
+
+    
+    
+    <meta name="author" content="TheRedDeveloper">
+    
+
+    
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+
+    
+    
+    <link rel="canonical" href="https://plyx.iz.rs/docs/debug-view/">
+    <link rel="alternate" hreflang="en" href="https://plyx.iz.rs/docs/debug-view/">
+    <link rel="alternate" hreflang="x-default" href="https://plyx.iz.rs/docs/debug-view/">
+    
+
+    
+    <meta property="og:type" content="article">
+    
+    <meta property="og:url" content="https://plyx.iz.rs/docs/debug-view/">
+    
+    
+    <meta property="og:title" content="Debug View">
+    
+    
+    <meta property="og:description" content="">
+    
+    
+    <meta property="og:site_name" content="Ply">
+    <meta property="og:locale" content="en">
+
+    
+    
+    
+    
+    
+    
+
+    
+    <meta name="twitter:card" content="summary_large_image">
+    
+    <meta name="twitter:url" content="https://plyx.iz.rs/docs/debug-view/">
+    
+    
+    <meta name="twitter:title" content="Debug View">
+    
+    
+    <meta name="twitter:description" content="">
+    
+    
+    
+
+    
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "WebSite",
+                "@id": "https://plyx.iz.rs#website",
+                "url": "https://plyx.iz.rs",
+                "name": "Ply",
+                "description": "Beautiful apps in Rust. Cross-platform. Dead simple.",
+                "publisher": {
+                    "@id": "https://plyx.iz.rs/#organization"
+                },
+                "inLanguage": "en",
+                "potentialAction": {
+                    "@type": "SearchAction",
+                    "target": {
+                        "@type": "EntryPoint",
+                        "urlTemplate": "https://plyx.iz.rs?q={search_term_string}"
+                    },
+                    "query-input": "required name=search_term_string"
+                }
+            },
+            {
+                "@type": "Organization",
+                "@id": "https://plyx.iz.rs/#organization",
+                "name": "TheRedDeveloper",
+                "url": "https://plyx.iz.rs"
+            },
+            {
+                "@type": "WebPage",
+                "@id": "https://plyx.iz.rs/docs/debug-view/#webpage",
+                "url": "https://plyx.iz.rs/docs/debug-view/",
+                "name": "Debug View",
+                "isPartOf": {
+                    "@id": "https://plyx.iz.rs#website"
+                },
+                "description": "",
+                "inLanguage": "en"
+                
+                
+            }
+            
+            ,{
+                "@type": "Article",
+                "@id": "https://plyx.iz.rs/docs/debug-view/#article",
+                "isPartOf": {
+                    "@id": "https://plyx.iz.rs/docs/debug-view/#webpage"
+                },
+                "headline": "Debug View",
+                
+                
+                
+                "author": {
+                    "@id": "https://plyx.iz.rs/#organization"
+                },
+                "publisher": {
+                    "@id": "https://plyx.iz.rs/#organization"
+                },
+                
+                
+                "wordCount": 584,
+                
+                "inLanguage": "en"
+            }
+            
+        ]
+    }
+    </script>
+
+    
+    
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Ply",
+                "item": "https://plyx.iz.rs"
+            }
+            
+            
+            
+            ,{
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Ply",
+                "item": "https://plyx.iz.rs/"
+            }
+            
+            
+            
+            ,{
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Documentation",
+                "item": "https://plyx.iz.rs/docs/"
+            }
+            
+            
+            ,{
+                "@type": "ListItem",
+                "position": 4,
+                "name": "Debug View",
+                "item": "https://plyx.iz.rs/docs/debug-view/"
+            }
+        ]
+    }
+    </script>
+    
+
+    
+    <link rel="stylesheet" href="https://plyx.iz.rs/style.css">
+
+    
+
+    
+    <link rel="preload" href="https://plyx.iz.rs/fonts/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="https://plyx.iz.rs/fonts/GeistMono-Variable.woff2" as="font" type="font/woff2" crossorigin>
+
+    
+    
+    <link rel="icon" href="https://plyx.iz.rs/images/favicon.png">
+    
+    
+
+    
+    
+
+    
+    
+    
+    <script>
+        (function() {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            document.documentElement.dataset.userColorScheme = 'dark';
+            // Pre-apply sidebar collapsed state
+            if (localStorage.getItem('tanuki-sidebar-collapsed') === 'true') {
+                document.documentElement.classList.add('sidebar-start-collapsed');
+            }
+            // Pre-apply saved sidebar width
+            var savedWidth = localStorage.getItem('tanuki-sidebar-width');
+            if (savedWidth) {
+                document.documentElement.style.setProperty('--sidebar-width', savedWidth + 'px');
+                var s = document.createElement('style');
+                s.id = 'sidebar-width-preload';
+                s.textContent = '.sidebar { --sidebar-width: ' + savedWidth + 'px !important; }';
+                document.head.appendChild(s);
+            }
+        })();
+    </script>
+    <style>
+        /* Prevent sidebar transition on initial page load when user had it collapsed */
+        .sidebar-start-collapsed .sidebar {
+            width: 0 !important;
+            min-width: 0 !important;
+            border-right: none !important;
+            overflow: hidden !important;
+            transition: none !important;
+        }
+    </style>
+
+    
+</head>
+<body class="page-debug-view">
+    
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    
+    
+
+    
+    
+        
+    
+
+    
+    <div class="layout layout--docs layout--fixed-header" data-mode="docs">
+        
+
+
+<aside id="sidebar" class="sidebar" role="complementary" aria-labelledby="sidebar-title">
+    
+    <div class="sidebar__resize-handle" aria-hidden="true" title="Drag to resize sidebar width"></div>
+
+    <div class="sidebar__header">
+        <span id="sidebar-title" class="sidebar__title">Table of contents</span>
+        <button class="sidebar__close" type="button" aria-label="Close sidebar" title="Close">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M18 6 6 18"/>
+                <path d="m6 6 12 12"/>
+            </svg>
+        </button>
+    </div>
+
+    <nav class="sidebar__content" aria-label="Documentation navigation">
+        <div class="toc">
+            
+            
+
+            
+            <div class="toc__section">
+                <ol class="toc__list toc__list--numbered" start="1">
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/getting-started/" class="toc__link ">
+                            <span class="toc__number">1.</span>
+                            Getting Started
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/elements-and-layout/" class="toc__link ">
+                            <span class="toc__number">2.</span>
+                            Elements &amp; Layout
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/debug-view/" class="toc__link active">
+                            <span class="toc__number">3.</span>
+                            Debug View
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/text/" class="toc__link ">
+                            <span class="toc__number">4.</span>
+                            Text
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/ids-and-state/" class="toc__link ">
+                            <span class="toc__number">5.</span>
+                            IDs &amp; State
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/interactivity/" class="toc__link ">
+                            <span class="toc__number">6.</span>
+                            Interactivity
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/floating-elements/" class="toc__link ">
+                            <span class="toc__number">7.</span>
+                            Floating Elements
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/images-and-rendering/" class="toc__link ">
+                            <span class="toc__number">8.</span>
+                            Images, Vectors &amp; Custom Rendering
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/text-input/" class="toc__link ">
+                            <span class="toc__number">9.</span>
+                            Text Input
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/text-styling/" class="toc__link ">
+                            <span class="toc__number">10.</span>
+                            Text Styling
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/shaders-and-effects/" class="toc__link ">
+                            <span class="toc__number">11.</span>
+                            Shaders &amp; Effects
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/rotation/" class="toc__link ">
+                            <span class="toc__number">12.</span>
+                            Rotation
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/accessibility/" class="toc__link ">
+                            <span class="toc__number">13.</span>
+                            Accessibility
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/networking/" class="toc__link ">
+                            <span class="toc__number">14.</span>
+                            Networking
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/sound/" class="toc__link ">
+                            <span class="toc__number">15.</span>
+                            Sound
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/cross-platform/" class="toc__link ">
+                            <span class="toc__number">16.</span>
+                            Cross-Platform Builds
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/advanced/" class="toc__link ">
+                            <span class="toc__number">17.</span>
+                            Advanced Topics
+                        </a>
+                    </li>
+                    
+                    
+                </ol>
+            </div>
+
+            
+            
+            
+        </div>
+    </nav>
+
+    <div class="sidebar__footer">
+        
+        <div class="sidebar__actions-mobile">
+            
+            
+
+            
+            
+
+            
+            
+            <a href="https:&#x2F;&#x2F;github.com&#x2F;TheRedDeveloper&#x2F;ply-engine" class="sidebar__github" target="_blank" rel="noopener noreferrer" aria-label="View project on GitHub (opens in new tab)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/>
+                    <path d="M9 18c-4.51 2-5-2-7-2"/>
+                </svg>
+                <span>View on GitHub</span>
+            </a>
+            
+        </div>
+    </div>
+</aside>
+
+
+
+
+        <div class="layout__main">
+            
+            
+
+
+
+
+<header class="header" role="banner">
+    <div class="header__left">
+        
+        
+        <button class="sidebar-toggle" type="button" aria-label="Toggle sidebar navigation" aria-expanded="true" aria-controls="sidebar" title="Toggle sidebar">
+            <svg class="sidebar-toggle__icon sidebar-toggle__icon--open" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect width="18" height="18" x="3" y="3" rx="2"/>
+                <path d="M9 3v18"/>
+                <path d="m16 15-3-3 3-3"/>
+            </svg>
+            <svg class="sidebar-toggle__icon sidebar-toggle__icon--closed" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect width="18" height="18" x="3" y="3" rx="2"/>
+                <path d="M9 3v18"/>
+                <path d="m14 9 3 3-3 3"/>
+            </svg>
+        </button>
+        
+
+        
+        
+        <button class="toc-toggle toc-toggle--docs" type="button" aria-label="Open table of contents" aria-expanded="false" aria-controls="sidebar" title="Table of contents">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect width="18" height="18" x="3" y="3" rx="2"/>
+                <path d="M9 3v18"/>
+                <path d="m16 15-3-3 3-3"/>
+            </svg>
+        </button>
+        
+
+        
+        
+
+        
+        
+
+        
+        <a href="https://plyx.iz.rs" class="header__logo" aria-label="Ply - Go to homepage">
+            
+            
+            
+            <img src="https://plyx.iz.rs/images/ply_logo.png" alt="Ply" class="header__logo-img">
+            
+        </a>
+    </div>
+
+    
+    <nav class="header__nav" role="navigation" aria-label="Main navigation">
+        
+            
+            <a href="/docs/getting-started/" class="header__link ">
+                Docs
+            </a>
+            
+            <a href="/examples/" class="header__link ">
+                Examples
+            </a>
+            
+            <a href="/blog/" class="header__link ">
+                Blog
+            </a>
+            
+        
+    </nav>
+
+    
+    <div class="header__actions" role="group" aria-label="Site actions">
+        
+        
+        <button class="search-toggle" type="button" aria-label="Open search dialog" aria-keyshortcuts="/" aria-haspopup="dialog" title="Search (press /)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="11" cy="11" r="8"/>
+                <path d="m21 21-4.3-4.3"/>
+            </svg>
+        </button>
+        
+
+        
+        <div class="header__actions-desktop">
+            
+            
+
+            
+            
+
+            
+            
+            <a href="https:&#x2F;&#x2F;github.com&#x2F;TheRedDeveloper&#x2F;ply-website&#x2F;edit&#x2F;main&#x2F;content/docs&#x2F;debug-view.md" class="btn btn--icon btn--ghost" aria-label="Edit this page on GitHub (opens in new tab)" target="_blank" rel="noopener noreferrer" title="Edit this page">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/>
+                    <path d="m15 5 4 4"/>
+                </svg>
+            </a>
+            
+
+            
+            
+            <a href="https:&#x2F;&#x2F;github.com&#x2F;TheRedDeveloper&#x2F;ply-engine" class="btn btn--icon btn--ghost" aria-label="View project on GitHub (opens in new tab)" target="_blank" rel="noopener noreferrer" title="GitHub">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/>
+                    <path d="M9 18c-4.51 2-5-2-7-2"/>
+                </svg>
+            </a>
+            
+        </div>
+    </div>
+</header>
+
+
+            
+
+            
+            
+            <div class="scroll-progress" aria-hidden="true">
+                <div class="scroll-progress__bar"></div>
+                <span class="scroll-progress__percent">0%</span>
+            </div>
+            
+
+            
+
+
+
+
+
+
+    
+
+
+    
+
+
+<nav class="nav-buttons" aria-label="Page navigation">
+    
+    
+    <a href="https://plyx.iz.rs/docs/elements-and-layout/" class="nav-button nav-button--prev" aria-label="Previous: Elements &amp; Layout">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m15 18-6-6 6-6"/>
+        </svg>
+        <span class="nav-button__label">
+            Elements &amp; Layout
+            <span class="nav-button__shortcut">←</span>
+        </span>
+    </a>
+    
+
+    
+    
+    <a href="https://plyx.iz.rs/docs/text/" class="nav-button nav-button--next" aria-label="Next: Text">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m9 18 6-6-6-6"/>
+        </svg>
+        <span class="nav-button__label">
+            Text
+            <span class="nav-button__shortcut">→</span>
+        </span>
+    </a>
+    
+</nav>
+
+
+
+
+
+            <div class="layout__content-area">
+                <main id="main-content" class="main-content" role="main" aria-label="Main content">
+                    
+
+
+<article class="article" itemscope itemtype="https://schema.org/Article" aria-labelledby="article-title">
+    
+    <header class="article__header article__header--docs">
+        <h1 id="article-title" itemprop="headline">Debug View</h1>
+        
+    </header>
+
+    <div class="article__content" itemprop="articleBody">
+        <p>One line of code gives you Chrome DevTools-style element inspection. Built right
+into the engine. No other Rust UI library has this.</p>
+<h2 id="turning-it-on"><a class="zola-anchor" href="#turning-it-on" aria-label="Anchor link for: turning-it-on">🔗</a>Turning it on</h2>
+
+
+
+
+
+
+<div class="toggle-code-block" style="border:1px solid #262220;border-radius:12px;overflow:hidden;margin:1.5rem 0">
+<pre style="background:#1a1111;color:#e8e0dc;font-family:'Geist Mono','Fira Code','Cascadia Code','JetBrains Mono',monospace;font-size:0.875rem;line-height:1.6;padding:1.25rem;margin:0;border:none;border-radius:0;white-space:pre;overflow-x:auto"><code style="padding:0;display:inline">ply<span style="color:#94e2d5">.</span><span style="color:#89b4fa;font-style:italic">set_debug_mode</span><span style="color:#9399b2">(</span><span class="toggle-bool" style="color:#f38ba8;cursor:pointer;border-bottom:1px dashed #585b70;user-select:none" data-on="true" data-off="false">true</span><span style="color:#9399b2">);</span></code></pre>
+<iframe
+  class="toggle-iframe"
+  src="/examples/shell.html?id=debug_mode_demo#e%2Edebug%3Dtrue%3Bfalse"
+  style="width:100%;height:700px;border:none;display:block"
+  loading="lazy"
+  tabindex="-1"></iframe>
+<script>
+(function(){
+  var c=document.currentScript.parentElement;
+  var s=c.querySelector('.toggle-bool');
+  var f=c.querySelector('.toggle-iframe');
+  var key='debug';
+  s.addEventListener('click',function(){
+    var next=s.textContent.trim()===s.dataset.on?s.dataset.off:s.dataset.on;
+    s.textContent=next;
+    f.contentWindow.postMessage({type:'setParam',key:key,value:next},'*');
+  });
+})();
+</script>
+</div>
+<p>That's it. A full element inspector appears on top of your UI, showing every element
+in your tree, its sizing, layout, colors, borders, and more.</p>
+<h2 id="what-you-get"><a class="zola-anchor" href="#what-you-get" aria-label="Anchor link for: what-you-get">🔗</a>What you get</h2>
+<h3 id="element-tree"><a class="zola-anchor" href="#element-tree" aria-label="Anchor link for: element-tree">🔗</a>Element tree</h3>
+<p>A scrollable, indented tree of every element in your UI. Containers have +/- buttons
+to collapse or expand their children. Leaf elements are shown with dots.</p>
+<ul>
+<li><strong>Hover</strong> a row to highlight that element on screen</li>
+<li><strong>Click</strong> a row to select it and open the detail panel</li>
+</ul>
+<h3 id="detail-panel"><a class="zola-anchor" href="#detail-panel" aria-label="Anchor link for: detail-panel">🔗</a>Detail panel</h3>
+<p>When you select an element, the detail panel shows everything about it:</p>
+<table><thead><tr><th>Section</th><th>What it shows</th></tr></thead><tbody>
+<tr><td><strong>Layout</strong></td><td>bounding box, sizing, padding, child gap, alignment</td></tr>
+<tr><td><strong>Color</strong></td><td>background color</td></tr>
+<tr><td><strong>Shape</strong></td><td>corner radius, shape rotation</td></tr>
+<tr><td><strong>Text</strong></td><td>size, ID, line height, spacing, wrap mode, alignment, color</td></tr>
+<tr><td><strong>Border</strong></td><td>widths, color, between-children</td></tr>
+<tr><td><strong>Floating</strong></td><td>offset, anchor, attachment, z-index</td></tr>
+<tr><td><strong>Overflow</strong></td><td>clip/scroll per axis</td></tr>
+<tr><td><strong>Image</strong></td><td>source info</td></tr>
+<tr><td><strong>Effects</strong></td><td>shader infos and visual rotation</td></tr>
+<tr><td><strong>Input</strong></td><td>input information</td></tr>
+</tbody></table>
+<h2 id="common-debugging-patterns"><a class="zola-anchor" href="#common-debugging-patterns" aria-label="Anchor link for: common-debugging-patterns">🔗</a>Common debugging patterns</h2>
+<h3 id="why-is-my-element-the-wrong-size"><a class="zola-anchor" href="#why-is-my-element-the-wrong-size" aria-label="Anchor link for: why-is-my-element-the-wrong-size">🔗</a>"Why is my element the wrong size?"</h3>
+<p>Select the element in the tree. The detail panel shows its sizing type.
+You'll immediately see if it's being clamped, if the parent is too small, or if a sibling is eating the available space.</p>
+
+
+
+
+
+
+<iframe
+  src="/examples/shell.html?id=sizing_bug_demo#ui%2Eelement%28%29%0A%20%20%2Ewidth%28%5B%5Bparent%5Fwidth%5D%5D%28%29%29%0A%20%20%2Eheight%28grow%21%28%29%29%0A%20%20%2Ebackground%5Fcolor%280x1E1B1B%29%0A%20%20%2Elayout%28%7Cl%7C%20l%2Edirection%28LeftToRight%29%29%0A%20%20%2Echildren%28%7Cui%7C%20%7B%0A%20%20%20%20%2F%2F%20Sidebar%0A%20%20%20%20ui%2Eelement%28%29%0A%20%20%20%20%20%20%2Ewidth%28percent%21%280%2E25%29%29%0A%20%20%20%20%20%20%2Eheight%28grow%21%28%29%29%0A%20%20%20%20%20%20%2Ebackground%5Fcolor%280x262220%29%0A%20%20%20%20%20%20%2Elayout%28%7Cl%7C%20l%2Edirection%28TopToBottom%29%2Egap%288%29%2Epadding%2812%29%29%0A%20%20%20%20%20%20%2Echildren%28%7Cui%7C%20%7B%0A%20%20%20%20%20%20%20%20ui%2Etext%28%22Sidebar%22%2C%20%7Ct%7C%20t%2Efont%5Fsize%2816%29%2Ecolor%280xFFC32C%29%29%3B%0A%20%20%20%20%20%20%20%20ui%2Etext%28%22Home%22%2C%20%7Ct%7C%20t%2Efont%5Fsize%2814%29%2Ecolor%280xE8E0DC%29%29%3B%0A%20%20%20%20%20%20%20%20ui%2Etext%28%22Settings%22%2C%20%7Ct%7C%20t%2Efont%5Fsize%2814%29%2Ecolor%280xE8E0DC%29%29%3B%0A%20%20%20%20%20%20%7D%29%3B%0A%0A%20%20%20%20%2F%2F%20Content%0A%20%20%20%20ui%2Eelement%28%29%0A%20%20%20%20%20%20%2Ewidth%28grow%21%28%29%29%2Eheight%28grow%21%28%29%29%0A%20%20%20%20%20%20%2Elayout%28%7Cl%7C%20l%2Ealign%28CenterX%2C%20CenterY%29%29%0A%20%20%20%20%20%20%2Echildren%28%7Cui%7C%20%7B%0A%20%20%20%20%20%20%20%20%2F%2F%20This%20text%20is%20crunched%20into%20two%20lines%0A%20%20%20%20%20%20%20%20ui%2Etext%28%22Why%20is%20everything%20crushed%3F%22%2C%20%7Ct%7C%20t%2Efont%5Fsize%2824%29%2Ecolor%280xFFFFFF%29%29%3B%0A%20%20%20%20%20%20%7D%29%3B%0A%20%20%7D%29%3B%0A%2D%2D%2D%0Ae%2Eparent%5Fwidth%3Dfit%21%3Bgrow%21"
+  style="width: 100%; height: 1060px; border: 1px solid #262220; border-radius: 12px; margin: 1.5rem 0;"
+  loading="lazy"
+  tabindex="-1"></iframe>
+
+<p>The parent uses <code>fit!()</code>, so it sizes itself to the only thing it knows the size of "Why is everything crushed?" which is 320 px wide. Then the sidebar asks for 25 % of that: 320 × 0.25 = 80 px, so it crushes the text onto two lines. Do you know how to fix this? Edit the sizings above.</p>
+<h3 id="where-is-my-element"><a class="zola-anchor" href="#where-is-my-element" aria-label="Anchor link for: where-is-my-element">🔗</a>"Where is my element?"</h3>
+<p>Hover over rows in the tree. Each row highlights the corresponding element's bounding box.
+If an element exists in the tree but has no visible highlight, check its dimensions.
+If an element is highlighted but invisible, check the clip settings.</p>
+
+
+
+
+
+
+<iframe
+  src="/examples/shell.html?id=clipped_list_demo#ui%2Eelement%28%29%0A%20%20%2Ewidth%28fit%21%28%29%29%0A%20%20%2Eheight%28fixed%21%28%5B%5Bheight%5D%5D%29%29%0A%20%20%2Ebackground%5Fcolor%280x2E2A28%29%0A%20%20%2Ecorner%5Fradius%288%2E0%29%0A%20%20%2Eoverflow%28%7Co%7C%20o%2E%5B%5Boverflow%5D%5D%28%29%29%0A%20%20%2Elayout%28%7Cl%7C%20l%2Edirection%28TopToBottom%29%2Epadding%288%29%2Egap%288%29%29%0A%20%20%2Echildren%28%7Cui%7C%20%7B%0A%20%20%20%20for%20name%20in%20%5B%22Alice%22%2C%20%22Bob%22%2C%20%22Charlie%22%2C%20%22Diana%22%2C%20%22Eve%22%5D%20%7B%0A%20%20%20%20%20%20ui%2Etext%28name%2C%20%7Ct%7C%20t%2Efont%5Fsize%2830%29%2Ecolor%280xE8E0DC%29%29%3B%0A%20%20%20%20%7D%0A%20%20%7D%29%3B%0A%2D%2D%2D%0An%2Eheight%3D41%0Ae%2Eoverflow%3Dclip%3Bscroll"
+  style="width: 100%; height: 600px; border: 1px solid #262220; border-radius: 12px; margin: 1.5rem 0;"
+  loading="lazy"
+  tabindex="-1"></iframe>
+
+<p>All five text elements appear in the element tree. Hovering each one highlights its bounding box. The parent's <code>.overflow(|o| o.clip())</code> hides anything that overflows. Do you know how to fix this? Edit the code above.</p>
+<h2 id="works-everywhere"><a class="zola-anchor" href="#works-everywhere" aria-label="Anchor link for: works-everywhere">🔗</a>Works everywhere</h2>
+<p>The debug view runs on every platform Ply supports, desktop, web, and mobile.
+It's built with Ply elements itself (it uses the engine to inspect the engine).</p>
+<p>You can ship it in development builds and toggle it with a keybind:</p>
+<pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="rust"><span class="giallo-l"><span style="color: #CBA6F7;">if</span><span style="color: #89B4FA;font-style: italic;"> is_key_pressed</span><span style="color: #9399B2;">(</span><span style="color: #F9E2AF;">KeyCode</span><span style="color: #94E2D5;">::</span><span style="color: #F9E2AF;font-style: italic;">F12</span><span style="color: #9399B2;">) {</span></span>
+<span class="giallo-l"><span style="color: #CBA6F7;">  let</span><span> current</span><span style="color: #94E2D5;"> =</span><span> ply</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">is_debug_mode</span><span style="color: #9399B2;">();</span></span>
+<span class="giallo-l"><span>  ply</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">set_debug_mode</span><span style="color: #9399B2;">(</span><span style="color: #94E2D5;">!</span><span>current</span><span style="color: #9399B2;">);</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">}</span></span></code></pre><h2 id="next-steps"><a class="zola-anchor" href="#next-steps" aria-label="Anchor link for: next-steps">🔗</a>Next steps</h2>
+<p>→ <a href="/docs/text/">Text</a></p>
+
+    </div>
+
+    
+    
+    <meta itemprop="author" content="TheRedDeveloper">
+    
+    
+</article>
+
+
+
+<nav class="page-nav" aria-label="Page navigation">
+    
+
+    
+</nav>
+
+
+
+                </main>
+
+                
+                
+                
+
+
+
+
+<aside id="page-toc-panel" class="page-toc-panel" aria-hidden="true" aria-label="On this page">
+    <div class="page-toc-panel__content">
+        <div class="page-toc-panel__header">
+            <span class="page-toc-panel__title">On this page</span>
+            <button class="page-toc-panel__close" type="button" aria-label="Close table of contents">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M18 6 6 18"/>
+                    <path d="m6 6 12 12"/>
+                </svg>
+            </button>
+        </div>
+        <nav class="page-toc-panel__nav" aria-label="Page sections">
+            <ul class="page-toc-panel__list">
+                
+                <li class="page-toc-panel__item">
+                    <a href="#turning-it-on" class="page-toc-panel__link">
+                        Turning it on
+                    </a>
+                    
+                </li>
+                
+                <li class="page-toc-panel__item">
+                    <a href="#what-you-get" class="page-toc-panel__link">
+                        What you get
+                    </a>
+                    
+                    <ul class="page-toc-panel__list page-toc-panel__list--nested">
+                        
+                        <li class="page-toc-panel__item">
+                            <a href="#element-tree" class="page-toc-panel__link">
+                                Element tree
+                            </a>
+                        </li>
+                        
+                        <li class="page-toc-panel__item">
+                            <a href="#detail-panel" class="page-toc-panel__link">
+                                Detail panel
+                            </a>
+                        </li>
+                        
+                    </ul>
+                    
+                </li>
+                
+                <li class="page-toc-panel__item">
+                    <a href="#common-debugging-patterns" class="page-toc-panel__link">
+                        Common debugging patterns
+                    </a>
+                    
+                    <ul class="page-toc-panel__list page-toc-panel__list--nested">
+                        
+                        <li class="page-toc-panel__item">
+                            <a href="#why-is-my-element-the-wrong-size" class="page-toc-panel__link">
+                                &quot;Why is my element the wrong size?&quot;
+                            </a>
+                        </li>
+                        
+                        <li class="page-toc-panel__item">
+                            <a href="#where-is-my-element" class="page-toc-panel__link">
+                                &quot;Where is my element?&quot;
+                            </a>
+                        </li>
+                        
+                    </ul>
+                    
+                </li>
+                
+                <li class="page-toc-panel__item">
+                    <a href="#works-everywhere" class="page-toc-panel__link">
+                        Works everywhere
+                    </a>
+                    
+                </li>
+                
+                <li class="page-toc-panel__item">
+                    <a href="#next-steps" class="page-toc-panel__link">
+                        Next steps
+                    </a>
+                    
+                </li>
+                
+            </ul>
+        </nav>
+    </div>
+</aside>
+
+
+                
+            </div>
+
+            
+            
+            
+        </div>
+    </div>
+
+    
+    <div class="sidebar-overlay" aria-hidden="true"></div>
+
+    
+    
+    
+<div class="search-overlay" role="dialog" aria-modal="true" aria-labelledby="search-title" aria-describedby="search-description">
+    <div class="search">
+        <h2 id="search-title" class="sr-only">Search documentation</h2>
+        <p id="search-description" class="sr-only">Type to search. Use arrow keys to navigate results, Enter to select, Escape to close.</p>
+
+        <div class="search__input-wrapper">
+            <span class="search__icon" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"/>
+                    <path d="m21 21-4.3-4.3"/>
+                </svg>
+            </span>
+            <input
+                type="search"
+                class="search__input"
+                placeholder="Search documentation..."
+                autocomplete="off"
+                autofocus
+                aria-label="Search query"
+                aria-controls="search-results"
+                aria-autocomplete="list"
+            >
+            <span class="search__shortcut" aria-hidden="true">/</span>
+            <button class="search__close" type="button" aria-label="Close search dialog" title="Close (Esc)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M18 6 6 18"/>
+                    <path d="m6 6 12 12"/>
+                </svg>
+            </button>
+        </div>
+
+        <div id="search-results" class="search__results" role="listbox" aria-label="Search results">
+            
+        </div>
+
+        <footer class="search__footer">
+            <nav class="search__hints" aria-label="Keyboard shortcuts">
+                <span class="search__hint">
+                    <kbd aria-label="Up and down arrows">↑</kbd><kbd aria-hidden="true">↓</kbd> <span>Navigate</span>
+                </span>
+                <span class="search__hint">
+                    <kbd aria-label="Enter">↵</kbd> <span>Select</span>
+                </span>
+                <span class="search__hint">
+                    <kbd aria-label="Escape">esc</kbd> <span>Close</span>
+                </span>
+            </nav>
+            <span class="search__powered-by">Powered by <a href="https://github.com/weixsong/elasticlunr.js" target="_blank" rel="noopener noreferrer" aria-label="elasticlunr.js on GitHub (opens in new tab)">elasticlunr</a></span>
+        </footer>
+    </div>
+</div>
+
+    
+
+    
+    
+
+    
+    
+
+    
+    
+    
+    <button class="page-toc-toggle" type="button" aria-label="Toggle table of contents" aria-expanded="false" aria-controls="page-toc-panel" title="On this page">
+        <svg class="page-toc-toggle__icon page-toc-toggle__icon--list" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M16 5H3"/>
+            <path d="M16 12H3"/>
+            <path d="M16 19H3"/>
+            <path d="M21 5h.01"/>
+            <path d="M21 12h.01"/>
+            <path d="M21 19h.01"/>
+        </svg>
+        <svg class="page-toc-toggle__icon page-toc-toggle__icon--close" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M18 6 6 18"/>
+            <path d="m6 6 12 12"/>
+        </svg>
+    </button>
+    
+
+    
+    
+    <button class="fab scroll-to-top" aria-label="Scroll to top" title="Scroll to top">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="m18 15-6-6-6 6"/>
+        </svg>
+    </button>
+    
+
+    
+    
+    
+    <script src="https://plyx.iz.rs/js/theme.js" defer></script>
+    <script src="https://plyx.iz.rs/js/navigation.js" defer></script>
+    <script src="https://plyx.iz.rs/js/code.js" defer></script>
+    <script src="https://plyx.iz.rs/js/interactive.js" defer></script>
+
+    
+    <script src="https://plyx.iz.rs/elasticlunr.min.js"></script>
+    <script src="https://plyx.iz.rs/search_index.en.js"></script>
+    <script src="https://plyx.iz.rs/js/search.js" defer></script>
+    
+    
+
+    
+</body>
+</html>

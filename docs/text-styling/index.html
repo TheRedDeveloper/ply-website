@@ -1,0 +1,1293 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" prefix="og: https://ogp.me/ns#">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="dark">
+
+    
+    <title>Text Styling | Ply</title>
+
+    
+    
+    <meta name="description" content="Beautiful apps in Rust. Cross-platform. Dead simple.">
+    
+
+    
+    
+    <meta name="keywords" content="ply, ply-engine, rust, ui, engine, cross-platform, layout, graphics, gamedev">
+    
+
+    
+    
+    <meta name="author" content="TheRedDeveloper">
+    
+
+    
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+
+    
+    
+    <link rel="canonical" href="https://plyx.iz.rs/docs/text-styling/">
+    <link rel="alternate" hreflang="en" href="https://plyx.iz.rs/docs/text-styling/">
+    <link rel="alternate" hreflang="x-default" href="https://plyx.iz.rs/docs/text-styling/">
+    
+
+    
+    <meta property="og:type" content="article">
+    
+    <meta property="og:url" content="https://plyx.iz.rs/docs/text-styling/">
+    
+    
+    <meta property="og:title" content="Text Styling">
+    
+    
+    <meta property="og:description" content="">
+    
+    
+    <meta property="og:site_name" content="Ply">
+    <meta property="og:locale" content="en">
+
+    
+    
+    
+    
+    
+    
+
+    
+    <meta name="twitter:card" content="summary_large_image">
+    
+    <meta name="twitter:url" content="https://plyx.iz.rs/docs/text-styling/">
+    
+    
+    <meta name="twitter:title" content="Text Styling">
+    
+    
+    <meta name="twitter:description" content="">
+    
+    
+    
+
+    
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "WebSite",
+                "@id": "https://plyx.iz.rs#website",
+                "url": "https://plyx.iz.rs",
+                "name": "Ply",
+                "description": "Beautiful apps in Rust. Cross-platform. Dead simple.",
+                "publisher": {
+                    "@id": "https://plyx.iz.rs/#organization"
+                },
+                "inLanguage": "en",
+                "potentialAction": {
+                    "@type": "SearchAction",
+                    "target": {
+                        "@type": "EntryPoint",
+                        "urlTemplate": "https://plyx.iz.rs?q={search_term_string}"
+                    },
+                    "query-input": "required name=search_term_string"
+                }
+            },
+            {
+                "@type": "Organization",
+                "@id": "https://plyx.iz.rs/#organization",
+                "name": "TheRedDeveloper",
+                "url": "https://plyx.iz.rs"
+            },
+            {
+                "@type": "WebPage",
+                "@id": "https://plyx.iz.rs/docs/text-styling/#webpage",
+                "url": "https://plyx.iz.rs/docs/text-styling/",
+                "name": "Text Styling",
+                "isPartOf": {
+                    "@id": "https://plyx.iz.rs#website"
+                },
+                "description": "",
+                "inLanguage": "en"
+                
+                
+            }
+            
+            ,{
+                "@type": "Article",
+                "@id": "https://plyx.iz.rs/docs/text-styling/#article",
+                "isPartOf": {
+                    "@id": "https://plyx.iz.rs/docs/text-styling/#webpage"
+                },
+                "headline": "Text Styling",
+                
+                
+                
+                "author": {
+                    "@id": "https://plyx.iz.rs/#organization"
+                },
+                "publisher": {
+                    "@id": "https://plyx.iz.rs/#organization"
+                },
+                
+                
+                "wordCount": 961,
+                
+                "inLanguage": "en"
+            }
+            
+        ]
+    }
+    </script>
+
+    
+    
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Ply",
+                "item": "https://plyx.iz.rs"
+            }
+            
+            
+            
+            ,{
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Ply",
+                "item": "https://plyx.iz.rs/"
+            }
+            
+            
+            
+            ,{
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Documentation",
+                "item": "https://plyx.iz.rs/docs/"
+            }
+            
+            
+            ,{
+                "@type": "ListItem",
+                "position": 4,
+                "name": "Text Styling",
+                "item": "https://plyx.iz.rs/docs/text-styling/"
+            }
+        ]
+    }
+    </script>
+    
+
+    
+    <link rel="stylesheet" href="https://plyx.iz.rs/style.css">
+
+    
+
+    
+    <link rel="preload" href="https://plyx.iz.rs/fonts/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="https://plyx.iz.rs/fonts/GeistMono-Variable.woff2" as="font" type="font/woff2" crossorigin>
+
+    
+    
+    <link rel="icon" href="https://plyx.iz.rs/images/favicon.png">
+    
+    
+
+    
+    
+
+    
+    
+    
+    <script>
+        (function() {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            document.documentElement.dataset.userColorScheme = 'dark';
+            // Pre-apply sidebar collapsed state
+            if (localStorage.getItem('tanuki-sidebar-collapsed') === 'true') {
+                document.documentElement.classList.add('sidebar-start-collapsed');
+            }
+            // Pre-apply saved sidebar width
+            var savedWidth = localStorage.getItem('tanuki-sidebar-width');
+            if (savedWidth) {
+                document.documentElement.style.setProperty('--sidebar-width', savedWidth + 'px');
+                var s = document.createElement('style');
+                s.id = 'sidebar-width-preload';
+                s.textContent = '.sidebar { --sidebar-width: ' + savedWidth + 'px !important; }';
+                document.head.appendChild(s);
+            }
+        })();
+    </script>
+    <style>
+        /* Prevent sidebar transition on initial page load when user had it collapsed */
+        .sidebar-start-collapsed .sidebar {
+            width: 0 !important;
+            min-width: 0 !important;
+            border-right: none !important;
+            overflow: hidden !important;
+            transition: none !important;
+        }
+    </style>
+
+    
+</head>
+<body class="page-text-styling">
+    
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    
+    
+
+    
+    
+        
+    
+
+    
+    <div class="layout layout--docs layout--fixed-header" data-mode="docs">
+        
+
+
+<aside id="sidebar" class="sidebar" role="complementary" aria-labelledby="sidebar-title">
+    
+    <div class="sidebar__resize-handle" aria-hidden="true" title="Drag to resize sidebar width"></div>
+
+    <div class="sidebar__header">
+        <span id="sidebar-title" class="sidebar__title">Table of contents</span>
+        <button class="sidebar__close" type="button" aria-label="Close sidebar" title="Close">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M18 6 6 18"/>
+                <path d="m6 6 12 12"/>
+            </svg>
+        </button>
+    </div>
+
+    <nav class="sidebar__content" aria-label="Documentation navigation">
+        <div class="toc">
+            
+            
+
+            
+            <div class="toc__section">
+                <ol class="toc__list toc__list--numbered" start="1">
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/getting-started/" class="toc__link ">
+                            <span class="toc__number">1.</span>
+                            Getting Started
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/elements-and-layout/" class="toc__link ">
+                            <span class="toc__number">2.</span>
+                            Elements &amp; Layout
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/debug-view/" class="toc__link ">
+                            <span class="toc__number">3.</span>
+                            Debug View
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/text/" class="toc__link ">
+                            <span class="toc__number">4.</span>
+                            Text
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/ids-and-state/" class="toc__link ">
+                            <span class="toc__number">5.</span>
+                            IDs &amp; State
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/interactivity/" class="toc__link ">
+                            <span class="toc__number">6.</span>
+                            Interactivity
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/floating-elements/" class="toc__link ">
+                            <span class="toc__number">7.</span>
+                            Floating Elements
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/images-and-rendering/" class="toc__link ">
+                            <span class="toc__number">8.</span>
+                            Images, Vectors &amp; Custom Rendering
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/text-input/" class="toc__link ">
+                            <span class="toc__number">9.</span>
+                            Text Input
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/text-styling/" class="toc__link active">
+                            <span class="toc__number">10.</span>
+                            Text Styling
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/shaders-and-effects/" class="toc__link ">
+                            <span class="toc__number">11.</span>
+                            Shaders &amp; Effects
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/rotation/" class="toc__link ">
+                            <span class="toc__number">12.</span>
+                            Rotation
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/accessibility/" class="toc__link ">
+                            <span class="toc__number">13.</span>
+                            Accessibility
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/networking/" class="toc__link ">
+                            <span class="toc__number">14.</span>
+                            Networking
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/sound/" class="toc__link ">
+                            <span class="toc__number">15.</span>
+                            Sound
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/cross-platform/" class="toc__link ">
+                            <span class="toc__number">16.</span>
+                            Cross-Platform Builds
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/advanced/" class="toc__link ">
+                            <span class="toc__number">17.</span>
+                            Advanced Topics
+                        </a>
+                    </li>
+                    
+                    
+                </ol>
+            </div>
+
+            
+            
+            
+        </div>
+    </nav>
+
+    <div class="sidebar__footer">
+        
+        <div class="sidebar__actions-mobile">
+            
+            
+
+            
+            
+
+            
+            
+            <a href="https:&#x2F;&#x2F;github.com&#x2F;TheRedDeveloper&#x2F;ply-engine" class="sidebar__github" target="_blank" rel="noopener noreferrer" aria-label="View project on GitHub (opens in new tab)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/>
+                    <path d="M9 18c-4.51 2-5-2-7-2"/>
+                </svg>
+                <span>View on GitHub</span>
+            </a>
+            
+        </div>
+    </div>
+</aside>
+
+
+
+
+        <div class="layout__main">
+            
+            
+
+
+
+
+<header class="header" role="banner">
+    <div class="header__left">
+        
+        
+        <button class="sidebar-toggle" type="button" aria-label="Toggle sidebar navigation" aria-expanded="true" aria-controls="sidebar" title="Toggle sidebar">
+            <svg class="sidebar-toggle__icon sidebar-toggle__icon--open" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect width="18" height="18" x="3" y="3" rx="2"/>
+                <path d="M9 3v18"/>
+                <path d="m16 15-3-3 3-3"/>
+            </svg>
+            <svg class="sidebar-toggle__icon sidebar-toggle__icon--closed" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect width="18" height="18" x="3" y="3" rx="2"/>
+                <path d="M9 3v18"/>
+                <path d="m14 9 3 3-3 3"/>
+            </svg>
+        </button>
+        
+
+        
+        
+        <button class="toc-toggle toc-toggle--docs" type="button" aria-label="Open table of contents" aria-expanded="false" aria-controls="sidebar" title="Table of contents">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect width="18" height="18" x="3" y="3" rx="2"/>
+                <path d="M9 3v18"/>
+                <path d="m16 15-3-3 3-3"/>
+            </svg>
+        </button>
+        
+
+        
+        
+
+        
+        
+
+        
+        <a href="https://plyx.iz.rs" class="header__logo" aria-label="Ply - Go to homepage">
+            
+            
+            
+            <img src="https://plyx.iz.rs/images/ply_logo.png" alt="Ply" class="header__logo-img">
+            
+        </a>
+    </div>
+
+    
+    <nav class="header__nav" role="navigation" aria-label="Main navigation">
+        
+            
+            <a href="/docs/getting-started/" class="header__link ">
+                Docs
+            </a>
+            
+            <a href="/examples/" class="header__link ">
+                Examples
+            </a>
+            
+            <a href="/blog/" class="header__link ">
+                Blog
+            </a>
+            
+        
+    </nav>
+
+    
+    <div class="header__actions" role="group" aria-label="Site actions">
+        
+        
+        <button class="search-toggle" type="button" aria-label="Open search dialog" aria-keyshortcuts="/" aria-haspopup="dialog" title="Search (press /)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="11" cy="11" r="8"/>
+                <path d="m21 21-4.3-4.3"/>
+            </svg>
+        </button>
+        
+
+        
+        <div class="header__actions-desktop">
+            
+            
+
+            
+            
+
+            
+            
+            <a href="https:&#x2F;&#x2F;github.com&#x2F;TheRedDeveloper&#x2F;ply-website&#x2F;edit&#x2F;main&#x2F;content/docs&#x2F;text-styling.md" class="btn btn--icon btn--ghost" aria-label="Edit this page on GitHub (opens in new tab)" target="_blank" rel="noopener noreferrer" title="Edit this page">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/>
+                    <path d="m15 5 4 4"/>
+                </svg>
+            </a>
+            
+
+            
+            
+            <a href="https:&#x2F;&#x2F;github.com&#x2F;TheRedDeveloper&#x2F;ply-engine" class="btn btn--icon btn--ghost" aria-label="View project on GitHub (opens in new tab)" target="_blank" rel="noopener noreferrer" title="GitHub">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/>
+                    <path d="M9 18c-4.51 2-5-2-7-2"/>
+                </svg>
+            </a>
+            
+        </div>
+    </div>
+</header>
+
+
+            
+
+            
+            
+            <div class="scroll-progress" aria-hidden="true">
+                <div class="scroll-progress__bar"></div>
+                <span class="scroll-progress__percent">0%</span>
+            </div>
+            
+
+            
+
+
+
+
+
+
+    
+
+
+    
+
+
+<nav class="nav-buttons" aria-label="Page navigation">
+    
+    
+    <a href="https://plyx.iz.rs/docs/text-input/" class="nav-button nav-button--prev" aria-label="Previous: Text Input">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m15 18-6-6 6-6"/>
+        </svg>
+        <span class="nav-button__label">
+            Text Input
+            <span class="nav-button__shortcut">←</span>
+        </span>
+    </a>
+    
+
+    
+    
+    <a href="https://plyx.iz.rs/docs/shaders-and-effects/" class="nav-button nav-button--next" aria-label="Next: Shaders &amp; Effects">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m9 18 6-6-6-6"/>
+        </svg>
+        <span class="nav-button__label">
+            Shaders &amp; Effects
+            <span class="nav-button__shortcut">→</span>
+        </span>
+    </a>
+    
+</nav>
+
+
+
+
+
+            <div class="layout__content-area">
+                <main id="main-content" class="main-content" role="main" aria-label="Main content">
+                    
+
+
+<article class="article" itemscope itemtype="https://schema.org/Article" aria-labelledby="article-title">
+    
+    <header class="article__header article__header--docs">
+        <h1 id="article-title" itemprop="headline">Text Styling</h1>
+        
+    </header>
+
+    <div class="article__content" itemprop="articleBody">
+        <p>Ply has a built-in rich text system that lets you color, animate, and
+transform individual characters.</p>
+<p><strong>Requires the <code>text-styling</code> feature flag:</strong></p>
+<pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="toml"><span class="giallo-l"><span style="color: #9399B2;">[</span><span>dependencies</span><span style="color: #9399B2;">]</span></span>
+<span class="giallo-l"><span>ply-engine</span><span style="color: #94E2D5;"> =</span><span style="color: #9399B2;"> {</span><span> version</span><span style="color: #94E2D5;"> =</span><span style="color: #A6E3A1;"> &quot;1.0&quot;</span><span style="color: #9399B2;">,</span><span> features</span><span style="color: #94E2D5;"> =</span><span style="color: #9399B2;"> [</span><span style="color: #A6E3A1;">&quot;text-styling&quot;</span><span style="color: #9399B2;">] }</span></span></code></pre><h2 id="syntax"><a class="zola-anchor" href="#syntax" aria-label="Anchor link for: syntax">🔗</a>Syntax</h2>
+<p>Wrap styled text in <code>{tag|content}</code>. The tag goes before the pipe, the
+content after:</p>
+<iframe
+  src="/examples/shell.html?id=text_preview#ui%2Etext%28%22%5B%5Btext%5D%5D%22%2C%20%7Ct%7C%20t%2Efont%5Fsize%28%5B%5Bfont%5Fsize%5D%5D%29%29%3B%0A%2D%2D%2D%0Atext%20%3D%20%7Bcolor%3Dred%7CThis%20text%20is%20red%7D%0An%2Efont%5Fsize%20%3D%2024"
+  style="width: 100%; height: 130px; border: 1px solid #262220; border-radius: 12px; margin: 1.5rem 0;"
+  loading="lazy"
+  tabindex="-1"></iframe>
+<p>Use underscores to chain parameters:</p>
+<iframe
+  src="/examples/shell.html?id=text_preview#ui%2Etext%28%22%5B%5Btext%5D%5D%22%2C%20%7Ct%7C%20t%2Efont%5Fsize%28%5B%5Bfont%5Fsize%5D%5D%29%29%3B%0A%2D%2D%2D%0Atext%20%3D%20%7Bwave%5Fa%3D0%2E5%5Ff%3D1%2E0%7CWavy%20text%7D%0An%2Efont%5Fsize%20%3D%2024"
+  style="width: 100%; height: 130px; border: 1px solid #262220; border-radius: 12px; margin: 1.5rem 0;"
+  loading="lazy"
+  tabindex="-1"></iframe>
+<p>Tags can nest. Inner tags override outer ones if they conflict:</p>
+<iframe
+  src="/examples/shell.html?id=text_preview#ui%2Etext%28%22%5B%5Btext%5D%5D%22%2C%20%7Ct%7C%20t%2Efont%5Fsize%28%5B%5Bfont%5Fsize%5D%5D%29%29%3B%0A%2D%2D%2D%0Atext%20%3D%20%7Bcolor%3D%23FFC32C%7CHello%20%7Bcolor%3D%23FF654D%7Cworld%7D%21%7D%0An%2Efont%5Fsize%20%3D%2024"
+  style="width: 100%; height: 130px; border: 1px solid #262220; border-radius: 12px; margin: 1.5rem 0;"
+  loading="lazy"
+  tabindex="-1"></iframe>
+<p><strong>Escaping:</strong> Use <code>\</code> to insert literal <code>{</code>, <code>}</code>, <code>|</code>, or <code>\</code>:</p>
+<iframe
+  src="/examples/shell.html?id=text_preview#ui%2Etext%28%22%5B%5Btext%5D%5D%22%2C%20%7Ct%7C%20t%2Efont%5Fsize%28%5B%5Bfont%5Fsize%5D%5D%29%29%3B%0A%2D%2D%2D%0Atext%20%3D%20Price%3A%20%5C%7B5%5C%7D%0An%2Efont%5Fsize%20%3D%2024"
+  style="width: 100%; height: 130px; border: 1px solid #262220; border-radius: 12px; margin: 1.5rem 0;"
+  loading="lazy"
+  tabindex="-1"></iframe>
+<h2 id="properties"><a class="zola-anchor" href="#properties" aria-label="Anchor link for: properties">🔗</a>Properties</h2>
+<p>Static attributes on the wrapped text. These are optimized in rendering.</p>
+<h3 id="color"><a class="zola-anchor" href="#color" aria-label="Anchor link for: color">🔗</a>color</h3>
+<p>Sets the text fill color. Accepts hex (<code>#RRGGBB</code>), RGB tuples
+(<code>(r,g,b)</code>), or named colors.</p>
+
+
+
+
+
+
+<iframe
+  src="/examples/shell.html?id=text_preview#ui%2Etext%28%22%5B%5Btext1%5D%5D%22%2C%20%7Ct%7C%20t%2Efont%5Fsize%28%5B%5Bfont%5Fsize1%5D%5D%29%29%3B%0Aui%2Etext%28%22%5B%5Btext2%5D%5D%22%2C%20%7Ct%7C%20t%2Efont%5Fsize%28%5B%5Bfont%5Fsize2%5D%5D%29%29%3B%0Aui%2Etext%28%22%5B%5Btext3%5D%5D%22%2C%20%7Ct%7C%20t%2Efont%5Fsize%28%5B%5Bfont%5Fsize3%5D%5D%29%29%3B%0A%2D%2D%2D%0Atext1%20%3D%20%7Bcolor%3D%23FF654D%7CSalmon%20text%7D%0Atext2%20%3D%20%7Bcolor%3Dcyan%7CCyan%20text%7D%0Atext3%20%3D%20%7Bcolor%3D%28255%2C195%2C44%29%7CYellow%20text%7D%0An%2Efont%5Fsize1%20%3D%2024%0An%2Efont%5Fsize2%20%3D%2024%0An%2Efont%5Fsize3%20%3D%2024"
+  style="width: 100%; height: 220px; border: 1px solid #262220; border-radius: 12px; margin: 1.5rem 0;"
+  loading="lazy"
+  tabindex="-1"></iframe>
+
+<p>Named colors: <code>white</code>, <code>black</code>, <code>lightgray</code>, <code>darkgray</code>, <code>red</code>, <code>orange</code>, <code>yellow</code>,
+<code>lime</code>, <code>green</code>, <code>cyan</code>, <code>lightblue</code>, <code>blue</code>, <code>purple</code>, <code>magenta</code>, <code>brown</code>, <code>pink</code> (case
+insensitive).</p>
+<h3 id="opacity"><a class="zola-anchor" href="#opacity" aria-label="Anchor link for: opacity">🔗</a>opacity</h3>
+<p>Makes text semi-transparent:</p>
+<iframe
+  src="/examples/shell.html?id=text_preview#ui%2Etext%28%22%5B%5Btext%5D%5D%22%2C%20%7Ct%7C%20t%2Efont%5Fsize%28%5B%5Bfont%5Fsize%5D%5D%29%29%3B%0A%2D%2D%2D%0Atext%20%3D%20%7Bopacity%3D0%2E5%7CGhost%20text%7D%0An%2Efont%5Fsize%20%3D%2024"
+  style="width: 100%; height: 130px; border: 1px solid #262220; border-radius: 12px; margin: 1.5rem 0;"
+  loading="lazy"
+  tabindex="-1"></iframe>
+<p>Properties combine, nest opacity inside a color tag:</p>
+<iframe
+  src="/examples/shell.html?id=text_preview#ui%2Etext%28%22%5B%5Btext%5D%5D%22%2C%20%7Ct%7C%20t%2Efont%5Fsize%28%5B%5Bfont%5Fsize%5D%5D%29%29%3B%0A%2D%2D%2D%0Atext%20%3D%20%7Bcolor%3Dred%7C%7Bopacity%3D0%2E5%7CFaded%20red%7D%7D%0An%2Efont%5Fsize%20%3D%2024"
+  style="width: 100%; height: 130px; border: 1px solid #262220; border-radius: 12px; margin: 1.5rem 0;"
+  loading="lazy"
+  tabindex="-1"></iframe>
+<h2 id="effects"><a class="zola-anchor" href="#effects" aria-label="Anchor link for: effects">🔗</a>Effects</h2>
+<p>Per-character visual effects that create movement, shadows, or gradients.</p>
+<h3 id="wave"><a class="zola-anchor" href="#wave" aria-label="Anchor link for: wave">🔗</a>wave</h3>
+<p>Vertical sine wave:</p>
+<iframe
+  src="/examples/shell.html?id=text_preview#ui%2Etext%28%22%5B%5Btext%5D%5D%22%2C%20%7Ct%7C%20t%2Efont%5Fsize%28%5B%5Bfont%5Fsize%5D%5D%29%29%3B%0A%2D%2D%2D%0Atext%20%3D%20%7Bwave%7CBouncing%20text%7D%0An%2Efont%5Fsize%20%3D%2024"
+  style="width: 100%; height: 130px; border: 1px solid #262220; border-radius: 12px; margin: 1.5rem 0;"
+  loading="lazy"
+  tabindex="-1"></iframe>
+<table><thead><tr><th>Parameter</th><th>What it does</th><th>Default</th></tr></thead><tbody>
+<tr><td><code>w</code></td><td>Wavelength in characters</td><td>3</td></tr>
+<tr><td><code>f</code></td><td>Frequency (cycles/sec)</td><td>0.5</td></tr>
+<tr><td><code>s</code></td><td>Speed (chars/sec) — overrides <code>f</code></td><td>—</td></tr>
+<tr><td><code>a</code></td><td>Amplitude (ratio of font size)</td><td>0.3</td></tr>
+<tr><td><code>p</code></td><td>Phase offset (0–1)</td><td>0</td></tr>
+<tr><td><code>r</code></td><td>Direction rotation in degrees</td><td>0</td></tr>
+</tbody></table>
+<iframe
+  src="/examples/shell.html?id=text_preview#ui%2Etext%28%22%5B%5Btext%5D%5D%22%2C%20%7Ct%7C%20t%2Efont%5Fsize%28%5B%5Bfont%5Fsize%5D%5D%29%29%3B%0A%2D%2D%2D%0Atext%20%3D%20%7Bwave%5Fw%3D5%5Fa%3D0%2E6%5Ff%3D0%2E2%5Fr%3D45%7CDiagonal%20wave%7D%0An%2Efont%5Fsize%20%3D%2024"
+  style="width: 100%; height: 130px; border: 1px solid #262220; border-radius: 12px; margin: 1.5rem 0;"
+  loading="lazy"
+  tabindex="-1"></iframe>
+<h3 id="pulse"><a class="zola-anchor" href="#pulse" aria-label="Anchor link for: pulse">🔗</a>pulse</h3>
+<p>Characters grow and shrink in a wave:</p>
+<iframe
+  src="/examples/shell.html?id=text_preview#ui%2Etext%28%22%5B%5Btext%5D%5D%22%2C%20%7Ct%7C%20t%2Efont%5Fsize%28%5B%5Bfont%5Fsize%5D%5D%29%29%3B%0A%2D%2D%2D%0Atext%20%3D%20%7Bpulse%7CPulsing%20text%7D%0An%2Efont%5Fsize%20%3D%2024"
+  style="width: 100%; height: 130px; border: 1px solid #262220; border-radius: 12px; margin: 1.5rem 0;"
+  loading="lazy"
+  tabindex="-1"></iframe>
+<table><thead><tr><th>Parameter</th><th>What it does</th><th>Default</th></tr></thead><tbody>
+<tr><td><code>w</code></td><td>Wavelength in characters</td><td>2</td></tr>
+<tr><td><code>f</code></td><td>Frequency (cycles/sec)</td><td>0.6</td></tr>
+<tr><td><code>s</code></td><td>Speed (chars/sec) — overrides <code>f</code></td><td>—</td></tr>
+<tr><td><code>a</code></td><td>Scale amplitude</td><td>0.15</td></tr>
+<tr><td><code>p</code></td><td>Phase offset (0–1)</td><td>0</td></tr>
+</tbody></table>
+<h3 id="swing"><a class="zola-anchor" href="#swing" aria-label="Anchor link for: swing">🔗</a>swing</h3>
+<p>Pendulum rotation per character:</p>
+<iframe
+  src="/examples/shell.html?id=text_preview#ui%2Etext%28%22%5B%5Btext%5D%5D%22%2C%20%7Ct%7C%20t%2Efont%5Fsize%28%5B%5Bfont%5Fsize%5D%5D%29%29%3B%0A%2D%2D%2D%0Atext%20%3D%20%7Bswing%5Fa%3D12%7CSwinging%20text%7D%0An%2Efont%5Fsize%20%3D%2024"
+  style="width: 100%; height: 130px; border: 1px solid #262220; border-radius: 12px; margin: 1.5rem 0;"
+  loading="lazy"
+  tabindex="-1"></iframe>
+<table><thead><tr><th>Parameter</th><th>What it does</th><th>Default</th></tr></thead><tbody>
+<tr><td><code>w</code></td><td>Wavelength in characters</td><td>3</td></tr>
+<tr><td><code>f</code></td><td>Frequency (swings/sec)</td><td>0.5</td></tr>
+<tr><td><code>s</code></td><td>Speed (chars/sec) — overrides <code>f</code></td><td>—</td></tr>
+<tr><td><code>a</code></td><td>Amplitude in degrees</td><td>8</td></tr>
+<tr><td><code>p</code></td><td>Phase offset (0–1)</td><td>0</td></tr>
+</tbody></table>
+<h3 id="jitter"><a class="zola-anchor" href="#jitter" aria-label="Anchor link for: jitter">🔗</a>jitter</h3>
+<p>Random character displacement:</p>
+<iframe
+  src="/examples/shell.html?id=text_preview#ui%2Etext%28%22%5B%5Btext%5D%5D%22%2C%20%7Ct%7C%20t%2Efont%5Fsize%28%5B%5Bfont%5Fsize%5D%5D%29%29%3B%0A%2D%2D%2D%0Atext%20%3D%20%7Bjitter%5Fradii%3D0%2E2%2C0%2E2%7CShaky%20text%7D%0An%2Efont%5Fsize%20%3D%2024"
+  style="width: 100%; height: 130px; border: 1px solid #262220; border-radius: 12px; margin: 1.5rem 0;"
+  loading="lazy"
+  tabindex="-1"></iframe>
+<table><thead><tr><th>Parameter</th><th>What it does</th><th>Default</th></tr></thead><tbody>
+<tr><td><code>radii</code></td><td>Horizontal,vertical offset (font ratio)</td><td>0.5,0.5</td></tr>
+<tr><td><code>rotation</code></td><td>Rotation of the jitter ellipse (degrees)</td><td>0</td></tr>
+</tbody></table>
+<h3 id="gradient"><a class="zola-anchor" href="#gradient" aria-label="Anchor link for: gradient">🔗</a>gradient</h3>
+<p>Cycling color gradient across characters:</p>
+<iframe
+  src="/examples/shell.html?id=text_preview#ui%2Etext%28%22%5B%5Btext%5D%5D%22%2C%20%7Ct%7C%20t%2Efont%5Fsize%28%5B%5Bfont%5Fsize%5D%5D%29%29%3B%0A%2D%2D%2D%0Atext%20%3D%20%7Bgradient%7CRainbow%20text%7D%0An%2Efont%5Fsize%20%3D%2024"
+  style="width: 100%; height: 130px; border: 1px solid #262220; border-radius: 12px; margin: 1.5rem 0;"
+  loading="lazy"
+  tabindex="-1"></iframe>
+<p>The default is a full rainbow. Custom stops use <code>position:color</code> pairs:</p>
+<pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="rust"><span class="giallo-l"><span>ui</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">text</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;</span><span style="color: #9399B2;">{</span><span style="color: #A6E3A1;">gradient_stops=0:#FF0000,5:#FFC32C_speed=2|Fire text</span><span style="color: #9399B2;">}</span><span style="color: #A6E3A1;">&quot;</span><span style="color: #9399B2;">,</span><span style="color: #94E2D5;"> |</span><span>t</span><span style="color: #94E2D5;">|</span><span> t</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">font_size</span><span style="color: #9399B2;">(</span><span style="color: #FAB387;">24</span><span style="color: #9399B2;">));</span></span></code></pre><iframe
+  src="/examples/shell.html?id=text_preview#ui%2Etext%28%22%5B%5Btext%5D%5D%22%2C%20%7Ct%7C%20t%2Efont%5Fsize%28%5B%5Bfont%5Fsize%5D%5D%29%29%3B%0A%2D%2D%2D%0Atext%20%3D%20%7Bgradient%5Fstops%3D0%3A%23FF0000%2C5%3A%23FFC32C%5Fspeed%3D2%7CFire%20text%7D%0An%2Efont%5Fsize%20%3D%2024"
+  style="width: 100%; height: 130px; border: 1px solid #262220; border-radius: 12px; margin: 1.5rem 0;"
+  loading="lazy"
+  tabindex="-1"></iframe>
+<table><thead><tr><th>Parameter</th><th>What it does</th><th>Default</th></tr></thead><tbody>
+<tr><td><code>stops</code></td><td>Comma-separated <code>pos:color</code></td><td>rainbow</td></tr>
+<tr><td><code>speed</code></td><td>Scroll speed (chars/sec)</td><td>1</td></tr>
+</tbody></table>
+<h3 id="shadow"><a class="zola-anchor" href="#shadow" aria-label="Anchor link for: shadow">🔗</a>shadow</h3>
+<p>Draws a duplicate behind each character:</p>
+<pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="rust"><span class="giallo-l"><span>ui</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">text</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;</span><span style="color: #9399B2;">{</span><span style="color: #A6E3A1;">shadow_color=#000000_offset=-0.1,0.1|Shadowed</span><span style="color: #9399B2;">}</span><span style="color: #A6E3A1;">&quot;</span><span style="color: #9399B2;">,</span><span style="color: #94E2D5;"> |</span><span>t</span><span style="color: #94E2D5;">|</span><span> t</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">font_size</span><span style="color: #9399B2;">(</span><span style="color: #FAB387;">24</span><span style="color: #9399B2;">));</span></span></code></pre><table><thead><tr><th>Parameter</th><th>What it does</th><th>Default</th></tr></thead><tbody>
+<tr><td><code>color</code></td><td>Shadow color</td><td>black</td></tr>
+<tr><td><code>offset</code></td><td>X,Y offset (font ratio)</td><td>-0.3,0.3</td></tr>
+<tr><td><code>scale</code></td><td>Shadow size multiplier</td><td>1.0</td></tr>
+</tbody></table>
+<h3 id="transform"><a class="zola-anchor" href="#transform" aria-label="Anchor link for: transform">🔗</a>transform</h3>
+<p>Static per-character transform:</p>
+
+
+
+
+
+
+<iframe
+  src="/examples/shell.html?id=text_preview#ui%2Etext%28%22%5B%5Btext1%5D%5D%22%2C%20%7Ct%7C%20t%2Efont%5Fsize%28%5B%5Bfont%5Fsize1%5D%5D%29%29%3B%0Aui%2Etext%28%22%5B%5Btext2%5D%5D%22%2C%20%7Ct%7C%20t%2Efont%5Fsize%28%5B%5Bfont%5Fsize2%5D%5D%29%29%3B%0Aui%2Etext%28%22%5B%5Btext3%5D%5D%22%2C%20%7Ct%7C%20t%2Efont%5Fsize%28%5B%5Bfont%5Fsize3%5D%5D%29%29%3B%0A%2D%2D%2D%0Atext1%20%3D%20%7Btransform%5Ftranslate%3D0%2C0%2E5%7CShifted%20down%7D%0Atext2%20%3D%20%7Btransform%5Fscale%3D1%2E5%7CGiant%20text%7D%0Atext3%20%3D%20%7Btransform%5Frotate%3D15%7CTilted%7D%0An%2Efont%5Fsize1%20%3D%2024%0An%2Efont%5Fsize2%20%3D%2024%0An%2Efont%5Fsize3%20%3D%2024"
+  style="width: 100%; height: 220px; border: 1px solid #262220; border-radius: 12px; margin: 1.5rem 0;"
+  loading="lazy"
+  tabindex="-1"></iframe>
+
+<table><thead><tr><th>Parameter</th><th>What it does</th><th>Default</th></tr></thead><tbody>
+<tr><td><code>translate</code></td><td>X,Y offset (font size ratio)</td><td>0,0</td></tr>
+<tr><td><code>scale</code></td><td>X,Y size multiplier</td><td>1.0</td></tr>
+<tr><td><code>rotate</code></td><td>Rotation in degrees</td><td>0</td></tr>
+</tbody></table>
+<h3 id="hide"><a class="zola-anchor" href="#hide" aria-label="Anchor link for: hide">🔗</a>hide</h3>
+<p>Prevents rendering entirely. Useful for reserving space or with
+animations:</p>
+<iframe
+  src="/examples/shell.html?id=text_preview#ui%2Etext%28%22%5B%5Btext%5D%5D%22%2C%20%7Ct%7C%20t%2Efont%5Fsize%28%5B%5Bfont%5Fsize%5D%5D%29%29%3B%0A%2D%2D%2D%0Atext%20%3D%20%7Bhide%7Cinvisible%7D%0An%2Efont%5Fsize%20%3D%2024"
+  style="width: 100%; height: 130px; border: 1px solid #262220; border-radius: 12px; margin: 1.5rem 0;"
+  loading="lazy"
+  tabindex="-1"></iframe>
+<h2 id="animations"><a class="zola-anchor" href="#animations" aria-label="Anchor link for: animations">🔗</a>Animations</h2>
+<p>Time-based transitions tracked by a unique <code>id</code>. Every animation needs
+either <code>in</code> (appear) or <code>out</code> (disappear).</p>
+<h3 id="type"><a class="zola-anchor" href="#type" aria-label="Anchor link for: type">🔗</a>type</h3>
+<p>Typewriter reveal:</p>
+<iframe
+  src="/examples/shell.html?id=text_preview&amp;replay=1#ui%2Etext%28%22%5B%5Btext%5D%5D%22%2C%20%7Ct%7C%20t%2Efont%5Fsize%28%5B%5Bfont%5Fsize%5D%5D%29%29%3B%0A%2D%2D%2D%0Atext%20%3D%20%7Btype%5Fin%5Fid%3Dintro%5Fspeed%3D12%7CHello%2C%20world%21%7D%0An%2Efont%5Fsize%20%3D%2024"
+  style="width: 100%; height: 130px; border: 1px solid #262220; border-radius: 12px; margin: 1.5rem 0;"
+  loading="lazy"
+  tabindex="-1"></iframe>
+<table><thead><tr><th>Parameter</th><th>What it does</th><th>Default</th></tr></thead><tbody>
+<tr><td><code>in</code>/<code>out</code></td><td>Direction (required)</td><td>—</td></tr>
+<tr><td><code>id</code></td><td>Unique identifier (required)</td><td>—</td></tr>
+<tr><td><code>speed</code></td><td>Characters per second</td><td>8</td></tr>
+<tr><td><code>delay</code></td><td>Delay before starting (seconds)</td><td>0</td></tr>
+<tr><td><code>cursor</code></td><td>Character to show as cursor</td><td>none</td></tr>
+</tbody></table>
+<p>Show a blinking cursor while typing:</p>
+<iframe
+  src="/examples/shell.html?id=text_preview&amp;replay=1#ui%2Etext%28%22%5B%5Btext%5D%5D%22%2C%20%7Ct%7C%20t%2Efont%5Fsize%28%5B%5Bfont%5Fsize%5D%5D%29%29%3B%0A%2D%2D%2D%0Atext%20%3D%20%7Btype%5Fin%5Fid%3Dmsg%5Fspeed%3D10%5Fcursor%3D%5C%7C%7CLoading%2E%2E%2E%7D%0An%2Efont%5Fsize%20%3D%2024"
+  style="width: 100%; height: 130px; border: 1px solid #262220; border-radius: 12px; margin: 1.5rem 0;"
+  loading="lazy"
+  tabindex="-1"></iframe>
+<h3 id="fade"><a class="zola-anchor" href="#fade" aria-label="Anchor link for: fade">🔗</a>fade</h3>
+<p>Opacity transition, character by character:</p>
+<iframe
+  src="/examples/shell.html?id=text_preview&amp;replay=1#ui%2Etext%28%22%5B%5Btext%5D%5D%22%2C%20%7Ct%7C%20t%2Efont%5Fsize%28%5B%5Bfont%5Fsize%5D%5D%29%29%3B%0A%2D%2D%2D%0Atext%20%3D%20%7Bfade%5Fin%5Fid%3Dappear%5Fspeed%3D5%7CFading%20in%7D%0An%2Efont%5Fsize%20%3D%2024"
+  style="width: 100%; height: 130px; border: 1px solid #262220; border-radius: 12px; margin: 1.5rem 0;"
+  loading="lazy"
+  tabindex="-1"></iframe>
+<table><thead><tr><th>Parameter</th><th>What it does</th><th>Default</th></tr></thead><tbody>
+<tr><td><code>in</code>/<code>out</code></td><td>Direction (required)</td><td>—</td></tr>
+<tr><td><code>id</code></td><td>Unique identifier (required)</td><td>—</td></tr>
+<tr><td><code>speed</code></td><td>Characters per second</td><td>3</td></tr>
+<tr><td><code>trail</code></td><td>Gradient length in characters</td><td>3</td></tr>
+<tr><td><code>delay</code></td><td>Delay before starting (seconds)</td><td>0</td></tr>
+</tbody></table>
+<h3 id="scale"><a class="zola-anchor" href="#scale" aria-label="Anchor link for: scale">🔗</a>scale</h3>
+<p>Pop-in or pop-out by scaling each character:</p>
+<iframe
+  src="/examples/shell.html?id=text_preview&amp;replay=1#ui%2Etext%28%22%5B%5Btext%5D%5D%22%2C%20%7Ct%7C%20t%2Efont%5Fsize%28%5B%5Bfont%5Fsize%5D%5D%29%29%3B%0A%2D%2D%2D%0Atext%20%3D%20%7Bscale%5Fin%5Fid%3Dpop%5Fspeed%3D4%5Ftrail%3D5%7CPopping%20in%21%7D%0An%2Efont%5Fsize%20%3D%2024"
+  style="width: 100%; height: 130px; border: 1px solid #262220; border-radius: 12px; margin: 1.5rem 0;"
+  loading="lazy"
+  tabindex="-1"></iframe>
+<table><thead><tr><th>Parameter</th><th>What it does</th><th>Default</th></tr></thead><tbody>
+<tr><td><code>in</code>/<code>out</code></td><td>Direction (required)</td><td>—</td></tr>
+<tr><td><code>id</code></td><td>Unique identifier (required)</td><td>—</td></tr>
+<tr><td><code>speed</code></td><td>Characters per second</td><td>3</td></tr>
+<tr><td><code>trail</code></td><td>Gradient length in characters</td><td>3</td></tr>
+<tr><td><code>delay</code></td><td>Delay before starting (seconds)</td><td>0</td></tr>
+</tbody></table>
+<h2 id="combining-styles"><a class="zola-anchor" href="#combining-styles" aria-label="Anchor link for: combining-styles">🔗</a>Combining styles</h2>
+<p>Stack tags to combine effects. Effects compose: transforms accumulate,
+colors override:</p>
+<iframe
+  src="/examples/shell.html?id=text_preview&amp;replay=1#ui%2Etext%28%22%5B%5Btext%5D%5D%22%2C%20%7Ct%7C%20t%2Efont%5Fsize%28%5B%5Bfont%5Fsize%5D%5D%29%29%3B%0A%2D%2D%2D%0Atext%20%3D%20%7Btype%5Fin%5Fid%3Dhero%5Fspeed%3D15%7C%7Bwave%5Fa%3D0%2E4%7C%7Bgradient%7CWelcome%20to%20Ply%21%7D%7D%7D%0An%2Efont%5Fsize%20%3D%2024"
+  style="width: 100%; height: 130px; border: 1px solid #262220; border-radius: 12px; margin: 1.5rem 0;"
+  loading="lazy"
+  tabindex="-1"></iframe>
+<iframe
+  src="/examples/shell.html?id=text_preview#ui%2Etext%28%22%5B%5Btext%5D%5D%22%2C%20%7Ct%7C%20t%2Efont%5Fsize%28%5B%5Bfont%5Fsize%5D%5D%29%29%3B%0A%2D%2D%2D%0Atext%20%3D%20%7Bcolor%3D%23B91414%7C%7Bpulse%5Fa%3D0%2E2%7C%7Bshadow%5Fcolor%3D%23000000%7CAlert%21%7D%7D%7D%0An%2Efont%5Fsize%20%3D%2024"
+  style="width: 100%; height: 130px; border: 1px solid #262220; border-radius: 12px; margin: 1.5rem 0;"
+  loading="lazy"
+  tabindex="-1"></iframe>
+<h2 id="styled-text-input"><a class="zola-anchor" href="#styled-text-input" aria-label="Anchor link for: styled-text-input">🔗</a>Styled text input</h2>
+<p>The text styling syntax works inside text inputs too. When <code>text-styling</code>
+is enabled, you can add styles and have the user interact with and see it rendered live.</p>
+<p>Use <code>.no_styles_movement()</code> so the cursor skips over style tag boundaries, this is useful when you are highlighting code:</p>
+<pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="rust"><span class="giallo-l"><span>ui</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">element</span><span style="color: #9399B2;">()</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">id</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;styled_editor&quot;</span><span style="color: #9399B2;">)</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">width</span><span style="color: #9399B2;">(</span><span style="color: #89B4FA;font-style: italic;">grow!</span><span style="color: #9399B2;">())</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">height</span><span style="color: #9399B2;">(</span><span style="color: #89B4FA;font-style: italic;">fixed!</span><span style="color: #9399B2;">(</span><span style="color: #FAB387;">200</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #9399B2;">))</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">background_color</span><span style="color: #9399B2;">(</span><span style="color: #FAB387;">0x1A1A28</span><span style="color: #9399B2;">)</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">corner_radius</span><span style="color: #9399B2;">(</span><span style="color: #FAB387;">6</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #9399B2;">)</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">text_input</span><span style="color: #9399B2;">(</span><span style="color: #94E2D5;">|</span><span>t</span><span style="color: #94E2D5;">|</span><span> t</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">    .</span><span style="color: #89B4FA;font-style: italic;">multiline</span><span style="color: #9399B2;">(</span><span style="color: #F38BA8;">true</span><span style="color: #9399B2;">)</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">    .</span><span style="color: #89B4FA;font-style: italic;">font_size</span><span style="color: #9399B2;">(</span><span style="color: #FAB387;">14</span><span style="color: #9399B2;">)</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">    .</span><span style="color: #89B4FA;font-style: italic;">text_color</span><span style="color: #9399B2;">(</span><span style="color: #FAB387;">0xDDDDDD</span><span style="color: #9399B2;">)</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">    .</span><span style="color: #89B4FA;font-style: italic;">no_styles_movement</span><span style="color: #9399B2;">()</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">  )</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">empty</span><span style="color: #9399B2;">();</span></span></code></pre><h3 id="live-highlighting"><a class="zola-anchor" href="#live-highlighting" aria-label="Anchor link for: live-highlighting">🔗</a>Live highlighting</h3>
+<p>Build a highlighter that converts plain text to styled text, then apply
+it on every frame. Use the <code>styling</code> module:</p>
+<pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="rust"><span class="giallo-l"><span style="color: #CBA6F7;">use</span><span style="color: #F9E2AF;"> ply_engine</span><span style="color: #94E2D5;">::</span><span style="color: #F9E2AF;">text_input</span><span style="color: #94E2D5;">::</span><span>styling</span><span style="color: #9399B2;">;</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #CBA6F7;">fn</span><span style="color: #89B4FA;font-style: italic;"> highlight</span><span style="color: #9399B2;">(</span><span style="color: #EBA0AC;">plain</span><span style="color: #94E2D5;">: &amp;</span><span style="color: #F9E2AF;font-style: italic;">str</span><span style="color: #9399B2;">)</span><span style="color: #94E2D5;"> -&gt;</span><span style="color: #F9E2AF;font-style: italic;"> String</span><span style="color: #9399B2;"> {</span></span>
+<span class="giallo-l"><span>  plain</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">split</span><span style="color: #9399B2;">(&#39; &#39;)</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">map</span><span style="color: #9399B2;">(</span><span style="color: #94E2D5;">|</span><span>word</span><span style="color: #94E2D5;">|</span><span style="color: #9399B2;"> {</span></span>
+<span class="giallo-l"><span style="color: #CBA6F7;">    if</span><span> word</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">starts_with</span><span style="color: #9399B2;">(&#39;</span><span style="color: #A6E3A1;">#</span><span style="color: #9399B2;">&#39;) {</span></span>
+<span class="giallo-l"><span style="color: #89B4FA;font-style: italic;">      format!</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;{{color=#FFC32C|</span><span style="color: #9399B2;">{}</span><span style="color: #A6E3A1;">}}&quot;</span><span style="color: #9399B2;">,</span><span style="color: #F9E2AF;"> styling</span><span style="color: #94E2D5;">::</span><span style="color: #89B4FA;font-style: italic;">escape_str</span><span style="color: #9399B2;">(</span><span>word</span><span style="color: #9399B2;">))</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">    }</span><span style="color: #CBA6F7;"> else</span><span style="color: #9399B2;"> {</span></span>
+<span class="giallo-l"><span style="color: #F9E2AF;">      styling</span><span style="color: #94E2D5;">::</span><span style="color: #89B4FA;font-style: italic;">escape_str</span><span style="color: #9399B2;">(</span><span>word</span><span style="color: #9399B2;">)</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">    }</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">  })</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">collect</span><span style="color: #94E2D5;">::</span><span style="color: #89DCEB;">&lt;</span><span style="color: #F9E2AF;font-style: italic;">Vec</span><span style="color: #89DCEB;">&lt;</span><span>_</span><span style="color: #89DCEB;">&gt;&gt;</span><span style="color: #9399B2;">()</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">join</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot; &quot;</span><span style="color: #9399B2;">)</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">}</span></span></code></pre>
+<p>Apply each frame:</p>
+<pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="rust"><span class="giallo-l"><span style="color: #CBA6F7;">let</span><span> raw</span><span style="color: #94E2D5;"> =</span><span> ply</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">get_text_value</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;styled_editor&quot;</span><span style="color: #9399B2;">)</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">to_string</span><span style="color: #9399B2;">();</span></span>
+<span class="giallo-l"><span style="color: #CBA6F7;">if</span><span style="color: #94E2D5;"> !</span><span>raw</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">is_empty</span><span style="color: #9399B2;">() {</span></span>
+<span class="giallo-l"><span style="color: #CBA6F7;">  let</span><span> plain</span><span style="color: #94E2D5;"> =</span><span style="color: #F9E2AF;"> styling</span><span style="color: #94E2D5;">::</span><span style="color: #89B4FA;font-style: italic;">strip_styling</span><span style="color: #9399B2;">(</span><span style="color: #94E2D5;">&amp;</span><span>raw</span><span style="color: #9399B2;">);</span></span>
+<span class="giallo-l"><span style="color: #CBA6F7;">  let</span><span> highlighted</span><span style="color: #94E2D5;"> =</span><span style="color: #89B4FA;font-style: italic;"> highlight</span><span style="color: #9399B2;">(</span><span style="color: #94E2D5;">&amp;</span><span>plain</span><span style="color: #9399B2;">);</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #CBA6F7;">  if</span><span> raw</span><span style="color: #94E2D5;"> !=</span><span> highlighted</span><span style="color: #9399B2;"> {</span></span>
+<span class="giallo-l"><span style="color: #CBA6F7;">    let</span><span> cursor</span><span style="color: #94E2D5;"> =</span><span> ply</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">get_cursor_pos</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;styled_editor&quot;</span><span style="color: #9399B2;">);</span></span>
+<span class="giallo-l"><span style="color: #CBA6F7;">    let</span><span> content_pos</span><span style="color: #94E2D5;"> =</span><span style="color: #F9E2AF;"> styling</span><span style="color: #94E2D5;">::</span><span style="color: #89B4FA;font-style: italic;">cursor_to_content</span><span style="color: #9399B2;">(</span><span style="color: #94E2D5;">&amp;</span><span>raw</span><span style="color: #9399B2;">,</span><span> cursor</span><span style="color: #9399B2;">);</span></span>
+<span class="giallo-l"><span>    ply</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">set_text_value</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;styled_editor&quot;</span><span style="color: #9399B2;">,</span><span style="color: #94E2D5;"> &amp;</span><span>highlighted</span><span style="color: #9399B2;">);</span></span>
+<span class="giallo-l"><span style="color: #CBA6F7;">    let</span><span> new_cursor</span><span style="color: #94E2D5;"> =</span><span style="color: #F9E2AF;"> styling</span><span style="color: #94E2D5;">::</span><span style="color: #89B4FA;font-style: italic;">content_to_cursor</span><span style="color: #9399B2;">(</span><span style="color: #94E2D5;">&amp;</span><span>highlighted</span><span style="color: #9399B2;">,</span><span> content_pos</span><span style="color: #9399B2;">,</span><span style="color: #F38BA8;"> false</span><span style="color: #9399B2;">);</span></span>
+<span class="giallo-l"><span>    ply</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">set_cursor_pos</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;styled_editor&quot;</span><span style="color: #9399B2;">,</span><span> new_cursor</span><span style="color: #9399B2;">);</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">  }</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">}</span></span></code></pre><h3 id="styling-functions"><a class="zola-anchor" href="#styling-functions" aria-label="Anchor link for: styling-functions">🔗</a>styling functions</h3>
+<table><thead><tr><th>Function</th><th>What it does</th></tr></thead><tbody>
+<tr><td><code>escape_str(s)</code></td><td>Escapes all style delimiters in a string</td></tr>
+<tr><td><code>strip_styling(s)</code></td><td>Removes all style tags, returning plain content</td></tr>
+<tr><td><code>cursor_to_content(s, pos)</code></td><td>Converts cursor pos to content character index</td></tr>
+<tr><td><code>content_to_cursor(s, pos, snap_to_content)</code></td><td>Converts content character index to cursor pos. When <code>snap_to_content</code> is true, the cursor skips structural positions like <code>}</code> and lands on the next visible character.</td></tr>
+</tbody></table>
+<h2 id="processing-order"><a class="zola-anchor" href="#processing-order" aria-label="Anchor link for: processing-order">🔗</a>Processing order</h2>
+<p>When multiple tags are active on the same text, they are processed in
+this order:</p>
+<ol>
+<li>hide</li>
+<li>type (animation)</li>
+<li>fade (animation)</li>
+<li>scale (animation)</li>
+<li>transform</li>
+<li>wave</li>
+<li>pulse</li>
+<li>swing</li>
+<li>jitter</li>
+<li>gradient</li>
+<li>opacity</li>
+<li>color</li>
+<li>shadow</li>
+</ol>
+<p>Later entries override earlier ones if they affect the same property (color, opacity).</p>
+<h2 id="next-steps"><a class="zola-anchor" href="#next-steps" aria-label="Anchor link for: next-steps">🔗</a>Next steps</h2>
+<p>→ <a href="/docs/shaders-and-effects/">Shaders &amp; Effects</a></p>
+
+    </div>
+
+    
+    
+    <meta itemprop="author" content="TheRedDeveloper">
+    
+    
+</article>
+
+
+
+<nav class="page-nav" aria-label="Page navigation">
+    
+
+    
+</nav>
+
+
+
+                </main>
+
+                
+                
+                
+
+
+
+
+<aside id="page-toc-panel" class="page-toc-panel" aria-hidden="true" aria-label="On this page">
+    <div class="page-toc-panel__content">
+        <div class="page-toc-panel__header">
+            <span class="page-toc-panel__title">On this page</span>
+            <button class="page-toc-panel__close" type="button" aria-label="Close table of contents">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M18 6 6 18"/>
+                    <path d="m6 6 12 12"/>
+                </svg>
+            </button>
+        </div>
+        <nav class="page-toc-panel__nav" aria-label="Page sections">
+            <ul class="page-toc-panel__list">
+                
+                <li class="page-toc-panel__item">
+                    <a href="#syntax" class="page-toc-panel__link">
+                        Syntax
+                    </a>
+                    
+                </li>
+                
+                <li class="page-toc-panel__item">
+                    <a href="#properties" class="page-toc-panel__link">
+                        Properties
+                    </a>
+                    
+                    <ul class="page-toc-panel__list page-toc-panel__list--nested">
+                        
+                        <li class="page-toc-panel__item">
+                            <a href="#color" class="page-toc-panel__link">
+                                color
+                            </a>
+                        </li>
+                        
+                        <li class="page-toc-panel__item">
+                            <a href="#opacity" class="page-toc-panel__link">
+                                opacity
+                            </a>
+                        </li>
+                        
+                    </ul>
+                    
+                </li>
+                
+                <li class="page-toc-panel__item">
+                    <a href="#effects" class="page-toc-panel__link">
+                        Effects
+                    </a>
+                    
+                    <ul class="page-toc-panel__list page-toc-panel__list--nested">
+                        
+                        <li class="page-toc-panel__item">
+                            <a href="#wave" class="page-toc-panel__link">
+                                wave
+                            </a>
+                        </li>
+                        
+                        <li class="page-toc-panel__item">
+                            <a href="#pulse" class="page-toc-panel__link">
+                                pulse
+                            </a>
+                        </li>
+                        
+                        <li class="page-toc-panel__item">
+                            <a href="#swing" class="page-toc-panel__link">
+                                swing
+                            </a>
+                        </li>
+                        
+                        <li class="page-toc-panel__item">
+                            <a href="#jitter" class="page-toc-panel__link">
+                                jitter
+                            </a>
+                        </li>
+                        
+                        <li class="page-toc-panel__item">
+                            <a href="#gradient" class="page-toc-panel__link">
+                                gradient
+                            </a>
+                        </li>
+                        
+                        <li class="page-toc-panel__item">
+                            <a href="#shadow" class="page-toc-panel__link">
+                                shadow
+                            </a>
+                        </li>
+                        
+                        <li class="page-toc-panel__item">
+                            <a href="#transform" class="page-toc-panel__link">
+                                transform
+                            </a>
+                        </li>
+                        
+                        <li class="page-toc-panel__item">
+                            <a href="#hide" class="page-toc-panel__link">
+                                hide
+                            </a>
+                        </li>
+                        
+                    </ul>
+                    
+                </li>
+                
+                <li class="page-toc-panel__item">
+                    <a href="#animations" class="page-toc-panel__link">
+                        Animations
+                    </a>
+                    
+                    <ul class="page-toc-panel__list page-toc-panel__list--nested">
+                        
+                        <li class="page-toc-panel__item">
+                            <a href="#type" class="page-toc-panel__link">
+                                type
+                            </a>
+                        </li>
+                        
+                        <li class="page-toc-panel__item">
+                            <a href="#fade" class="page-toc-panel__link">
+                                fade
+                            </a>
+                        </li>
+                        
+                        <li class="page-toc-panel__item">
+                            <a href="#scale" class="page-toc-panel__link">
+                                scale
+                            </a>
+                        </li>
+                        
+                    </ul>
+                    
+                </li>
+                
+                <li class="page-toc-panel__item">
+                    <a href="#combining-styles" class="page-toc-panel__link">
+                        Combining styles
+                    </a>
+                    
+                </li>
+                
+                <li class="page-toc-panel__item">
+                    <a href="#styled-text-input" class="page-toc-panel__link">
+                        Styled text input
+                    </a>
+                    
+                    <ul class="page-toc-panel__list page-toc-panel__list--nested">
+                        
+                        <li class="page-toc-panel__item">
+                            <a href="#live-highlighting" class="page-toc-panel__link">
+                                Live highlighting
+                            </a>
+                        </li>
+                        
+                        <li class="page-toc-panel__item">
+                            <a href="#styling-functions" class="page-toc-panel__link">
+                                styling functions
+                            </a>
+                        </li>
+                        
+                    </ul>
+                    
+                </li>
+                
+                <li class="page-toc-panel__item">
+                    <a href="#processing-order" class="page-toc-panel__link">
+                        Processing order
+                    </a>
+                    
+                </li>
+                
+                <li class="page-toc-panel__item">
+                    <a href="#next-steps" class="page-toc-panel__link">
+                        Next steps
+                    </a>
+                    
+                </li>
+                
+            </ul>
+        </nav>
+    </div>
+</aside>
+
+
+                
+            </div>
+
+            
+            
+            
+        </div>
+    </div>
+
+    
+    <div class="sidebar-overlay" aria-hidden="true"></div>
+
+    
+    
+    
+<div class="search-overlay" role="dialog" aria-modal="true" aria-labelledby="search-title" aria-describedby="search-description">
+    <div class="search">
+        <h2 id="search-title" class="sr-only">Search documentation</h2>
+        <p id="search-description" class="sr-only">Type to search. Use arrow keys to navigate results, Enter to select, Escape to close.</p>
+
+        <div class="search__input-wrapper">
+            <span class="search__icon" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"/>
+                    <path d="m21 21-4.3-4.3"/>
+                </svg>
+            </span>
+            <input
+                type="search"
+                class="search__input"
+                placeholder="Search documentation..."
+                autocomplete="off"
+                autofocus
+                aria-label="Search query"
+                aria-controls="search-results"
+                aria-autocomplete="list"
+            >
+            <span class="search__shortcut" aria-hidden="true">/</span>
+            <button class="search__close" type="button" aria-label="Close search dialog" title="Close (Esc)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M18 6 6 18"/>
+                    <path d="m6 6 12 12"/>
+                </svg>
+            </button>
+        </div>
+
+        <div id="search-results" class="search__results" role="listbox" aria-label="Search results">
+            
+        </div>
+
+        <footer class="search__footer">
+            <nav class="search__hints" aria-label="Keyboard shortcuts">
+                <span class="search__hint">
+                    <kbd aria-label="Up and down arrows">↑</kbd><kbd aria-hidden="true">↓</kbd> <span>Navigate</span>
+                </span>
+                <span class="search__hint">
+                    <kbd aria-label="Enter">↵</kbd> <span>Select</span>
+                </span>
+                <span class="search__hint">
+                    <kbd aria-label="Escape">esc</kbd> <span>Close</span>
+                </span>
+            </nav>
+            <span class="search__powered-by">Powered by <a href="https://github.com/weixsong/elasticlunr.js" target="_blank" rel="noopener noreferrer" aria-label="elasticlunr.js on GitHub (opens in new tab)">elasticlunr</a></span>
+        </footer>
+    </div>
+</div>
+
+    
+
+    
+    
+
+    
+    
+
+    
+    
+    
+    <button class="page-toc-toggle" type="button" aria-label="Toggle table of contents" aria-expanded="false" aria-controls="page-toc-panel" title="On this page">
+        <svg class="page-toc-toggle__icon page-toc-toggle__icon--list" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M16 5H3"/>
+            <path d="M16 12H3"/>
+            <path d="M16 19H3"/>
+            <path d="M21 5h.01"/>
+            <path d="M21 12h.01"/>
+            <path d="M21 19h.01"/>
+        </svg>
+        <svg class="page-toc-toggle__icon page-toc-toggle__icon--close" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M18 6 6 18"/>
+            <path d="m6 6 12 12"/>
+        </svg>
+    </button>
+    
+
+    
+    
+    <button class="fab scroll-to-top" aria-label="Scroll to top" title="Scroll to top">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="m18 15-6-6-6 6"/>
+        </svg>
+    </button>
+    
+
+    
+    
+    
+    <script src="https://plyx.iz.rs/js/theme.js" defer></script>
+    <script src="https://plyx.iz.rs/js/navigation.js" defer></script>
+    <script src="https://plyx.iz.rs/js/code.js" defer></script>
+    <script src="https://plyx.iz.rs/js/interactive.js" defer></script>
+
+    
+    <script src="https://plyx.iz.rs/elasticlunr.min.js"></script>
+    <script src="https://plyx.iz.rs/search_index.en.js"></script>
+    <script src="https://plyx.iz.rs/js/search.js" defer></script>
+    
+    
+
+    
+</body>
+</html>

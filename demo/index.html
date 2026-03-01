@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Ply Interactive Demo</title>
+    <style>
+        @font-face {
+            font-family: 'Geist Mono';
+            font-style: normal;
+            font-weight: 100 900;
+            src: url('../fonts/GeistMono-Variable.woff2') format('woff2-variations'),
+                 url('../fonts/GeistMono-Variable.woff2') format('woff2');
+            font-display: swap;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { height: 100%; background: #1a1111; overflow: hidden; }
+
+        .demo-container {
+            display: flex;
+            height: 100%;
+            gap: 0;
+        }
+
+        .editor-pane {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+            border-right: 1px solid #2E2A28;
+        }
+
+        .editor-header {
+            background: #181515;
+            color: #9E9590;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-size: 12px;
+            padding: 6px 12px;
+            border-bottom: 1px solid #2E2A28;
+            user-select: none;
+        }
+
+        #editor-container {
+            flex: 1;
+            overflow: auto;
+        }
+
+        /* CodeMirror overrides to fill the pane */
+        #editor-container .cm-editor {
+            height: 100%;
+        }
+        #editor-container .cm-scroller {
+            overflow: auto;
+        }
+
+        .canvas-pane {
+            flex: 1;
+            display: flex;
+            align-items: stretch;
+            min-width: 0;
+        }
+
+        canvas {
+            width: 100% !important;
+            height: 100% !important;
+        }
+
+        /* Fallback textarea while CodeMirror loads */
+        #fallback-editor {
+            width: 100%;
+            height: 100%;
+            background: #1a1111;
+            color: #E8E0DC;
+            font-family: 'Geist Mono', 'Fira Code', 'Cascadia Code', 'JetBrains Mono', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            padding: 12px;
+            border: none;
+            outline: none;
+            resize: none;
+            tab-size: 4;
+        }
+
+        /* Warm Ply theme overrides for CodeMirror */
+        .cm-editor {
+            background: #1a1111 !important;
+        }
+        .cm-editor .cm-scroller {
+            font-family: 'Geist Mono', 'Fira Code', 'Cascadia Code', 'JetBrains Mono', monospace;
+        }
+        .cm-editor .cm-gutters {
+            background: #1a1111 !important;
+            border-right: 1px solid #2E2A28 !important;
+            color: #5E5854 !important;
+        }
+        .cm-editor .cm-activeLineGutter {
+            background: rgba(255, 101, 77, 0.08) !important;
+        }
+        .cm-editor .cm-activeLine {
+            background: rgba(255, 101, 77, 0.06) !important;
+        }
+        .cm-editor .cm-cursor, .cm-editor .cm-dropCursor {
+            border-left-color: #FF654D !important;
+        }
+        .cm-editor .cm-selectionBackground,
+        .cm-editor.cm-focused .cm-selectionBackground,
+        .cm-editor ::selection {
+            background: rgba(255, 101, 77, 0.2) !important;
+        }
+        .cm-editor .cm-selectionMatch {
+            background: rgba(255, 195, 44, 0.12) !important;
+        }
+        .cm-editor .cm-matchingBracket {
+            background: rgba(255, 195, 44, 0.2) !important;
+            color: #FFC32C !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <div class="editor-pane">
+            <div class="editor-header">editor</div>
+            <div id="editor-container">
+                <textarea id="fallback-editor" spellcheck="false"></textarea>
+            </div>
+        </div>
+        <div class="canvas-pane">
+            <canvas id="glcanvas" tabindex="-1"></canvas>
+        </div>
+    </div>
+
+    <script>
+        // Default code shown in the editor on load.
+        var DEFAULT_CODE = [
+            '// Try editing this code!',
+            'ui.element()',
+            '  .width(grow!())',
+            '  .height(grow!())',
+            '  .background_color(0x1E1B1B)',
+            '  .layout(|l| l.direction(TopToBottom))',
+            '  .children(|ui| {',
+            '    // Header bar',
+            '    ui.element()',
+            '      .width(grow!())',
+            '      .height(fixed!(48.0))',
+            '      .background_color(0x262220)',
+            '      .layout(|l| l.direction(LeftToRight).padding(12).gap(12).align(Left, CenterY))',
+            '      .children(|ui| {',
+            '        ui.element()',
+            '          .width(fixed!(18.0))',
+            '          .height(fixed!(18.0))',
+            '          .background_color(0xFFC32C)',
+            '          .corner_radius(6.0)',
+            '          .rotate_shape(|r| r.degrees(45))',
+            '          .empty();',
+            '        ui.text("My App", |t| t.font_size(18).color(0xE8E0DC));',
+            '      });',
+            '',
+            '    // Scrollable content area',
+            '    ui.element()',
+            '      .width(grow!())',
+            '      .height(grow!())',
+            '      .layout(|l| l.direction(TopToBottom).padding(20).gap(16))',
+            '      .overflow(|o| o.scroll_y())',
+            '      .children(|ui| {',
+            '        ui.text("Welcome back!", |t| t.font_size(28).color(0xE8E0DC));',
+            '        ui.text("Here is what is happening today.", |t| t.font_size(14).color(0x9E9590));',
+            '',
+            '        // Stat cards row',
+            '        ui.element()',
+            '          .width(grow!())',
+            '          .height(fit!())',
+            '          .layout(|l| l.direction(LeftToRight).gap(12))',
+            '          .children(|ui| {',
+            '            ui.element()',
+            '              .width(grow!())',
+            '              .height(fixed!(80.0))',
+            '              .background_color(0xFFC32C)',
+            '              .corner_radius(12.0)',
+            '              .layout(|l| l.direction(TopToBottom).padding(14).gap(4))',
+            '              .children(|ui| {',
+            '                ui.text("Revenue", |t| t.font_size(12).color(0x1E1B1B));',
+            '                ui.text("$12,480", |t| t.font_size(22).color(0x1E1B1B));',
+            '              });',
+            '            ui.element()',
+            '              .width(grow!())',
+            '              .height(fixed!(80.0))',
+            '              .background_color(0x2E2A28)',
+            '              .corner_radius(12.0)',
+            '              .border(|b| b.color(0x3A3533).all(1))',
+            '              .layout(|l| l.direction(TopToBottom).padding(14).gap(4))',
+            '              .children(|ui| {',
+            '                ui.text("Users", |t| t.font_size(12).color(0x9E9590));',
+            '                ui.text("3,842", |t| t.font_size(22).color(0xE8E0DC));',
+            '              });',
+            '            ui.element()',
+            '              .width(grow!())',
+            '              .height(fixed!(80.0))',
+            '              .background_color(0x2E2A28)',
+            '              .corner_radius(12.0)',
+            '              .border(|b| b.color(0x3A3533).all(1))',
+            '              .layout(|l| l.direction(TopToBottom).padding(14).gap(4))',
+            '              .children(|ui| {',
+            '                ui.text("Growth", |t| t.font_size(12).color(0x9E9590));',
+            '                ui.text("+24%", |t| t.font_size(22).color(0x6ECB63));',
+            '              });',
+            '          });',
+            '',
+            '        // Activity list',
+            '        ui.element()',
+            '          .width(grow!())',
+            '          .height(fit!())',
+            '          .background_color(0x262220)',
+            '          .corner_radius(12.0)',
+            '          .layout(|l| l.direction(TopToBottom))',
+            '          .children(|ui| {',
+            '            ui.element()',
+            '              .width(grow!())',
+            '              .height(fit!())',
+            '              .layout(|l| l.padding(16))',
+            '              .children(|ui| {',
+            '                ui.text("Recent Activity", |t| t.font_size(14).color(0x9E9590));',
+            '              });',
+            '            ui.element()',
+            '              .width(grow!())',
+            '              .height(fixed!(1.0))',
+            '              .background_color(0x3A3533)',
+            '              .empty();',
+            '            ui.element()',
+            '              .width(grow!())',
+            '              .height(fit!())',
+            '              .layout(|l| l.direction(LeftToRight).padding(16).gap(12).align(Left, CenterY))',
+            '              .children(|ui| {',
+            '                ui.element()',
+            '                  .width(fixed!(8.0))',
+            '                  .height(fixed!(8.0))',
+            '                  .background_color(0x6ECB63)',
+            '                  .corner_radius(4.0)',
+            '                  .empty();',
+            '                ui.text("New signup from Tokyo", |t| t.font_size(13).color(0xE8E0DC));',
+            '              });',
+            '            ui.element()',
+            '              .width(grow!())',
+            '              .height(fit!())',
+            '              .layout(|l| l.direction(LeftToRight).padding(16).gap(12).align(Left, CenterY))',
+            '              .children(|ui| {',
+            '                ui.element()',
+            '                  .width(fixed!(8.0))',
+            '                  .height(fixed!(8.0))',
+            '                  .background_color(0xFFC32C)',
+            '                  .corner_radius(4.0)',
+            '                  .empty();',
+            '                ui.text("Payment received: $240", |t| t.font_size(13).color(0xE8E0DC));',
+            '              });',
+            '            ui.element()',
+            '              .width(grow!())',
+            '              .height(fit!())',
+            '              .layout(|l| l.direction(LeftToRight).padding(16).gap(12).align(Left, CenterY))',
+            '              .children(|ui| {',
+            '                ui.element()',
+            '                  .width(fixed!(8.0))',
+            '                  .height(fixed!(8.0))',
+            '                  .background_color(0xFF654D)',
+            '                  .corner_radius(4.0)',
+            '                  .empty();',
+            '                ui.text("Server alert resolved", |t| t.font_size(13).color(0xE8E0DC));',
+            '              });',
+            '            ui.element()',
+            '              .width(grow!())',
+            '              .height(fit!())',
+            '              .layout(|l| l.direction(LeftToRight).padding(16).gap(12).align(Left, CenterY))',
+            '              .children(|ui| {',
+            '                ui.element()',
+            '                  .width(fixed!(8.0))',
+            '                  .height(fixed!(8.0))',
+            '                  .background_color(0x6ECB63)',
+            '                  .corner_radius(4.0)',
+            '                  .empty();',
+            '                ui.text("Order #1042 shipped", |t| t.font_size(13).color(0xE8E0DC));',
+            '              });',
+            '            ui.element()',
+            '              .width(grow!())',
+            '              .height(fit!())',
+            '              .layout(|l| l.direction(LeftToRight).padding(16).gap(12).align(Left, CenterY))',
+            '              .children(|ui| {',
+            '                ui.element()',
+            '                  .width(fixed!(8.0))',
+            '                  .height(fixed!(8.0))',
+            '                  .background_color(0xFFC32C)',
+            '                  .corner_radius(4.0)',
+            '                  .empty();',
+            '                ui.text("New review: 5 stars", |t| t.font_size(13).color(0xE8E0DC));',
+            '              });',
+            '            ui.element()',
+            '              .width(grow!())',
+            '              .height(fit!())',
+            '              .layout(|l| l.direction(LeftToRight).padding(16).gap(12).align(Left, CenterY))',
+            '              .children(|ui| {',
+            '                ui.element()',
+            '                  .width(fixed!(8.0))',
+            '                  .height(fixed!(8.0))',
+            '                  .background_color(0xFF654D)',
+            '                  .corner_radius(4.0)',
+            '                  .empty();',
+            '                ui.text("Failed login attempt", |t| t.font_size(13).color(0xE8E0DC));',
+            '              });',
+            '            ui.element()',
+            '              .width(grow!())',
+            '              .height(fit!())',
+            '              .layout(|l| l.direction(LeftToRight).padding(16).gap(12).align(Left, CenterY))',
+            '              .children(|ui| {',
+            '                ui.element()',
+            '                  .width(fixed!(8.0))',
+            '                  .height(fixed!(8.0))',
+            '                  .background_color(0x6ECB63)',
+            '                  .corner_radius(4.0)',
+            '                  .empty();',
+            '                ui.text("Backup completed", |t| t.font_size(13).color(0xE8E0DC));',
+            '              });',
+            '            ui.element()',
+            '              .width(grow!())',
+            '              .height(fit!())',
+            '              .layout(|l| l.direction(LeftToRight).padding(16).gap(12).align(Left, CenterY))',
+            '              .children(|ui| {',
+            '                ui.element()',
+            '                  .width(fixed!(8.0))',
+            '                  .height(fixed!(8.0))',
+            '                  .background_color(0xFFC32C)',
+            '                  .corner_radius(4.0)',
+            '                  .empty();',
+            '                ui.text("New signup from Berlin", |t| t.font_size(13).color(0xE8E0DC));',
+            '              });',
+            '            ui.element()',
+            '              .width(grow!())',
+            '              .height(fit!())',
+            '              .layout(|l| l.direction(LeftToRight).padding(16).gap(12).align(Left, CenterY))',
+            '              .children(|ui| {',
+            '                ui.element()',
+            '                  .width(fixed!(8.0))',
+            '                  .height(fixed!(8.0))',
+            '                  .background_color(0x6ECB63)',
+            '                  .corner_radius(4.0)',
+            '                  .empty();',
+            '                ui.text("Payment received: $89", |t| t.font_size(13).color(0xE8E0DC));',
+            '              });',
+            '          });',
+            '      });',
+            '  });',
+        ].join('\n');
+
+        // Set the code immediately so WASM gets it on first frame.
+        window.demo_code = DEFAULT_CODE;
+    </script>
+
+    <!-- miniquad GL loader + ply_demo plugin -->
+    <script src="ply_bundle.js"></script>
+
+    <script>
+        // Register service worker for WASM caching
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js', { scope: '/demo/' });
+        }
+
+        // Load WASM
+        load("app-v1.wasm");
+    </script>
+
+    <!-- CodeMirror 6 (bundled locally via esbuild) -->
+    <script src="codemirror-bundle.js"></script>
+    <script>
+        // Remove fallback textarea and set up CodeMirror
+        var fb = document.getElementById('fallback-editor');
+        if (fb) fb.remove();
+
+        var view = new CM.EditorView({
+            state: CM.EditorState.create({
+                doc: DEFAULT_CODE,
+                extensions: [
+                    ...CM.minimalSetup,
+                    CM.rust(),
+                    CM.oneDark,
+                    CM.EditorView.updateListener.of(function (update) {
+                        if (update.docChanged) {
+                            ply_demo_set_code(update.state.doc.toString());
+                        }
+                    }),
+                ],
+            }),
+            parent: document.getElementById('editor-container'),
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" prefix="og: https://ogp.me/ns#">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="dark">
+
+    
+    <title>Text Input | Ply</title>
+
+    
+    
+    <meta name="description" content="Beautiful apps in Rust. Cross-platform. Dead simple.">
+    
+
+    
+    
+    <meta name="keywords" content="ply, ply-engine, rust, ui, engine, cross-platform, layout, graphics, gamedev">
+    
+
+    
+    
+    <meta name="author" content="TheRedDeveloper">
+    
+
+    
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+
+    
+    
+    <link rel="canonical" href="https://plyx.iz.rs/docs/text-input/">
+    <link rel="alternate" hreflang="en" href="https://plyx.iz.rs/docs/text-input/">
+    <link rel="alternate" hreflang="x-default" href="https://plyx.iz.rs/docs/text-input/">
+    
+
+    
+    <meta property="og:type" content="article">
+    
+    <meta property="og:url" content="https://plyx.iz.rs/docs/text-input/">
+    
+    
+    <meta property="og:title" content="Text Input">
+    
+    
+    <meta property="og:description" content="">
+    
+    
+    <meta property="og:site_name" content="Ply">
+    <meta property="og:locale" content="en">
+
+    
+    
+    
+    
+    
+    
+
+    
+    <meta name="twitter:card" content="summary_large_image">
+    
+    <meta name="twitter:url" content="https://plyx.iz.rs/docs/text-input/">
+    
+    
+    <meta name="twitter:title" content="Text Input">
+    
+    
+    <meta name="twitter:description" content="">
+    
+    
+    
+
+    
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "WebSite",
+                "@id": "https://plyx.iz.rs#website",
+                "url": "https://plyx.iz.rs",
+                "name": "Ply",
+                "description": "Beautiful apps in Rust. Cross-platform. Dead simple.",
+                "publisher": {
+                    "@id": "https://plyx.iz.rs/#organization"
+                },
+                "inLanguage": "en",
+                "potentialAction": {
+                    "@type": "SearchAction",
+                    "target": {
+                        "@type": "EntryPoint",
+                        "urlTemplate": "https://plyx.iz.rs?q={search_term_string}"
+                    },
+                    "query-input": "required name=search_term_string"
+                }
+            },
+            {
+                "@type": "Organization",
+                "@id": "https://plyx.iz.rs/#organization",
+                "name": "TheRedDeveloper",
+                "url": "https://plyx.iz.rs"
+            },
+            {
+                "@type": "WebPage",
+                "@id": "https://plyx.iz.rs/docs/text-input/#webpage",
+                "url": "https://plyx.iz.rs/docs/text-input/",
+                "name": "Text Input",
+                "isPartOf": {
+                    "@id": "https://plyx.iz.rs#website"
+                },
+                "description": "",
+                "inLanguage": "en"
+                
+                
+            }
+            
+            ,{
+                "@type": "Article",
+                "@id": "https://plyx.iz.rs/docs/text-input/#article",
+                "isPartOf": {
+                    "@id": "https://plyx.iz.rs/docs/text-input/#webpage"
+                },
+                "headline": "Text Input",
+                
+                
+                
+                "author": {
+                    "@id": "https://plyx.iz.rs/#organization"
+                },
+                "publisher": {
+                    "@id": "https://plyx.iz.rs/#organization"
+                },
+                
+                
+                "wordCount": 348,
+                
+                "inLanguage": "en"
+            }
+            
+        ]
+    }
+    </script>
+
+    
+    
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Ply",
+                "item": "https://plyx.iz.rs"
+            }
+            
+            
+            
+            ,{
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Ply",
+                "item": "https://plyx.iz.rs/"
+            }
+            
+            
+            
+            ,{
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Documentation",
+                "item": "https://plyx.iz.rs/docs/"
+            }
+            
+            
+            ,{
+                "@type": "ListItem",
+                "position": 4,
+                "name": "Text Input",
+                "item": "https://plyx.iz.rs/docs/text-input/"
+            }
+        ]
+    }
+    </script>
+    
+
+    
+    <link rel="stylesheet" href="https://plyx.iz.rs/style.css">
+
+    
+
+    
+    <link rel="preload" href="https://plyx.iz.rs/fonts/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="https://plyx.iz.rs/fonts/GeistMono-Variable.woff2" as="font" type="font/woff2" crossorigin>
+
+    
+    
+    <link rel="icon" href="https://plyx.iz.rs/images/favicon.png">
+    
+    
+
+    
+    
+
+    
+    
+    
+    <script>
+        (function() {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            document.documentElement.dataset.userColorScheme = 'dark';
+            // Pre-apply sidebar collapsed state
+            if (localStorage.getItem('tanuki-sidebar-collapsed') === 'true') {
+                document.documentElement.classList.add('sidebar-start-collapsed');
+            }
+            // Pre-apply saved sidebar width
+            var savedWidth = localStorage.getItem('tanuki-sidebar-width');
+            if (savedWidth) {
+                document.documentElement.style.setProperty('--sidebar-width', savedWidth + 'px');
+                var s = document.createElement('style');
+                s.id = 'sidebar-width-preload';
+                s.textContent = '.sidebar { --sidebar-width: ' + savedWidth + 'px !important; }';
+                document.head.appendChild(s);
+            }
+        })();
+    </script>
+    <style>
+        /* Prevent sidebar transition on initial page load when user had it collapsed */
+        .sidebar-start-collapsed .sidebar {
+            width: 0 !important;
+            min-width: 0 !important;
+            border-right: none !important;
+            overflow: hidden !important;
+            transition: none !important;
+        }
+    </style>
+
+    
+</head>
+<body class="page-text-input">
+    
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    
+    
+
+    
+    
+        
+    
+
+    
+    <div class="layout layout--docs layout--fixed-header" data-mode="docs">
+        
+
+
+<aside id="sidebar" class="sidebar" role="complementary" aria-labelledby="sidebar-title">
+    
+    <div class="sidebar__resize-handle" aria-hidden="true" title="Drag to resize sidebar width"></div>
+
+    <div class="sidebar__header">
+        <span id="sidebar-title" class="sidebar__title">Table of contents</span>
+        <button class="sidebar__close" type="button" aria-label="Close sidebar" title="Close">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M18 6 6 18"/>
+                <path d="m6 6 12 12"/>
+            </svg>
+        </button>
+    </div>
+
+    <nav class="sidebar__content" aria-label="Documentation navigation">
+        <div class="toc">
+            
+            
+
+            
+            <div class="toc__section">
+                <ol class="toc__list toc__list--numbered" start="1">
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/getting-started/" class="toc__link ">
+                            <span class="toc__number">1.</span>
+                            Getting Started
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/elements-and-layout/" class="toc__link ">
+                            <span class="toc__number">2.</span>
+                            Elements &amp; Layout
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/debug-view/" class="toc__link ">
+                            <span class="toc__number">3.</span>
+                            Debug View
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/text/" class="toc__link ">
+                            <span class="toc__number">4.</span>
+                            Text
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/ids-and-state/" class="toc__link ">
+                            <span class="toc__number">5.</span>
+                            IDs &amp; State
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/interactivity/" class="toc__link ">
+                            <span class="toc__number">6.</span>
+                            Interactivity
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/floating-elements/" class="toc__link ">
+                            <span class="toc__number">7.</span>
+                            Floating Elements
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/images-and-rendering/" class="toc__link ">
+                            <span class="toc__number">8.</span>
+                            Images, Vectors &amp; Custom Rendering
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/text-input/" class="toc__link active">
+                            <span class="toc__number">9.</span>
+                            Text Input
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/text-styling/" class="toc__link ">
+                            <span class="toc__number">10.</span>
+                            Text Styling
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/shaders-and-effects/" class="toc__link ">
+                            <span class="toc__number">11.</span>
+                            Shaders &amp; Effects
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/rotation/" class="toc__link ">
+                            <span class="toc__number">12.</span>
+                            Rotation
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/accessibility/" class="toc__link ">
+                            <span class="toc__number">13.</span>
+                            Accessibility
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/networking/" class="toc__link ">
+                            <span class="toc__number">14.</span>
+                            Networking
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/sound/" class="toc__link ">
+                            <span class="toc__number">15.</span>
+                            Sound
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/cross-platform/" class="toc__link ">
+                            <span class="toc__number">16.</span>
+                            Cross-Platform Builds
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/advanced/" class="toc__link ">
+                            <span class="toc__number">17.</span>
+                            Advanced Topics
+                        </a>
+                    </li>
+                    
+                    
+                </ol>
+            </div>
+
+            
+            
+            
+        </div>
+    </nav>
+
+    <div class="sidebar__footer">
+        
+        <div class="sidebar__actions-mobile">
+            
+            
+
+            
+            
+
+            
+            
+            <a href="https:&#x2F;&#x2F;github.com&#x2F;TheRedDeveloper&#x2F;ply-engine" class="sidebar__github" target="_blank" rel="noopener noreferrer" aria-label="View project on GitHub (opens in new tab)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/>
+                    <path d="M9 18c-4.51 2-5-2-7-2"/>
+                </svg>
+                <span>View on GitHub</span>
+            </a>
+            
+        </div>
+    </div>
+</aside>
+
+
+
+
+        <div class="layout__main">
+            
+            
+
+
+
+
+<header class="header" role="banner">
+    <div class="header__left">
+        
+        
+        <button class="sidebar-toggle" type="button" aria-label="Toggle sidebar navigation" aria-expanded="true" aria-controls="sidebar" title="Toggle sidebar">
+            <svg class="sidebar-toggle__icon sidebar-toggle__icon--open" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect width="18" height="18" x="3" y="3" rx="2"/>
+                <path d="M9 3v18"/>
+                <path d="m16 15-3-3 3-3"/>
+            </svg>
+            <svg class="sidebar-toggle__icon sidebar-toggle__icon--closed" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect width="18" height="18" x="3" y="3" rx="2"/>
+                <path d="M9 3v18"/>
+                <path d="m14 9 3 3-3 3"/>
+            </svg>
+        </button>
+        
+
+        
+        
+        <button class="toc-toggle toc-toggle--docs" type="button" aria-label="Open table of contents" aria-expanded="false" aria-controls="sidebar" title="Table of contents">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect width="18" height="18" x="3" y="3" rx="2"/>
+                <path d="M9 3v18"/>
+                <path d="m16 15-3-3 3-3"/>
+            </svg>
+        </button>
+        
+
+        
+        
+
+        
+        
+
+        
+        <a href="https://plyx.iz.rs" class="header__logo" aria-label="Ply - Go to homepage">
+            
+            
+            
+            <img src="https://plyx.iz.rs/images/ply_logo.png" alt="Ply" class="header__logo-img">
+            
+        </a>
+    </div>
+
+    
+    <nav class="header__nav" role="navigation" aria-label="Main navigation">
+        
+            
+            <a href="/docs/getting-started/" class="header__link ">
+                Docs
+            </a>
+            
+            <a href="/examples/" class="header__link ">
+                Examples
+            </a>
+            
+            <a href="/blog/" class="header__link ">
+                Blog
+            </a>
+            
+        
+    </nav>
+
+    
+    <div class="header__actions" role="group" aria-label="Site actions">
+        
+        
+        <button class="search-toggle" type="button" aria-label="Open search dialog" aria-keyshortcuts="/" aria-haspopup="dialog" title="Search (press /)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="11" cy="11" r="8"/>
+                <path d="m21 21-4.3-4.3"/>
+            </svg>
+        </button>
+        
+
+        
+        <div class="header__actions-desktop">
+            
+            
+
+            
+            
+
+            
+            
+            <a href="https:&#x2F;&#x2F;github.com&#x2F;TheRedDeveloper&#x2F;ply-website&#x2F;edit&#x2F;main&#x2F;content/docs&#x2F;text-input.md" class="btn btn--icon btn--ghost" aria-label="Edit this page on GitHub (opens in new tab)" target="_blank" rel="noopener noreferrer" title="Edit this page">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/>
+                    <path d="m15 5 4 4"/>
+                </svg>
+            </a>
+            
+
+            
+            
+            <a href="https:&#x2F;&#x2F;github.com&#x2F;TheRedDeveloper&#x2F;ply-engine" class="btn btn--icon btn--ghost" aria-label="View project on GitHub (opens in new tab)" target="_blank" rel="noopener noreferrer" title="GitHub">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/>
+                    <path d="M9 18c-4.51 2-5-2-7-2"/>
+                </svg>
+            </a>
+            
+        </div>
+    </div>
+</header>
+
+
+            
+
+            
+            
+            <div class="scroll-progress" aria-hidden="true">
+                <div class="scroll-progress__bar"></div>
+                <span class="scroll-progress__percent">0%</span>
+            </div>
+            
+
+            
+
+
+
+
+
+
+    
+
+
+    
+
+
+<nav class="nav-buttons" aria-label="Page navigation">
+    
+    
+    <a href="https://plyx.iz.rs/docs/images-and-rendering/" class="nav-button nav-button--prev" aria-label="Previous: Images, Vectors &amp; Custom Rendering">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m15 18-6-6 6-6"/>
+        </svg>
+        <span class="nav-button__label">
+            Images, Vectors &amp; Custom Rende…
+            <span class="nav-button__shortcut">←</span>
+        </span>
+    </a>
+    
+
+    
+    
+    <a href="https://plyx.iz.rs/docs/text-styling/" class="nav-button nav-button--next" aria-label="Next: Text Styling">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m9 18 6-6-6-6"/>
+        </svg>
+        <span class="nav-button__label">
+            Text Styling
+            <span class="nav-button__shortcut">→</span>
+        </span>
+    </a>
+    
+</nav>
+
+
+
+
+
+            <div class="layout__content-area">
+                <main id="main-content" class="main-content" role="main" aria-label="Main content">
+                    
+
+
+<article class="article" itemscope itemtype="https://schema.org/Article" aria-labelledby="article-title">
+    
+    <header class="article__header article__header--docs">
+        <h1 id="article-title" itemprop="headline">Text Input</h1>
+        
+    </header>
+
+    <div class="article__content" itemprop="articleBody">
+        <p>Ply has a full built-in text input system with cursor movement, selection, undo/redo,
+multiline editing, password mode, and click-to-position.</p>
+<h2 id="basic-text-input"><a class="zola-anchor" href="#basic-text-input" aria-label="Anchor link for: basic-text-input">🔗</a>Basic text input</h2>
+<p>Add <code>.text_input()</code> to an element. The element needs an explicit <code>.id()</code> so
+the engine can persist input state across frames:</p>
+
+
+
+
+
+
+<iframe
+  src="/examples/shell.html?id=basic_input#ui%2Eelement%28%29%0A%20%20%2Eid%28%22username%22%29%0A%20%20%2Ewidth%28fixed%21%28300%2E0%29%29%2Eheight%28fixed%21%2836%2E0%29%29%0A%20%20%2Ebackground%5Fcolor%280x262220%29%0A%20%20%2Ecorner%5Fradius%286%2E0%29%0A%20%20%2Etext%5Finput%28%7Ct%7C%20t%0A%20%20%20%20%2Eplaceholder%28%22%5B%5Bplaceholder%5D%5D%22%29%0A%20%20%20%20%2Efont%5Fsize%28%5B%5Bfont%5Fsize%5D%5D%29%0A%20%20%20%20%2Etext%5Fcolor%28%5B%5Btext%5Fcolor%5D%5D%29%0A%20%20%29%0A%20%20%2Eempty%28%29%3B%0A%2D%2D%2D%0Aplaceholder%20%3D%20Enter%20username%0An%2Efont%5Fsize%20%3D%2014%0Ac%2Etext%5Fcolor%20%3D%200xE8E0DC"
+  style="width: 100%; height: 350px; border: 1px solid #262220; border-radius: 12px; margin: 1.5rem 0;"
+  loading="lazy"
+  tabindex="-1"></iframe>
+
+<p>Click to focus, type to enter text. The cursor blinks, selection highlights,
+and all standard keyboard shortcuts work.</p>
+<h2 id="configuration"><a class="zola-anchor" href="#configuration" aria-label="Anchor link for: configuration">🔗</a>Configuration</h2>
+<table><thead><tr><th>Method</th><th>What it does</th><th>Default</th></tr></thead><tbody>
+<tr><td><code>.placeholder("text")</code></td><td>Ghost text when empty</td><td>none</td></tr>
+<tr><td><code>.font_size(14)</code></td><td>Text size in pixels</td><td><code>0</code></td></tr>
+<tr><td><code>.font(&amp;FONT_ASSET)</code></td><td>Which font to use</td><td>default font</td></tr>
+<tr><td><code>.text_color(0xFFFFFF)</code></td><td>Input text color</td><td>white</td></tr>
+<tr><td><code>.placeholder_color(0x99)</code></td><td>Placeholder text color</td><td>gray</td></tr>
+<tr><td><code>.cursor_color(0xFFC32C)</code></td><td>Cursor line color</td><td>white</td></tr>
+<tr><td><code>.selection_color(c)</code></td><td>Selection highlight color</td><td>semi-transparent blue</td></tr>
+<tr><td><code>.max_length(100)</code></td><td>Maximum character count</td><td>unlimited</td></tr>
+<tr><td><code>.password(true)</code></td><td>Show dots instead of characters</td><td><code>false</code></td></tr>
+<tr><td><code>.multiline(true)</code></td><td>Enable multiline editing</td><td><code>false</code></td></tr>
+<tr><td><code>.no_styles_movement()</code></td><td>Cursor skips style markup (text-styling)</td><td><code>false</code></td></tr>
+</tbody></table>
+<h2 id="reading-text"><a class="zola-anchor" href="#reading-text" aria-label="Anchor link for: reading-text">🔗</a>Reading text</h2>
+<pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="rust"><span class="giallo-l"><span style="color: #CBA6F7;">let</span><span> username</span><span style="color: #94E2D5;"> =</span><span> ply</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">get_text_value</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;username&quot;</span><span style="color: #9399B2;">);</span></span></code></pre>
+<p>or use callbacks to react to changes:</p>
+<pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="rust"><span class="giallo-l"><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">text_input</span><span style="color: #9399B2;">(</span><span style="color: #94E2D5;">|</span><span>t</span><span style="color: #94E2D5;">|</span><span> t</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">font_size</span><span style="color: #9399B2;">(</span><span style="color: #FAB387;">14</span><span style="color: #9399B2;">)</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">on_changed</span><span style="color: #9399B2;">(</span><span style="color: #94E2D5;">|</span><span>text</span><span style="color: #94E2D5;">|</span><span style="color: #9399B2;"> {</span></span>
+<span class="giallo-l"><span style="color: #89B4FA;font-style: italic;">    println!</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;Text changed: </span><span style="color: #9399B2;">{}</span><span style="color: #A6E3A1;">&quot;</span><span style="color: #9399B2;">,</span><span> text</span><span style="color: #9399B2;">);</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">  })</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">on_submit</span><span style="color: #9399B2;">(</span><span style="color: #94E2D5;">|</span><span>text</span><span style="color: #94E2D5;">|</span><span style="color: #9399B2;"> {</span></span>
+<span class="giallo-l"><span style="color: #89B4FA;font-style: italic;">    println!</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;Submitted: </span><span style="color: #9399B2;">{}</span><span style="color: #A6E3A1;">&quot;</span><span style="color: #9399B2;">,</span><span> text</span><span style="color: #9399B2;">);</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">  })</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">)</span></span></code></pre>
+<p><code>.on_changed()</code> fires after every keystroke. <code>.on_submit()</code> fires when Enter is
+pressed (in single-line mode). If you call either method more than once, the
+last callback wins.</p>
+<h2 id="multiline"><a class="zola-anchor" href="#multiline" aria-label="Anchor link for: multiline">🔗</a>Multiline</h2>
+<p>Enable with <code>.multiline(true)</code>:</p>
+<pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="rust"><span class="giallo-l"><span>ui</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">element</span><span style="color: #9399B2;">()</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">id</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;editor&quot;</span><span style="color: #9399B2;">)</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">width</span><span style="color: #9399B2;">(</span><span style="color: #89B4FA;font-style: italic;">grow!</span><span style="color: #9399B2;">())</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">height</span><span style="color: #9399B2;">(</span><span style="color: #89B4FA;font-style: italic;">grow!</span><span style="color: #9399B2;">())</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">background_color</span><span style="color: #9399B2;">(</span><span style="color: #FAB387;">0x262220</span><span style="color: #9399B2;">)</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">corner_radius</span><span style="color: #9399B2;">(</span><span style="color: #FAB387;">8</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #9399B2;">)</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">text_input</span><span style="color: #9399B2;">(</span><span style="color: #94E2D5;">|</span><span>t</span><span style="color: #94E2D5;">|</span><span> t</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">    .</span><span style="color: #89B4FA;font-style: italic;">multiline</span><span style="color: #9399B2;">(</span><span style="color: #F38BA8;">true</span><span style="color: #9399B2;">)</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">    .</span><span style="color: #89B4FA;font-style: italic;">font_size</span><span style="color: #9399B2;">(</span><span style="color: #FAB387;">14</span><span style="color: #9399B2;">)</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">    .</span><span style="color: #89B4FA;font-style: italic;">text_color</span><span style="color: #9399B2;">(</span><span style="color: #FAB387;">0xE8E0DC</span><span style="color: #9399B2;">)</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">  )</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">empty</span><span style="color: #9399B2;">();</span></span></code></pre>
+
+<iframe
+  class="demo-iframe"
+  src="/examples/shell.html?id=multiline_editor"
+  style="width: 100%; height: 150px; border: 1px solid #262220; border-radius: 12px; margin: 1.5rem 0;"
+  loading="lazy"
+  tabindex="-1"></iframe>
+<p>In multiline mode:</p>
+<ul>
+<li>Enter inserts a newline (instead of triggering submit)</li>
+<li>Up/Down arrows navigate between lines (it remembers the x position)</li>
+<li>The input scrolls vertically when content overflows</li>
+</ul>
+<h2 id="password-mode"><a class="zola-anchor" href="#password-mode" aria-label="Anchor link for: password-mode">🔗</a>Password mode</h2>
+<pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="rust"><span class="giallo-l"><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">text_input</span><span style="color: #9399B2;">(</span><span style="color: #94E2D5;">|</span><span>t</span><span style="color: #94E2D5;">|</span><span> t</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">password</span><span style="color: #9399B2;">(</span><span style="color: #F38BA8;">true</span><span style="color: #9399B2;">)</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">font_size</span><span style="color: #9399B2;">(</span><span style="color: #FAB387;">14</span><span style="color: #9399B2;">)</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">placeholder</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;Enter password&quot;</span><span style="color: #9399B2;">)</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">)</span></span></code></pre>
+
+<iframe
+  class="demo-iframe"
+  src="/examples/shell.html?id=password_input"
+  style="width: 100%; height: 80px; border: 1px solid #262220; border-radius: 12px; margin: 1.5rem 0;"
+  loading="lazy"
+  tabindex="-1"></iframe>
+<p>Characters are displayed as dots. Copy/cut is disabled.</p>
+<h2 id="programmatic-control"><a class="zola-anchor" href="#programmatic-control" aria-label="Anchor link for: programmatic-control">🔗</a>Programmatic control</h2>
+<p>Manipulate text input state by ID:</p>
+<pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="rust"><span class="giallo-l"><span>ply</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">set_text_value</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;editor&quot;</span><span style="color: #9399B2;">,</span><span style="color: #A6E3A1;"> &quot;Hello world&quot;</span><span style="color: #9399B2;">);</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span>ply</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">set_cursor_pos</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;editor&quot;</span><span style="color: #9399B2;">,</span><span style="color: #FAB387;"> 5</span><span style="color: #9399B2;">);</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #CBA6F7;">let</span><span> pos</span><span style="color: #94E2D5;"> =</span><span> ply</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">get_cursor_pos</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;editor&quot;</span><span style="color: #9399B2;">);</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span>ply</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">set_selection</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;editor&quot;</span><span style="color: #9399B2;">,</span><span style="color: #FAB387;"> 0</span><span style="color: #9399B2;">,</span><span style="color: #FAB387;"> 5</span><span style="color: #9399B2;">);</span><span style="color: #9399B2;font-style: italic;">  // select &quot;Hello&quot;</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #CBA6F7;">if let</span><span style="color: #F9E2AF;font-style: italic;"> Some</span><span style="color: #9399B2;">((</span><span>start</span><span style="color: #9399B2;">,</span><span> end</span><span style="color: #9399B2;">))</span><span style="color: #94E2D5;"> =</span><span> ply</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">get_selection_range</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;editor&quot;</span><span style="color: #9399B2;">) {</span></span>
+<span class="giallo-l"><span style="color: #9399B2;font-style: italic;">    // active selection from start to end</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">}</span></span></code></pre><h2 id="keyboard-operations"><a class="zola-anchor" href="#keyboard-operations" aria-label="Anchor link for: keyboard-operations">🔗</a>Keyboard operations</h2>
+<p>All standard text editing shortcuts work out of the box:</p>
+<table><thead><tr><th>Shortcut</th><th>Action</th></tr></thead><tbody>
+<tr><td>Arrow keys</td><td>Move cursor</td></tr>
+<tr><td>Shift + arrows</td><td>Extend selection</td></tr>
+<tr><td>Ctrl/Cmd + Left/Right</td><td>Move by word</td></tr>
+<tr><td>Home / End</td><td>Start/end of line</td></tr>
+<tr><td>Ctrl/Cmd + A</td><td>Select all</td></tr>
+<tr><td>Ctrl/Cmd + Z</td><td>Undo</td></tr>
+<tr><td>Ctrl/Cmd + Y</td><td>Redo</td></tr>
+<tr><td>Double-click</td><td>Select word</td></tr>
+</tbody></table>
+<h2 id="login-form-example"><a class="zola-anchor" href="#login-form-example" aria-label="Anchor link for: login-form-example">🔗</a>Login form example</h2>
+<pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="rust"><span class="giallo-l"><span>ui</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">element</span><span style="color: #9399B2;">()</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">width</span><span style="color: #9399B2;">(</span><span style="color: #89B4FA;font-style: italic;">fixed!</span><span style="color: #9399B2;">(</span><span style="color: #FAB387;">320</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #9399B2;">))</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">height</span><span style="color: #9399B2;">(</span><span style="color: #89B4FA;font-style: italic;">fit!</span><span style="color: #9399B2;">())</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">background_color</span><span style="color: #9399B2;">(</span><span style="color: #FAB387;">0x2E2A28</span><span style="color: #9399B2;">)</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">corner_radius</span><span style="color: #9399B2;">(</span><span style="color: #FAB387;">12</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #9399B2;">)</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">layout</span><span style="color: #9399B2;">(</span><span style="color: #94E2D5;">|</span><span>l</span><span style="color: #94E2D5;">|</span><span> l</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">direction</span><span style="color: #9399B2;">(</span><span style="color: #F9E2AF;font-style: italic;">TopToBottom</span><span style="color: #9399B2;">)</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">padding</span><span style="color: #9399B2;">(</span><span style="color: #FAB387;">24</span><span style="color: #9399B2;">)</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">gap</span><span style="color: #9399B2;">(</span><span style="color: #FAB387;">16</span><span style="color: #9399B2;">))</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">children</span><span style="color: #9399B2;">(</span><span style="color: #94E2D5;">|</span><span>ui</span><span style="color: #94E2D5;">|</span><span style="color: #9399B2;"> {</span></span>
+<span class="giallo-l"><span>    ui</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">text</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;Sign In&quot;</span><span style="color: #9399B2;">,</span><span style="color: #94E2D5;"> |</span><span>t</span><span style="color: #94E2D5;">|</span><span> t</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">font_size</span><span style="color: #9399B2;">(</span><span style="color: #FAB387;">20</span><span style="color: #9399B2;">)</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">color</span><span style="color: #9399B2;">(</span><span style="color: #FAB387;">0xFFFFFF</span><span style="color: #9399B2;">));</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span>    ui</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">element</span><span style="color: #9399B2;">()</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">      .</span><span style="color: #89B4FA;font-style: italic;">id</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;email&quot;</span><span style="color: #9399B2;">)</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">      .</span><span style="color: #89B4FA;font-style: italic;">width</span><span style="color: #9399B2;">(</span><span style="color: #89B4FA;font-style: italic;">grow!</span><span style="color: #9399B2;">())</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">      .</span><span style="color: #89B4FA;font-style: italic;">height</span><span style="color: #9399B2;">(</span><span style="color: #89B4FA;font-style: italic;">fixed!</span><span style="color: #9399B2;">(</span><span style="color: #FAB387;">36</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #9399B2;">))</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">      .</span><span style="color: #89B4FA;font-style: italic;">background_color</span><span style="color: #9399B2;">(</span><span style="color: #FAB387;">0x262220</span><span style="color: #9399B2;">)</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">      .</span><span style="color: #89B4FA;font-style: italic;">corner_radius</span><span style="color: #9399B2;">(</span><span style="color: #FAB387;">6</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #9399B2;">)</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">      .</span><span style="color: #89B4FA;font-style: italic;">text_input</span><span style="color: #9399B2;">(</span><span style="color: #94E2D5;">|</span><span>t</span><span style="color: #94E2D5;">|</span><span> t</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">        .</span><span style="color: #89B4FA;font-style: italic;">placeholder</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;Email&quot;</span><span style="color: #9399B2;">)</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">        .</span><span style="color: #89B4FA;font-style: italic;">font_size</span><span style="color: #9399B2;">(</span><span style="color: #FAB387;">14</span><span style="color: #9399B2;">)</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">        .</span><span style="color: #89B4FA;font-style: italic;">text_color</span><span style="color: #9399B2;">(</span><span style="color: #FAB387;">0xE8E0DC</span><span style="color: #9399B2;">)</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">        .</span><span style="color: #89B4FA;font-style: italic;">placeholder_color</span><span style="color: #9399B2;">(</span><span style="color: #FAB387;">0x6E6560</span><span style="color: #9399B2;">)</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">      )</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">      .</span><span style="color: #89B4FA;font-style: italic;">empty</span><span style="color: #9399B2;">();</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span>    ui</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">element</span><span style="color: #9399B2;">()</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">      .</span><span style="color: #89B4FA;font-style: italic;">id</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;password&quot;</span><span style="color: #9399B2;">)</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">      .</span><span style="color: #89B4FA;font-style: italic;">width</span><span style="color: #9399B2;">(</span><span style="color: #89B4FA;font-style: italic;">grow!</span><span style="color: #9399B2;">())</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">      .</span><span style="color: #89B4FA;font-style: italic;">height</span><span style="color: #9399B2;">(</span><span style="color: #89B4FA;font-style: italic;">fixed!</span><span style="color: #9399B2;">(</span><span style="color: #FAB387;">36</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #9399B2;">))</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">      .</span><span style="color: #89B4FA;font-style: italic;">background_color</span><span style="color: #9399B2;">(</span><span style="color: #FAB387;">0x262220</span><span style="color: #9399B2;">)</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">      .</span><span style="color: #89B4FA;font-style: italic;">corner_radius</span><span style="color: #9399B2;">(</span><span style="color: #FAB387;">6</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #9399B2;">)</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">      .</span><span style="color: #89B4FA;font-style: italic;">text_input</span><span style="color: #9399B2;">(</span><span style="color: #94E2D5;">|</span><span>t</span><span style="color: #94E2D5;">|</span><span> t</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">        .</span><span style="color: #89B4FA;font-style: italic;">password</span><span style="color: #9399B2;">(</span><span style="color: #F38BA8;">true</span><span style="color: #9399B2;">)</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">        .</span><span style="color: #89B4FA;font-style: italic;">placeholder</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;Password&quot;</span><span style="color: #9399B2;">)</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">        .</span><span style="color: #89B4FA;font-style: italic;">font_size</span><span style="color: #9399B2;">(</span><span style="color: #FAB387;">14</span><span style="color: #9399B2;">)</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">        .</span><span style="color: #89B4FA;font-style: italic;">text_color</span><span style="color: #9399B2;">(</span><span style="color: #FAB387;">0xE8E0DC</span><span style="color: #9399B2;">)</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">        .</span><span style="color: #89B4FA;font-style: italic;">placeholder_color</span><span style="color: #9399B2;">(</span><span style="color: #FAB387;">0x6E6560</span><span style="color: #9399B2;">)</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">      )</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">      .</span><span style="color: #89B4FA;font-style: italic;">empty</span><span style="color: #9399B2;">();</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #89B4FA;font-style: italic;">    button</span><span style="color: #9399B2;">(</span><span>ui</span><span style="color: #9399B2;">,</span><span style="color: #A6E3A1;"> &quot;Sign In&quot;</span><span style="color: #9399B2;">,</span><span style="color: #94E2D5;"> |</span><span>_</span><span style="color: #94E2D5;">|</span><span style="color: #9399B2;"> {</span></span>
+<span class="giallo-l"><span style="color: #9399B2;font-style: italic;">      // ply.get_text_value(&quot;email&quot;), ply.get_text_value(&quot;password&quot;)</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">    });</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">  });</span></span></code></pre>
+
+<iframe
+  class="demo-iframe"
+  src="/examples/shell.html?id=login_form"
+  style="width: 100%; height: 270px; border: 1px solid #262220; border-radius: 12px; margin: 1.5rem 0;"
+  loading="lazy"
+  tabindex="-1"></iframe>
+<h2 id="next-steps"><a class="zola-anchor" href="#next-steps" aria-label="Anchor link for: next-steps">🔗</a>Next steps</h2>
+<p>→ <a href="/docs/text-styling/">Text Styling</a></p>
+
+    </div>
+
+    
+    
+    <meta itemprop="author" content="TheRedDeveloper">
+    
+    
+</article>
+
+
+
+<nav class="page-nav" aria-label="Page navigation">
+    
+
+    
+</nav>
+
+
+
+                </main>
+
+                
+                
+                
+
+
+
+
+<aside id="page-toc-panel" class="page-toc-panel" aria-hidden="true" aria-label="On this page">
+    <div class="page-toc-panel__content">
+        <div class="page-toc-panel__header">
+            <span class="page-toc-panel__title">On this page</span>
+            <button class="page-toc-panel__close" type="button" aria-label="Close table of contents">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M18 6 6 18"/>
+                    <path d="m6 6 12 12"/>
+                </svg>
+            </button>
+        </div>
+        <nav class="page-toc-panel__nav" aria-label="Page sections">
+            <ul class="page-toc-panel__list">
+                
+                <li class="page-toc-panel__item">
+                    <a href="#basic-text-input" class="page-toc-panel__link">
+                        Basic text input
+                    </a>
+                    
+                </li>
+                
+                <li class="page-toc-panel__item">
+                    <a href="#configuration" class="page-toc-panel__link">
+                        Configuration
+                    </a>
+                    
+                </li>
+                
+                <li class="page-toc-panel__item">
+                    <a href="#reading-text" class="page-toc-panel__link">
+                        Reading text
+                    </a>
+                    
+                </li>
+                
+                <li class="page-toc-panel__item">
+                    <a href="#multiline" class="page-toc-panel__link">
+                        Multiline
+                    </a>
+                    
+                </li>
+                
+                <li class="page-toc-panel__item">
+                    <a href="#password-mode" class="page-toc-panel__link">
+                        Password mode
+                    </a>
+                    
+                </li>
+                
+                <li class="page-toc-panel__item">
+                    <a href="#programmatic-control" class="page-toc-panel__link">
+                        Programmatic control
+                    </a>
+                    
+                </li>
+                
+                <li class="page-toc-panel__item">
+                    <a href="#keyboard-operations" class="page-toc-panel__link">
+                        Keyboard operations
+                    </a>
+                    
+                </li>
+                
+                <li class="page-toc-panel__item">
+                    <a href="#login-form-example" class="page-toc-panel__link">
+                        Login form example
+                    </a>
+                    
+                </li>
+                
+                <li class="page-toc-panel__item">
+                    <a href="#next-steps" class="page-toc-panel__link">
+                        Next steps
+                    </a>
+                    
+                </li>
+                
+            </ul>
+        </nav>
+    </div>
+</aside>
+
+
+                
+            </div>
+
+            
+            
+            
+        </div>
+    </div>
+
+    
+    <div class="sidebar-overlay" aria-hidden="true"></div>
+
+    
+    
+    
+<div class="search-overlay" role="dialog" aria-modal="true" aria-labelledby="search-title" aria-describedby="search-description">
+    <div class="search">
+        <h2 id="search-title" class="sr-only">Search documentation</h2>
+        <p id="search-description" class="sr-only">Type to search. Use arrow keys to navigate results, Enter to select, Escape to close.</p>
+
+        <div class="search__input-wrapper">
+            <span class="search__icon" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"/>
+                    <path d="m21 21-4.3-4.3"/>
+                </svg>
+            </span>
+            <input
+                type="search"
+                class="search__input"
+                placeholder="Search documentation..."
+                autocomplete="off"
+                autofocus
+                aria-label="Search query"
+                aria-controls="search-results"
+                aria-autocomplete="list"
+            >
+            <span class="search__shortcut" aria-hidden="true">/</span>
+            <button class="search__close" type="button" aria-label="Close search dialog" title="Close (Esc)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M18 6 6 18"/>
+                    <path d="m6 6 12 12"/>
+                </svg>
+            </button>
+        </div>
+
+        <div id="search-results" class="search__results" role="listbox" aria-label="Search results">
+            
+        </div>
+
+        <footer class="search__footer">
+            <nav class="search__hints" aria-label="Keyboard shortcuts">
+                <span class="search__hint">
+                    <kbd aria-label="Up and down arrows">↑</kbd><kbd aria-hidden="true">↓</kbd> <span>Navigate</span>
+                </span>
+                <span class="search__hint">
+                    <kbd aria-label="Enter">↵</kbd> <span>Select</span>
+                </span>
+                <span class="search__hint">
+                    <kbd aria-label="Escape">esc</kbd> <span>Close</span>
+                </span>
+            </nav>
+            <span class="search__powered-by">Powered by <a href="https://github.com/weixsong/elasticlunr.js" target="_blank" rel="noopener noreferrer" aria-label="elasticlunr.js on GitHub (opens in new tab)">elasticlunr</a></span>
+        </footer>
+    </div>
+</div>
+
+    
+
+    
+    
+
+    
+    
+
+    
+    
+    
+    <button class="page-toc-toggle" type="button" aria-label="Toggle table of contents" aria-expanded="false" aria-controls="page-toc-panel" title="On this page">
+        <svg class="page-toc-toggle__icon page-toc-toggle__icon--list" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M16 5H3"/>
+            <path d="M16 12H3"/>
+            <path d="M16 19H3"/>
+            <path d="M21 5h.01"/>
+            <path d="M21 12h.01"/>
+            <path d="M21 19h.01"/>
+        </svg>
+        <svg class="page-toc-toggle__icon page-toc-toggle__icon--close" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M18 6 6 18"/>
+            <path d="m6 6 12 12"/>
+        </svg>
+    </button>
+    
+
+    
+    
+    <button class="fab scroll-to-top" aria-label="Scroll to top" title="Scroll to top">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="m18 15-6-6-6 6"/>
+        </svg>
+    </button>
+    
+
+    
+    
+    
+    <script src="https://plyx.iz.rs/js/theme.js" defer></script>
+    <script src="https://plyx.iz.rs/js/navigation.js" defer></script>
+    <script src="https://plyx.iz.rs/js/code.js" defer></script>
+    <script src="https://plyx.iz.rs/js/interactive.js" defer></script>
+
+    
+    <script src="https://plyx.iz.rs/elasticlunr.min.js"></script>
+    <script src="https://plyx.iz.rs/search_index.en.js"></script>
+    <script src="https://plyx.iz.rs/js/search.js" defer></script>
+    
+    
+
+    
+</body>
+</html>

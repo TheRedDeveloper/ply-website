@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" prefix="og: https://ogp.me/ns#">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="dark">
+
+    
+    <title>Rotation | Ply</title>
+
+    
+    
+    <meta name="description" content="Beautiful apps in Rust. Cross-platform. Dead simple.">
+    
+
+    
+    
+    <meta name="keywords" content="ply, ply-engine, rust, ui, engine, cross-platform, layout, graphics, gamedev">
+    
+
+    
+    
+    <meta name="author" content="TheRedDeveloper">
+    
+
+    
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+
+    
+    
+    <link rel="canonical" href="https://plyx.iz.rs/docs/rotation/">
+    <link rel="alternate" hreflang="en" href="https://plyx.iz.rs/docs/rotation/">
+    <link rel="alternate" hreflang="x-default" href="https://plyx.iz.rs/docs/rotation/">
+    
+
+    
+    <meta property="og:type" content="article">
+    
+    <meta property="og:url" content="https://plyx.iz.rs/docs/rotation/">
+    
+    
+    <meta property="og:title" content="Rotation">
+    
+    
+    <meta property="og:description" content="">
+    
+    
+    <meta property="og:site_name" content="Ply">
+    <meta property="og:locale" content="en">
+
+    
+    
+    
+    
+    
+    
+
+    
+    <meta name="twitter:card" content="summary_large_image">
+    
+    <meta name="twitter:url" content="https://plyx.iz.rs/docs/rotation/">
+    
+    
+    <meta name="twitter:title" content="Rotation">
+    
+    
+    <meta name="twitter:description" content="">
+    
+    
+    
+
+    
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "WebSite",
+                "@id": "https://plyx.iz.rs#website",
+                "url": "https://plyx.iz.rs",
+                "name": "Ply",
+                "description": "Beautiful apps in Rust. Cross-platform. Dead simple.",
+                "publisher": {
+                    "@id": "https://plyx.iz.rs/#organization"
+                },
+                "inLanguage": "en",
+                "potentialAction": {
+                    "@type": "SearchAction",
+                    "target": {
+                        "@type": "EntryPoint",
+                        "urlTemplate": "https://plyx.iz.rs?q={search_term_string}"
+                    },
+                    "query-input": "required name=search_term_string"
+                }
+            },
+            {
+                "@type": "Organization",
+                "@id": "https://plyx.iz.rs/#organization",
+                "name": "TheRedDeveloper",
+                "url": "https://plyx.iz.rs"
+            },
+            {
+                "@type": "WebPage",
+                "@id": "https://plyx.iz.rs/docs/rotation/#webpage",
+                "url": "https://plyx.iz.rs/docs/rotation/",
+                "name": "Rotation",
+                "isPartOf": {
+                    "@id": "https://plyx.iz.rs#website"
+                },
+                "description": "",
+                "inLanguage": "en"
+                
+                
+            }
+            
+            ,{
+                "@type": "Article",
+                "@id": "https://plyx.iz.rs/docs/rotation/#article",
+                "isPartOf": {
+                    "@id": "https://plyx.iz.rs/docs/rotation/#webpage"
+                },
+                "headline": "Rotation",
+                
+                
+                
+                "author": {
+                    "@id": "https://plyx.iz.rs/#organization"
+                },
+                "publisher": {
+                    "@id": "https://plyx.iz.rs/#organization"
+                },
+                
+                
+                "wordCount": 294,
+                
+                "inLanguage": "en"
+            }
+            
+        ]
+    }
+    </script>
+
+    
+    
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Ply",
+                "item": "https://plyx.iz.rs"
+            }
+            
+            
+            
+            ,{
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Ply",
+                "item": "https://plyx.iz.rs/"
+            }
+            
+            
+            
+            ,{
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Documentation",
+                "item": "https://plyx.iz.rs/docs/"
+            }
+            
+            
+            ,{
+                "@type": "ListItem",
+                "position": 4,
+                "name": "Rotation",
+                "item": "https://plyx.iz.rs/docs/rotation/"
+            }
+        ]
+    }
+    </script>
+    
+
+    
+    <link rel="stylesheet" href="https://plyx.iz.rs/style.css">
+
+    
+
+    
+    <link rel="preload" href="https://plyx.iz.rs/fonts/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="https://plyx.iz.rs/fonts/GeistMono-Variable.woff2" as="font" type="font/woff2" crossorigin>
+
+    
+    
+    <link rel="icon" href="https://plyx.iz.rs/images/favicon.png">
+    
+    
+
+    
+    
+
+    
+    
+    
+    <script>
+        (function() {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            document.documentElement.dataset.userColorScheme = 'dark';
+            // Pre-apply sidebar collapsed state
+            if (localStorage.getItem('tanuki-sidebar-collapsed') === 'true') {
+                document.documentElement.classList.add('sidebar-start-collapsed');
+            }
+            // Pre-apply saved sidebar width
+            var savedWidth = localStorage.getItem('tanuki-sidebar-width');
+            if (savedWidth) {
+                document.documentElement.style.setProperty('--sidebar-width', savedWidth + 'px');
+                var s = document.createElement('style');
+                s.id = 'sidebar-width-preload';
+                s.textContent = '.sidebar { --sidebar-width: ' + savedWidth + 'px !important; }';
+                document.head.appendChild(s);
+            }
+        })();
+    </script>
+    <style>
+        /* Prevent sidebar transition on initial page load when user had it collapsed */
+        .sidebar-start-collapsed .sidebar {
+            width: 0 !important;
+            min-width: 0 !important;
+            border-right: none !important;
+            overflow: hidden !important;
+            transition: none !important;
+        }
+    </style>
+
+    
+</head>
+<body class="page-rotation">
+    
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    
+    
+
+    
+    
+        
+    
+
+    
+    <div class="layout layout--docs layout--fixed-header" data-mode="docs">
+        
+
+
+<aside id="sidebar" class="sidebar" role="complementary" aria-labelledby="sidebar-title">
+    
+    <div class="sidebar__resize-handle" aria-hidden="true" title="Drag to resize sidebar width"></div>
+
+    <div class="sidebar__header">
+        <span id="sidebar-title" class="sidebar__title">Table of contents</span>
+        <button class="sidebar__close" type="button" aria-label="Close sidebar" title="Close">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M18 6 6 18"/>
+                <path d="m6 6 12 12"/>
+            </svg>
+        </button>
+    </div>
+
+    <nav class="sidebar__content" aria-label="Documentation navigation">
+        <div class="toc">
+            
+            
+
+            
+            <div class="toc__section">
+                <ol class="toc__list toc__list--numbered" start="1">
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/getting-started/" class="toc__link ">
+                            <span class="toc__number">1.</span>
+                            Getting Started
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/elements-and-layout/" class="toc__link ">
+                            <span class="toc__number">2.</span>
+                            Elements &amp; Layout
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/debug-view/" class="toc__link ">
+                            <span class="toc__number">3.</span>
+                            Debug View
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/text/" class="toc__link ">
+                            <span class="toc__number">4.</span>
+                            Text
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/ids-and-state/" class="toc__link ">
+                            <span class="toc__number">5.</span>
+                            IDs &amp; State
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/interactivity/" class="toc__link ">
+                            <span class="toc__number">6.</span>
+                            Interactivity
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/floating-elements/" class="toc__link ">
+                            <span class="toc__number">7.</span>
+                            Floating Elements
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/images-and-rendering/" class="toc__link ">
+                            <span class="toc__number">8.</span>
+                            Images, Vectors &amp; Custom Rendering
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/text-input/" class="toc__link ">
+                            <span class="toc__number">9.</span>
+                            Text Input
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/text-styling/" class="toc__link ">
+                            <span class="toc__number">10.</span>
+                            Text Styling
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/shaders-and-effects/" class="toc__link ">
+                            <span class="toc__number">11.</span>
+                            Shaders &amp; Effects
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/rotation/" class="toc__link active">
+                            <span class="toc__number">12.</span>
+                            Rotation
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/accessibility/" class="toc__link ">
+                            <span class="toc__number">13.</span>
+                            Accessibility
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/networking/" class="toc__link ">
+                            <span class="toc__number">14.</span>
+                            Networking
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/sound/" class="toc__link ">
+                            <span class="toc__number">15.</span>
+                            Sound
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/cross-platform/" class="toc__link ">
+                            <span class="toc__number">16.</span>
+                            Cross-Platform Builds
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/advanced/" class="toc__link ">
+                            <span class="toc__number">17.</span>
+                            Advanced Topics
+                        </a>
+                    </li>
+                    
+                    
+                </ol>
+            </div>
+
+            
+            
+            
+        </div>
+    </nav>
+
+    <div class="sidebar__footer">
+        
+        <div class="sidebar__actions-mobile">
+            
+            
+
+            
+            
+
+            
+            
+            <a href="https:&#x2F;&#x2F;github.com&#x2F;TheRedDeveloper&#x2F;ply-engine" class="sidebar__github" target="_blank" rel="noopener noreferrer" aria-label="View project on GitHub (opens in new tab)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/>
+                    <path d="M9 18c-4.51 2-5-2-7-2"/>
+                </svg>
+                <span>View on GitHub</span>
+            </a>
+            
+        </div>
+    </div>
+</aside>
+
+
+
+
+        <div class="layout__main">
+            
+            
+
+
+
+
+<header class="header" role="banner">
+    <div class="header__left">
+        
+        
+        <button class="sidebar-toggle" type="button" aria-label="Toggle sidebar navigation" aria-expanded="true" aria-controls="sidebar" title="Toggle sidebar">
+            <svg class="sidebar-toggle__icon sidebar-toggle__icon--open" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect width="18" height="18" x="3" y="3" rx="2"/>
+                <path d="M9 3v18"/>
+                <path d="m16 15-3-3 3-3"/>
+            </svg>
+            <svg class="sidebar-toggle__icon sidebar-toggle__icon--closed" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect width="18" height="18" x="3" y="3" rx="2"/>
+                <path d="M9 3v18"/>
+                <path d="m14 9 3 3-3 3"/>
+            </svg>
+        </button>
+        
+
+        
+        
+        <button class="toc-toggle toc-toggle--docs" type="button" aria-label="Open table of contents" aria-expanded="false" aria-controls="sidebar" title="Table of contents">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect width="18" height="18" x="3" y="3" rx="2"/>
+                <path d="M9 3v18"/>
+                <path d="m16 15-3-3 3-3"/>
+            </svg>
+        </button>
+        
+
+        
+        
+
+        
+        
+
+        
+        <a href="https://plyx.iz.rs" class="header__logo" aria-label="Ply - Go to homepage">
+            
+            
+            
+            <img src="https://plyx.iz.rs/images/ply_logo.png" alt="Ply" class="header__logo-img">
+            
+        </a>
+    </div>
+
+    
+    <nav class="header__nav" role="navigation" aria-label="Main navigation">
+        
+            
+            <a href="/docs/getting-started/" class="header__link ">
+                Docs
+            </a>
+            
+            <a href="/examples/" class="header__link ">
+                Examples
+            </a>
+            
+            <a href="/blog/" class="header__link ">
+                Blog
+            </a>
+            
+        
+    </nav>
+
+    
+    <div class="header__actions" role="group" aria-label="Site actions">
+        
+        
+        <button class="search-toggle" type="button" aria-label="Open search dialog" aria-keyshortcuts="/" aria-haspopup="dialog" title="Search (press /)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="11" cy="11" r="8"/>
+                <path d="m21 21-4.3-4.3"/>
+            </svg>
+        </button>
+        
+
+        
+        <div class="header__actions-desktop">
+            
+            
+
+            
+            
+
+            
+            
+            <a href="https:&#x2F;&#x2F;github.com&#x2F;TheRedDeveloper&#x2F;ply-website&#x2F;edit&#x2F;main&#x2F;content/docs&#x2F;rotation.md" class="btn btn--icon btn--ghost" aria-label="Edit this page on GitHub (opens in new tab)" target="_blank" rel="noopener noreferrer" title="Edit this page">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/>
+                    <path d="m15 5 4 4"/>
+                </svg>
+            </a>
+            
+
+            
+            
+            <a href="https:&#x2F;&#x2F;github.com&#x2F;TheRedDeveloper&#x2F;ply-engine" class="btn btn--icon btn--ghost" aria-label="View project on GitHub (opens in new tab)" target="_blank" rel="noopener noreferrer" title="GitHub">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/>
+                    <path d="M9 18c-4.51 2-5-2-7-2"/>
+                </svg>
+            </a>
+            
+        </div>
+    </div>
+</header>
+
+
+            
+
+            
+            
+            <div class="scroll-progress" aria-hidden="true">
+                <div class="scroll-progress__bar"></div>
+                <span class="scroll-progress__percent">0%</span>
+            </div>
+            
+
+            
+
+
+
+
+
+
+    
+
+
+    
+
+
+<nav class="nav-buttons" aria-label="Page navigation">
+    
+    
+    <a href="https://plyx.iz.rs/docs/shaders-and-effects/" class="nav-button nav-button--prev" aria-label="Previous: Shaders &amp; Effects">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m15 18-6-6 6-6"/>
+        </svg>
+        <span class="nav-button__label">
+            Shaders &amp; Effects
+            <span class="nav-button__shortcut">←</span>
+        </span>
+    </a>
+    
+
+    
+    
+    <a href="https://plyx.iz.rs/docs/accessibility/" class="nav-button nav-button--next" aria-label="Next: Accessibility">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m9 18 6-6-6-6"/>
+        </svg>
+        <span class="nav-button__label">
+            Accessibility
+            <span class="nav-button__shortcut">→</span>
+        </span>
+    </a>
+    
+</nav>
+
+
+
+
+
+            <div class="layout__content-area">
+                <main id="main-content" class="main-content" role="main" aria-label="Main content">
+                    
+
+
+<article class="article" itemscope itemtype="https://schema.org/Article" aria-labelledby="article-title">
+    
+    <header class="article__header article__header--docs">
+        <h1 id="article-title" itemprop="headline">Rotation</h1>
+        
+    </header>
+
+    <div class="article__content" itemprop="articleBody">
+        <p>Ply offers two rotation systems. Visual rotation renders the element
+and its children to an offscreen buffer then draws it back rotated,
+layout is unaffected. Shape rotation rotates the element's own
+geometry at the vertex level and adjusts its bounding box, children and
+text are unaffected.</p>
+<h2 id="visual-rotation"><a class="zola-anchor" href="#visual-rotation" aria-label="Anchor link for: visual-rotation">🔗</a>Visual rotation</h2>
+<p>Rotate an element and everything inside it, purely visual:</p>
+
+
+
+
+
+
+<iframe
+  src="/examples/shell.html?id=visual_rotation#ui%2Eelement%28%29%0A%20%20%2Ewidth%28fixed%21%28120%2E0%29%29%0A%20%20%2Eheight%28fixed%21%2880%2E0%29%29%0A%20%20%2Ebackground%5Fcolor%280xFFC32C%29%0A%20%20%2Ecorner%5Fradius%288%2E0%29%0A%20%20%2Erotate%5Fvisual%28%7Cr%7C%20r%2Edegrees%28%5B%5Bdegrees%5D%5D%29%29%0A%20%20%2Echildren%28%7Cui%7C%20%7B%0A%20%20%20%20ui%2Etext%28%22Tilted%21%22%2C%20%7Ct%7C%20t%2Efont%5Fsize%2814%29%2Ecolor%280x181515%29%29%3B%0A%20%20%7D%29%3B%0A%2D%2D%2D%0An%2Edegrees%20%3D%2015"
+  style="width: 100%; height: 400px; border: 1px solid #262220; border-radius: 12px; margin: 1.5rem 0;"
+  loading="lazy"
+  tabindex="-1"></iframe>
+
+<p>The layout stays axis-aligned, surrounding elements don't see the
+rotation.</p>
+<h3 id="pivot"><a class="zola-anchor" href="#pivot" aria-label="Anchor link for: pivot">🔗</a>Pivot</h3>
+<p>By default, rotation is around the center (0.5, 0.5). Change it with
+<code>.pivot()</code>:</p>
+<pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="rust"><span class="giallo-l"><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">rotate_visual</span><span style="color: #9399B2;">(</span><span style="color: #94E2D5;">|</span><span>r</span><span style="color: #94E2D5;">|</span><span> r</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">degrees</span><span style="color: #9399B2;">(</span><span style="color: #FAB387;">30</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #9399B2;">)</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">pivot</span><span style="color: #9399B2;">(</span><span style="color: #FAB387;">0</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #9399B2;">,</span><span style="color: #FAB387;"> 0</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #9399B2;">)</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">)</span></span></code></pre>
+<p>Pivot coordinates are normalized: (0, 0) = top-left, (1, 1) = bottom-right.</p>
+<h3 id="flipping"><a class="zola-anchor" href="#flipping" aria-label="Anchor link for: flipping">🔗</a>Flipping</h3>
+<p>Mirror horizontally or vertically:</p>
+<pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="rust"><span class="giallo-l"><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">rotate_visual</span><span style="color: #9399B2;">(</span><span style="color: #94E2D5;">|</span><span>r</span><span style="color: #94E2D5;">|</span><span> r</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">flip_x</span><span style="color: #9399B2;">())</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">rotate_visual</span><span style="color: #9399B2;">(</span><span style="color: #94E2D5;">|</span><span>r</span><span style="color: #94E2D5;">|</span><span> r</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">flip_y</span><span style="color: #9399B2;">())</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">rotate_visual</span><span style="color: #9399B2;">(</span><span style="color: #94E2D5;">|</span><span>r</span><span style="color: #94E2D5;">|</span><span> r</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">degrees</span><span style="color: #9399B2;">(</span><span style="color: #FAB387;">45</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #9399B2;">)</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">flip_x</span><span style="color: #9399B2;">())</span></span></code></pre><h3 id="combining-with-shaders"><a class="zola-anchor" href="#combining-with-shaders" aria-label="Anchor link for: combining-with-shaders">🔗</a>Combining with shaders</h3>
+<p>Visual rotation shares the same offscreen render target as <code>.shader()</code>.
+When you use both, there's no extra GPU cost:</p>
+<pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="rust"><span class="giallo-l"><span>ui</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">element</span><span style="color: #9399B2;">()</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">shader</span><span style="color: #9399B2;">(</span><span style="color: #94E2D5;">&amp;</span><span style="color: #FAB387;">FOIL</span><span style="color: #9399B2;">,</span><span style="color: #94E2D5;"> |</span><span>s</span><span style="color: #94E2D5;">|</span><span> s</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">uniform</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;u_time&quot;</span><span style="color: #9399B2;">,</span><span style="color: #89B4FA;font-style: italic;"> get_time</span><span style="color: #9399B2;">()</span><span style="color: #CBA6F7;"> as f32</span><span style="color: #9399B2;">))</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">rotate_visual</span><span style="color: #9399B2;">(</span><span style="color: #94E2D5;">|</span><span>r</span><span style="color: #94E2D5;">|</span><span> r</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">degrees</span><span style="color: #9399B2;">(</span><span style="color: #FAB387;">5</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #9399B2;">))</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">children</span><span style="color: #9399B2;">(</span><span style="color: #94E2D5;">|</span><span>ui</span><span style="color: #94E2D5;">|</span><span style="color: #9399B2;"> {</span></span>
+<span class="giallo-l"><span>    ui</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">text</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;Shiny + tilted&quot;</span><span style="color: #9399B2;">,</span><span style="color: #94E2D5;"> |</span><span>t</span><span style="color: #94E2D5;">|</span><span> t</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">font_size</span><span style="color: #9399B2;">(</span><span style="color: #FAB387;">16</span><span style="color: #9399B2;">)</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">color</span><span style="color: #9399B2;">(</span><span style="color: #FAB387;">0xFFFFFF</span><span style="color: #9399B2;">));</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">  });</span></span></code></pre><h3 id="reference"><a class="zola-anchor" href="#reference" aria-label="Anchor link for: reference">🔗</a>Reference</h3>
+<table><thead><tr><th>Method</th><th>What it does</th><th>Default</th></tr></thead><tbody>
+<tr><td><code>.degrees(f32)</code></td><td>Rotation angle in degrees</td><td>0</td></tr>
+<tr><td><code>.radians(f32)</code></td><td>Rotation angle in radians</td><td>0</td></tr>
+<tr><td><code>.pivot(x, y)</code></td><td>Rotation center (0.0–1.0)</td><td>(0.5, 0.5)</td></tr>
+<tr><td><code>.flip_x()</code></td><td>Mirror horizontally</td><td>false</td></tr>
+<tr><td><code>.flip_y()</code></td><td>Mirror vertically</td><td>false</td></tr>
+</tbody></table>
+<h2 id="shape-rotation"><a class="zola-anchor" href="#shape-rotation" aria-label="Anchor link for: shape-rotation">🔗</a>Shape rotation</h2>
+<p>Rotates the element's own geometry (background, border, image) at the
+vertex level. The bounding box adjusts to fit the rotated shape (AABB):</p>
+
+
+
+
+
+
+<iframe
+  src="/examples/shell.html?id=shape_rotation#ui%2Eelement%28%29%0A%20%20%2Ewidth%28fixed%21%2880%2E0%29%29%0A%20%20%2Eheight%28fixed%21%2880%2E0%29%29%0A%20%20%2Ebackground%5Fcolor%280xFF654D%29%0A%20%20%2Erotate%5Fshape%28%7Cr%7C%20r%2Edegrees%28%5B%5Bdegrees%5D%5D%29%29%0A%20%20%2Eempty%28%29%3B%0A%2D%2D%2D%0An%2Edegrees%20%3D%2045"
+  style="width: 100%; height: 333px; border: 1px solid #262220; border-radius: 12px; margin: 1.5rem 0;"
+  loading="lazy"
+  tabindex="-1"></iframe>
+
+<p>What shape rotation does not affect:</p>
+<ul>
+<li>Children</li>
+<li>Text</li>
+<li>Shaders</li>
+</ul>
+<p>There is no pivot, because pivots actually only move elements
+and <code>.rotate_shape()</code> stays within the layout.</p>
+<h3 id="reference-1"><a class="zola-anchor" href="#reference-1" aria-label="Anchor link for: reference-1">🔗</a>Reference</h3>
+<table><thead><tr><th>Method</th><th>What it does</th><th>Default</th></tr></thead><tbody>
+<tr><td><code>.degrees(f32)</code></td><td>Rotation angle in degrees</td><td>0</td></tr>
+<tr><td><code>.radians(f32)</code></td><td>Rotation angle in radians</td><td>0</td></tr>
+<tr><td><code>.flip_x()</code></td><td>Mirror horizontally</td><td>false</td></tr>
+<tr><td><code>.flip_y()</code></td><td>Mirror vertically</td><td>false</td></tr>
+</tbody></table>
+<h2 id="next-steps"><a class="zola-anchor" href="#next-steps" aria-label="Anchor link for: next-steps">🔗</a>Next steps</h2>
+<p>→ <a href="/docs/accessibility/">Accessibility</a></p>
+
+    </div>
+
+    
+    
+    <meta itemprop="author" content="TheRedDeveloper">
+    
+    
+</article>
+
+
+
+<nav class="page-nav" aria-label="Page navigation">
+    
+
+    
+</nav>
+
+
+
+                </main>
+
+                
+                
+                
+
+
+
+
+<aside id="page-toc-panel" class="page-toc-panel" aria-hidden="true" aria-label="On this page">
+    <div class="page-toc-panel__content">
+        <div class="page-toc-panel__header">
+            <span class="page-toc-panel__title">On this page</span>
+            <button class="page-toc-panel__close" type="button" aria-label="Close table of contents">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M18 6 6 18"/>
+                    <path d="m6 6 12 12"/>
+                </svg>
+            </button>
+        </div>
+        <nav class="page-toc-panel__nav" aria-label="Page sections">
+            <ul class="page-toc-panel__list">
+                
+                <li class="page-toc-panel__item">
+                    <a href="#visual-rotation" class="page-toc-panel__link">
+                        Visual rotation
+                    </a>
+                    
+                    <ul class="page-toc-panel__list page-toc-panel__list--nested">
+                        
+                        <li class="page-toc-panel__item">
+                            <a href="#pivot" class="page-toc-panel__link">
+                                Pivot
+                            </a>
+                        </li>
+                        
+                        <li class="page-toc-panel__item">
+                            <a href="#flipping" class="page-toc-panel__link">
+                                Flipping
+                            </a>
+                        </li>
+                        
+                        <li class="page-toc-panel__item">
+                            <a href="#combining-with-shaders" class="page-toc-panel__link">
+                                Combining with shaders
+                            </a>
+                        </li>
+                        
+                        <li class="page-toc-panel__item">
+                            <a href="#reference" class="page-toc-panel__link">
+                                Reference
+                            </a>
+                        </li>
+                        
+                    </ul>
+                    
+                </li>
+                
+                <li class="page-toc-panel__item">
+                    <a href="#shape-rotation" class="page-toc-panel__link">
+                        Shape rotation
+                    </a>
+                    
+                    <ul class="page-toc-panel__list page-toc-panel__list--nested">
+                        
+                        <li class="page-toc-panel__item">
+                            <a href="#reference-1" class="page-toc-panel__link">
+                                Reference
+                            </a>
+                        </li>
+                        
+                    </ul>
+                    
+                </li>
+                
+                <li class="page-toc-panel__item">
+                    <a href="#next-steps" class="page-toc-panel__link">
+                        Next steps
+                    </a>
+                    
+                </li>
+                
+            </ul>
+        </nav>
+    </div>
+</aside>
+
+
+                
+            </div>
+
+            
+            
+            
+        </div>
+    </div>
+
+    
+    <div class="sidebar-overlay" aria-hidden="true"></div>
+
+    
+    
+    
+<div class="search-overlay" role="dialog" aria-modal="true" aria-labelledby="search-title" aria-describedby="search-description">
+    <div class="search">
+        <h2 id="search-title" class="sr-only">Search documentation</h2>
+        <p id="search-description" class="sr-only">Type to search. Use arrow keys to navigate results, Enter to select, Escape to close.</p>
+
+        <div class="search__input-wrapper">
+            <span class="search__icon" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"/>
+                    <path d="m21 21-4.3-4.3"/>
+                </svg>
+            </span>
+            <input
+                type="search"
+                class="search__input"
+                placeholder="Search documentation..."
+                autocomplete="off"
+                autofocus
+                aria-label="Search query"
+                aria-controls="search-results"
+                aria-autocomplete="list"
+            >
+            <span class="search__shortcut" aria-hidden="true">/</span>
+            <button class="search__close" type="button" aria-label="Close search dialog" title="Close (Esc)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M18 6 6 18"/>
+                    <path d="m6 6 12 12"/>
+                </svg>
+            </button>
+        </div>
+
+        <div id="search-results" class="search__results" role="listbox" aria-label="Search results">
+            
+        </div>
+
+        <footer class="search__footer">
+            <nav class="search__hints" aria-label="Keyboard shortcuts">
+                <span class="search__hint">
+                    <kbd aria-label="Up and down arrows">↑</kbd><kbd aria-hidden="true">↓</kbd> <span>Navigate</span>
+                </span>
+                <span class="search__hint">
+                    <kbd aria-label="Enter">↵</kbd> <span>Select</span>
+                </span>
+                <span class="search__hint">
+                    <kbd aria-label="Escape">esc</kbd> <span>Close</span>
+                </span>
+            </nav>
+            <span class="search__powered-by">Powered by <a href="https://github.com/weixsong/elasticlunr.js" target="_blank" rel="noopener noreferrer" aria-label="elasticlunr.js on GitHub (opens in new tab)">elasticlunr</a></span>
+        </footer>
+    </div>
+</div>
+
+    
+
+    
+    
+
+    
+    
+
+    
+    
+    
+    <button class="page-toc-toggle" type="button" aria-label="Toggle table of contents" aria-expanded="false" aria-controls="page-toc-panel" title="On this page">
+        <svg class="page-toc-toggle__icon page-toc-toggle__icon--list" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M16 5H3"/>
+            <path d="M16 12H3"/>
+            <path d="M16 19H3"/>
+            <path d="M21 5h.01"/>
+            <path d="M21 12h.01"/>
+            <path d="M21 19h.01"/>
+        </svg>
+        <svg class="page-toc-toggle__icon page-toc-toggle__icon--close" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M18 6 6 18"/>
+            <path d="m6 6 12 12"/>
+        </svg>
+    </button>
+    
+
+    
+    
+    <button class="fab scroll-to-top" aria-label="Scroll to top" title="Scroll to top">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="m18 15-6-6-6 6"/>
+        </svg>
+    </button>
+    
+
+    
+    
+    
+    <script src="https://plyx.iz.rs/js/theme.js" defer></script>
+    <script src="https://plyx.iz.rs/js/navigation.js" defer></script>
+    <script src="https://plyx.iz.rs/js/code.js" defer></script>
+    <script src="https://plyx.iz.rs/js/interactive.js" defer></script>
+
+    
+    <script src="https://plyx.iz.rs/elasticlunr.min.js"></script>
+    <script src="https://plyx.iz.rs/search_index.en.js"></script>
+    <script src="https://plyx.iz.rs/js/search.js" defer></script>
+    
+    
+
+    
+</body>
+</html>

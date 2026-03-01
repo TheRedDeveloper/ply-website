@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" prefix="og: https://ogp.me/ns#">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="dark">
+
+    
+    <title>Images, Vectors &amp; Custom Rendering | Ply</title>
+
+    
+    
+    <meta name="description" content="Beautiful apps in Rust. Cross-platform. Dead simple.">
+    
+
+    
+    
+    <meta name="keywords" content="ply, ply-engine, rust, ui, engine, cross-platform, layout, graphics, gamedev">
+    
+
+    
+    
+    <meta name="author" content="TheRedDeveloper">
+    
+
+    
+    <meta name="robots" content="index, follow">
+    <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+
+    
+    
+    <link rel="canonical" href="https://plyx.iz.rs/docs/images-and-rendering/">
+    <link rel="alternate" hreflang="en" href="https://plyx.iz.rs/docs/images-and-rendering/">
+    <link rel="alternate" hreflang="x-default" href="https://plyx.iz.rs/docs/images-and-rendering/">
+    
+
+    
+    <meta property="og:type" content="article">
+    
+    <meta property="og:url" content="https://plyx.iz.rs/docs/images-and-rendering/">
+    
+    
+    <meta property="og:title" content="Images, Vectors &amp; Custom Rendering">
+    
+    
+    <meta property="og:description" content="">
+    
+    
+    <meta property="og:site_name" content="Ply">
+    <meta property="og:locale" content="en">
+
+    
+    
+    
+    
+    
+    
+
+    
+    <meta name="twitter:card" content="summary_large_image">
+    
+    <meta name="twitter:url" content="https://plyx.iz.rs/docs/images-and-rendering/">
+    
+    
+    <meta name="twitter:title" content="Images, Vectors &amp; Custom Rendering">
+    
+    
+    <meta name="twitter:description" content="">
+    
+    
+    
+
+    
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "WebSite",
+                "@id": "https://plyx.iz.rs#website",
+                "url": "https://plyx.iz.rs",
+                "name": "Ply",
+                "description": "Beautiful apps in Rust. Cross-platform. Dead simple.",
+                "publisher": {
+                    "@id": "https://plyx.iz.rs/#organization"
+                },
+                "inLanguage": "en",
+                "potentialAction": {
+                    "@type": "SearchAction",
+                    "target": {
+                        "@type": "EntryPoint",
+                        "urlTemplate": "https://plyx.iz.rs?q={search_term_string}"
+                    },
+                    "query-input": "required name=search_term_string"
+                }
+            },
+            {
+                "@type": "Organization",
+                "@id": "https://plyx.iz.rs/#organization",
+                "name": "TheRedDeveloper",
+                "url": "https://plyx.iz.rs"
+            },
+            {
+                "@type": "WebPage",
+                "@id": "https://plyx.iz.rs/docs/images-and-rendering/#webpage",
+                "url": "https://plyx.iz.rs/docs/images-and-rendering/",
+                "name": "Images, Vectors &amp; Custom Rendering",
+                "isPartOf": {
+                    "@id": "https://plyx.iz.rs#website"
+                },
+                "description": "",
+                "inLanguage": "en"
+                
+                
+            }
+            
+            ,{
+                "@type": "Article",
+                "@id": "https://plyx.iz.rs/docs/images-and-rendering/#article",
+                "isPartOf": {
+                    "@id": "https://plyx.iz.rs/docs/images-and-rendering/#webpage"
+                },
+                "headline": "Images, Vectors &amp; Custom Rendering",
+                
+                
+                
+                "author": {
+                    "@id": "https://plyx.iz.rs/#organization"
+                },
+                "publisher": {
+                    "@id": "https://plyx.iz.rs/#organization"
+                },
+                
+                
+                "wordCount": 371,
+                
+                "inLanguage": "en"
+            }
+            
+        ]
+    }
+    </script>
+
+    
+    
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Ply",
+                "item": "https://plyx.iz.rs"
+            }
+            
+            
+            
+            ,{
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Ply",
+                "item": "https://plyx.iz.rs/"
+            }
+            
+            
+            
+            ,{
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Documentation",
+                "item": "https://plyx.iz.rs/docs/"
+            }
+            
+            
+            ,{
+                "@type": "ListItem",
+                "position": 4,
+                "name": "Images, Vectors &amp; Custom Rendering",
+                "item": "https://plyx.iz.rs/docs/images-and-rendering/"
+            }
+        ]
+    }
+    </script>
+    
+
+    
+    <link rel="stylesheet" href="https://plyx.iz.rs/style.css">
+
+    
+
+    
+    <link rel="preload" href="https://plyx.iz.rs/fonts/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="https://plyx.iz.rs/fonts/GeistMono-Variable.woff2" as="font" type="font/woff2" crossorigin>
+
+    
+    
+    <link rel="icon" href="https://plyx.iz.rs/images/favicon.png">
+    
+    
+
+    
+    
+
+    
+    
+    
+    <script>
+        (function() {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            document.documentElement.dataset.userColorScheme = 'dark';
+            // Pre-apply sidebar collapsed state
+            if (localStorage.getItem('tanuki-sidebar-collapsed') === 'true') {
+                document.documentElement.classList.add('sidebar-start-collapsed');
+            }
+            // Pre-apply saved sidebar width
+            var savedWidth = localStorage.getItem('tanuki-sidebar-width');
+            if (savedWidth) {
+                document.documentElement.style.setProperty('--sidebar-width', savedWidth + 'px');
+                var s = document.createElement('style');
+                s.id = 'sidebar-width-preload';
+                s.textContent = '.sidebar { --sidebar-width: ' + savedWidth + 'px !important; }';
+                document.head.appendChild(s);
+            }
+        })();
+    </script>
+    <style>
+        /* Prevent sidebar transition on initial page load when user had it collapsed */
+        .sidebar-start-collapsed .sidebar {
+            width: 0 !important;
+            min-width: 0 !important;
+            border-right: none !important;
+            overflow: hidden !important;
+            transition: none !important;
+        }
+    </style>
+
+    
+</head>
+<body class="page-images-and-rendering">
+    
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    
+    
+
+    
+    
+        
+    
+
+    
+    <div class="layout layout--docs layout--fixed-header" data-mode="docs">
+        
+
+
+<aside id="sidebar" class="sidebar" role="complementary" aria-labelledby="sidebar-title">
+    
+    <div class="sidebar__resize-handle" aria-hidden="true" title="Drag to resize sidebar width"></div>
+
+    <div class="sidebar__header">
+        <span id="sidebar-title" class="sidebar__title">Table of contents</span>
+        <button class="sidebar__close" type="button" aria-label="Close sidebar" title="Close">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M18 6 6 18"/>
+                <path d="m6 6 12 12"/>
+            </svg>
+        </button>
+    </div>
+
+    <nav class="sidebar__content" aria-label="Documentation navigation">
+        <div class="toc">
+            
+            
+
+            
+            <div class="toc__section">
+                <ol class="toc__list toc__list--numbered" start="1">
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/getting-started/" class="toc__link ">
+                            <span class="toc__number">1.</span>
+                            Getting Started
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/elements-and-layout/" class="toc__link ">
+                            <span class="toc__number">2.</span>
+                            Elements &amp; Layout
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/debug-view/" class="toc__link ">
+                            <span class="toc__number">3.</span>
+                            Debug View
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/text/" class="toc__link ">
+                            <span class="toc__number">4.</span>
+                            Text
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/ids-and-state/" class="toc__link ">
+                            <span class="toc__number">5.</span>
+                            IDs &amp; State
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/interactivity/" class="toc__link ">
+                            <span class="toc__number">6.</span>
+                            Interactivity
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/floating-elements/" class="toc__link ">
+                            <span class="toc__number">7.</span>
+                            Floating Elements
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/images-and-rendering/" class="toc__link active">
+                            <span class="toc__number">8.</span>
+                            Images, Vectors &amp; Custom Rendering
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/text-input/" class="toc__link ">
+                            <span class="toc__number">9.</span>
+                            Text Input
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/text-styling/" class="toc__link ">
+                            <span class="toc__number">10.</span>
+                            Text Styling
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/shaders-and-effects/" class="toc__link ">
+                            <span class="toc__number">11.</span>
+                            Shaders &amp; Effects
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/rotation/" class="toc__link ">
+                            <span class="toc__number">12.</span>
+                            Rotation
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/accessibility/" class="toc__link ">
+                            <span class="toc__number">13.</span>
+                            Accessibility
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/networking/" class="toc__link ">
+                            <span class="toc__number">14.</span>
+                            Networking
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/sound/" class="toc__link ">
+                            <span class="toc__number">15.</span>
+                            Sound
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/cross-platform/" class="toc__link ">
+                            <span class="toc__number">16.</span>
+                            Cross-Platform Builds
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/advanced/" class="toc__link ">
+                            <span class="toc__number">17.</span>
+                            Advanced Topics
+                        </a>
+                    </li>
+                    
+                    
+                </ol>
+            </div>
+
+            
+            
+            
+        </div>
+    </nav>
+
+    <div class="sidebar__footer">
+        
+        <div class="sidebar__actions-mobile">
+            
+            
+
+            
+            
+
+            
+            
+            <a href="https:&#x2F;&#x2F;github.com&#x2F;TheRedDeveloper&#x2F;ply-engine" class="sidebar__github" target="_blank" rel="noopener noreferrer" aria-label="View project on GitHub (opens in new tab)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/>
+                    <path d="M9 18c-4.51 2-5-2-7-2"/>
+                </svg>
+                <span>View on GitHub</span>
+            </a>
+            
+        </div>
+    </div>
+</aside>
+
+
+
+
+        <div class="layout__main">
+            
+            
+
+
+
+
+<header class="header" role="banner">
+    <div class="header__left">
+        
+        
+        <button class="sidebar-toggle" type="button" aria-label="Toggle sidebar navigation" aria-expanded="true" aria-controls="sidebar" title="Toggle sidebar">
+            <svg class="sidebar-toggle__icon sidebar-toggle__icon--open" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect width="18" height="18" x="3" y="3" rx="2"/>
+                <path d="M9 3v18"/>
+                <path d="m16 15-3-3 3-3"/>
+            </svg>
+            <svg class="sidebar-toggle__icon sidebar-toggle__icon--closed" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect width="18" height="18" x="3" y="3" rx="2"/>
+                <path d="M9 3v18"/>
+                <path d="m14 9 3 3-3 3"/>
+            </svg>
+        </button>
+        
+
+        
+        
+        <button class="toc-toggle toc-toggle--docs" type="button" aria-label="Open table of contents" aria-expanded="false" aria-controls="sidebar" title="Table of contents">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect width="18" height="18" x="3" y="3" rx="2"/>
+                <path d="M9 3v18"/>
+                <path d="m16 15-3-3 3-3"/>
+            </svg>
+        </button>
+        
+
+        
+        
+
+        
+        
+
+        
+        <a href="https://plyx.iz.rs" class="header__logo" aria-label="Ply - Go to homepage">
+            
+            
+            
+            <img src="https://plyx.iz.rs/images/ply_logo.png" alt="Ply" class="header__logo-img">
+            
+        </a>
+    </div>
+
+    
+    <nav class="header__nav" role="navigation" aria-label="Main navigation">
+        
+            
+            <a href="/docs/getting-started/" class="header__link ">
+                Docs
+            </a>
+            
+            <a href="/examples/" class="header__link ">
+                Examples
+            </a>
+            
+            <a href="/blog/" class="header__link ">
+                Blog
+            </a>
+            
+        
+    </nav>
+
+    
+    <div class="header__actions" role="group" aria-label="Site actions">
+        
+        
+        <button class="search-toggle" type="button" aria-label="Open search dialog" aria-keyshortcuts="/" aria-haspopup="dialog" title="Search (press /)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="11" cy="11" r="8"/>
+                <path d="m21 21-4.3-4.3"/>
+            </svg>
+        </button>
+        
+
+        
+        <div class="header__actions-desktop">
+            
+            
+
+            
+            
+
+            
+            
+            <a href="https:&#x2F;&#x2F;github.com&#x2F;TheRedDeveloper&#x2F;ply-website&#x2F;edit&#x2F;main&#x2F;content/docs&#x2F;images-and-rendering.md" class="btn btn--icon btn--ghost" aria-label="Edit this page on GitHub (opens in new tab)" target="_blank" rel="noopener noreferrer" title="Edit this page">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/>
+                    <path d="m15 5 4 4"/>
+                </svg>
+            </a>
+            
+
+            
+            
+            <a href="https:&#x2F;&#x2F;github.com&#x2F;TheRedDeveloper&#x2F;ply-engine" class="btn btn--icon btn--ghost" aria-label="View project on GitHub (opens in new tab)" target="_blank" rel="noopener noreferrer" title="GitHub">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/>
+                    <path d="M9 18c-4.51 2-5-2-7-2"/>
+                </svg>
+            </a>
+            
+        </div>
+    </div>
+</header>
+
+
+            
+
+            
+            
+            <div class="scroll-progress" aria-hidden="true">
+                <div class="scroll-progress__bar"></div>
+                <span class="scroll-progress__percent">0%</span>
+            </div>
+            
+
+            
+
+
+
+
+
+
+    
+
+
+    
+
+
+<nav class="nav-buttons" aria-label="Page navigation">
+    
+    
+    <a href="https://plyx.iz.rs/docs/floating-elements/" class="nav-button nav-button--prev" aria-label="Previous: Floating Elements">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m15 18-6-6 6-6"/>
+        </svg>
+        <span class="nav-button__label">
+            Floating Elements
+            <span class="nav-button__shortcut">←</span>
+        </span>
+    </a>
+    
+
+    
+    
+    <a href="https://plyx.iz.rs/docs/text-input/" class="nav-button nav-button--next" aria-label="Next: Text Input">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m9 18 6-6-6-6"/>
+        </svg>
+        <span class="nav-button__label">
+            Text Input
+            <span class="nav-button__shortcut">→</span>
+        </span>
+    </a>
+    
+</nav>
+
+
+
+
+
+            <div class="layout__content-area">
+                <main id="main-content" class="main-content" role="main" aria-label="Main content">
+                    
+
+
+<article class="article" itemscope itemtype="https://schema.org/Article" aria-labelledby="article-title">
+    
+    <header class="article__header article__header--docs">
+        <h1 id="article-title" itemprop="headline">Images, Vectors &amp; Custom Rendering</h1>
+        
+    </header>
+
+    <div class="article__content" itemprop="articleBody">
+        <p>Display images from files, embedded bytes, or custom draw calls.</p>
+<h2 id="static-assets"><a class="zola-anchor" href="#static-assets" aria-label="Anchor link for: static-assets">🔗</a>Static assets</h2>
+<p>Define image assets as <code>static GraphicAsset</code> constants:</p>
+<pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="rust"><span class="giallo-l"><span style="color: #CBA6F7;">static</span><span style="color: #FAB387;"> LOGO</span><span style="color: #94E2D5;">:</span><span style="color: #F9E2AF;font-style: italic;"> GraphicAsset</span><span style="color: #94E2D5;"> =</span><span style="color: #F9E2AF;font-style: italic;"> GraphicAsset</span><span style="color: #94E2D5;">::</span><span style="color: #89B4FA;font-style: italic;">Path</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;assets/images/logo.png&quot;</span><span style="color: #9399B2;">);</span></span>
+<span class="giallo-l"><span style="color: #CBA6F7;">static</span><span style="color: #FAB387;"> ICON</span><span style="color: #94E2D5;">:</span><span style="color: #F9E2AF;font-style: italic;"> GraphicAsset</span><span style="color: #94E2D5;"> =</span><span style="color: #F9E2AF;font-style: italic;"> GraphicAsset</span><span style="color: #94E2D5;">::</span><span style="color: #F9E2AF;font-style: italic;">Bytes</span><span style="color: #9399B2;"> {</span></span>
+<span class="giallo-l"><span>    file_name</span><span style="color: #94E2D5;">:</span><span style="color: #A6E3A1;"> &quot;icon.tvg&quot;</span><span style="color: #9399B2;">,</span></span>
+<span class="giallo-l"><span>    data</span><span style="color: #94E2D5;">:</span><span style="color: #89B4FA;font-style: italic;"> include_bytes!</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;../assets/images/icon.tvg&quot;</span><span style="color: #9399B2;">),</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">};</span></span></code></pre>
+<p>Display them with <code>.image()</code>:
+
+
+
+
+
+
+<iframe
+  src="/examples/shell.html?id=image_demo#ui%2Eelement%28%29%0A%20%20%2Ewidth%28fixed%21%28%5B%5Bwidth%5D%5D%29%29%0A%20%20%2Eheight%28fixed%21%28%5B%5Bheight%5D%5D%29%29%0A%20%20%2Eimage%28%26LOGO%29%0A%20%20%2Eempty%28%29%3B%0A%2D%2D%2D%0An%2Ewidth%3D200%0An%2Eheight%3D200"
+  style="width: 100%; height: 360px; border: 1px solid #262220; border-radius: 12px; margin: 1.5rem 0;"
+  loading="lazy"
+  tabindex="-1"></iframe>
+
+</p>
+<p>The image scales to fill the element. The texture is loaded and cached
+automatically.</p>
+<h3 id="vector-graphics"><a class="zola-anchor" href="#vector-graphics" aria-label="Anchor link for: vector-graphics">🔗</a>Vector graphics</h3>
+<p>Ply supports vector graphics via the <code>tinyvg</code> feature.
+You can use TinyVG files in GraphicAsset just like PNGs:</p>
+<pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="rust"><span class="giallo-l"><span style="color: #CBA6F7;">static</span><span style="color: #FAB387;"> ICON</span><span style="color: #94E2D5;">:</span><span style="color: #F9E2AF;font-style: italic;"> GraphicAsset</span><span style="color: #94E2D5;"> =</span><span style="color: #F9E2AF;font-style: italic;"> GraphicAsset</span><span style="color: #94E2D5;">::</span><span style="color: #89B4FA;font-style: italic;">Path</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;assets/images/icon.tvg&quot;</span><span style="color: #9399B2;">);</span></span></code></pre>
+<p>To use TinyVG, enable the feature in your <code>Cargo.toml</code>:</p>
+<pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="toml"><span class="giallo-l"><span>ply-engine</span><span style="color: #94E2D5;"> =</span><span style="color: #9399B2;"> {</span><span> version</span><span style="color: #94E2D5;"> =</span><span style="color: #A6E3A1;"> &quot;1.0&quot;</span><span style="color: #9399B2;">,</span><span> features</span><span style="color: #94E2D5;"> =</span><span style="color: #9399B2;"> [</span><span style="color: #A6E3A1;">&quot;tinyvg&quot;</span><span style="color: #9399B2;">] }</span></span></code></pre>
+<p>Or add it with the CLI:</p>
+<pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="shellscript"><span class="giallo-l"><span style="color: #89B4FA;font-style: italic;">plyx</span><span style="color: #A6E3A1;"> add tinyvg</span></span></code></pre>
+<p>TinyVG assets are resolution-independent and scale seamlessly to any size, the
+engine rasterizes them on-demand.
+Everything is cached so that when nothing changes, no computation needs to be done.</p>
+<p>To convert your existing <code>.svg</code> files into the ultra-compact <code>.tvg</code> format, use the <a rel="external" href="https://tinyvg.tech/">official TinyVG tools</a>.
+This gives you asset files that are blazingly fast to render with a fraction of
+the file size compared to PNG or SVG.</p>
+<p>Here is a cool tiger, just 27kB (the SVG is 100kB):</p>
+
+
+
+
+
+
+<iframe
+  src="/examples/shell.html?id=tiger_demo#static%20TIGER%3A%20GraphicAsset%20%3D%20GraphicAsset%3A%3ABytes%20%7B%0A%20%20file%5Fname%3A%20%22tiger%2Etvg%22%2C%0A%20%20data%3A%20include%5Fbytes%21%28%22tiger%2Etvg%22%29%2C%0A%7D%3B%0A%0Aui%2Eelement%28%29%0A%20%20%2Ewidth%28fixed%21%28%5B%5Bwidth%5D%5D%29%29%0A%20%20%2Eheight%28fixed%21%28%5B%5Bheight%5D%5D%29%29%0A%20%20%2Eimage%28%26TIGER%29%0A%20%20%2Eempty%28%29%3B%0A%2D%2D%2D%0An%2Ewidth%3D200%0An%2Eheight%3D200"
+  style="width: 100%; height: 470px; border: 1px solid #262220; border-radius: 12px; margin: 1.5rem 0;"
+  loading="lazy"
+  tabindex="-1"></iframe>
+
+<h2 id="texture2d"><a class="zola-anchor" href="#texture2d" aria-label="Anchor link for: texture2d">🔗</a>Texture2D</h2>
+<p>Pass any macroquad <code>Texture2D</code> directly:</p>
+<pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="rust"><span class="giallo-l"><span style="color: #CBA6F7;">let</span><span> tex</span><span style="color: #94E2D5;"> =</span><span style="color: #89B4FA;font-style: italic;"> load_texture</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;assets/photo.png&quot;</span><span style="color: #9399B2;">)</span><span style="color: #94E2D5;">.</span><span style="color: #CBA6F7;">await</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">unwrap</span><span style="color: #9399B2;">();</span></span>
+<span class="giallo-l"><span>tex</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">set_filter</span><span style="color: #9399B2;">(</span><span style="color: #F9E2AF;">FilterMode</span><span style="color: #94E2D5;">::</span><span style="color: #F9E2AF;font-style: italic;">Linear</span><span style="color: #9399B2;">);</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span>ui</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">element</span><span style="color: #9399B2;">()</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">width</span><span style="color: #9399B2;">(</span><span style="color: #89B4FA;font-style: italic;">fixed!</span><span style="color: #9399B2;">(</span><span style="color: #FAB387;">300</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #9399B2;">))</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">height</span><span style="color: #9399B2;">(</span><span style="color: #89B4FA;font-style: italic;">fixed!</span><span style="color: #9399B2;">(</span><span style="color: #FAB387;">200</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #9399B2;">))</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">image</span><span style="color: #9399B2;">(</span><span>tex</span><span style="color: #9399B2;">)</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">empty</span><span style="color: #9399B2;">();</span></span></code></pre>
+<p>This is useful when you load textures yourself or generate them at runtime.
+You can also use Ply's TextureManager to cache your textures.</p>
+<h2 id="render-to-texture"><a class="zola-anchor" href="#render-to-texture" aria-label="Anchor link for: render-to-texture">🔗</a>render_to_texture</h2>
+<p>Draw arbitrary macroquad geometry into a texture,</p>
+<pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="rust"><span class="giallo-l"><span style="color: #CBA6F7;">let</span><span> chart</span><span style="color: #94E2D5;"> =</span><span style="color: #89B4FA;font-style: italic;"> render_to_texture</span><span style="color: #9399B2;">(</span><span>w</span><span style="color: #9399B2;">,</span><span> h</span><span style="color: #9399B2;">,</span><span style="color: #94E2D5;"> ||</span><span style="color: #9399B2;"> {</span></span>
+<span class="giallo-l"><span style="color: #89B4FA;font-style: italic;">  clear_background</span><span style="color: #9399B2;">(</span><span style="color: #FAB387;">BLACK</span><span style="color: #9399B2;">);</span></span>
+<span class="giallo-l"><span style="color: #CBA6F7;">  let</span><span> data</span><span style="color: #94E2D5;"> =</span><span style="color: #9399B2;"> [</span><span style="color: #FAB387;">0</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">2</span><span style="color: #9399B2;">,</span><span style="color: #FAB387;"> 0</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">5</span><span style="color: #9399B2;">,</span><span style="color: #FAB387;"> 0</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">3</span><span style="color: #9399B2;">,</span><span style="color: #FAB387;"> 0</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">8</span><span style="color: #9399B2;">,</span><span style="color: #FAB387;"> 0</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">6</span><span style="color: #9399B2;">,</span><span style="color: #FAB387;"> 0</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">9</span><span style="color: #9399B2;">,</span><span style="color: #FAB387;"> 0</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">4</span><span style="color: #9399B2;">,</span><span style="color: #FAB387;"> 0</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">7</span><span style="color: #9399B2;">];</span></span>
+<span class="giallo-l"><span style="color: #CBA6F7;">  let</span><span> step</span><span style="color: #94E2D5;"> =</span><span> w</span><span style="color: #94E2D5;"> /</span><span style="color: #9399B2;"> (</span><span>data</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">len</span><span style="color: #9399B2;">()</span><span style="color: #94E2D5;"> -</span><span style="color: #FAB387;"> 1</span><span style="color: #9399B2;">)</span><span style="color: #CBA6F7;"> as f32</span><span style="color: #9399B2;">;</span></span>
+<span class="giallo-l"><span style="color: #CBA6F7;">  for</span><span> i</span><span style="color: #CBA6F7;"> in</span><span style="color: #FAB387;"> 0</span><span style="color: #94E2D5;">..</span><span>data</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">len</span><span style="color: #9399B2;">()</span><span style="color: #94E2D5;"> -</span><span style="color: #FAB387;"> 1</span><span style="color: #9399B2;"> {</span></span>
+<span class="giallo-l"><span style="color: #CBA6F7;">    let</span><span> x1</span><span style="color: #94E2D5;"> =</span><span> step</span><span style="color: #94E2D5;"> *</span><span> i</span><span style="color: #CBA6F7;"> as f32</span><span style="color: #9399B2;">;</span></span>
+<span class="giallo-l"><span style="color: #CBA6F7;">    let</span><span> y1</span><span style="color: #94E2D5;"> =</span><span> h</span><span style="color: #94E2D5;"> -</span><span> data</span><span style="color: #9399B2;">[</span><span>i</span><span style="color: #9399B2;">]</span><span style="color: #CBA6F7;"> as f32</span><span style="color: #94E2D5;"> *</span><span> h</span><span style="color: #9399B2;">;</span></span>
+<span class="giallo-l"><span style="color: #CBA6F7;">    let</span><span> x2</span><span style="color: #94E2D5;"> =</span><span> step</span><span style="color: #94E2D5;"> *</span><span style="color: #9399B2;"> (</span><span>i</span><span style="color: #94E2D5;"> +</span><span style="color: #FAB387;"> 1</span><span style="color: #9399B2;">)</span><span style="color: #CBA6F7;"> as f32</span><span style="color: #9399B2;">;</span></span>
+<span class="giallo-l"><span style="color: #CBA6F7;">    let</span><span> y2</span><span style="color: #94E2D5;"> =</span><span> h</span><span style="color: #94E2D5;"> -</span><span> data</span><span style="color: #9399B2;">[</span><span>i</span><span style="color: #94E2D5;"> +</span><span style="color: #FAB387;"> 1</span><span style="color: #9399B2;">]</span><span style="color: #CBA6F7;"> as f32</span><span style="color: #94E2D5;"> *</span><span> h</span><span style="color: #9399B2;">;</span></span>
+<span class="giallo-l"><span style="color: #89B4FA;font-style: italic;">    draw_line</span><span style="color: #9399B2;">(</span><span>x1</span><span style="color: #9399B2;">,</span><span> y1</span><span style="color: #9399B2;">,</span><span> x2</span><span style="color: #9399B2;">,</span><span> y2</span><span style="color: #9399B2;">,</span><span style="color: #FAB387;"> 2</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #9399B2;">,</span><span style="color: #FAB387;"> GREEN</span><span style="color: #9399B2;">);</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">  }</span></span>
+<span class="giallo-l"><span style="color: #CBA6F7;">  for</span><span style="color: #9399B2;"> (</span><span>i</span><span style="color: #9399B2;">,</span><span style="color: #94E2D5;"> &amp;</span><span>val</span><span style="color: #9399B2;">)</span><span style="color: #CBA6F7;"> in</span><span> data</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">iter</span><span style="color: #9399B2;">()</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">enumerate</span><span style="color: #9399B2;">() {</span></span>
+<span class="giallo-l"><span style="color: #CBA6F7;">    let</span><span> x</span><span style="color: #94E2D5;"> =</span><span> step</span><span style="color: #94E2D5;"> *</span><span> i</span><span style="color: #CBA6F7;"> as f32</span><span style="color: #9399B2;">;</span></span>
+<span class="giallo-l"><span style="color: #CBA6F7;">    let</span><span> y</span><span style="color: #94E2D5;"> =</span><span> h</span><span style="color: #94E2D5;"> -</span><span> val</span><span style="color: #CBA6F7;"> as f32</span><span style="color: #94E2D5;"> *</span><span> h</span><span style="color: #9399B2;">;</span></span>
+<span class="giallo-l"><span style="color: #89B4FA;font-style: italic;">    draw_circle</span><span style="color: #9399B2;">(</span><span>x</span><span style="color: #9399B2;">,</span><span> y</span><span style="color: #9399B2;">,</span><span style="color: #FAB387;"> 4</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #9399B2;">,</span><span style="color: #FAB387;"> RED</span><span style="color: #9399B2;">);</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">  }</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">});</span></span></code></pre>
+<p>then use it as an element's image:
+
+
+
+
+
+
+<iframe
+  src="/examples/shell.html?id=chart_demo#let%20mut%20ui%20%3D%20ply%2Ebegin%28%29%3B%0A%0Aui%2Eelement%28%29%0A%20%20%2Ewidth%28fixed%21%28%5B%5Bwidth%5D%5D%29%29%0A%20%20%2Eheight%28fixed%21%28%5B%5Bheight%5D%5D%29%29%0A%20%20%2Eimage%28chart%29%0A%20%20%2Eempty%28%29%3B%0A%2D%2D%2D%0An%2Ewidth%3D400%0An%2Eheight%3D200"
+  style="width: 100%; height: 530px; border: 1px solid #262220; border-radius: 12px; margin: 1.5rem 0;"
+  loading="lazy"
+  tabindex="-1"></iframe>
+
+</p>
+<p><code>render_to_texture</code> uses MSAA (Antialiasing) and linear filtering, just like the rest of Ply.</p>
+<h2 id="procedual-tinyvg"><a class="zola-anchor" href="#procedual-tinyvg" aria-label="Anchor link for: procedual-tinyvg">🔗</a>Procedual TinyVG</h2>
+<p>With the <code>tinyvg</code> feature, you can display procedural vector graphics that
+rasterize at the element's layout size each frame:</p>
+<pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="rust"><span class="giallo-l"><span style="color: #CBA6F7;">let</span><span> tvg_bytes</span><span style="color: #94E2D5;"> =</span><span style="color: #89B4FA;font-style: italic;"> include_bytes!</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;../assets/icon.tvg&quot;</span><span style="color: #9399B2;">);</span></span>
+<span class="giallo-l"><span style="color: #CBA6F7;">let</span><span> image</span><span style="color: #94E2D5;"> =</span><span style="color: #F9E2AF;"> tinyvg</span><span style="color: #94E2D5;">::</span><span style="color: #F9E2AF;font-style: italic;">Decoder</span><span style="color: #94E2D5;">::</span><span style="color: #89B4FA;font-style: italic;">new</span><span style="color: #9399B2;">(</span><span style="color: #F9E2AF;">std</span><span style="color: #94E2D5;">::</span><span style="color: #F9E2AF;">io</span><span style="color: #94E2D5;">::</span><span style="color: #F9E2AF;">Cursor</span><span style="color: #94E2D5;">::</span><span style="color: #89B4FA;font-style: italic;">new</span><span style="color: #9399B2;">(</span><span>tvg_bytes</span><span style="color: #9399B2;">))</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">decode</span><span style="color: #9399B2;">()</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">unwrap</span><span style="color: #9399B2;">();</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span>image</span><span style="color: #94E2D5;">.</span><span>commands</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">push</span><span style="color: #9399B2;">(</span><span style="color: #F9E2AF;">tinyvg</span><span style="color: #94E2D5;">::</span><span style="color: #F9E2AF;">format</span><span style="color: #94E2D5;">::</span><span style="color: #F9E2AF;">Command</span><span style="color: #94E2D5;">::</span><span style="color: #F9E2AF;font-style: italic;">FillPolygon</span><span style="color: #9399B2;"> {</span></span>
+<span class="giallo-l"><span>  polygon</span><span style="color: #94E2D5;">:</span><span style="color: #89B4FA;font-style: italic;"> vec!</span><span style="color: #9399B2;">[</span></span>
+<span class="giallo-l"><span style="color: #F9E2AF;">    tinyvg</span><span style="color: #94E2D5;">::</span><span style="color: #F9E2AF;">format</span><span style="color: #94E2D5;">::</span><span style="color: #F9E2AF;font-style: italic;">Point</span><span style="color: #9399B2;"> {</span><span> x</span><span style="color: #94E2D5;">:</span><span style="color: #FAB387;"> 50</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #9399B2;">,</span><span> y</span><span style="color: #94E2D5;">:</span><span style="color: #FAB387;"> 10</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #9399B2;"> },</span></span>
+<span class="giallo-l"><span style="color: #F9E2AF;">    tinyvg</span><span style="color: #94E2D5;">::</span><span style="color: #F9E2AF;">format</span><span style="color: #94E2D5;">::</span><span style="color: #F9E2AF;font-style: italic;">Point</span><span style="color: #9399B2;"> {</span><span> x</span><span style="color: #94E2D5;">:</span><span style="color: #FAB387;"> 90</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #9399B2;">,</span><span> y</span><span style="color: #94E2D5;">:</span><span style="color: #FAB387;"> 190</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #9399B2;"> },</span></span>
+<span class="giallo-l"><span style="color: #F9E2AF;">    tinyvg</span><span style="color: #94E2D5;">::</span><span style="color: #F9E2AF;">format</span><span style="color: #94E2D5;">::</span><span style="color: #F9E2AF;font-style: italic;">Point</span><span style="color: #9399B2;"> {</span><span> x</span><span style="color: #94E2D5;">:</span><span style="color: #FAB387;"> 10</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #9399B2;">,</span><span> y</span><span style="color: #94E2D5;">:</span><span style="color: #FAB387;"> 190</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #9399B2;"> },</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">  ],</span></span>
+<span class="giallo-l"><span>  fill_style</span><span style="color: #94E2D5;">:</span><span style="color: #F9E2AF;"> tinyvg</span><span style="color: #94E2D5;">::</span><span style="color: #F9E2AF;">format</span><span style="color: #94E2D5;">::</span><span style="color: #F9E2AF;">Style</span><span style="color: #94E2D5;">::</span><span style="color: #89B4FA;font-style: italic;">FlatColor</span><span style="color: #9399B2;">(</span><span style="color: #FAB387;">0</span><span style="color: #9399B2;">),</span></span>
+<span class="giallo-l"><span>  outline</span><span style="color: #94E2D5;">:</span><span style="color: #F9E2AF;font-style: italic;"> None</span><span style="color: #9399B2;">,</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">});</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span>ui</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">element</span><span style="color: #9399B2;">()</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">width</span><span style="color: #9399B2;">(</span><span style="color: #89B4FA;font-style: italic;">fixed!</span><span style="color: #9399B2;">(</span><span style="color: #FAB387;">64</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #9399B2;">))</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">height</span><span style="color: #9399B2;">(</span><span style="color: #89B4FA;font-style: italic;">fixed!</span><span style="color: #9399B2;">(</span><span style="color: #FAB387;">64</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #9399B2;">))</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">image</span><span style="color: #9399B2;">(</span><span>image</span><span style="color: #9399B2;">)</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">empty</span><span style="color: #9399B2;">();</span></span></code></pre>
+<p>TinyVG images are resolution-independent. The engine uses lyon tessellation to
+render filled paths at whatever size the layout gives the element.</p>
+<h2 id="imagesource"><a class="zola-anchor" href="#imagesource" aria-label="Anchor link for: imagesource">🔗</a>ImageSource</h2>
+<p><code>.image()</code> accepts anything that implements <code>Into&lt;ImageSource&gt;</code>:</p>
+<table><thead><tr><th>Type</th><th>What it does</th></tr></thead><tbody>
+<tr><td><code>&amp;'static GraphicAsset</code></td><td>File path or embedded bytes, auto-cached</td></tr>
+<tr><td><code>Texture2D</code></td><td>Pre-existing GPU texture</td></tr>
+<tr><td><code>tinyvg::format::Image</code></td><td>Procedural vector (requires <code>tinyvg</code> feature)</td></tr>
+</tbody></table>
+<h2 id="next-steps"><a class="zola-anchor" href="#next-steps" aria-label="Anchor link for: next-steps">🔗</a>Next steps</h2>
+<p>→ <a href="/docs/text-input/">Text Input</a></p>
+
+    </div>
+
+    
+    
+    <meta itemprop="author" content="TheRedDeveloper">
+    
+    
+</article>
+
+
+
+<nav class="page-nav" aria-label="Page navigation">
+    
+
+    
+</nav>
+
+
+
+                </main>
+
+                
+                
+                
+
+
+
+
+<aside id="page-toc-panel" class="page-toc-panel" aria-hidden="true" aria-label="On this page">
+    <div class="page-toc-panel__content">
+        <div class="page-toc-panel__header">
+            <span class="page-toc-panel__title">On this page</span>
+            <button class="page-toc-panel__close" type="button" aria-label="Close table of contents">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M18 6 6 18"/>
+                    <path d="m6 6 12 12"/>
+                </svg>
+            </button>
+        </div>
+        <nav class="page-toc-panel__nav" aria-label="Page sections">
+            <ul class="page-toc-panel__list">
+                
+                <li class="page-toc-panel__item">
+                    <a href="#static-assets" class="page-toc-panel__link">
+                        Static assets
+                    </a>
+                    
+                    <ul class="page-toc-panel__list page-toc-panel__list--nested">
+                        
+                        <li class="page-toc-panel__item">
+                            <a href="#vector-graphics" class="page-toc-panel__link">
+                                Vector graphics
+                            </a>
+                        </li>
+                        
+                    </ul>
+                    
+                </li>
+                
+                <li class="page-toc-panel__item">
+                    <a href="#texture2d" class="page-toc-panel__link">
+                        Texture2D
+                    </a>
+                    
+                </li>
+                
+                <li class="page-toc-panel__item">
+                    <a href="#render-to-texture" class="page-toc-panel__link">
+                        render_to_texture
+                    </a>
+                    
+                </li>
+                
+                <li class="page-toc-panel__item">
+                    <a href="#procedual-tinyvg" class="page-toc-panel__link">
+                        Procedual TinyVG
+                    </a>
+                    
+                </li>
+                
+                <li class="page-toc-panel__item">
+                    <a href="#imagesource" class="page-toc-panel__link">
+                        ImageSource
+                    </a>
+                    
+                </li>
+                
+                <li class="page-toc-panel__item">
+                    <a href="#next-steps" class="page-toc-panel__link">
+                        Next steps
+                    </a>
+                    
+                </li>
+                
+            </ul>
+        </nav>
+    </div>
+</aside>
+
+
+                
+            </div>
+
+            
+            
+            
+        </div>
+    </div>
+
+    
+    <div class="sidebar-overlay" aria-hidden="true"></div>
+
+    
+    
+    
+<div class="search-overlay" role="dialog" aria-modal="true" aria-labelledby="search-title" aria-describedby="search-description">
+    <div class="search">
+        <h2 id="search-title" class="sr-only">Search documentation</h2>
+        <p id="search-description" class="sr-only">Type to search. Use arrow keys to navigate results, Enter to select, Escape to close.</p>
+
+        <div class="search__input-wrapper">
+            <span class="search__icon" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"/>
+                    <path d="m21 21-4.3-4.3"/>
+                </svg>
+            </span>
+            <input
+                type="search"
+                class="search__input"
+                placeholder="Search documentation..."
+                autocomplete="off"
+                autofocus
+                aria-label="Search query"
+                aria-controls="search-results"
+                aria-autocomplete="list"
+            >
+            <span class="search__shortcut" aria-hidden="true">/</span>
+            <button class="search__close" type="button" aria-label="Close search dialog" title="Close (Esc)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M18 6 6 18"/>
+                    <path d="m6 6 12 12"/>
+                </svg>
+            </button>
+        </div>
+
+        <div id="search-results" class="search__results" role="listbox" aria-label="Search results">
+            
+        </div>
+
+        <footer class="search__footer">
+            <nav class="search__hints" aria-label="Keyboard shortcuts">
+                <span class="search__hint">
+                    <kbd aria-label="Up and down arrows">↑</kbd><kbd aria-hidden="true">↓</kbd> <span>Navigate</span>
+                </span>
+                <span class="search__hint">
+                    <kbd aria-label="Enter">↵</kbd> <span>Select</span>
+                </span>
+                <span class="search__hint">
+                    <kbd aria-label="Escape">esc</kbd> <span>Close</span>
+                </span>
+            </nav>
+            <span class="search__powered-by">Powered by <a href="https://github.com/weixsong/elasticlunr.js" target="_blank" rel="noopener noreferrer" aria-label="elasticlunr.js on GitHub (opens in new tab)">elasticlunr</a></span>
+        </footer>
+    </div>
+</div>
+
+    
+
+    
+    
+
+    
+    
+
+    
+    
+    
+    <button class="page-toc-toggle" type="button" aria-label="Toggle table of contents" aria-expanded="false" aria-controls="page-toc-panel" title="On this page">
+        <svg class="page-toc-toggle__icon page-toc-toggle__icon--list" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M16 5H3"/>
+            <path d="M16 12H3"/>
+            <path d="M16 19H3"/>
+            <path d="M21 5h.01"/>
+            <path d="M21 12h.01"/>
+            <path d="M21 19h.01"/>
+        </svg>
+        <svg class="page-toc-toggle__icon page-toc-toggle__icon--close" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M18 6 6 18"/>
+            <path d="m6 6 12 12"/>
+        </svg>
+    </button>
+    
+
+    
+    
+    <button class="fab scroll-to-top" aria-label="Scroll to top" title="Scroll to top">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="m18 15-6-6-6 6"/>
+        </svg>
+    </button>
+    
+
+    
+    
+    
+    <script src="https://plyx.iz.rs/js/theme.js" defer></script>
+    <script src="https://plyx.iz.rs/js/navigation.js" defer></script>
+    <script src="https://plyx.iz.rs/js/code.js" defer></script>
+    <script src="https://plyx.iz.rs/js/interactive.js" defer></script>
+
+    
+    <script src="https://plyx.iz.rs/elasticlunr.min.js"></script>
+    <script src="https://plyx.iz.rs/search_index.en.js"></script>
+    <script src="https://plyx.iz.rs/js/search.js" defer></script>
+    
+    
+
+    
+</body>
+</html>
