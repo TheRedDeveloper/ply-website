@@ -1,5 +1,5 @@
 # Ply Engine — Website & Documentation
-base_url = "https://ply-engine.dev"
+base_url = "https://plyx.iz.rs"
 title = "Ply"
 description = "Beautiful apps in Rust. Cross-platform. Dead simple."
 compile_sass = true

@@ -23,9 +23,9 @@ impl Dir {
   fn opposite(self) -> Self {
     match self {
       Dir::Up    => Dir::Down,
-			Dir::Down  => Dir::Up,
+      Dir::Down  => Dir::Up,
       Dir::Left  => Dir::Right,
-			Dir::Right => Dir::Left,
+      Dir::Right => Dir::Left,
     }
   }
 
@@ -122,7 +122,7 @@ fn hsl(h: f32, s: f32, l: f32) -> Color {
     3 => (0.0, x, c),
     4 => (x, 0.0, c),
     5 => (c, 0.0, x),
-		_ => unreachable!(),
+    _ => unreachable!(),
   };
   let m = l - c / 2.0;
   ((((r1 + m) * 255.0) as u8, ((g1 + m) * 255.0) as u8, ((b1 + m) * 255.0) as u8)).into()

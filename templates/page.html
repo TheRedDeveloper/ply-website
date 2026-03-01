@@ -95,7 +95,7 @@
     {# For docs/book mode, show title as visible heading #}
     <header class="article__header article__header--docs">
         <h1 id="article-title" itemprop="headline">{{ page.title }}</h1>
-        {% if page.description %}
+        {% if page.description and current_path is defined and not current_path is starting_with("/blog/") %}
         <p class="article__description" itemprop="description">{{ page.description }}</p>
         {% endif %}
     </header>
