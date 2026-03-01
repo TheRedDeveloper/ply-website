@@ -613,6 +613,11 @@
 
     <!-- Same JS bundle and WASM binary as the home page demo -->
     <script src="/demo/ply_bundle.js"></script>
-    <script>load("/demo/app-v1.wasm");</script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js', { scope: '/' });
+        }
+        load("/demo/app-v1.wasm");
+    </script>
 </body>
 </html>

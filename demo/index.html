@@ -358,7 +358,7 @@
     <script>
         // Register service worker for WASM caching
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('/sw.js', { scope: '/demo/' });
+            navigator.serviceWorker.register('/sw.js', { scope: '/' });
         }
 
         // Load WASM
