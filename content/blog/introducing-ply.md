@@ -48,7 +48,7 @@ In February I focused on this project. I ported the layout engine to 100% Rust, 
 
 I settled on **builder pattern + closures**. Closures cure the `.end()` problem. Builder methods are cleaner than specifying every property with `..Default::default()`. You can chain `.shader()` calls, choose `.degrees()` or `.radians()`, and everything stays readable.
 
-One `use ply_engine::prelude::*` gives you everything. We use `Into<T>` everywhere. When `.background_color()` accepts `Into<Color>`, it takes hex integers, float tuples, or macroquad colors. When `.image()` accepts `Into<ImageSource>`, it takes file paths, embedded bytes, textures, or vector graphics. No `hex_to_macroquad_color!()` wrappers. No ceremony.
+One `use ply_engine::prelude::*` gives you everything. We use `Into<T>` everywhere. When `.background_color()` accepts `Into<Color>`, it takes hex integers, float tuples, or macroquad colors. When `.image()` accepts `Into<ImageSource>`, it takes file paths, embedded bytes, textures, or vector graphics. No `hex_to_macroquad_color!()` wrappers.
 
 Every second you don't spend looking up how to construct a `FloatingElementBuilder` is a second saved.
 

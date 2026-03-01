@@ -3,7 +3,7 @@ title = "Debug View"
 weight = 3
 +++
 
-One line of code gives you Chrome DevTools-style element inspection — built right
+One line of code gives you Chrome DevTools-style element inspection. Built right
 into the engine. No other Rust UI library has this.
 
 ## Turning it on

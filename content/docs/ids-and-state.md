@@ -4,7 +4,7 @@ weight = 5
 +++
 
 Ply rebuilds your UI every frame. IDs are how the engine knows that this frame's
-"submit button" is the same one as last frame's — so it can carry over focus,
+"submit button" is the same one as last frame's, so it can carry over focus,
 scroll positions, hover state, and text input.
 
 ## Automatic IDs

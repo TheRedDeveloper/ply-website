@@ -61,6 +61,14 @@ plyx apk --install
 
 ## iOS
 
+Before building to iOS, you should make sure your Mac has Xcode installed and your Rust toolchain is set to `aarch64-apple-darwin`. Otherwise switch to the correct toolchain and reinstall plyx:
+
+```bash
+rustup toolchain install stable-aarch64-apple-darwin
+rustup default stable-aarch64-apple-darwin
+cargo install plyx --force
+```
+
 Generate an Xcode project:
 
 ```bash
