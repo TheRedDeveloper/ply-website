@@ -120,34 +120,6 @@ ui.element()
 
 ### Tooltip on hover
 
-```rust
-ui.element()
-  .width(fit!())
-  .height(fixed!(36.0))
-  .background_color(0x3A3533)
-  .corner_radius(6.0)
-  .layout(|l| l.padding((0, 12, 0, 12)).align(CenterX, CenterY))
-  .children(|ui| {
-    ui.text("Hover for tooltip", |t| t.font_size(14).color(0xE8E0DC));
-
-    if ui.hovered() {
-      ui.element()
-        .width(fit!())
-        .height(fit!())
-        .background_color(0x1E1B1B)
-        .corner_radius(4.0)
-        .floating(|f| f
-          .attach_parent()
-          .anchor((CenterX, Top), (CenterX, Bottom))
-          .offset(0.0, 4.0)
-        )
-        .layout(|l| l.padding(8))
-        .children(|ui| {
-          ui.text("Extra information here", |t| t.font_size(12).color(0x9E9590));
-        });
-    }
-  });
-```
 {% example(id="tooltip_demo", height=600) %}
 ui.element()
   .width(fit!()).height(fit!())
@@ -175,31 +147,6 @@ tooltip = Extra information here
 
 ### Notification badge
 
-```rust
-ui.element()
-  .width(fixed!(280.0))
-  .height(fixed!(80.0))
-  .background_color(0x2E2A28)
-  .corner_radius(12.0)
-  .layout(|l| l.padding(16).align(Left, CenterY))
-  .children(|ui| {
-    ui.text("Messages", |t| t.font_size(16).color(0xFFFFFF));
-
-    ui.element()
-      .width(fixed!(24.0))
-      .height(fixed!(24.0))
-      .background_color(0xB91414)
-      .corner_radius(12.0)
-      .floating(|f| f
-        .attach_parent()
-        .anchor((CenterX, CenterY), (Right, Top))
-      )
-      .layout(|l| l.align(CenterX, CenterY))
-      .children(|ui| {
-        ui.text("3", |t| t.font_size(12).color(0xFFFFFF));
-      });
-  });
-```
 {% example(id="notification_badge", height=600) %}
 ui.element()
   .width(fixed!(280.0)).height(fixed!(80.0))
