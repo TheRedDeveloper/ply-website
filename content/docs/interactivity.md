@@ -114,7 +114,7 @@ then the {color=red| wouldn't get applied.
 Putting it all together:
 
 ```rust
-fn button(ui: &mut Ui, label: &str, on_click: impl FnMut(Id) + 'static) {
+fn button(ui: &mut Ui, label: &str, on_click: impl FnMut(Id, PointerData) + 'static) {
   ui.element()
     .width(fit!())
     .height(fixed!(36.0))
@@ -148,9 +148,9 @@ ui.element()
   .height(grow!())
   .layout(|l| l.direction(LeftToRight).gap(8).padding(16).align(Left, Top))
   .children(|ui| {
-    button(ui, "Save", |_| { println!("Saved!"); });
-    button(ui, "Cancel", |_| { println!("Cancelled!"); });
-    button(ui, "Delete", |_| { println!("Deleted!"); });
+    button(ui, "Save", |_, _| { println!("Saved!"); });
+    button(ui, "Cancel", |_, _| { println!("Cancelled!"); });
+    button(ui, "Delete", |_, _| { println!("Deleted!"); });
   });
 ```
 {{ demo(id="button_row", height=130) }}
