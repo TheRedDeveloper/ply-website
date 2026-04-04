@@ -6,7 +6,7 @@ weight = 14
 Ply has built-in HTTP and WebSocket support. Enable it with the `net` feature:
 
 ```toml
-ply-engine = { version = "1.0", features = ["net"] }
+ply-engine = { version = "1.1", features = ["net"] }
 ```
 
 Or add it with the CLI:
@@ -74,7 +74,7 @@ if let Some(req) = net::request("users") {
 Enable the `net-json` feature to add `.json()`:
 
 ```toml
-ply-engine = { version = "1.0", features = ["net-json"] }
+ply-engine = { version = "1.1", features = ["net-json"] }
 ```
 
 Or add it with the CLI:
@@ -162,4 +162,4 @@ Requests and WebSockets are tracked by the global `NET_MANAGER`, you don't need 
 
 ## Next steps
 
-→ [Sound](/docs/sound/)
+→ [Storage](/docs/storage/)

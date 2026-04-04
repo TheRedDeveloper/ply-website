@@ -44,7 +44,7 @@ static ICON: GraphicAsset = GraphicAsset::Path("assets/images/icon.tvg");
 To use TinyVG, enable the feature in your `Cargo.toml`:
 
 ```toml
-ply-engine = { version = "1.0", features = ["tinyvg"] }
+ply-engine = { version = "1.1", features = ["tinyvg"] }
 ```
 
 Or add it with the CLI:

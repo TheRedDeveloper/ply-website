@@ -10,7 +10,7 @@ transform individual characters.
 
 ```toml
 [dependencies]
-ply-engine = { version = "1.0", features = ["text-styling"] }
+ply-engine = { version = "1.1", features = ["text-styling"] }
 ```
 
 ## Syntax
@@ -266,7 +266,7 @@ ui.element()
   .background_color(0x1A1A28)
   .corner_radius(6.0)
   .text_input(|t| t
-    .multiline(true)
+    .multiline()
     .font_size(14)
     .text_color(0xDDDDDD)
     .no_styles_movement()

@@ -194,7 +194,7 @@ These four macros control how elements are sized:
 | `fixed!(200.0)` | Exactly 200 pixels       |
 | `percent!(0.5)` | 50% of parent's size     |
 
-`fit` and `grow` also accept optional min: `fit!(10)` (don't shrink below 10px), and optional max: `grow!(10, 100)` (grow between 10px and 100px)
+`fit` and `grow` also accept optional min: `fit!(10)` (don't shrink below 10px), and optional max: `grow!(10, 100)` (grow between 10px and 100px). These parameters can also be named: `fit!(min: 10)`, `grow!(max: 100)` and `grow` supports a third weight parameter `grow!(weight: 2.0)` (2x bigger than siblings).
 
 ## Zero-Clause BSD
 

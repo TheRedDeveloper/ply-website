@@ -33,8 +33,10 @@ Every element has a width and height, set with four sizing macros:
 | `percent!(0.5)` | 50% of parent's size     |
 
 `grow!` and `fit!` accept optional min/max bounds:
-- `fit!(100.0)`: fit content, but don't shrink below 100px
-- `grow!(100.0, 500.0)`: grow within 100-500px range
+- `fit!(100.0)`/`fit!(min: 100.0)`: fit content, but don't shrink below 100px
+- `grow!(100.0, 500.0)`/`grow!(min: 100.0, max: 500.0)`: grow within 100-500px range
+
+`grow!` supports a third weight parameter for proportional sizing among siblings. `grow!(100.0, 500.0, 2.0)`/`grow!(min: 100.0, max: 500.0, weight: 2.0)`: grow within 100-500px, and take twice as much space as siblings with weight 1.0
 
 {% example(id="layout_card", height=500) %}
 ui.element().width(grow!()).height(grow!())
@@ -125,17 +127,29 @@ Round the corners with a single value or per-corner tuple:
 
 ## Borders
 
-Configure per-side border widths, color, and child dividers:
+Configure per-side border widths, color, child dividers, and border position:
 
 ```rust
 .border(|b| b
   .all(2)                  // 2px on all sides
   .color(0x4A4440)         // border color
+  .position(Outside)       // position
   .between_children(1)     // 1px dividers between children
 )
 ```
+<!-- TODO: This should be an interactive example -->
 
 Individual sides: `.left(2)`, `.right(2)`, `.top(2)`, `.bottom(2)`.
+
+### Border position
+
+Choose where the border is drawn:
+
+| Value     | Behavior                                  |
+|-----------|-------------------------------------------|
+| `Outside` | Border is fully outside (default)         |
+| `Middle`  | Border is centered on the edge            |
+| `Inside`  | Border is fully inside the element bounds |
 
 ## Overflow
 
@@ -154,6 +168,19 @@ and scrolling:
 
 // Scroll both axes
 .overflow(|o| o.scroll())
+
+// Disable mouse drag-scrolling, keep touch + wheel
+.overflow(|o| o.scroll_y().no_drag_scroll())
+
+// Enable a scrollbar
+.overflow(|o| o.scroll_y().scrollbar(|s| {
+  s.width(4.0)
+   .corner_radius(2.0)
+   .thumb_color(0xFFFFFF)
+   .track_color(0x141414)
+   .min_thumb_size(18.0)
+   .hide_after_frames(60)
+}))
 ```
 
 Clipping hides any content that extends beyond the element's bounds. Scrolling
@@ -165,9 +192,13 @@ Lock an element to a specific aspect ratio:
 
 ```rust
 .aspect_ratio(16.0 / 9.0)
+
+.contain(16.0 / 9.0)
+
+.cover(16.0 / 9.0)
 ```
 
-The engine fills in whichever dimension is unset. If both height and width are explicitly sized, aspect ratio has no effect.
+With `aspect_ratio()`, the engine fills in whichever dimension is unset. If both height and width are explicitly sized, aspect ratio will use contain behavior. `contain()` and `cover()` work like in CSS.
 
 ## Passing Ui into functions
 

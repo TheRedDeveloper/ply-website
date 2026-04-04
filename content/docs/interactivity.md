@@ -9,7 +9,8 @@ a children closure, and callback-based events on the element builder.
 
 ## Inline
 
-Check `ui.pressed()`, `ui.hovered()` and `ui.focused()` inside a `.children()` closure,
+Check `ui.pressed()`, `ui.just_pressed()`, `ui.just_released()`,
+`ui.hovered()` and `ui.focused()` inside a `.children()` closure,
 we explained this in the last section:
 
 {% example(id="hover_highlight", height=550) %}
@@ -88,6 +89,14 @@ if ui.is_pressed("submit") {
 
 if ui.pointer_over("tooltip_trigger") {
   // show tooltip
+}
+
+if ui.is_just_pressed("submit") {
+  // one frame only
+}
+
+if ui.is_just_released("submit") {
+  // one frame only
 }
 ```
 

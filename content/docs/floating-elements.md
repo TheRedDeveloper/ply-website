@@ -73,8 +73,8 @@ Add spacing between the floating element and its anchor point:
 
 ```rust
 .floating(|f| f
-    .anchor((CenterX, Top), (CenterX, Bottom))
-    .offset(0.0, 8.0)  // 8px gap below the parent
+  .anchor((CenterX, Top), (CenterX, Bottom))
+  .offset((0.0, 8.0))  // 8px gap below the parent
 )
 ```
 
@@ -133,7 +133,7 @@ ui.element()
         .floating(|f| f
           .attach_parent()
           .anchor((CenterX, Top), (CenterX, Bottom))
-          .offset(0.0, 4.0)
+          .offset((0.0, 4.0))
         )
         .children(|ui| {
           ui.text("[[tooltip]]", |t| t.font_size(12).color(0x9E9590));

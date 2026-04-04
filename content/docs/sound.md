@@ -1,6 +1,6 @@
 +++
 title = "Sound"
-weight = 15
+weight = 17
 +++
 
 Ply's audio system is powered by macroquad's built-in audio (quad-snd),
@@ -11,7 +11,7 @@ re-exported through the prelude behind the `audio` feature.
 Enable the `audio` feature in your `Cargo.toml`:
 
 ```toml
-ply-engine = { version = "1.0", features = ["audio"] }
+ply-engine = { version = "1.1", features = ["audio"] }
 ```
 
 Or add it with the CLI:

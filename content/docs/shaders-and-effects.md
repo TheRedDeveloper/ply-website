@@ -128,7 +128,7 @@ Enable with the `built-in-shaders` feature:
 
 ```toml
 [dependencies]
-ply-engine = { version = "1.0", features = ["built-in-shaders"] }
+ply-engine = { version = "1.1", features = ["built-in-shaders"] }
 ```
 
 Or add it with the CLI:
@@ -256,7 +256,7 @@ and `.slang` files via a `build.rs` script:
 
 ```toml
 [build-dependencies]
-ply-engine = { version = "1.0", default_features = false, features = ["shader-build"] }
+ply-engine = { version = "1.1", default_features = false, features = ["shader-build"] }
 ```
 
 ```rust

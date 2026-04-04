@@ -121,6 +121,8 @@ c.default_color=0x262220
 |----------------------|---------------------------------------|
 | `ui.hovered()`       | Is pointer over this element?         |
 | `ui.pressed()`       | Is pointer held down on this element  |
+| `ui.just_pressed()`  | Was this element pressed this frame?  |
+| `ui.just_released()` | Was this element released this frame? |
 | `ui.focused()`       | Does this element have keyboard focus |
 | `ui.scroll_offset()` | What's this element's scroll offset   |
 
@@ -134,6 +136,14 @@ When you need to check state from anywhere use `Ply` methods with an ID:
 ```rust
 if ply.is_pressed("card") {
   // card is being held down
+}
+
+if ply.is_just_pressed("card") {
+  // one frame only
+}
+
+if ply.is_just_released("card") {
+  // one frame only
 }
 
 let mut ui = ply.begin();
@@ -181,6 +191,8 @@ ui.set_selection("editor", 0, 10);  // select first 10 chars
 if let Some(data) = ply.scroll_container_data("my_list") {
     // data.scroll_position, data.content_dimensions, etc.
 }
+
+ui.set_scroll_position("my_list", (0.0, 600.0));
 ```
 
 ## Constructing IDs directly

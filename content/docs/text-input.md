@@ -34,19 +34,21 @@ and all standard keyboard shortcuts work.
 
 ## Configuration
 
-| Method                     | What it does                              | Default                 |
-|----------------------------|-------------------------------------------|-------------------------|
-| `.placeholder("text")`     | Ghost text when empty                     | none                    |
-| `.font_size(14)`           | Text size in pixels                       | `0`                     |
-| `.font(&FONT_ASSET)`       | Which font to use                         | default font            |
-| `.text_color(0xFFFFFF)`    | Input text color                          | white                   |
-| `.placeholder_color(0x99)` | Placeholder text color                    | gray                    |
-| `.cursor_color(0xFFC32C)`  | Cursor line color                         | white                   |
-| `.selection_color(c)`      | Selection highlight color                 | semi-transparent blue   |
-| `.max_length(100)`         | Maximum character count                   | unlimited               |
-| `.password(true)`          | Show dots instead of characters           | `false`                 |
-| `.multiline(true)`         | Enable multiline editing                  | `false`                 |
-| `.no_styles_movement()`    | Cursor skips style markup (text-styling)  | `false`                 |
+| Method                     | What it does                             | Default               |
+|----------------------------|------------------------------------------|-----------------------|
+| `.placeholder("text")`     | Ghost text when empty                    | none                  |
+| `.font_size(14)`           | Text size in pixels                      | `0`                   |
+| `.font(&FONT_ASSET)`       | Which font to use                        | default font          |
+| `.text_color(0xFFFFFF)`    | Input text color                         | white                 |
+| `.placeholder_color(0x99)` | Placeholder text color                   | gray                  |
+| `.cursor_color(0xFFC32C)`  | Cursor line color                        | white                 |
+| `.selection_color(c)`      | Selection highlight color                | semi-transparent blue |
+| `.max_length(100)`         | Maximum character count                  | unlimited             |
+| `.password()`              | Enable password mode                     | disabled              |
+| `.multiline()`             | Enable multiline editing                 | disabled              |
+| `.drag_select()`           | Enable mouse drag-to-select              | disabled              |
+| `.scrollbar(|s| ...)`      | Enable/configure input scrollbar         | disabled              |
+| `.no_styles_movement()`    | Cursor skips style markup (text-styling) | disabled              |
 
 ## Reading text
 
@@ -75,7 +77,7 @@ last callback wins.
 
 ## Multiline
 
-Enable with `.multiline(true)`:
+Enable with `.multiline()`:
 
 ```rust
 ui.element()
@@ -85,7 +87,7 @@ ui.element()
   .background_color(0x262220)
   .corner_radius(8.0)
   .text_input(|t| t
-    .multiline(true)
+    .multiline()
     .font_size(14)
     .text_color(0xE8E0DC)
   )
@@ -102,7 +104,7 @@ In multiline mode:
 
 ```rust
 .text_input(|t| t
-  .password(true)
+  .password()
   .font_size(14)
   .placeholder("Enter password")
 )
@@ -110,6 +112,27 @@ In multiline mode:
 {{ demo(id="password_input", height=80) }}
 
 Characters are displayed as dots. Copy/cut is disabled.
+
+## Drag-select and scrollbar
+
+```rust
+ui.element()
+  .id("editor")
+  .width(grow!())
+  .height(fixed!(120.0))
+  .text_input(|t| t
+    .multiline()
+    .drag_select()
+    .scrollbar(|s| s
+      .width(4.0)
+      .thumb_color(0xC8C8C8)
+      .hide_after_frames(90)
+    )
+  )
+  .empty();
+```
+
+With `.drag_select()`, mouse drag selects text while touch drag still scrolls.
 
 ## Programmatic control
 
@@ -133,16 +156,16 @@ if let Some((start, end)) = ply.get_selection_range("editor") {
 
 All standard text editing shortcuts work out of the box:
 
-| Shortcut              | Action                   |
-|-----------------------|--------------------------|
-| Arrow keys            | Move cursor              |
-| Shift + arrows        | Extend selection         |
-| Ctrl/Cmd + Left/Right | Move by word             |
-| Home / End            | Start/end of line        |
-| Ctrl/Cmd + A          | Select all               |
-| Ctrl/Cmd + Z          | Undo                     |
-| Ctrl/Cmd + Y          | Redo                     |
-| Double-click          | Select word              |
+| Shortcut              | Action            |
+|-----------------------|-------------------|
+| Arrow keys            | Move cursor       |
+| Shift + arrows        | Extend selection  |
+| Ctrl/Cmd + Left/Right | Move by word      |
+| Home / End            | Start/end of line |
+| Ctrl/Cmd + A          | Select all        |
+| Ctrl/Cmd + Z          | Undo              |
+| Ctrl/Cmd + Y          | Redo              |
+| Double-click          | Select word       |
 
 ## Login form example
 
@@ -177,7 +200,7 @@ ui.element()
       .background_color(0x262220)
       .corner_radius(6.0)
       .text_input(|t| t
-        .password(true)
+        .password()
         .placeholder("Password")
         .font_size(14)
         .text_color(0xE8E0DC)

@@ -38,7 +38,7 @@ By default, rotation is around the center (0.5, 0.5). Change it with
 ```rust
 .rotate_visual(|r| r
   .degrees(30.0)
-  .pivot(0.0, 0.0)
+  .pivot((0.0, 0.0))
 )
 ```
 
@@ -72,13 +72,13 @@ ui.element()
 
 ### Reference
 
-| Method          | What it does              | Default    |
-|-----------------|---------------------------|------------|
-| `.degrees(f32)` | Rotation angle in degrees | 0          |
-| `.radians(f32)` | Rotation angle in radians | 0          |
-| `.pivot(x, y)`  | Rotation center (0.0–1.0) | (0.5, 0.5) |
-| `.flip_x()`     | Mirror horizontally       | false      |
-| `.flip_y()`     | Mirror vertically         | false      |
+| Method           | What it does              | Default    |
+|------------------|---------------------------|------------|
+| `.degrees(f32)`  | Rotation angle in degrees | 0          |
+| `.radians(f32)`  | Rotation angle in radians | 0          |
+| `.pivot((x, y))` | Rotation center (0.0–1.0) | (0.5, 0.5) |
+| `.flip_x()`      | Mirror horizontally       | false      |
+| `.flip_y()`      | Mirror vertically         | false      |
 
 ## Shape rotation
 
