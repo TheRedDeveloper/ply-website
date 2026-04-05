@@ -406,8 +406,26 @@
                     
                     
                     <li class="toc__item">
-                        <a href="https://plyx.iz.rs/docs/sound/" class="toc__link ">
+                        <a href="https://plyx.iz.rs/docs/storage/" class="toc__link ">
                             <span class="toc__number">15.</span>
+                            Storage
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/jobs/" class="toc__link ">
+                            <span class="toc__number">16.</span>
+                            Jobs
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/sound/" class="toc__link ">
+                            <span class="toc__number">17.</span>
                             Sound
                         </a>
                     </li>
@@ -416,7 +434,7 @@
                     
                     <li class="toc__item">
                         <a href="https://plyx.iz.rs/docs/cross-platform/" class="toc__link ">
-                            <span class="toc__number">16.</span>
+                            <span class="toc__number">18.</span>
                             Cross-Platform Builds
                         </a>
                     </li>
@@ -425,7 +443,7 @@
                     
                     <li class="toc__item">
                         <a href="https://plyx.iz.rs/docs/advanced/" class="toc__link ">
-                            <span class="toc__number">17.</span>
+                            <span class="toc__number">19.</span>
                             Advanced Topics
                         </a>
                     </li>
@@ -663,7 +681,7 @@ text are unaffected.</p>
 
 
 <iframe
-  src="/examples/shell.html?id=visual_rotation#ui%2Eelement%28%29%0A%20%20%2Ewidth%28fixed%21%28120%2E0%29%29%0A%20%20%2Eheight%28fixed%21%2880%2E0%29%29%0A%20%20%2Ebackground%5Fcolor%280xFFC32C%29%0A%20%20%2Ecorner%5Fradius%288%2E0%29%0A%20%20%2Erotate%5Fvisual%28%7Cr%7C%20r%2Edegrees%28%5B%5Bdegrees%5D%5D%29%29%0A%20%20%2Echildren%28%7Cui%7C%20%7B%0A%20%20%20%20ui%2Etext%28%22Tilted%21%22%2C%20%7Ct%7C%20t%2Efont%5Fsize%2814%29%2Ecolor%280x181515%29%29%3B%0A%20%20%7D%29%3B%0A%2D%2D%2D%0An%2Edegrees%20%3D%2015"
+  src="/examples/shell.html?id=visual_rotation#ui%2Eelement%28%29%0D%0A%20%20%2Ewidth%28fixed%21%28120%2E0%29%29%0D%0A%20%20%2Eheight%28fixed%21%2880%2E0%29%29%0D%0A%20%20%2Ebackground%5Fcolor%280xFFC32C%29%0D%0A%20%20%2Ecorner%5Fradius%288%2E0%29%0D%0A%20%20%2Erotate%5Fvisual%28%7Cr%7C%20r%2Edegrees%28%5B%5Bdegrees%5D%5D%29%29%0D%0A%20%20%2Echildren%28%7Cui%7C%20%7B%0D%0A%20%20%20%20ui%2Etext%28%22Tilted%21%22%2C%20%7Ct%7C%20t%2Efont%5Fsize%2814%29%2Ecolor%280x181515%29%29%3B%0D%0A%20%20%7D%29%3B%0D%0A%2D%2D%2D%0D%0An%2Edegrees%20%3D%2015"
   style="width: 100%; height: 400px; border: 1px solid #262220; border-radius: 12px; margin: 1.5rem 0;"
   loading="lazy"
   tabindex="-1"></iframe>
@@ -675,7 +693,7 @@ rotation.</p>
 <code>.pivot()</code>:</p>
 <pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="rust"><span class="giallo-l"><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">rotate_visual</span><span style="color: #9399B2;">(</span><span style="color: #94E2D5;">|</span><span>r</span><span style="color: #94E2D5;">|</span><span> r</span></span>
 <span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">degrees</span><span style="color: #9399B2;">(</span><span style="color: #FAB387;">30</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #9399B2;">)</span></span>
-<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">pivot</span><span style="color: #9399B2;">(</span><span style="color: #FAB387;">0</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #9399B2;">,</span><span style="color: #FAB387;"> 0</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #9399B2;">)</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">pivot</span><span style="color: #9399B2;">((</span><span style="color: #FAB387;">0</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #9399B2;">,</span><span style="color: #FAB387;"> 0</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #9399B2;">))</span></span>
 <span class="giallo-l"><span style="color: #9399B2;">)</span></span></code></pre>
 <p>Pivot coordinates are normalized: (0, 0) = top-left, (1, 1) = bottom-right.</p>
 <h3 id="flipping"><a class="zola-anchor" href="#flipping" aria-label="Anchor link for: flipping">🔗</a>Flipping</h3>
@@ -696,7 +714,7 @@ When you use both, there's no extra GPU cost:</p>
 <table><thead><tr><th>Method</th><th>What it does</th><th>Default</th></tr></thead><tbody>
 <tr><td><code>.degrees(f32)</code></td><td>Rotation angle in degrees</td><td>0</td></tr>
 <tr><td><code>.radians(f32)</code></td><td>Rotation angle in radians</td><td>0</td></tr>
-<tr><td><code>.pivot(x, y)</code></td><td>Rotation center (0.0–1.0)</td><td>(0.5, 0.5)</td></tr>
+<tr><td><code>.pivot((x, y))</code></td><td>Rotation center (0.0–1.0)</td><td>(0.5, 0.5)</td></tr>
 <tr><td><code>.flip_x()</code></td><td>Mirror horizontally</td><td>false</td></tr>
 <tr><td><code>.flip_y()</code></td><td>Mirror vertically</td><td>false</td></tr>
 </tbody></table>
@@ -710,7 +728,7 @@ vertex level. The bounding box adjusts to fit the rotated shape (AABB):</p>
 
 
 <iframe
-  src="/examples/shell.html?id=shape_rotation#ui%2Eelement%28%29%0A%20%20%2Ewidth%28fixed%21%2880%2E0%29%29%0A%20%20%2Eheight%28fixed%21%2880%2E0%29%29%0A%20%20%2Ebackground%5Fcolor%280xFF654D%29%0A%20%20%2Erotate%5Fshape%28%7Cr%7C%20r%2Edegrees%28%5B%5Bdegrees%5D%5D%29%29%0A%20%20%2Eempty%28%29%3B%0A%2D%2D%2D%0An%2Edegrees%20%3D%2045"
+  src="/examples/shell.html?id=shape_rotation#ui%2Eelement%28%29%0D%0A%20%20%2Ewidth%28fixed%21%2880%2E0%29%29%0D%0A%20%20%2Eheight%28fixed%21%2880%2E0%29%29%0D%0A%20%20%2Ebackground%5Fcolor%280xFF654D%29%0D%0A%20%20%2Erotate%5Fshape%28%7Cr%7C%20r%2Edegrees%28%5B%5Bdegrees%5D%5D%29%29%0D%0A%20%20%2Eempty%28%29%3B%0D%0A%2D%2D%2D%0D%0An%2Edegrees%20%3D%2045"
   style="width: 100%; height: 333px; border: 1px solid #262220; border-radius: 12px; margin: 1.5rem 0;"
   loading="lazy"
   tabindex="-1"></iframe>

@@ -132,7 +132,7 @@
                 },
                 
                 
-                "wordCount": 252,
+                "wordCount": 254,
                 
                 "inLanguage": "en"
             }
@@ -406,8 +406,26 @@
                     
                     
                     <li class="toc__item">
-                        <a href="https://plyx.iz.rs/docs/sound/" class="toc__link ">
+                        <a href="https://plyx.iz.rs/docs/storage/" class="toc__link ">
                             <span class="toc__number">15.</span>
+                            Storage
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/jobs/" class="toc__link ">
+                            <span class="toc__number">16.</span>
+                            Jobs
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/sound/" class="toc__link ">
+                            <span class="toc__number">17.</span>
                             Sound
                         </a>
                     </li>
@@ -416,7 +434,7 @@
                     
                     <li class="toc__item">
                         <a href="https://plyx.iz.rs/docs/cross-platform/" class="toc__link ">
-                            <span class="toc__number">16.</span>
+                            <span class="toc__number">18.</span>
                             Cross-Platform Builds
                         </a>
                     </li>
@@ -425,7 +443,7 @@
                     
                     <li class="toc__item">
                         <a href="https://plyx.iz.rs/docs/advanced/" class="toc__link ">
-                            <span class="toc__number">17.</span>
+                            <span class="toc__number">19.</span>
                             Advanced Topics
                         </a>
                     </li>
@@ -653,7 +671,8 @@
 Ply gives you two levels of control: inline state queries inside
 a children closure, and callback-based events on the element builder.</p>
 <h2 id="inline"><a class="zola-anchor" href="#inline" aria-label="Anchor link for: inline">🔗</a>Inline</h2>
-<p>Check <code>ui.pressed()</code>, <code>ui.hovered()</code> and <code>ui.focused()</code> inside a <code>.children()</code> closure,
+<p>Check <code>ui.pressed()</code>, <code>ui.just_pressed()</code>, <code>ui.just_released()</code>,
+<code>ui.hovered()</code> and <code>ui.focused()</code> inside a <code>.children()</code> closure,
 we explained this in the last section:</p>
 
 
@@ -662,7 +681,7 @@ we explained this in the last section:</p>
 
 
 <iframe
-  src="/examples/shell.html?id=hover_highlight#ui%2Eelement%28%29%2Ewidth%28fit%21%28%29%29%2Eheight%28fixed%21%2840%2E0%29%29%0A%20%20%2Echildren%28%7Cui%7C%20%7B%0A%20%20%20%20let%20bg%20%3D%20if%20ui%2Epressed%28%29%20%7B%0A%20%20%20%20%20%20%5B%5Bpress%5Fcolor%5D%5D%0A%20%20%20%20%7D%20else%20if%20ui%2Ehovered%28%29%20%7C%7C%20ui%2Efocused%28%29%20%7B%0A%20%20%20%20%20%20%5B%5Bhover%5Fcolor%5D%5D%0A%20%20%20%20%7D%20else%20%7B%0A%20%20%20%20%20%20%5B%5Bdefault%5Fcolor%5D%5D%0A%20%20%20%20%7D%3B%0A%0A%20%20%20%20ui%2Eelement%28%29%2Ewidth%28fit%21%28%29%29%2Eheight%28grow%21%28%29%29%0A%20%20%20%20%20%20%2Ebackground%5Fcolor%28bg%29%0A%20%20%20%20%20%20%2Ecorner%5Fradius%288%2E0%29%0A%20%20%20%20%20%20%2Elayout%28%7Cl%7C%20l%2Epadding%28%280%2C%2016%2C%200%2C%2016%29%29%2Ealign%28CenterX%2C%20CenterY%29%29%0A%20%20%20%20%20%20%2Echildren%28%7Cui%7C%20%7B%0A%20%20%20%20%20%20%20%20ui%2Etext%28%22Hover%20me%22%2C%20%7Ct%7C%20t%2Efont%5Fsize%2814%29%2Ecolor%280xE8E0DC%29%29%3B%0A%20%20%20%20%20%20%7D%29%3B%0A%20%20%7D%29%3B%0A%2D%2D%2D%0Ac%2Epress%5Fcolor%20%3D%200xFF654D%0Ac%2Ehover%5Fcolor%20%3D%200x3A3533%0Ac%2Edefault%5Fcolor%20%3D%200x262220"
+  src="/examples/shell.html?id=hover_highlight#ui%2Eelement%28%29%2Ewidth%28fit%21%28%29%29%2Eheight%28fixed%21%2840%2E0%29%29%0D%0A%20%20%2Echildren%28%7Cui%7C%20%7B%0D%0A%20%20%20%20let%20bg%20%3D%20if%20ui%2Epressed%28%29%20%7B%0D%0A%20%20%20%20%20%20%5B%5Bpress%5Fcolor%5D%5D%0D%0A%20%20%20%20%7D%20else%20if%20ui%2Ehovered%28%29%20%7C%7C%20ui%2Efocused%28%29%20%7B%0D%0A%20%20%20%20%20%20%5B%5Bhover%5Fcolor%5D%5D%0D%0A%20%20%20%20%7D%20else%20%7B%0D%0A%20%20%20%20%20%20%5B%5Bdefault%5Fcolor%5D%5D%0D%0A%20%20%20%20%7D%3B%0D%0A%0D%0A%20%20%20%20ui%2Eelement%28%29%2Ewidth%28fit%21%28%29%29%2Eheight%28grow%21%28%29%29%0D%0A%20%20%20%20%20%20%2Ebackground%5Fcolor%28bg%29%0D%0A%20%20%20%20%20%20%2Ecorner%5Fradius%288%2E0%29%0D%0A%20%20%20%20%20%20%2Elayout%28%7Cl%7C%20l%2Epadding%28%280%2C%2016%2C%200%2C%2016%29%29%2Ealign%28CenterX%2C%20CenterY%29%29%0D%0A%20%20%20%20%20%20%2Echildren%28%7Cui%7C%20%7B%0D%0A%20%20%20%20%20%20%20%20ui%2Etext%28%22Hover%20me%22%2C%20%7Ct%7C%20t%2Efont%5Fsize%2814%29%2Ecolor%280xE8E0DC%29%29%3B%0D%0A%20%20%20%20%20%20%7D%29%3B%0D%0A%20%20%7D%29%3B%0D%0A%2D%2D%2D%0D%0Ac%2Epress%5Fcolor%20%3D%200xFF654D%0D%0Ac%2Ehover%5Fcolor%20%3D%200x3A3533%0D%0Ac%2Edefault%5Fcolor%20%3D%200x262220"
   style="width: 100%; height: 550px; border: 1px solid #262220; border-radius: 12px; margin: 1.5rem 0;"
   loading="lazy"
   tabindex="-1"></iframe>
@@ -708,6 +727,14 @@ we explained this in the last section:</p>
 <span class="giallo-l"></span>
 <span class="giallo-l"><span style="color: #CBA6F7;">if</span><span> ui</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">pointer_over</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;tooltip_trigger&quot;</span><span style="color: #9399B2;">) {</span></span>
 <span class="giallo-l"><span style="color: #9399B2;font-style: italic;">  // show tooltip</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">}</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #CBA6F7;">if</span><span> ui</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">is_just_pressed</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;submit&quot;</span><span style="color: #9399B2;">) {</span></span>
+<span class="giallo-l"><span style="color: #9399B2;font-style: italic;">  // one frame only</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">}</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #CBA6F7;">if</span><span> ui</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">is_just_released</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;submit&quot;</span><span style="color: #9399B2;">) {</span></span>
+<span class="giallo-l"><span style="color: #9399B2;font-style: italic;">  // one frame only</span></span>
 <span class="giallo-l"><span style="color: #9399B2;">}</span></span></code></pre><h2 id="preserve-focus"><a class="zola-anchor" href="#preserve-focus" aria-label="Anchor link for: preserve-focus">🔗</a>Preserve focus</h2>
 <p>Toolbar buttons that modify a text input shouldn't steal
 focus from the input. Use <code>.preserve_focus()</code>:</p>

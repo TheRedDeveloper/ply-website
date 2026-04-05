@@ -406,8 +406,26 @@
                     
                     
                     <li class="toc__item">
-                        <a href="https://plyx.iz.rs/docs/sound/" class="toc__link ">
+                        <a href="https://plyx.iz.rs/docs/storage/" class="toc__link ">
                             <span class="toc__number">15.</span>
+                            Storage
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/jobs/" class="toc__link ">
+                            <span class="toc__number">16.</span>
+                            Jobs
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/sound/" class="toc__link ">
+                            <span class="toc__number">17.</span>
                             Sound
                         </a>
                     </li>
@@ -416,7 +434,7 @@
                     
                     <li class="toc__item">
                         <a href="https://plyx.iz.rs/docs/cross-platform/" class="toc__link ">
-                            <span class="toc__number">16.</span>
+                            <span class="toc__number">18.</span>
                             Cross-Platform Builds
                         </a>
                     </li>
@@ -425,7 +443,7 @@
                     
                     <li class="toc__item">
                         <a href="https://plyx.iz.rs/docs/advanced/" class="toc__link ">
-                            <span class="toc__number">17.</span>
+                            <span class="toc__number">19.</span>
                             Advanced Topics
                         </a>
                     </li>
@@ -620,12 +638,12 @@
 
     
     
-    <a href="https://plyx.iz.rs/docs/sound/" class="nav-button nav-button--next" aria-label="Next: Sound">
+    <a href="https://plyx.iz.rs/docs/storage/" class="nav-button nav-button--next" aria-label="Next: Storage">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="m9 18 6-6-6-6"/>
         </svg>
         <span class="nav-button__label">
-            Sound
+            Storage
             <span class="nav-button__shortcut">→</span>
         </span>
     </a>
@@ -650,7 +668,7 @@
 
     <div class="article__content" itemprop="articleBody">
         <p>Ply has built-in HTTP and WebSocket support. Enable it with the <code>net</code> feature:</p>
-<pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="toml"><span class="giallo-l"><span>ply-engine</span><span style="color: #94E2D5;"> =</span><span style="color: #9399B2;"> {</span><span> version</span><span style="color: #94E2D5;"> =</span><span style="color: #A6E3A1;"> &quot;1.0&quot;</span><span style="color: #9399B2;">,</span><span> features</span><span style="color: #94E2D5;"> =</span><span style="color: #9399B2;"> [</span><span style="color: #A6E3A1;">&quot;net&quot;</span><span style="color: #9399B2;">] }</span></span></code></pre>
+<pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="toml"><span class="giallo-l"><span>ply-engine</span><span style="color: #94E2D5;"> =</span><span style="color: #9399B2;"> {</span><span> version</span><span style="color: #94E2D5;"> =</span><span style="color: #A6E3A1;"> &quot;1.1&quot;</span><span style="color: #9399B2;">,</span><span> features</span><span style="color: #94E2D5;"> =</span><span style="color: #9399B2;"> [</span><span style="color: #A6E3A1;">&quot;net&quot;</span><span style="color: #9399B2;">] }</span></span></code></pre>
 <p>Or add it with the CLI:</p>
 <pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="shellscript"><span class="giallo-l"><span style="color: #89B4FA;font-style: italic;">plyx</span><span style="color: #A6E3A1;"> add net</span></span></code></pre>
 <p>Everything lives in the <code>net</code> module, available through the prelude. It works on all platforms. It is optimized to work across the application loop without you needing to store or manage anything, unlike typical networking libraries.</p>
@@ -691,7 +709,7 @@ Each takes a string ID, a URL, and a configuration closure:</p>
 <span class="giallo-l"><span>  req</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">cancel</span><span style="color: #9399B2;">();</span><span style="color: #9399B2;font-style: italic;">  // removes the request immediately and consumes the handle</span></span>
 <span class="giallo-l"><span style="color: #9399B2;">}</span></span></code></pre><h3 id="json-deserialization"><a class="zola-anchor" href="#json-deserialization" aria-label="Anchor link for: json-deserialization">🔗</a>JSON deserialization</h3>
 <p>Enable the <code>net-json</code> feature to add <code>.json()</code>:</p>
-<pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="toml"><span class="giallo-l"><span>ply-engine</span><span style="color: #94E2D5;"> =</span><span style="color: #9399B2;"> {</span><span> version</span><span style="color: #94E2D5;"> =</span><span style="color: #A6E3A1;"> &quot;1.0&quot;</span><span style="color: #9399B2;">,</span><span> features</span><span style="color: #94E2D5;"> =</span><span style="color: #9399B2;"> [</span><span style="color: #A6E3A1;">&quot;net-json&quot;</span><span style="color: #9399B2;">] }</span></span></code></pre>
+<pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="toml"><span class="giallo-l"><span>ply-engine</span><span style="color: #94E2D5;"> =</span><span style="color: #9399B2;"> {</span><span> version</span><span style="color: #94E2D5;"> =</span><span style="color: #A6E3A1;"> &quot;1.1&quot;</span><span style="color: #9399B2;">,</span><span> features</span><span style="color: #94E2D5;"> =</span><span style="color: #9399B2;"> [</span><span style="color: #A6E3A1;">&quot;net-json&quot;</span><span style="color: #9399B2;">] }</span></span></code></pre>
 <p>Or add it with the CLI:</p>
 <pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="shellscript"><span class="giallo-l"><span style="color: #89B4FA;font-style: italic;">plyx</span><span style="color: #A6E3A1;"> add net-json</span></span></code></pre><pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="rust"><span class="giallo-l"><span style="color: #F9E2AF;font-style: italic;">#</span><span style="color: #9399B2;">[</span><span style="color: #F9E2AF;font-style: italic;">derive</span><span style="color: #9399B2;">(</span><span style="color: #F9E2AF;font-style: italic;">serde</span><span style="color: #94E2D5;">::</span><span style="color: #F9E2AF;font-style: italic;">Deserialize</span><span style="color: #9399B2;">)]</span></span>
 <span class="giallo-l"><span style="color: #CBA6F7;">struct</span><span style="color: #F9E2AF;font-style: italic;"> User</span><span style="color: #9399B2;"> {</span><span> name</span><span style="color: #94E2D5;">:</span><span style="color: #F9E2AF;font-style: italic;"> String</span><span style="color: #9399B2;">,</span><span> email</span><span style="color: #94E2D5;">:</span><span style="color: #F9E2AF;font-style: italic;"> String</span><span style="color: #9399B2;"> }</span></span>
@@ -743,7 +761,7 @@ a tokio runtime (WebSocket). WASM builds use the browser's
 <code>XMLHttpRequest</code> and <code>WebSocket</code> APIs through the bridge.</p>
 <p>Requests and WebSockets are tracked by the global <code>NET_MANAGER</code>, you don't need to manage anything. It cleans up your completed requests if you don't access them for 60 frames.</p>
 <h2 id="next-steps"><a class="zola-anchor" href="#next-steps" aria-label="Anchor link for: next-steps">🔗</a>Next steps</h2>
-<p>→ <a href="/docs/sound/">Sound</a></p>
+<p>→ <a href="/docs/storage/">Storage</a></p>
 
     </div>
 

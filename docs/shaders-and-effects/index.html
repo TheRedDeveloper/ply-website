@@ -406,8 +406,26 @@
                     
                     
                     <li class="toc__item">
-                        <a href="https://plyx.iz.rs/docs/sound/" class="toc__link ">
+                        <a href="https://plyx.iz.rs/docs/storage/" class="toc__link ">
                             <span class="toc__number">15.</span>
+                            Storage
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/jobs/" class="toc__link ">
+                            <span class="toc__number">16.</span>
+                            Jobs
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/sound/" class="toc__link ">
+                            <span class="toc__number">17.</span>
                             Sound
                         </a>
                     </li>
@@ -416,7 +434,7 @@
                     
                     <li class="toc__item">
                         <a href="https://plyx.iz.rs/docs/cross-platform/" class="toc__link ">
-                            <span class="toc__number">16.</span>
+                            <span class="toc__number">18.</span>
                             Cross-Platform Builds
                         </a>
                     </li>
@@ -425,7 +443,7 @@
                     
                     <li class="toc__item">
                         <a href="https://plyx.iz.rs/docs/advanced/" class="toc__link ">
-                            <span class="toc__number">17.</span>
+                            <span class="toc__number">19.</span>
                             Advanced Topics
                         </a>
                     </li>
@@ -741,7 +759,7 @@ automatically. The next render pass recompiles.</p>
 <h2 id="built-in-shaders"><a class="zola-anchor" href="#built-in-shaders" aria-label="Anchor link for: built-in-shaders">🔗</a>Built-in shaders</h2>
 <p>Enable with the <code>built-in-shaders</code> feature:</p>
 <pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="toml"><span class="giallo-l"><span style="color: #9399B2;">[</span><span>dependencies</span><span style="color: #9399B2;">]</span></span>
-<span class="giallo-l"><span>ply-engine</span><span style="color: #94E2D5;"> =</span><span style="color: #9399B2;"> {</span><span> version</span><span style="color: #94E2D5;"> =</span><span style="color: #A6E3A1;"> &quot;1.0&quot;</span><span style="color: #9399B2;">,</span><span> features</span><span style="color: #94E2D5;"> =</span><span style="color: #9399B2;"> [</span><span style="color: #A6E3A1;">&quot;built-in-shaders&quot;</span><span style="color: #9399B2;">] }</span></span></code></pre>
+<span class="giallo-l"><span>ply-engine</span><span style="color: #94E2D5;"> =</span><span style="color: #9399B2;"> {</span><span> version</span><span style="color: #94E2D5;"> =</span><span style="color: #A6E3A1;"> &quot;1.1&quot;</span><span style="color: #9399B2;">,</span><span> features</span><span style="color: #94E2D5;"> =</span><span style="color: #9399B2;"> [</span><span style="color: #A6E3A1;">&quot;built-in-shaders&quot;</span><span style="color: #9399B2;">] }</span></span></code></pre>
 <p>Or add it with the CLI:</p>
 <pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="shellscript"><span class="giallo-l"><span style="color: #89B4FA;font-style: italic;">plyx</span><span style="color: #A6E3A1;"> add built-in-shaders</span></span></code></pre>
 <p>Built-in shaders are automatically included in the prelude.</p>
@@ -813,7 +831,7 @@ come from the bounding box:</p>
 <p>For larger projects, use the <code>shader-build</code> feature to compile <code>.frag</code>
 and <code>.slang</code> files via a <code>build.rs</code> script:</p>
 <pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="toml"><span class="giallo-l"><span style="color: #9399B2;">[</span><span>build-dependencies</span><span style="color: #9399B2;">]</span></span>
-<span class="giallo-l"><span>ply-engine</span><span style="color: #94E2D5;"> =</span><span style="color: #9399B2;"> {</span><span> version</span><span style="color: #94E2D5;"> =</span><span style="color: #A6E3A1;"> &quot;1.0&quot;</span><span style="color: #9399B2;">,</span><span> default_features</span><span style="color: #94E2D5;"> =</span><span style="color: #FAB387;"> false</span><span style="color: #9399B2;">,</span><span> features</span><span style="color: #94E2D5;"> =</span><span style="color: #9399B2;"> [</span><span style="color: #A6E3A1;">&quot;shader-build&quot;</span><span style="color: #9399B2;">] }</span></span></code></pre><pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="rust"><span class="giallo-l"><span style="color: #CBA6F7;">use</span><span style="color: #F9E2AF;"> ply_engine</span><span style="color: #94E2D5;">::</span><span style="color: #F9E2AF;">shader_build</span><span style="color: #94E2D5;">::</span><span style="color: #F9E2AF;font-style: italic;">ShaderBuild</span><span style="color: #9399B2;">;</span></span>
+<span class="giallo-l"><span>ply-engine</span><span style="color: #94E2D5;"> =</span><span style="color: #9399B2;"> {</span><span> version</span><span style="color: #94E2D5;"> =</span><span style="color: #A6E3A1;"> &quot;1.1&quot;</span><span style="color: #9399B2;">,</span><span> default_features</span><span style="color: #94E2D5;"> =</span><span style="color: #FAB387;"> false</span><span style="color: #9399B2;">,</span><span> features</span><span style="color: #94E2D5;"> =</span><span style="color: #9399B2;"> [</span><span style="color: #A6E3A1;">&quot;shader-build&quot;</span><span style="color: #9399B2;">] }</span></span></code></pre><pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="rust"><span class="giallo-l"><span style="color: #CBA6F7;">use</span><span style="color: #F9E2AF;"> ply_engine</span><span style="color: #94E2D5;">::</span><span style="color: #F9E2AF;">shader_build</span><span style="color: #94E2D5;">::</span><span style="color: #F9E2AF;font-style: italic;">ShaderBuild</span><span style="color: #9399B2;">;</span></span>
 <span class="giallo-l"></span>
 <span class="giallo-l"><span style="color: #CBA6F7;">fn</span><span style="color: #89B4FA;font-style: italic;"> main</span><span style="color: #9399B2;">() {</span></span>
 <span class="giallo-l"><span style="color: #F9E2AF;font-style: italic;">  ShaderBuild</span><span style="color: #94E2D5;">::</span><span style="color: #89B4FA;font-style: italic;">new</span><span style="color: #9399B2;">()</span></span>

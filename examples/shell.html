@@ -458,7 +458,7 @@
         // ----- Simple syntax highlighter -----
         function highlightChunk(code) {
             var frag = document.createDocumentFragment();
-            var re = /(\/\/[^\n]*)|("(?:[^"\\\n]|\\.)*"|")|(\b(?:0x[0-9a-fA-F]+|\d+\.?\d*)\b)|(\.(?:element|text|font_size|color|width|height|background_color|corner_radius|layout|children|empty|floating|attach_parent|attach_root|attach_id|anchor|offset|z_index|clip_by_parent|passthrough|border|overflow|id|aspect_ratio|direction|gap|padding|align|multiline|text_color|no_styles_movement|text_input|rotate_visual|rotate_shape|degrees|radians|pivot|flip_x|flip_y|placeholder|placeholder_color|password|cursor_color|selection_color|on_press|on_release|on_hover|on_focus|on_unfocus|preserve_focus|focused|hovered|pressed|wrap_mode|alignment|letter_spacing|line_height|clip|clip_x|clip_y|scroll|scroll_x|scroll_y|image|effect|shader|accessible|on_changed|on_submit|max_length|font|begin|iter|enumerate|parse|ok|unwrap_or)\b)|(\b(?:grow|fit|fixed|percent|include_bytes|println|format|vec)!)|(\b(?:render_to_texture|draw_line|draw_circle|draw_rectangle|draw_text|clear_background|nav_item|button)\b)|(\b(?:true|false)\b)|(\b(?:CenterX|CenterY|Left|Right|Top|Bottom|LeftToRight|TopToBottom|Words|Newline|Letters|None|WrapMode|GraphicAsset|Bytes|Path|Source|Some|Ok|Err)\b)|(\b[A-Z][A-Z0-9_]+\b)|(\b(?:let|fn|if|else|mut|pub|use|mod|struct|impl|for|in|as|static|const|u8|u16|u32|u64|i8|i16|i32|i64|f32|f64|usize|bool|String)\b)|(\|)|(::|->|=>|\.\.|[=&])|([(){};\[\],])/g;
+            var re = /(\/\/[^\n]*)|("(?:[^"\\\n]|\\.)*"|")|(\b(?:0x[0-9a-fA-F]+|\d+\.?\d*)\b)|(\.(?:element|text|font_size|color|width|height|background_color|corner_radius|layout|children|empty|floating|attach_parent|attach_root|attach_id|anchor|offset|z_index|clip_by_parent|passthrough|border|left|right|top|bottom|between_children|position|overflow|id|aspect_ratio|direction|gap|padding|align|multiline|text_color|no_styles_movement|text_input|rotate_visual|rotate_shape|degrees|radians|pivot|flip_x|flip_y|placeholder|placeholder_color|password|cursor_color|selection_color|on_press|on_release|on_hover|on_focus|on_unfocus|preserve_focus|focused|hovered|pressed|wrap_mode|alignment|letter_spacing|line_height|clip|clip_x|clip_y|scroll|scroll_x|scroll_y|image|effect|shader|accessible|on_changed|on_submit|max_length|font|begin|iter|enumerate|parse|ok|unwrap_or)\b)|(\b(?:grow|fit|fixed|percent|include_bytes|println|format|vec)!)|(\b(?:render_to_texture|draw_line|draw_circle|draw_rectangle|draw_text|clear_background|nav_item|button)\b)|(\b(?:true|false)\b)|(\b(?:CenterX|CenterY|Left|Right|Top|Bottom|LeftToRight|TopToBottom|Words|Newline|Letters|None|WrapMode|GraphicAsset|Bytes|Path|Source|Some|Ok|Err)\b)|(\b[A-Z][A-Z0-9_]+\b)|(\b(?:let|fn|if|else|mut|pub|use|mod|struct|impl|for|in|as|static|const|u8|u16|u32|u64|i8|i16|i32|i64|f32|f64|usize|bool|String)\b)|(\|)|(::|->|=>|\.\.|[=&])|([(){};\[\],])/g;
             var last = 0;
             var m;
 
@@ -617,7 +617,7 @@
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('/sw.js', { scope: '/' });
         }
-        load("/demo/app-v1.wasm");
+        load("/demo/app-v2.wasm");
     </script>
 </body>
 </html>

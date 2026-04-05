@@ -132,7 +132,7 @@
                 },
                 
                 
-                "wordCount": 383,
+                "wordCount": 545,
                 
                 "inLanguage": "en"
             }
@@ -406,8 +406,26 @@
                     
                     
                     <li class="toc__item">
-                        <a href="https://plyx.iz.rs/docs/sound/" class="toc__link ">
+                        <a href="https://plyx.iz.rs/docs/storage/" class="toc__link ">
                             <span class="toc__number">15.</span>
+                            Storage
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/jobs/" class="toc__link ">
+                            <span class="toc__number">16.</span>
+                            Jobs
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/sound/" class="toc__link ">
+                            <span class="toc__number">17.</span>
                             Sound
                         </a>
                     </li>
@@ -416,7 +434,7 @@
                     
                     <li class="toc__item">
                         <a href="https://plyx.iz.rs/docs/cross-platform/" class="toc__link ">
-                            <span class="toc__number">16.</span>
+                            <span class="toc__number">18.</span>
                             Cross-Platform Builds
                         </a>
                     </li>
@@ -425,7 +443,7 @@
                     
                     <li class="toc__item">
                         <a href="https://plyx.iz.rs/docs/advanced/" class="toc__link ">
-                            <span class="toc__number">17.</span>
+                            <span class="toc__number">19.</span>
                             Advanced Topics
                         </a>
                     </li>
@@ -670,9 +688,10 @@ finalize with <code>.children()</code> or <code>.empty()</code>:</p>
 </tbody></table>
 <p><code>grow!</code> and <code>fit!</code> accept optional min/max bounds:</p>
 <ul>
-<li><code>fit!(100.0)</code>: fit content, but don't shrink below 100px</li>
-<li><code>grow!(100.0, 500.0)</code>: grow within 100-500px range</li>
+<li><code>fit!(100.0)</code>/<code>fit!(min: 100.0)</code>: fit content, but don't shrink below 100px</li>
+<li><code>grow!(100.0, 500.0)</code>/<code>grow!(min: 100.0, max: 500.0)</code>: grow within 100-500px range</li>
 </ul>
+<p><code>grow!</code> supports a third weight parameter for proportional sizing among siblings. <code>grow!(100.0, 500.0, 2.0)</code>/<code>grow!(min: 100.0, max: 500.0, weight: 2.0)</code>: grow within 100-500px, and take twice as much space as siblings with weight 1.0</p>
 
 
 
@@ -680,7 +699,7 @@ finalize with <code>.children()</code> or <code>.empty()</code>:</p>
 
 
 <iframe
-  src="/examples/shell.html?id=layout_card#ui%2Eelement%28%29%2Ewidth%28grow%21%28%29%29%2Eheight%28grow%21%28%29%29%0A%20%20%2Ebackground%5Fcolor%28%5B%5Bbg%5D%5D%29%0A%20%20%2Elayout%28%7Cl%7C%20l%0A%20%20%20%20%2Edirection%28%5B%5Bdirection%5D%5D%29%0A%20%20%20%20%2Egap%28%5B%5Bgap%5D%5D%29%0A%20%20%20%20%2Epadding%28%5B%5Bpadding%5D%5D%29%0A%20%20%20%20%2Ealign%28%5B%5Balign%5Fx%5D%5D%2C%20%5B%5Balign%5Fy%5D%5D%29%0A%20%20%29%0A%20%20%2Echildren%28%7Cui%7C%20%7B%0A%20%20%20%20ui%2Etext%28%22A%22%2C%20%7Ct%7C%20t%2Efont%5Fsize%2824%29%29%3B%0A%20%20%20%20ui%2Etext%28%22B%22%2C%20%7Ct%7C%20t%2Efont%5Fsize%2824%29%29%3B%0A%20%20%20%20ui%2Etext%28%22C%22%2C%20%7Ct%7C%20t%2Efont%5Fsize%2824%29%29%3B%0A%20%20%7D%29%3B%0A%2D%2D%2D%0Ac%2Ebg%20%3D%200x262220%0Ae%2Edirection%20%3D%20LeftToRight%20%3B%20TopToBottom%0An%2Egap%20%3D%2012%0Apadding%20%3D%2016%0Ae%2Ealign%5Fx%20%3D%20CenterX%20%3B%20Left%20%3B%20Right%0Ae%2Ealign%5Fy%20%3D%20CenterY%20%3B%20Top%20%3B%20Bottom"
+  src="/examples/shell.html?id=layout_card#ui%2Eelement%28%29%2Ewidth%28grow%21%28%29%29%2Eheight%28grow%21%28%29%29%0D%0A%20%20%2Ebackground%5Fcolor%28%5B%5Bbg%5D%5D%29%0D%0A%20%20%2Elayout%28%7Cl%7C%20l%0D%0A%20%20%20%20%2Edirection%28%5B%5Bdirection%5D%5D%29%0D%0A%20%20%20%20%2Egap%28%5B%5Bgap%5D%5D%29%0D%0A%20%20%20%20%2Epadding%28%5B%5Bpadding%5D%5D%29%0D%0A%20%20%20%20%2Ealign%28%5B%5Balign%5Fx%5D%5D%2C%20%5B%5Balign%5Fy%5D%5D%29%0D%0A%20%20%29%0D%0A%20%20%2Echildren%28%7Cui%7C%20%7B%0D%0A%20%20%20%20ui%2Etext%28%22A%22%2C%20%7Ct%7C%20t%2Efont%5Fsize%2824%29%29%3B%0D%0A%20%20%20%20ui%2Etext%28%22B%22%2C%20%7Ct%7C%20t%2Efont%5Fsize%2824%29%29%3B%0D%0A%20%20%20%20ui%2Etext%28%22C%22%2C%20%7Ct%7C%20t%2Efont%5Fsize%2824%29%29%3B%0D%0A%20%20%7D%29%3B%0D%0A%2D%2D%2D%0D%0Ac%2Ebg%20%3D%200x262220%0D%0Ae%2Edirection%20%3D%20LeftToRight%20%3B%20TopToBottom%0D%0An%2Egap%20%3D%2012%0D%0Apadding%20%3D%2016%0D%0Ae%2Ealign%5Fx%20%3D%20CenterX%20%3B%20Left%20%3B%20Right%0D%0Ae%2Ealign%5Fy%20%3D%20CenterY%20%3B%20Top%20%3B%20Bottom"
   style="width: 100%; height: 500px; border: 1px solid #262220; border-radius: 12px; margin: 1.5rem 0;"
   loading="lazy"
   tabindex="-1"></iframe>
@@ -721,13 +740,27 @@ finalize with <code>.children()</code> or <code>.empty()</code>:</p>
 <span class="giallo-l"></span>
 <span class="giallo-l"><span style="color: #9399B2;font-style: italic;">// Per-corner: (top-left, top-right, bottom-right, bottom-left), CSS order</span></span>
 <span class="giallo-l"><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">corner_radius</span><span style="color: #9399B2;">((</span><span style="color: #FAB387;">12</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #9399B2;">,</span><span style="color: #FAB387;"> 12</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #9399B2;">,</span><span style="color: #FAB387;"> 0</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #9399B2;">,</span><span style="color: #FAB387;"> 0</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #9399B2;">))</span></span></code></pre><h2 id="borders"><a class="zola-anchor" href="#borders" aria-label="Anchor link for: borders">🔗</a>Borders</h2>
-<p>Configure per-side border widths, color, and child dividers:</p>
-<pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="rust"><span class="giallo-l"><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">border</span><span style="color: #9399B2;">(</span><span style="color: #94E2D5;">|</span><span>b</span><span style="color: #94E2D5;">|</span><span> b</span></span>
-<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">all</span><span style="color: #9399B2;">(</span><span style="color: #FAB387;">2</span><span style="color: #9399B2;">)</span><span style="color: #9399B2;font-style: italic;">                  // 2px on all sides</span></span>
-<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">color</span><span style="color: #9399B2;">(</span><span style="color: #FAB387;">0x4A4440</span><span style="color: #9399B2;">)</span><span style="color: #9399B2;font-style: italic;">         // border color</span></span>
-<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">between_children</span><span style="color: #9399B2;">(</span><span style="color: #FAB387;">1</span><span style="color: #9399B2;">)</span><span style="color: #9399B2;font-style: italic;">     // 1px dividers between children</span></span>
-<span class="giallo-l"><span style="color: #9399B2;">)</span></span></code></pre>
-<p>Individual sides: <code>.left(2)</code>, <code>.right(2)</code>, <code>.top(2)</code>, <code>.bottom(2)</code>.</p>
+<p>Configure per-side border widths, color, child dividers, and border position:</p>
+
+
+
+
+
+
+<iframe
+  src="/examples/shell.html?id=borders_demo#ui%2Eelement%28%29%2Ewidth%28fit%21%28%29%29%2Eheight%28fit%21%28%29%29%0D%0A%20%20%2Ebackground%5Fcolor%280x262220%29%0D%0A%20%20%2Ecorner%5Fradius%2812%2E0%29%0D%0A%20%20%2Eborder%28%7Cb%7C%20b%0D%0A%20%20%20%20%2Eleft%28%5B%5Bleft%5D%5D%29%0D%0A%20%20%20%20%2Eright%28%5B%5Bright%5D%5D%29%0D%0A%20%20%20%20%2Etop%28%5B%5Btop%5D%5D%29%0D%0A%20%20%20%20%2Ebottom%28%5B%5Bbottom%5D%5D%29%0D%0A%20%20%20%20%2Ebetween%5Fchildren%28%5B%5Bbetween%5Fchildren%5D%5D%29%0D%0A%20%20%20%20%2Ecolor%28%5B%5Bborder%5Fcolor%5D%5D%29%0D%0A%20%20%20%20%2Eposition%28%5B%5Bposition%5D%5D%29%0D%0A%20%20%29%0D%0A%20%20%2Elayout%28%7Cl%7C%20l%2Epadding%2812%29%2Egap%2820%29%29%0D%0A%20%20%2Echildren%28%7Cui%7C%20%7B%0D%0A%20%20%20%20ui%2Etext%28%22A%22%2C%20%7Ct%7C%20t%2Efont%5Fsize%2824%29%29%3B%0D%0A%20%20%20%20ui%2Etext%28%22B%22%2C%20%7Ct%7C%20t%2Efont%5Fsize%2824%29%29%3B%0D%0A%20%20%20%20ui%2Etext%28%22C%22%2C%20%7Ct%7C%20t%2Efont%5Fsize%2824%29%29%3B%0D%0A%20%20%7D%29%3B%0D%0A%2D%2D%2D%0D%0An%2Eleft%20%3D%202%0D%0An%2Eright%20%3D%202%0D%0An%2Etop%20%3D%202%0D%0An%2Ebottom%20%3D%202%0D%0An%2Ebetween%5Fchildren%20%3D%201%0D%0Ac%2Eborder%5Fcolor%20%3D%200x4A4440%0D%0Ae%2Eposition%20%3D%20Outside%20%3B%20Middle%20%3B%20Inside"
+  style="width: 100%; height: 600px; border: 1px solid #262220; border-radius: 12px; margin: 1.5rem 0;"
+  loading="lazy"
+  tabindex="-1"></iframe>
+
+<p><code>.all(2)</code> = <code>.left(2).right(2).top(2).bottom(2)</code>. <code>.between_children()</code> is separate.</p>
+<h3 id="border-position"><a class="zola-anchor" href="#border-position" aria-label="Anchor link for: border-position">🔗</a>Border position</h3>
+<p>Choose where the border is drawn:</p>
+<table><thead><tr><th>Value</th><th>Behavior</th></tr></thead><tbody>
+<tr><td><code>Outside</code></td><td>Border is fully outside (default)</td></tr>
+<tr><td><code>Middle</code></td><td>Border is centered on the edge</td></tr>
+<tr><td><code>Inside</code></td><td>Border is fully inside the element bounds</td></tr>
+</tbody></table>
 <h2 id="overflow"><a class="zola-anchor" href="#overflow" aria-label="Anchor link for: overflow">🔗</a>Overflow</h2>
 <p>By default, children can overflow their parent. Use <code>.overflow()</code> to control clipping
 and scrolling:</p>
@@ -741,13 +774,30 @@ and scrolling:</p>
 <span class="giallo-l"><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">overflow</span><span style="color: #9399B2;">(</span><span style="color: #94E2D5;">|</span><span>o</span><span style="color: #94E2D5;">|</span><span> o</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">scroll_y</span><span style="color: #9399B2;">())</span></span>
 <span class="giallo-l"></span>
 <span class="giallo-l"><span style="color: #9399B2;font-style: italic;">// Scroll both axes</span></span>
-<span class="giallo-l"><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">overflow</span><span style="color: #9399B2;">(</span><span style="color: #94E2D5;">|</span><span>o</span><span style="color: #94E2D5;">|</span><span> o</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">scroll</span><span style="color: #9399B2;">())</span></span></code></pre>
+<span class="giallo-l"><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">overflow</span><span style="color: #9399B2;">(</span><span style="color: #94E2D5;">|</span><span>o</span><span style="color: #94E2D5;">|</span><span> o</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">scroll</span><span style="color: #9399B2;">())</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #9399B2;font-style: italic;">// Disable mouse drag-scrolling, keep touch + wheel</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">overflow</span><span style="color: #9399B2;">(</span><span style="color: #94E2D5;">|</span><span>o</span><span style="color: #94E2D5;">|</span><span> o</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">scroll_y</span><span style="color: #9399B2;">()</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">no_drag_scroll</span><span style="color: #9399B2;">())</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #9399B2;font-style: italic;">// Enable a scrollbar</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">overflow</span><span style="color: #9399B2;">(</span><span style="color: #94E2D5;">|</span><span>o</span><span style="color: #94E2D5;">|</span><span> o</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">scroll_y</span><span style="color: #9399B2;">()</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">scrollbar</span><span style="color: #9399B2;">(</span><span style="color: #94E2D5;">|</span><span>s</span><span style="color: #94E2D5;">|</span><span style="color: #9399B2;"> {</span></span>
+<span class="giallo-l"><span>  s</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">width</span><span style="color: #9399B2;">(</span><span style="color: #FAB387;">4</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #9399B2;">)</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">   .</span><span style="color: #89B4FA;font-style: italic;">corner_radius</span><span style="color: #9399B2;">(</span><span style="color: #FAB387;">2</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #9399B2;">)</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">   .</span><span style="color: #89B4FA;font-style: italic;">thumb_color</span><span style="color: #9399B2;">(</span><span style="color: #FAB387;">0xFFFFFF</span><span style="color: #9399B2;">)</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">   .</span><span style="color: #89B4FA;font-style: italic;">track_color</span><span style="color: #9399B2;">(</span><span style="color: #FAB387;">0x141414</span><span style="color: #9399B2;">)</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">   .</span><span style="color: #89B4FA;font-style: italic;">min_thumb_size</span><span style="color: #9399B2;">(</span><span style="color: #FAB387;">18</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #9399B2;">)</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">   .</span><span style="color: #89B4FA;font-style: italic;">hide_after_frames</span><span style="color: #9399B2;">(</span><span style="color: #FAB387;">60</span><span style="color: #9399B2;">)</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">}))</span></span></code></pre>
 <p>Clipping hides any content that extends beyond the element's bounds. Scrolling
 enables drag/wheel interaction so the user can pan through the overflow.</p>
 <h2 id="aspect-ratio"><a class="zola-anchor" href="#aspect-ratio" aria-label="Anchor link for: aspect-ratio">🔗</a>Aspect ratio</h2>
 <p>Lock an element to a specific aspect ratio:</p>
-<pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="rust"><span class="giallo-l"><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">aspect_ratio</span><span style="color: #9399B2;">(</span><span style="color: #FAB387;">16</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #94E2D5;"> /</span><span style="color: #FAB387;"> 9</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #9399B2;">)</span></span></code></pre>
-<p>The engine fills in whichever dimension is unset. If both height and width are explicitly sized, aspect ratio has no effect.</p>
+<pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="rust"><span class="giallo-l"><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">aspect_ratio</span><span style="color: #9399B2;">(</span><span style="color: #FAB387;">16</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #94E2D5;"> /</span><span style="color: #FAB387;"> 9</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #9399B2;">)</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">contain</span><span style="color: #9399B2;">(</span><span style="color: #FAB387;">16</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #94E2D5;"> /</span><span style="color: #FAB387;"> 9</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #9399B2;">)</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">cover</span><span style="color: #9399B2;">(</span><span style="color: #FAB387;">16</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #94E2D5;"> /</span><span style="color: #FAB387;"> 9</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #9399B2;">)</span></span></code></pre>
+<p>With <code>aspect_ratio()</code>, the engine fills in whichever dimension is unset. If both height and width are explicitly sized, aspect ratio will use contain behavior. <code>contain()</code> and <code>cover()</code> work like in CSS.</p>
 <h2 id="passing-ui-into-functions"><a class="zola-anchor" href="#passing-ui-into-functions" aria-label="Anchor link for: passing-ui-into-functions">🔗</a>Passing Ui into functions</h2>
 <p>Pass Ui to functions for modular UI:</p>
 <pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="rust"><span class="giallo-l"><span style="color: #CBA6F7;">fn</span><span style="color: #89B4FA;font-style: italic;"> nav_item</span><span style="color: #9399B2;">(</span><span style="color: #EBA0AC;">ui</span><span style="color: #94E2D5;">: &amp;</span><span style="color: #CBA6F7;">mut</span><span style="color: #F9E2AF;font-style: italic;"> Ui</span><span style="color: #9399B2;">,</span><span style="color: #EBA0AC;"> label</span><span style="color: #94E2D5;">: &amp;</span><span style="color: #F9E2AF;font-style: italic;">str</span><span style="color: #9399B2;">,</span><span style="color: #EBA0AC;"> active</span><span style="color: #94E2D5;">:</span><span style="color: #F9E2AF;font-style: italic;"> bool</span><span style="color: #9399B2;">) {</span></span>
@@ -771,7 +821,7 @@ enables drag/wheel interaction so the user can pan through the overflow.</p>
 
 <iframe
   id="ply-frame-sidebar_nav"
-  src="/examples/shell.html?id=sidebar_nav#ui%2Eelement%28%29%0A%20%20%2Ewidth%28fixed%21%28200%2E0%29%29%0A%20%20%2Eheight%28grow%21%28%29%29%0A%20%20%2Ebackground%5Fcolor%28%5B%5Bbg%5D%5D%29%0A%20%20%2Elayout%28%7Cl%7C%20l%2Edirection%28TopToBottom%29%2Egap%284%29%2Epadding%288%29%29%0A%20%20%2Echildren%28%7Cui%7C%20%7B%0A%5B%5Bitems%3A%20%20%20%20nav%5Fitem%28ui%2C%20%22%24%22%2C%20false%29%3B%5D%5D%0A%20%20%7D%29%3B%0A%2D%2D%2D%0Ac%2Ebg%20%3D%200x181515%0Al%2Eitems%20%3D%20Home%7CSettings%7CAbout"
+  src="/examples/shell.html?id=sidebar_nav#ui%2Eelement%28%29%0D%0A%20%20%2Ewidth%28fixed%21%28200%2E0%29%29%0D%0A%20%20%2Eheight%28grow%21%28%29%29%0D%0A%20%20%2Ebackground%5Fcolor%28%5B%5Bbg%5D%5D%29%0D%0A%20%20%2Elayout%28%7Cl%7C%20l%2Edirection%28TopToBottom%29%2Egap%284%29%2Epadding%288%29%29%0D%0A%20%20%2Echildren%28%7Cui%7C%20%7B%0D%0A%5B%5Bitems%3A%20%20%20%20nav%5Fitem%28ui%2C%20%22%24%22%2C%20false%29%3B%5D%5D%0D%0A%20%20%7D%29%3B%0D%0A%2D%2D%2D%0D%0Ac%2Ebg%20%3D%200x181515%0D%0Al%2Eitems%20%3D%20Home%7CSettings%7CAbout"
   style="width: 100%; height: 495px; border: 1px solid #262220; border-radius: 12px; margin: 1.5rem 0;"
   loading="lazy"
   tabindex="-1"></iframe>
@@ -893,6 +943,16 @@ enables drag/wheel interaction so the user can pan through the overflow.</p>
                     <a href="#borders" class="page-toc-panel__link">
                         Borders
                     </a>
+                    
+                    <ul class="page-toc-panel__list page-toc-panel__list--nested">
+                        
+                        <li class="page-toc-panel__item">
+                            <a href="#border-position" class="page-toc-panel__link">
+                                Border position
+                            </a>
+                        </li>
+                        
+                    </ul>
                     
                 </li>
                 

@@ -406,8 +406,26 @@
                     
                     
                     <li class="toc__item">
-                        <a href="https://plyx.iz.rs/docs/sound/" class="toc__link ">
+                        <a href="https://plyx.iz.rs/docs/storage/" class="toc__link ">
                             <span class="toc__number">15.</span>
+                            Storage
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/jobs/" class="toc__link ">
+                            <span class="toc__number">16.</span>
+                            Jobs
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/sound/" class="toc__link ">
+                            <span class="toc__number">17.</span>
                             Sound
                         </a>
                     </li>
@@ -416,7 +434,7 @@
                     
                     <li class="toc__item">
                         <a href="https://plyx.iz.rs/docs/cross-platform/" class="toc__link ">
-                            <span class="toc__number">16.</span>
+                            <span class="toc__number">18.</span>
                             Cross-Platform Builds
                         </a>
                     </li>
@@ -425,7 +443,7 @@
                     
                     <li class="toc__item">
                         <a href="https://plyx.iz.rs/docs/advanced/" class="toc__link ">
-                            <span class="toc__number">17.</span>
+                            <span class="toc__number">19.</span>
                             Advanced Topics
                         </a>
                     </li>
@@ -706,8 +724,8 @@ which is how you'd position a tooltip below something.</p>
 <h2 id="offset"><a class="zola-anchor" href="#offset" aria-label="Anchor link for: offset">🔗</a>Offset</h2>
 <p>Add spacing between the floating element and its anchor point:</p>
 <pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="rust"><span class="giallo-l"><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">floating</span><span style="color: #9399B2;">(</span><span style="color: #94E2D5;">|</span><span>f</span><span style="color: #94E2D5;">|</span><span> f</span></span>
-<span class="giallo-l"><span style="color: #94E2D5;">    .</span><span style="color: #89B4FA;font-style: italic;">anchor</span><span style="color: #9399B2;">((</span><span style="color: #F9E2AF;font-style: italic;">CenterX</span><span style="color: #9399B2;">,</span><span style="color: #F9E2AF;font-style: italic;"> Top</span><span style="color: #9399B2;">), (</span><span style="color: #F9E2AF;font-style: italic;">CenterX</span><span style="color: #9399B2;">,</span><span style="color: #F9E2AF;font-style: italic;"> Bottom</span><span style="color: #9399B2;">))</span></span>
-<span class="giallo-l"><span style="color: #94E2D5;">    .</span><span style="color: #89B4FA;font-style: italic;">offset</span><span style="color: #9399B2;">(</span><span style="color: #FAB387;">0</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #9399B2;">,</span><span style="color: #FAB387;"> 8</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #9399B2;">)</span><span style="color: #9399B2;font-style: italic;">  // 8px gap below the parent</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">anchor</span><span style="color: #9399B2;">((</span><span style="color: #F9E2AF;font-style: italic;">CenterX</span><span style="color: #9399B2;">,</span><span style="color: #F9E2AF;font-style: italic;"> Top</span><span style="color: #9399B2;">), (</span><span style="color: #F9E2AF;font-style: italic;">CenterX</span><span style="color: #9399B2;">,</span><span style="color: #F9E2AF;font-style: italic;"> Bottom</span><span style="color: #9399B2;">))</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">offset</span><span style="color: #9399B2;">((</span><span style="color: #FAB387;">0</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #9399B2;">,</span><span style="color: #FAB387;"> 8</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #9399B2;">))</span><span style="color: #9399B2;font-style: italic;">  // 8px gap below the parent</span></span>
 <span class="giallo-l"><span style="color: #9399B2;">)</span></span></code></pre><h2 id="z-index"><a class="zola-anchor" href="#z-index" aria-label="Anchor link for: z-index">🔗</a>Z-index</h2>
 <p>Control stacking order with <code>.z_index()</code>. Higher values render on top:</p>
 <pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="rust"><span class="giallo-l"><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">floating</span><span style="color: #9399B2;">(</span><span style="color: #94E2D5;">|</span><span>f</span><span style="color: #94E2D5;">|</span><span> f</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">attach_parent</span><span style="color: #9399B2;">()</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">z_index</span><span style="color: #9399B2;">(</span><span style="color: #FAB387;">10</span><span style="color: #9399B2;">))</span><span style="color: #9399B2;font-style: italic;">    // dropdown</span></span>
@@ -744,7 +762,7 @@ block interaction:</p>
 
 
 <iframe
-  src="/examples/shell.html?id=tooltip_demo#ui%2Eelement%28%29%0A%20%20%2Ewidth%28fit%21%28%29%29%2Eheight%28fit%21%28%29%29%0A%20%20%2Ebackground%5Fcolor%280x2E2A28%29%0A%20%20%2Ecorner%5Fradius%288%2E0%29%0A%20%20%2Echildren%28%7Cui%7C%20%7B%0A%20%20%20%20ui%2Etext%28%22%5B%5Blabel%5D%5D%22%2C%20%7Ct%7C%20t%2Efont%5Fsize%2814%29%2Ecolor%280xE8E0DC%29%29%3B%0A%0A%20%20%20%20if%20ui%2Ehovered%28%29%20%7B%0A%20%20%20%20%20%20ui%2Eelement%28%29%0A%20%20%20%20%20%20%20%20%2Efloating%28%7Cf%7C%20f%0A%20%20%20%20%20%20%20%20%20%20%2Eattach%5Fparent%28%29%0A%20%20%20%20%20%20%20%20%20%20%2Eanchor%28%28CenterX%2C%20Top%29%2C%20%28CenterX%2C%20Bottom%29%29%0A%20%20%20%20%20%20%20%20%20%20%2Eoffset%280%2E0%2C%204%2E0%29%0A%20%20%20%20%20%20%20%20%29%0A%20%20%20%20%20%20%20%20%2Echildren%28%7Cui%7C%20%7B%0A%20%20%20%20%20%20%20%20%20%20ui%2Etext%28%22%5B%5Btooltip%5D%5D%22%2C%20%7Ct%7C%20t%2Efont%5Fsize%2812%29%2Ecolor%280x9E9590%29%29%3B%0A%20%20%20%20%20%20%20%20%7D%29%3B%0A%20%20%20%20%7D%0A%20%20%7D%29%3B%0A%2D%2D%2D%0Alabel%20%3D%20Hover%20me%20for%20info%0Atooltip%20%3D%20Extra%20information%20here"
+  src="/examples/shell.html?id=tooltip_demo#ui%2Eelement%28%29%0D%0A%20%20%2Ewidth%28fit%21%28%29%29%2Eheight%28fit%21%28%29%29%0D%0A%20%20%2Ebackground%5Fcolor%280x2E2A28%29%0D%0A%20%20%2Ecorner%5Fradius%288%2E0%29%0D%0A%20%20%2Echildren%28%7Cui%7C%20%7B%0D%0A%20%20%20%20ui%2Etext%28%22%5B%5Blabel%5D%5D%22%2C%20%7Ct%7C%20t%2Efont%5Fsize%2814%29%2Ecolor%280xE8E0DC%29%29%3B%0D%0A%0D%0A%20%20%20%20if%20ui%2Ehovered%28%29%20%7B%0D%0A%20%20%20%20%20%20ui%2Eelement%28%29%0D%0A%20%20%20%20%20%20%20%20%2Efloating%28%7Cf%7C%20f%0D%0A%20%20%20%20%20%20%20%20%20%20%2Eattach%5Fparent%28%29%0D%0A%20%20%20%20%20%20%20%20%20%20%2Eanchor%28%28CenterX%2C%20Top%29%2C%20%28CenterX%2C%20Bottom%29%29%0D%0A%20%20%20%20%20%20%20%20%20%20%2Eoffset%28%280%2E0%2C%204%2E0%29%29%0D%0A%20%20%20%20%20%20%20%20%29%0D%0A%20%20%20%20%20%20%20%20%2Echildren%28%7Cui%7C%20%7B%0D%0A%20%20%20%20%20%20%20%20%20%20ui%2Etext%28%22%5B%5Btooltip%5D%5D%22%2C%20%7Ct%7C%20t%2Efont%5Fsize%2812%29%2Ecolor%280x9E9590%29%29%3B%0D%0A%20%20%20%20%20%20%20%20%7D%29%3B%0D%0A%20%20%20%20%7D%0D%0A%20%20%7D%29%3B%0D%0A%2D%2D%2D%0D%0Alabel%20%3D%20Hover%20me%20for%20info%0D%0Atooltip%20%3D%20Extra%20information%20here"
   style="width: 100%; height: 600px; border: 1px solid #262220; border-radius: 12px; margin: 1.5rem 0;"
   loading="lazy"
   tabindex="-1"></iframe>
@@ -757,7 +775,7 @@ block interaction:</p>
 
 
 <iframe
-  src="/examples/shell.html?id=notification_badge#ui%2Eelement%28%29%0A%20%20%2Ewidth%28fixed%21%28280%2E0%29%29%2Eheight%28fixed%21%2880%2E0%29%29%0A%20%20%2Ebackground%5Fcolor%280x2E2A28%29%0A%20%20%2Ecorner%5Fradius%2812%2E0%29%0A%20%20%2Echildren%28%7Cui%7C%20%7B%0A%20%20%20%20ui%2Etext%28%22Messages%22%2C%20%7Ct%7C%20t%2Efont%5Fsize%2816%29%2Ecolor%280xFFFFFF%29%29%3B%0A%0A%20%20%20%20ui%2Eelement%28%29%0A%20%20%20%20%20%20%2Ewidth%28fixed%21%2824%2E0%29%29%2Eheight%28fixed%21%2824%2E0%29%29%0A%20%20%20%20%20%20%2Ebackground%5Fcolor%28%5B%5Bbadge%5Fcolor%5D%5D%29%0A%20%20%20%20%20%20%2Ecorner%5Fradius%2812%2E0%29%0A%20%20%20%20%20%20%2Efloating%28%7Cf%7C%20f%0A%20%20%20%20%20%20%20%20%2Eattach%5Fparent%28%29%0A%20%20%20%20%20%20%20%20%2Eanchor%28%28CenterX%2C%20CenterY%29%2C%20%28Right%2C%20Top%29%29%0A%20%20%20%20%20%20%29%0A%20%20%20%20%20%20%2Echildren%28%7Cui%7C%20%7B%0A%20%20%20%20%20%20%20%20ui%2Etext%28%22%5B%5Bcount%5D%5D%22%2C%20%7Ct%7C%20t%2Efont%5Fsize%2812%29%2Ecolor%280xFFFFFF%29%29%3B%0A%20%20%20%20%20%20%7D%29%3B%0A%20%20%7D%29%3B%0A%2D%2D%2D%0Ac%2Ebadge%5Fcolor%20%3D%200xB91414%0Acount%20%3D%203"
+  src="/examples/shell.html?id=notification_badge#ui%2Eelement%28%29%0D%0A%20%20%2Ewidth%28fixed%21%28280%2E0%29%29%2Eheight%28fixed%21%2880%2E0%29%29%0D%0A%20%20%2Ebackground%5Fcolor%280x2E2A28%29%0D%0A%20%20%2Ecorner%5Fradius%2812%2E0%29%0D%0A%20%20%2Echildren%28%7Cui%7C%20%7B%0D%0A%20%20%20%20ui%2Etext%28%22Messages%22%2C%20%7Ct%7C%20t%2Efont%5Fsize%2816%29%2Ecolor%280xFFFFFF%29%29%3B%0D%0A%0D%0A%20%20%20%20ui%2Eelement%28%29%0D%0A%20%20%20%20%20%20%2Ewidth%28fixed%21%2824%2E0%29%29%2Eheight%28fixed%21%2824%2E0%29%29%0D%0A%20%20%20%20%20%20%2Ebackground%5Fcolor%28%5B%5Bbadge%5Fcolor%5D%5D%29%0D%0A%20%20%20%20%20%20%2Ecorner%5Fradius%2812%2E0%29%0D%0A%20%20%20%20%20%20%2Efloating%28%7Cf%7C%20f%0D%0A%20%20%20%20%20%20%20%20%2Eattach%5Fparent%28%29%0D%0A%20%20%20%20%20%20%20%20%2Eanchor%28%28CenterX%2C%20CenterY%29%2C%20%28Right%2C%20Top%29%29%0D%0A%20%20%20%20%20%20%29%0D%0A%20%20%20%20%20%20%2Echildren%28%7Cui%7C%20%7B%0D%0A%20%20%20%20%20%20%20%20ui%2Etext%28%22%5B%5Bcount%5D%5D%22%2C%20%7Ct%7C%20t%2Efont%5Fsize%2812%29%2Ecolor%280xFFFFFF%29%29%3B%0D%0A%20%20%20%20%20%20%7D%29%3B%0D%0A%20%20%7D%29%3B%0D%0A%2D%2D%2D%0D%0Ac%2Ebadge%5Fcolor%20%3D%200xB91414%0D%0Acount%20%3D%203"
   style="width: 100%; height: 600px; border: 1px solid #262220; border-radius: 12px; margin: 1.5rem 0;"
   loading="lazy"
   tabindex="-1"></iframe>

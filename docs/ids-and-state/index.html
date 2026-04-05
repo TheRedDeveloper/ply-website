@@ -132,7 +132,7 @@
                 },
                 
                 
-                "wordCount": 454,
+                "wordCount": 468,
                 
                 "inLanguage": "en"
             }
@@ -406,8 +406,26 @@
                     
                     
                     <li class="toc__item">
-                        <a href="https://plyx.iz.rs/docs/sound/" class="toc__link ">
+                        <a href="https://plyx.iz.rs/docs/storage/" class="toc__link ">
                             <span class="toc__number">15.</span>
+                            Storage
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/jobs/" class="toc__link ">
+                            <span class="toc__number">16.</span>
+                            Jobs
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/sound/" class="toc__link ">
+                            <span class="toc__number">17.</span>
                             Sound
                         </a>
                     </li>
@@ -416,7 +434,7 @@
                     
                     <li class="toc__item">
                         <a href="https://plyx.iz.rs/docs/cross-platform/" class="toc__link ">
-                            <span class="toc__number">16.</span>
+                            <span class="toc__number">18.</span>
                             Cross-Platform Builds
                         </a>
                     </li>
@@ -425,7 +443,7 @@
                     
                     <li class="toc__item">
                         <a href="https://plyx.iz.rs/docs/advanced/" class="toc__link ">
-                            <span class="toc__number">17.</span>
+                            <span class="toc__number">19.</span>
                             Advanced Topics
                         </a>
                     </li>
@@ -701,7 +719,7 @@ elements this is all you need.</p>
 
 <iframe
   id="ply-frame-indexed_nav_demo"
-  src="/examples/shell.html?id=indexed_nav_demo#let%20items%20%3D%20%5B%0A%5B%5Bitems%3A%20%20%22%24%22%2C%5D%5D%0A%5D%3B%0Alet%20active%20%3D%20%5B%5Bactive%5D%5D%3B%0A%0Afor%20%28i%2C%20label%29%20in%20items%2Eiter%28%29%2Eenumerate%28%29%20%7B%0A%20%20let%20bg%20%3D%20if%20i%20%3D%3D%20active%20%7B%200x3A3533%20%7D%20else%20%7B%200x262220%20%7D%3B%0A%20%20ui%2Eelement%28%29%0A%20%20%20%20%2Eid%28%28%22nav%5Fitem%22%2C%20i%20as%20u32%29%29%0A%20%20%20%20%2Ewidth%28grow%21%28%29%29%0A%20%20%20%20%2Eheight%28fixed%21%2836%2E0%29%29%0A%20%20%20%20%2Ebackground%5Fcolor%28bg%29%0A%20%20%20%20%2Ecorner%5Fradius%286%2E0%29%0A%20%20%20%20%2Elayout%28%7Cl%7C%20l%2Epadding%288%29%2Ealign%28Left%2C%20CenterY%29%29%0A%20%20%20%20%2Echildren%28%7Cui%7C%20%7B%0A%20%20%20%20%20%20ui%2Etext%28label%2C%20%7Ct%7C%20t%2Efont%5Fsize%2814%29%2Ecolor%280xE8E0DC%29%29%3B%0A%20%20%20%20%7D%29%3B%0A%7D%0A%2D%2D%2D%0Al%2Eitems%3DHome%7CSettings%7CProfile%7CAbout%0An%2Eactive%3D0"
+  src="/examples/shell.html?id=indexed_nav_demo#let%20items%20%3D%20%5B%0D%0A%5B%5Bitems%3A%20%20%22%24%22%2C%5D%5D%0D%0A%5D%3B%0D%0Alet%20active%20%3D%20%5B%5Bactive%5D%5D%3B%0D%0A%0D%0Afor%20%28i%2C%20label%29%20in%20items%2Eiter%28%29%2Eenumerate%28%29%20%7B%0D%0A%20%20let%20bg%20%3D%20if%20i%20%3D%3D%20active%20%7B%200x3A3533%20%7D%20else%20%7B%200x262220%20%7D%3B%0D%0A%20%20ui%2Eelement%28%29%0D%0A%20%20%20%20%2Eid%28%28%22nav%5Fitem%22%2C%20i%20as%20u32%29%29%0D%0A%20%20%20%20%2Ewidth%28grow%21%28%29%29%0D%0A%20%20%20%20%2Eheight%28fixed%21%2836%2E0%29%29%0D%0A%20%20%20%20%2Ebackground%5Fcolor%28bg%29%0D%0A%20%20%20%20%2Ecorner%5Fradius%286%2E0%29%0D%0A%20%20%20%20%2Elayout%28%7Cl%7C%20l%2Epadding%288%29%2Ealign%28Left%2C%20CenterY%29%29%0D%0A%20%20%20%20%2Echildren%28%7Cui%7C%20%7B%0D%0A%20%20%20%20%20%20ui%2Etext%28label%2C%20%7Ct%7C%20t%2Efont%5Fsize%2814%29%2Ecolor%280xE8E0DC%29%29%3B%0D%0A%20%20%20%20%7D%29%3B%0D%0A%7D%0D%0A%2D%2D%2D%0D%0Al%2Eitems%3DHome%7CSettings%7CProfile%7CAbout%0D%0An%2Eactive%3D0"
   style="width: 100%; height: 785px; border: 1px solid #262220; border-radius: 12px; margin: 1.5rem 0;"
   loading="lazy"
   tabindex="-1"></iframe>
@@ -728,7 +746,7 @@ a stable ID regardless of how many items are in the list. Whenever you need an i
 
 
 <iframe
-  src="/examples/shell.html?id=hover_press_demo#ui%2Eelement%28%29%0A%20%20%2Ewidth%28fit%21%28%29%29%0A%20%20%2Eheight%28fixed%21%2840%2E0%29%29%0A%20%20%2Ecorner%5Fradius%288%2E0%29%0A%20%20%2Echildren%28%7Cui%7C%20%7B%0A%20%20%20%20let%20bg%20%3D%20if%20ui%2Epressed%28%29%20%7B%0A%20%20%20%20%20%20%5B%5Bpress%5Fcolor%5D%5D%0A%20%20%20%20%7D%20else%20if%20ui%2Ehovered%28%29%20%7B%0A%20%20%20%20%20%20%5B%5Bhover%5Fcolor%5D%5D%0A%20%20%20%20%7D%20else%20%7B%0A%20%20%20%20%20%20%5B%5Bdefault%5Fcolor%5D%5D%0A%20%20%20%20%7D%3B%0A%0A%20%20%20%20ui%2Eelement%28%29%0A%20%20%20%20%20%20%2Ewidth%28fit%21%28%29%29%0A%20%20%20%20%20%20%2Eheight%28grow%21%28%29%29%0A%20%20%20%20%20%20%2Ebackground%5Fcolor%28bg%29%0A%20%20%20%20%20%20%2Ecorner%5Fradius%288%2E0%29%0A%20%20%20%20%20%20%2Elayout%28%7Cl%7C%20l%2Epadding%28%280%2C%2016%2C%200%2C%2016%29%29%2Ealign%28CenterX%2C%20CenterY%29%29%0A%20%20%20%20%20%20%2Echildren%28%7Cui%7C%20%7B%0A%20%20%20%20%20%20%20%20ui%2Etext%28%22Hover%20me%22%2C%20%7Ct%7C%20t%2Efont%5Fsize%2814%29%2Ecolor%280xE8E0DC%29%29%3B%0A%20%20%20%20%20%20%7D%29%3B%0A%20%20%7D%29%3B%0A%2D%2D%2D%0Ac%2Epress%5Fcolor%3D0xFF654D%0Ac%2Ehover%5Fcolor%3D0x3A3533%0Ac%2Edefault%5Fcolor%3D0x262220"
+  src="/examples/shell.html?id=hover_press_demo#ui%2Eelement%28%29%0D%0A%20%20%2Ewidth%28fit%21%28%29%29%0D%0A%20%20%2Eheight%28fixed%21%2840%2E0%29%29%0D%0A%20%20%2Ecorner%5Fradius%288%2E0%29%0D%0A%20%20%2Echildren%28%7Cui%7C%20%7B%0D%0A%20%20%20%20let%20bg%20%3D%20if%20ui%2Epressed%28%29%20%7B%0D%0A%20%20%20%20%20%20%5B%5Bpress%5Fcolor%5D%5D%0D%0A%20%20%20%20%7D%20else%20if%20ui%2Ehovered%28%29%20%7B%0D%0A%20%20%20%20%20%20%5B%5Bhover%5Fcolor%5D%5D%0D%0A%20%20%20%20%7D%20else%20%7B%0D%0A%20%20%20%20%20%20%5B%5Bdefault%5Fcolor%5D%5D%0D%0A%20%20%20%20%7D%3B%0D%0A%0D%0A%20%20%20%20ui%2Eelement%28%29%0D%0A%20%20%20%20%20%20%2Ewidth%28fit%21%28%29%29%0D%0A%20%20%20%20%20%20%2Eheight%28grow%21%28%29%29%0D%0A%20%20%20%20%20%20%2Ebackground%5Fcolor%28bg%29%0D%0A%20%20%20%20%20%20%2Ecorner%5Fradius%288%2E0%29%0D%0A%20%20%20%20%20%20%2Elayout%28%7Cl%7C%20l%2Epadding%28%280%2C%2016%2C%200%2C%2016%29%29%2Ealign%28CenterX%2C%20CenterY%29%29%0D%0A%20%20%20%20%20%20%2Echildren%28%7Cui%7C%20%7B%0D%0A%20%20%20%20%20%20%20%20ui%2Etext%28%22Hover%20me%22%2C%20%7Ct%7C%20t%2Efont%5Fsize%2814%29%2Ecolor%280xE8E0DC%29%29%3B%0D%0A%20%20%20%20%20%20%7D%29%3B%0D%0A%20%20%7D%29%3B%0D%0A%2D%2D%2D%0D%0Ac%2Epress%5Fcolor%3D0xFF654D%0D%0Ac%2Ehover%5Fcolor%3D0x3A3533%0D%0Ac%2Edefault%5Fcolor%3D0x262220"
   style="width: 100%; height: 650px; border: 1px solid #262220; border-radius: 12px; margin: 1.5rem 0;"
   loading="lazy"
   tabindex="-1"></iframe>
@@ -736,6 +754,8 @@ a stable ID regardless of how many items are in the list. Whenever you need an i
 <table><thead><tr><th>Method</th><th>What it does</th></tr></thead><tbody>
 <tr><td><code>ui.hovered()</code></td><td>Is pointer over this element?</td></tr>
 <tr><td><code>ui.pressed()</code></td><td>Is pointer held down on this element</td></tr>
+<tr><td><code>ui.just_pressed()</code></td><td>Was this element pressed this frame?</td></tr>
+<tr><td><code>ui.just_released()</code></td><td>Was this element released this frame?</td></tr>
 <tr><td><code>ui.focused()</code></td><td>Does this element have keyboard focus</td></tr>
 <tr><td><code>ui.scroll_offset()</code></td><td>What's this element's scroll offset</td></tr>
 </tbody></table>
@@ -745,6 +765,14 @@ closure you're inside.</p>
 <p>When you need to check state from anywhere use <code>Ply</code> methods with an ID:</p>
 <pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="rust"><span class="giallo-l"><span style="color: #CBA6F7;">if</span><span> ply</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">is_pressed</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;card&quot;</span><span style="color: #9399B2;">) {</span></span>
 <span class="giallo-l"><span style="color: #9399B2;font-style: italic;">  // card is being held down</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">}</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #CBA6F7;">if</span><span> ply</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">is_just_pressed</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;card&quot;</span><span style="color: #9399B2;">) {</span></span>
+<span class="giallo-l"><span style="color: #9399B2;font-style: italic;">  // one frame only</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">}</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span style="color: #CBA6F7;">if</span><span> ply</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">is_just_released</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;card&quot;</span><span style="color: #9399B2;">) {</span></span>
+<span class="giallo-l"><span style="color: #9399B2;font-style: italic;">  // one frame only</span></span>
 <span class="giallo-l"><span style="color: #9399B2;">}</span></span>
 <span class="giallo-l"></span>
 <span class="giallo-l"><span style="color: #CBA6F7;">let mut</span><span> ui</span><span style="color: #94E2D5;"> =</span><span> ply</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">begin</span><span style="color: #9399B2;">();</span></span>
@@ -787,7 +815,9 @@ You can use these query methods on both <code>ply</code> and <code>ui</code>.</p
 <span class="giallo-l"></span>
 <span class="giallo-l"><span style="color: #CBA6F7;">if let</span><span style="color: #F9E2AF;font-style: italic;"> Some</span><span style="color: #9399B2;">(</span><span>data</span><span style="color: #9399B2;">)</span><span style="color: #94E2D5;"> =</span><span> ply</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">scroll_container_data</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;my_list&quot;</span><span style="color: #9399B2;">) {</span></span>
 <span class="giallo-l"><span style="color: #9399B2;font-style: italic;">    // data.scroll_position, data.content_dimensions, etc.</span></span>
-<span class="giallo-l"><span style="color: #9399B2;">}</span></span></code></pre><h2 id="constructing-ids-directly"><a class="zola-anchor" href="#constructing-ids-directly" aria-label="Anchor link for: constructing-ids-directly">🔗</a>Constructing IDs directly</h2>
+<span class="giallo-l"><span style="color: #9399B2;">}</span></span>
+<span class="giallo-l"></span>
+<span class="giallo-l"><span>ui</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">set_scroll_position</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;my_list&quot;</span><span style="color: #9399B2;">, (</span><span style="color: #FAB387;">0</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #9399B2;">,</span><span style="color: #FAB387;"> 600</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #9399B2;">));</span></span></code></pre><h2 id="constructing-ids-directly"><a class="zola-anchor" href="#constructing-ids-directly" aria-label="Anchor link for: constructing-ids-directly">🔗</a>Constructing IDs directly</h2>
 <p>You can create IDs without an element builder:</p>
 <pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="rust"><span class="giallo-l"><span style="color: #CBA6F7;">let</span><span> id</span><span style="color: #94E2D5;"> =</span><span style="color: #F9E2AF;font-style: italic;"> Id</span><span style="color: #94E2D5;">::</span><span style="color: #89B4FA;font-style: italic;">new</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;my_button&quot;</span><span style="color: #9399B2;">);</span></span>
 <span class="giallo-l"><span style="color: #CBA6F7;">let</span><span> id</span><span style="color: #94E2D5;"> =</span><span style="color: #F9E2AF;font-style: italic;"> Id</span><span style="color: #94E2D5;">::</span><span style="color: #89B4FA;font-style: italic;">new_index</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;item&quot;</span><span style="color: #9399B2;">,</span><span style="color: #FAB387;"> 3</span><span style="color: #9399B2;">);</span></span></code></pre>

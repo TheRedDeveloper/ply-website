@@ -132,7 +132,7 @@
                 },
                 
                 
-                "wordCount": 348,
+                "wordCount": 372,
                 
                 "inLanguage": "en"
             }
@@ -406,8 +406,26 @@
                     
                     
                     <li class="toc__item">
-                        <a href="https://plyx.iz.rs/docs/sound/" class="toc__link ">
+                        <a href="https://plyx.iz.rs/docs/storage/" class="toc__link ">
                             <span class="toc__number">15.</span>
+                            Storage
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/jobs/" class="toc__link ">
+                            <span class="toc__number">16.</span>
+                            Jobs
+                        </a>
+                    </li>
+                    
+                    
+                    
+                    <li class="toc__item">
+                        <a href="https://plyx.iz.rs/docs/sound/" class="toc__link ">
+                            <span class="toc__number">17.</span>
                             Sound
                         </a>
                     </li>
@@ -416,7 +434,7 @@
                     
                     <li class="toc__item">
                         <a href="https://plyx.iz.rs/docs/cross-platform/" class="toc__link ">
-                            <span class="toc__number">16.</span>
+                            <span class="toc__number">18.</span>
                             Cross-Platform Builds
                         </a>
                     </li>
@@ -425,7 +443,7 @@
                     
                     <li class="toc__item">
                         <a href="https://plyx.iz.rs/docs/advanced/" class="toc__link ">
-                            <span class="toc__number">17.</span>
+                            <span class="toc__number">19.</span>
                             Advanced Topics
                         </a>
                     </li>
@@ -661,7 +679,7 @@ the engine can persist input state across frames:</p>
 
 
 <iframe
-  src="/examples/shell.html?id=basic_input#ui%2Eelement%28%29%0A%20%20%2Eid%28%22username%22%29%0A%20%20%2Ewidth%28fixed%21%28300%2E0%29%29%2Eheight%28fixed%21%2836%2E0%29%29%0A%20%20%2Ebackground%5Fcolor%280x262220%29%0A%20%20%2Ecorner%5Fradius%286%2E0%29%0A%20%20%2Etext%5Finput%28%7Ct%7C%20t%0A%20%20%20%20%2Eplaceholder%28%22%5B%5Bplaceholder%5D%5D%22%29%0A%20%20%20%20%2Efont%5Fsize%28%5B%5Bfont%5Fsize%5D%5D%29%0A%20%20%20%20%2Etext%5Fcolor%28%5B%5Btext%5Fcolor%5D%5D%29%0A%20%20%29%0A%20%20%2Eempty%28%29%3B%0A%2D%2D%2D%0Aplaceholder%20%3D%20Enter%20username%0An%2Efont%5Fsize%20%3D%2014%0Ac%2Etext%5Fcolor%20%3D%200xE8E0DC"
+  src="/examples/shell.html?id=basic_input#ui%2Eelement%28%29%0D%0A%20%20%2Eid%28%22username%22%29%0D%0A%20%20%2Ewidth%28fixed%21%28300%2E0%29%29%2Eheight%28fixed%21%2836%2E0%29%29%0D%0A%20%20%2Ebackground%5Fcolor%280x262220%29%0D%0A%20%20%2Ecorner%5Fradius%286%2E0%29%0D%0A%20%20%2Etext%5Finput%28%7Ct%7C%20t%0D%0A%20%20%20%20%2Eplaceholder%28%22%5B%5Bplaceholder%5D%5D%22%29%0D%0A%20%20%20%20%2Efont%5Fsize%28%5B%5Bfont%5Fsize%5D%5D%29%0D%0A%20%20%20%20%2Etext%5Fcolor%28%5B%5Btext%5Fcolor%5D%5D%29%0D%0A%20%20%29%0D%0A%20%20%2Eempty%28%29%3B%0D%0A%2D%2D%2D%0D%0Aplaceholder%20%3D%20Enter%20username%0D%0An%2Efont%5Fsize%20%3D%2014%0D%0Ac%2Etext%5Fcolor%20%3D%200xE8E0DC"
   style="width: 100%; height: 350px; border: 1px solid #262220; border-radius: 12px; margin: 1.5rem 0;"
   loading="lazy"
   tabindex="-1"></iframe>
@@ -678,9 +696,11 @@ and all standard keyboard shortcuts work.</p>
 <tr><td><code>.cursor_color(0xFFC32C)</code></td><td>Cursor line color</td><td>white</td></tr>
 <tr><td><code>.selection_color(c)</code></td><td>Selection highlight color</td><td>semi-transparent blue</td></tr>
 <tr><td><code>.max_length(100)</code></td><td>Maximum character count</td><td>unlimited</td></tr>
-<tr><td><code>.password(true)</code></td><td>Show dots instead of characters</td><td><code>false</code></td></tr>
-<tr><td><code>.multiline(true)</code></td><td>Enable multiline editing</td><td><code>false</code></td></tr>
-<tr><td><code>.no_styles_movement()</code></td><td>Cursor skips style markup (text-styling)</td><td><code>false</code></td></tr>
+<tr><td><code>.password()</code></td><td>Enable password mode</td><td>disabled</td></tr>
+<tr><td><code>.multiline()</code></td><td>Enable multiline editing</td><td>disabled</td></tr>
+<tr><td><code>.drag_select()</code></td><td>Enable mouse drag-to-select</td><td>disabled</td></tr>
+<tr><td>`.scrollbar(</td><td>s</td><td>...)`</td></tr>
+<tr><td><code>.no_styles_movement()</code></td><td>Cursor skips style markup (text-styling)</td><td>disabled</td></tr>
 </tbody></table>
 <h2 id="reading-text"><a class="zola-anchor" href="#reading-text" aria-label="Anchor link for: reading-text">🔗</a>Reading text</h2>
 <pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="rust"><span class="giallo-l"><span style="color: #CBA6F7;">let</span><span> username</span><span style="color: #94E2D5;"> =</span><span> ply</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">get_text_value</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;username&quot;</span><span style="color: #9399B2;">);</span></span></code></pre>
@@ -698,7 +718,7 @@ and all standard keyboard shortcuts work.</p>
 pressed (in single-line mode). If you call either method more than once, the
 last callback wins.</p>
 <h2 id="multiline"><a class="zola-anchor" href="#multiline" aria-label="Anchor link for: multiline">🔗</a>Multiline</h2>
-<p>Enable with <code>.multiline(true)</code>:</p>
+<p>Enable with <code>.multiline()</code>:</p>
 <pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="rust"><span class="giallo-l"><span>ui</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">element</span><span style="color: #9399B2;">()</span></span>
 <span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">id</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;editor&quot;</span><span style="color: #9399B2;">)</span></span>
 <span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">width</span><span style="color: #9399B2;">(</span><span style="color: #89B4FA;font-style: italic;">grow!</span><span style="color: #9399B2;">())</span></span>
@@ -706,7 +726,7 @@ last callback wins.</p>
 <span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">background_color</span><span style="color: #9399B2;">(</span><span style="color: #FAB387;">0x262220</span><span style="color: #9399B2;">)</span></span>
 <span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">corner_radius</span><span style="color: #9399B2;">(</span><span style="color: #FAB387;">8</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #9399B2;">)</span></span>
 <span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">text_input</span><span style="color: #9399B2;">(</span><span style="color: #94E2D5;">|</span><span>t</span><span style="color: #94E2D5;">|</span><span> t</span></span>
-<span class="giallo-l"><span style="color: #94E2D5;">    .</span><span style="color: #89B4FA;font-style: italic;">multiline</span><span style="color: #9399B2;">(</span><span style="color: #F38BA8;">true</span><span style="color: #9399B2;">)</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">    .</span><span style="color: #89B4FA;font-style: italic;">multiline</span><span style="color: #9399B2;">()</span></span>
 <span class="giallo-l"><span style="color: #94E2D5;">    .</span><span style="color: #89B4FA;font-style: italic;">font_size</span><span style="color: #9399B2;">(</span><span style="color: #FAB387;">14</span><span style="color: #9399B2;">)</span></span>
 <span class="giallo-l"><span style="color: #94E2D5;">    .</span><span style="color: #89B4FA;font-style: italic;">text_color</span><span style="color: #9399B2;">(</span><span style="color: #FAB387;">0xE8E0DC</span><span style="color: #9399B2;">)</span></span>
 <span class="giallo-l"><span style="color: #9399B2;">  )</span></span>
@@ -726,7 +746,7 @@ last callback wins.</p>
 </ul>
 <h2 id="password-mode"><a class="zola-anchor" href="#password-mode" aria-label="Anchor link for: password-mode">🔗</a>Password mode</h2>
 <pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="rust"><span class="giallo-l"><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">text_input</span><span style="color: #9399B2;">(</span><span style="color: #94E2D5;">|</span><span>t</span><span style="color: #94E2D5;">|</span><span> t</span></span>
-<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">password</span><span style="color: #9399B2;">(</span><span style="color: #F38BA8;">true</span><span style="color: #9399B2;">)</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">password</span><span style="color: #9399B2;">()</span></span>
 <span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">font_size</span><span style="color: #9399B2;">(</span><span style="color: #FAB387;">14</span><span style="color: #9399B2;">)</span></span>
 <span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">placeholder</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;Enter password&quot;</span><span style="color: #9399B2;">)</span></span>
 <span class="giallo-l"><span style="color: #9399B2;">)</span></span></code></pre>
@@ -738,6 +758,22 @@ last callback wins.</p>
   loading="lazy"
   tabindex="-1"></iframe>
 <p>Characters are displayed as dots. Copy/cut is disabled.</p>
+<h2 id="drag-select-and-scrollbar"><a class="zola-anchor" href="#drag-select-and-scrollbar" aria-label="Anchor link for: drag-select-and-scrollbar">🔗</a>Drag-select and scrollbar</h2>
+<pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="rust"><span class="giallo-l"><span>ui</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">element</span><span style="color: #9399B2;">()</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">id</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;editor&quot;</span><span style="color: #9399B2;">)</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">width</span><span style="color: #9399B2;">(</span><span style="color: #89B4FA;font-style: italic;">grow!</span><span style="color: #9399B2;">())</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">height</span><span style="color: #9399B2;">(</span><span style="color: #89B4FA;font-style: italic;">fixed!</span><span style="color: #9399B2;">(</span><span style="color: #FAB387;">120</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #9399B2;">))</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">text_input</span><span style="color: #9399B2;">(</span><span style="color: #94E2D5;">|</span><span>t</span><span style="color: #94E2D5;">|</span><span> t</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">    .</span><span style="color: #89B4FA;font-style: italic;">multiline</span><span style="color: #9399B2;">()</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">    .</span><span style="color: #89B4FA;font-style: italic;">drag_select</span><span style="color: #9399B2;">()</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">    .</span><span style="color: #89B4FA;font-style: italic;">scrollbar</span><span style="color: #9399B2;">(</span><span style="color: #94E2D5;">|</span><span>s</span><span style="color: #94E2D5;">|</span><span> s</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">      .</span><span style="color: #89B4FA;font-style: italic;">width</span><span style="color: #9399B2;">(</span><span style="color: #FAB387;">4</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #9399B2;">)</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">      .</span><span style="color: #89B4FA;font-style: italic;">thumb_color</span><span style="color: #9399B2;">(</span><span style="color: #FAB387;">0xC8C8C8</span><span style="color: #9399B2;">)</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">      .</span><span style="color: #89B4FA;font-style: italic;">hide_after_frames</span><span style="color: #9399B2;">(</span><span style="color: #FAB387;">90</span><span style="color: #9399B2;">)</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">    )</span></span>
+<span class="giallo-l"><span style="color: #9399B2;">  )</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">  .</span><span style="color: #89B4FA;font-style: italic;">empty</span><span style="color: #9399B2;">();</span></span></code></pre>
+<p>With <code>.drag_select()</code>, mouse drag selects text while touch drag still scrolls.</p>
 <h2 id="programmatic-control"><a class="zola-anchor" href="#programmatic-control" aria-label="Anchor link for: programmatic-control">🔗</a>Programmatic control</h2>
 <p>Manipulate text input state by ID:</p>
 <pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="rust"><span class="giallo-l"><span>ply</span><span style="color: #94E2D5;">.</span><span style="color: #89B4FA;font-style: italic;">set_text_value</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;editor&quot;</span><span style="color: #9399B2;">,</span><span style="color: #A6E3A1;"> &quot;Hello world&quot;</span><span style="color: #9399B2;">);</span></span>
@@ -793,7 +829,7 @@ last callback wins.</p>
 <span class="giallo-l"><span style="color: #94E2D5;">      .</span><span style="color: #89B4FA;font-style: italic;">background_color</span><span style="color: #9399B2;">(</span><span style="color: #FAB387;">0x262220</span><span style="color: #9399B2;">)</span></span>
 <span class="giallo-l"><span style="color: #94E2D5;">      .</span><span style="color: #89B4FA;font-style: italic;">corner_radius</span><span style="color: #9399B2;">(</span><span style="color: #FAB387;">6</span><span style="color: #9399B2;">.</span><span style="color: #FAB387;">0</span><span style="color: #9399B2;">)</span></span>
 <span class="giallo-l"><span style="color: #94E2D5;">      .</span><span style="color: #89B4FA;font-style: italic;">text_input</span><span style="color: #9399B2;">(</span><span style="color: #94E2D5;">|</span><span>t</span><span style="color: #94E2D5;">|</span><span> t</span></span>
-<span class="giallo-l"><span style="color: #94E2D5;">        .</span><span style="color: #89B4FA;font-style: italic;">password</span><span style="color: #9399B2;">(</span><span style="color: #F38BA8;">true</span><span style="color: #9399B2;">)</span></span>
+<span class="giallo-l"><span style="color: #94E2D5;">        .</span><span style="color: #89B4FA;font-style: italic;">password</span><span style="color: #9399B2;">()</span></span>
 <span class="giallo-l"><span style="color: #94E2D5;">        .</span><span style="color: #89B4FA;font-style: italic;">placeholder</span><span style="color: #9399B2;">(</span><span style="color: #A6E3A1;">&quot;Password&quot;</span><span style="color: #9399B2;">)</span></span>
 <span class="giallo-l"><span style="color: #94E2D5;">        .</span><span style="color: #89B4FA;font-style: italic;">font_size</span><span style="color: #9399B2;">(</span><span style="color: #FAB387;">14</span><span style="color: #9399B2;">)</span></span>
 <span class="giallo-l"><span style="color: #94E2D5;">        .</span><span style="color: #89B4FA;font-style: italic;">text_color</span><span style="color: #9399B2;">(</span><span style="color: #FAB387;">0xE8E0DC</span><span style="color: #9399B2;">)</span></span>
@@ -888,6 +924,13 @@ last callback wins.</p>
                 <li class="page-toc-panel__item">
                     <a href="#password-mode" class="page-toc-panel__link">
                         Password mode
+                    </a>
+                    
+                </li>
+                
+                <li class="page-toc-panel__item">
+                    <a href="#drag-select-and-scrollbar" class="page-toc-panel__link">
+                        Drag-select and scrollbar
                     </a>
                     
                 </li>
