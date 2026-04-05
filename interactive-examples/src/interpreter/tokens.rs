@@ -12,6 +12,7 @@ pub enum Token {
     // Punctuation
     Dot,
     Comma,
+    Colon,
     Semicolon,
     Pipe,
     Bang,

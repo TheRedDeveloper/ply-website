@@ -30,20 +30,12 @@ fn get<'a>(params: &'a Params, name: &str) -> Option<&'a str> {
         .map(|(_, v)| v.as_str())
 }
 
-/// Get all values for a given key (for multi-line params like multiple `text` entries).
-fn get_all<'a>(params: &'a Params, name: &str) -> Vec<&'a str> {
-    params
-        .iter()
-        .filter(|(k, _)| k == name)
-        .map(|(_, v)| v.as_str())
-        .collect()
-}
-
 /// Dispatch to the correct compiled example function.
 pub fn run(id: &str, params: &Params, ui: &mut Ui<'_, ()>) {
     match id {
         "text_preview" => text_preview(ui, params),
         "layout_card" => layout_card(ui, params),
+        "borders_demo" => borders_demo(ui, params),
         "basic_float" => basic_float(ui, params),
         "passthrough_overlay" => passthrough_overlay(ui, params),
         "notification_badge" => notification_badge(ui, params),
@@ -188,6 +180,74 @@ fn layout_card(ui: &mut Ui<'_, ()>, params: &Params) {
             ui.text("A", |t| t.font_size(24).color(0xFFFFFF));
             ui.text("B", |t| t.font_size(24).color(0xFFFFFF));
             ui.text("C", |t| t.font_size(24).color(0xFFFFFF));
+        });
+}
+
+// ---------------------------------------------------------------------------
+// Example: borders_demo
+// From elements-and-layout.md — configurable borders and border positions.
+// ---------------------------------------------------------------------------
+
+fn borders_demo(ui: &mut Ui<'_, ()>, params: &Params) {
+    let bg = parse_hex_color(get(params, "bg").unwrap_or("0x262220"));
+    let border_color = parse_hex_color(get(params, "border_color").unwrap_or("0x4A4440"));
+    let border_width: u16 = get(params, "width")
+        .and_then(|s| s.parse().ok())
+        .unwrap_or(2);
+    let left: u16 = get(params, "left")
+        .and_then(|s| s.parse().ok())
+        .unwrap_or(border_width);
+    let right: u16 = get(params, "right")
+        .and_then(|s| s.parse().ok())
+        .unwrap_or(border_width);
+    let top: u16 = get(params, "top")
+        .and_then(|s| s.parse().ok())
+        .unwrap_or(border_width);
+    let bottom: u16 = get(params, "bottom")
+        .and_then(|s| s.parse().ok())
+        .unwrap_or(border_width);
+    let between_children: u16 = get(params, "between_children")
+        .and_then(|s| s.parse().ok())
+        .unwrap_or(1);
+    let radius: f32 = get(params, "radius")
+        .and_then(|s| s.parse().ok())
+        .unwrap_or(12.0);
+    let position = match get(params, "position").unwrap_or("Outside") {
+        "Middle" => BorderPosition::Middle,
+        "Inside" => BorderPosition::Inside,
+        _ => BorderPosition::Outside,
+    };
+
+    ui.element()
+        .width(grow!())
+        .height(grow!())
+        .background_color(0x1a1111)
+        .layout(|l| l.align(AlignX::CenterX, AlignY::CenterY).padding(16_u16))
+        .children(|ui| {
+            ui.element()
+                .width(fit!())
+                .height(fit!())
+                .background_color(bg)
+                .corner_radius(radius)
+                .border(|b| {
+                    b.left(left)
+                        .right(right)
+                        .top(top)
+                        .bottom(bottom)
+                        .between_children(between_children)
+                        .color(border_color)
+                        .position(position)
+                })
+                .layout(|l| {
+                    l.direction(LayoutDirection::LeftToRight)
+                        .padding(12_u16)
+                        .gap(20_u16)
+                })
+                .children(|ui| {
+                    ui.text("A", |t| t.font_size(24).color(0xFFFFFF));
+                    ui.text("B", |t| t.font_size(24).color(0xFFFFFF));
+                    ui.text("C", |t| t.font_size(24).color(0xFFFFFF));
+                });
         });
 }
 
@@ -480,7 +540,7 @@ fn tooltip_demo(ui: &mut Ui<'_, ()>, params: &Params) {
                                         (AlignX::CenterX, AlignY::Top),
                                         (AlignX::CenterX, AlignY::Bottom),
                                     )
-                                    .offset(0.0, 4.0)
+                                    .offset((0.0, 4.0))
                             })
                             .layout(|l| l.padding(8_u16))
                             .children(|ui| {
@@ -608,7 +668,7 @@ fn multiline_editor(ui: &mut Ui<'_, ()>, params: &Params) {
                 .background_color(bg)
                 .corner_radius(8.0)
                 .text_input(|t| {
-                    t.multiline(true)
+                    t.multiline()
                         .font_size(font_size)
                         .text_color(0xE8E0DC)
                         .cursor_color(0xFFC32C)
@@ -638,7 +698,7 @@ fn password_input(ui: &mut Ui<'_, ()>, params: &Params) {
                 .background_color(0x262220_u32)
                 .corner_radius(6.0)
                 .text_input(|t| {
-                    t.password(true)
+                    t.password()
                         .placeholder(placeholder)
                         .font_size(14)
                         .text_color(0xE8E0DC)
@@ -697,7 +757,7 @@ fn login_form(ui: &mut Ui<'_, ()>, _params: &Params) {
                         .background_color(0x262220_u32)
                         .corner_radius(6.0)
                         .text_input(|t| {
-                            t.password(true)
+                            t.password()
                                 .placeholder("Password")
                                 .font_size(14)
                                 .text_color(0xE8E0DC)

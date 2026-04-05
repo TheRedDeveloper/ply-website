@@ -127,6 +127,16 @@ fn exec_element_chain(
                 let f = eval_f32(&call.args[0])?;
                 builder = builder.aspect_ratio(f);
             }
+            "contain" => {
+                expect_args(&call.name, &call.args, 1)?;
+                let f = eval_f32(&call.args[0])?;
+                builder = builder.contain(f);
+            }
+            "cover" => {
+                expect_args(&call.name, &call.args, 1)?;
+                let f = eval_f32(&call.args[0])?;
+                builder = builder.cover(f);
+            }
             "preserve_focus" => {
                 builder = builder.preserve_focus();
             }
@@ -356,6 +366,14 @@ fn apply_layout_calls(
                     l.gap(g);
                 }
             }
+            "wrap" => {
+                l.wrap();
+            }
+            "wrap_gap" => {
+                if let Ok(g) = eval_u16(&call.args[0]) {
+                    l.wrap_gap(g);
+                }
+            }
             "align" => {
                 if call.args.len() >= 2 {
                     if let (Ok(ax), Ok(ay)) =
@@ -390,11 +408,15 @@ fn apply_floating_calls(
                 }
             }
             "offset" => {
-                if call.args.len() >= 2 {
+                if call.args.len() == 1 {
+                    if let Ok((x, y)) = eval_vector2(&call.args[0]) {
+                        f.offset((x, y));
+                    }
+                } else if call.args.len() >= 2 {
                     if let (Ok(x), Ok(y)) =
                         (eval_f32(&call.args[0]), eval_f32(&call.args[1]))
                     {
-                        f.offset(x, y);
+                        f.offset((x, y));
                     }
                 }
             }
@@ -466,6 +488,11 @@ fn apply_border_calls(
                     b.between_children(w);
                 }
             }
+            "position" => {
+                if let Ok(position) = eval_border_position(&call.args[0]) {
+                    b.position(position);
+                }
+            }
             _ => {}
         }
     }
@@ -485,6 +512,60 @@ fn apply_overflow_calls(
             "scroll" => { o.scroll(); }
             "scroll_x" => { o.scroll_x(); }
             "scroll_y" => { o.scroll_y(); }
+            "no_drag_scroll" => { o.no_drag_scroll(); }
+            "scrollbar" => {
+                if call.args.len() == 1 {
+                    if let Ok((_params, body)) = expect_closure(&call.args[0]) {
+                        if let Ok(scrollbar_calls) = flatten_closure_chain(body) {
+                            o.scrollbar(|s| {
+                                apply_scrollbar_calls(s, &scrollbar_calls);
+                                s
+                            });
+                        }
+                    }
+                }
+            }
+            _ => {}
+        }
+    }
+}
+
+fn apply_scrollbar_calls(
+    s: &mut ply_engine::elements::ScrollbarBuilder,
+    calls: &[FlatCall],
+) {
+    for call in calls {
+        match call.name.as_str() {
+            "width" => {
+                if let Ok(v) = eval_f32(&call.args[0]) {
+                    s.width(v);
+                }
+            }
+            "corner_radius" => {
+                if let Ok(v) = eval_f32(&call.args[0]) {
+                    s.corner_radius(v);
+                }
+            }
+            "thumb_color" => {
+                if let Ok(c) = eval_color(&call.args[0]) {
+                    s.thumb_color(c);
+                }
+            }
+            "track_color" => {
+                if let Ok(c) = eval_color(&call.args[0]) {
+                    s.track_color(c);
+                }
+            }
+            "min_thumb_size" => {
+                if let Ok(v) = eval_f32(&call.args[0]) {
+                    s.min_thumb_size(v);
+                }
+            }
+            "hide_after_frames" => {
+                if let Ok(v) = eval_u32(&call.args[0]) {
+                    s.hide_after_frames(v);
+                }
+            }
             _ => {}
         }
     }
@@ -509,11 +590,15 @@ fn apply_visual_rotation_calls(
                 }
             }
             "pivot" => {
-                if call.args.len() >= 2 {
+                if call.args.len() == 1 {
+                    if let Ok((x, y)) = eval_vector2(&call.args[0]) {
+                        r.pivot((x, y));
+                    }
+                } else if call.args.len() >= 2 {
                     if let (Ok(x), Ok(y)) =
                         (eval_f32(&call.args[0]), eval_f32(&call.args[1]))
                     {
-                        r.pivot(x, y);
+                        r.pivot((x, y));
                     }
                 }
             }
@@ -597,18 +682,99 @@ fn apply_text_config_calls(
 fn eval_sizing(expr: &Expr) -> Result<Sizing, InterpreterError> {
     match expr {
         Expr::MacroCall { name, args } => match name.as_str() {
-            "grow" => match args.len() {
-                0 => Ok(Sizing::Grow(0.0, f32::MAX)),
-                1 => Ok(Sizing::Grow(eval_f32(&args[0])?, f32::MAX)),
-                2 => Ok(Sizing::Grow(eval_f32(&args[0])?, eval_f32(&args[1])?)),
-                _ => Err(InterpreterError::eval("grow!() takes 0, 1, or 2 arguments")),
-            },
-            "fit" => match args.len() {
-                0 => Ok(Sizing::Fit(0.0, f32::MAX)),
-                1 => Ok(Sizing::Fit(eval_f32(&args[0])?, f32::MAX)),
-                2 => Ok(Sizing::Fit(eval_f32(&args[0])?, eval_f32(&args[1])?)),
-                _ => Err(InterpreterError::eval("fit!() takes 0, 1, or 2 arguments")),
-            },
+            "grow" => {
+                if args.iter().any(|arg| matches!(arg, Expr::NamedArg { .. })) {
+                    let mut min = 0.0_f32;
+                    let mut max = f32::MAX;
+                    let mut weight = 1.0_f32;
+
+                    for arg in args {
+                        match arg {
+                            Expr::NamedArg { name, value } => {
+                                match name.as_str() {
+                                    "min" => min = eval_f32(value)?,
+                                    "max" => max = eval_f32(value)?,
+                                    "weight" => weight = eval_f32(value)?,
+                                    other => {
+                                        return Err(InterpreterError::eval(format!(
+                                            "Unknown grow!() named argument `{other}`. Use min:, max:, or weight:"
+                                        )));
+                                    }
+                                }
+                            }
+                            _ => {
+                                return Err(InterpreterError::eval(
+                                    "grow!() named form must use only named arguments like grow!(min: 100.0, max: 500.0, weight: 2.0)",
+                                ));
+                            }
+                        }
+                    }
+
+                    if weight < 0.0 {
+                        return Err(InterpreterError::eval(
+                            "grow!() weight must be non-negative",
+                        ));
+                    }
+
+                    Ok(Sizing::Grow(min, max, weight))
+                } else {
+                    match args.len() {
+                        0 => Ok(Sizing::Grow(0.0, f32::MAX, 1.0)),
+                        1 => Ok(Sizing::Grow(eval_f32(&args[0])?, f32::MAX, 1.0)),
+                        2 => Ok(Sizing::Grow(eval_f32(&args[0])?, eval_f32(&args[1])?, 1.0)),
+                        3 => {
+                            let weight = eval_f32(&args[2])?;
+                            if weight < 0.0 {
+                                return Err(InterpreterError::eval(
+                                    "grow!() weight must be non-negative",
+                                ));
+                            }
+                            Ok(Sizing::Grow(eval_f32(&args[0])?, eval_f32(&args[1])?, weight))
+                        }
+                        _ => Err(InterpreterError::eval(
+                            "grow!() takes 0-3 positional arguments or named arguments (min:, max:, weight:)",
+                        )),
+                    }
+                }
+            }
+            "fit" => {
+                if args.iter().any(|arg| matches!(arg, Expr::NamedArg { .. })) {
+                    let mut min = 0.0_f32;
+                    let mut max = f32::MAX;
+
+                    for arg in args {
+                        match arg {
+                            Expr::NamedArg { name, value } => {
+                                match name.as_str() {
+                                    "min" => min = eval_f32(value)?,
+                                    "max" => max = eval_f32(value)?,
+                                    other => {
+                                        return Err(InterpreterError::eval(format!(
+                                            "Unknown fit!() named argument `{other}`. Use min: or max:"
+                                        )));
+                                    }
+                                }
+                            }
+                            _ => {
+                                return Err(InterpreterError::eval(
+                                    "fit!() named form must use only named arguments like fit!(min: 100.0, max: 400.0)",
+                                ));
+                            }
+                        }
+                    }
+
+                    Ok(Sizing::Fit(min, max))
+                } else {
+                    match args.len() {
+                        0 => Ok(Sizing::Fit(0.0, f32::MAX)),
+                        1 => Ok(Sizing::Fit(eval_f32(&args[0])?, f32::MAX)),
+                        2 => Ok(Sizing::Fit(eval_f32(&args[0])?, eval_f32(&args[1])?)),
+                        _ => Err(InterpreterError::eval(
+                            "fit!() takes 0-2 positional arguments or named arguments (min:, max:)",
+                        )),
+                    }
+                }
+            }
             "fixed" => {
                 if args.len() != 1 {
                     return Err(InterpreterError::eval("fixed!() takes exactly 1 argument"));
@@ -757,6 +923,35 @@ fn eval_align_tuple(expr: &Expr) -> Result<(AlignX, AlignY), InterpreterError> {
     }
 }
 
+fn eval_vector2(expr: &Expr) -> Result<(f32, f32), InterpreterError> {
+    match expr {
+        Expr::Tuple(elems) if elems.len() == 2 => {
+            let x = eval_f32(&elems[0])?;
+            let y = eval_f32(&elems[1])?;
+            Ok((x, y))
+        }
+        _ => Err(InterpreterError::eval(
+            "Expected a tuple with two numbers, like (12.0, 24.0)",
+        )),
+    }
+}
+
+fn eval_border_position(expr: &Expr) -> Result<ply_engine::elements::BorderPosition, InterpreterError> {
+    match expr {
+        Expr::Ident(name) => match name.as_str() {
+            "Outside" => Ok(ply_engine::elements::BorderPosition::Outside),
+            "Middle" => Ok(ply_engine::elements::BorderPosition::Middle),
+            "Inside" => Ok(ply_engine::elements::BorderPosition::Inside),
+            other => Err(InterpreterError::eval(format!(
+                "Unknown border position `{other}`. Use Outside, Middle, or Inside"
+            ))),
+        },
+        _ => Err(InterpreterError::eval(
+            "Expected a border position: Outside, Middle, or Inside",
+        )),
+    }
+}
+
 fn eval_wrap_mode(expr: &Expr) -> Result<ply_engine::text::WrapMode, InterpreterError> {
     match expr {
         Expr::Ident(name) => match name.as_str() {
@@ -790,6 +985,20 @@ fn eval_u16(expr: &Expr) -> Result<u16, InterpreterError> {
                 )));
             }
             Ok(*n as u16)
+        }
+        _ => Err(InterpreterError::eval("Expected an integer")),
+    }
+}
+
+fn eval_u32(expr: &Expr) -> Result<u32, InterpreterError> {
+    match expr {
+        Expr::IntLit(n) => {
+            if *n < 0 || *n > u32::MAX as i64 {
+                return Err(InterpreterError::eval(format!(
+                    "Value {n} is out of range for u32"
+                )));
+            }
+            Ok(*n as u32)
         }
         _ => Err(InterpreterError::eval("Expected an integer")),
     }

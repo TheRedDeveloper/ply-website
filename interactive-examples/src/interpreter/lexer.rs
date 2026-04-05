@@ -231,6 +231,7 @@ pub fn lex(source: &str) -> Result<Vec<Spanned>, InterpreterError> {
                     "Just use the variant name directly, like TopToBottom instead of LayoutDirection::TopToBottom!",
                 ));
             }
+            ':' => Token::Colon,
             '+' | '-' | '*' | '/' | '=' | '<' | '>' | '&' | '%' | '^' => {
                 return Err(InterpreterError::unsupported(
                     "This is a little demo with a custom interpreter. Math and operators aren't supported!",
@@ -360,6 +361,29 @@ mod tests {
                 &Token::Ident("grow".into()),
                 &Token::Bang,
                 &Token::LParen,
+                &Token::RParen,
+                &Token::Eof,
+            ]
+        );
+    }
+
+    #[test]
+    fn lex_named_macro_args() {
+        let tokens = lex("grow!(min: 100.0, weight: 2.0)").unwrap();
+        let kinds: Vec<_> = tokens.iter().map(|t| &t.token).collect();
+        assert_eq!(
+            kinds,
+            vec![
+                &Token::Ident("grow".into()),
+                &Token::Bang,
+                &Token::LParen,
+                &Token::Ident("min".into()),
+                &Token::Colon,
+                &Token::Float(100.0),
+                &Token::Comma,
+                &Token::Ident("weight".into()),
+                &Token::Colon,
+                &Token::Float(2.0),
                 &Token::RParen,
                 &Token::Eof,
             ]

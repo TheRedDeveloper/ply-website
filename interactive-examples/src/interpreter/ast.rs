@@ -41,6 +41,12 @@ pub enum Expr {
         args: Vec<Expr>,
     },
 
+    /// A named argument expression used in macro calls, e.g. `min: 100.0`.
+    NamedArg {
+        name: String,
+        value: Box<Expr>,
+    },
+
     /// A closure: `|a, b| expr` or `|a| { stmts }`
     Closure {
         params: Vec<String>,

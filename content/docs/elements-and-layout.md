@@ -129,17 +129,36 @@ Round the corners with a single value or per-corner tuple:
 
 Configure per-side border widths, color, child dividers, and border position:
 
-```rust
-.border(|b| b
-  .all(2)                  // 2px on all sides
-  .color(0x4A4440)         // border color
-  .position(Outside)       // position
-  .between_children(1)     // 1px dividers between children
-)
-```
-<!-- TODO: This should be an interactive example -->
+{% example(id="borders_demo", height=600) %}
+ui.element().width(fit!()).height(fit!())
+  .background_color(0x262220)
+  .corner_radius(12.0)
+  .border(|b| b
+    .left([[left]])
+    .right([[right]])
+    .top([[top]])
+    .bottom([[bottom]])
+    .between_children([[between_children]])
+    .color([[border_color]])
+    .position([[position]])
+  )
+  .layout(|l| l.padding(12).gap(20))
+  .children(|ui| {
+    ui.text("A", |t| t.font_size(24));
+    ui.text("B", |t| t.font_size(24));
+    ui.text("C", |t| t.font_size(24));
+  });
+---
+n.left = 2
+n.right = 2
+n.top = 2
+n.bottom = 2
+n.between_children = 1
+c.border_color = 0x4A4440
+e.position = Outside ; Middle ; Inside
+{% end %}
 
-Individual sides: `.left(2)`, `.right(2)`, `.top(2)`, `.bottom(2)`.
+`.all(2)` = `.left(2).right(2).top(2).bottom(2)`. `.between_children()` is separate.
 
 ### Border position
 

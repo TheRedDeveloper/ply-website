@@ -336,22 +336,24 @@ dependencies = [
 ]
 
 [[package]]
-name = "macroquad"
+name = "macroquad-ply"
 version = "0.4.14"
-source = "git+https://github.com/TheRedDeveloper/macroquad-fix#954665c6289b2878a073e7d1cc2eb5b33bec71be"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "5b6f76faf57040e43b597597aac7a33c1ba477ffcc369402118a02a7fa61dabf"
 dependencies = [
  "fontdue",
  "glam",
  "image",
  "macroquad_macro",
- "miniquad",
+ "miniquad-ply",
  "quad-rand",
 ]
 
 [[package]]
 name = "macroquad_macro"
 version = "0.1.8"
-source = "git+https://github.com/TheRedDeveloper/macroquad-fix#954665c6289b2878a073e7d1cc2eb5b33bec71be"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "64b1d96218903768c1ce078b657c0d5965465c95a60d2682fd97443c9d2483dd"
 
 [[package]]
 name = "malloc_buf"
@@ -369,9 +371,10 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "2532096657941c2fea9c289d370a250971c689d4f143798ff67113ec042024a5"
 
 [[package]]
-name = "miniquad"
+name = "miniquad-ply"
 version = "0.4.8"
-source = "git+https://github.com/TheRedDeveloper/miniquad-fix#c6bd9ea0bad8fcff3013fcb7adeda28596e7f3e1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "6f2a9be48056327ef1de4569afcc34f3b9649ee658097bd998a1beacdcb4c4a0"
 dependencies = [
  "libc",
  "ndk-sys",
@@ -454,11 +457,11 @@ dependencies = [
 
 [[package]]
 name = "ply-engine"
-version = "0.5.0"
+version = "1.0.3"
 dependencies = [
  "kurbo 0.13.0",
  "lyon",
- "macroquad",
+ "macroquad-ply",
  "rustc-hash",
  "tinyvg",
 ]

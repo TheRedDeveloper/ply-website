@@ -20,6 +20,11 @@ impl Parser {
         &self.tokens[self.pos].token
     }
 
+    fn peek_n(&self, n: usize) -> &Token {
+        let idx = (self.pos + n).min(self.tokens.len().saturating_sub(1));
+        &self.tokens[idx].token
+    }
+
     fn current_span(&self) -> (usize, usize) {
         let s = &self.tokens[self.pos];
         (s.line, s.col)
@@ -129,7 +134,7 @@ impl Parser {
                 if *self.peek() == Token::Bang {
                     self.advance(); // consume '!'
                     self.expect(&Token::LParen)?;
-                    let args = self.parse_args()?;
+                    let args = self.parse_macro_args()?;
                     self.expect(&Token::RParen)?;
                     return Ok(Expr::MacroCall { name, args });
                 }
@@ -229,6 +234,38 @@ impl Parser {
         }
         Ok(args)
     }
+
+    /// macro_args = macro_arg ("," macro_arg)* ","?
+    fn parse_macro_args(&mut self) -> Result<Vec<Expr>, InterpreterError> {
+        if *self.peek() == Token::RParen {
+            return Ok(Vec::new());
+        }
+        let mut args = vec![self.parse_macro_arg()?];
+        while *self.peek() == Token::Comma {
+            self.advance();
+            if *self.peek() == Token::RParen {
+                break; // trailing comma
+            }
+            args.push(self.parse_macro_arg()?);
+        }
+        Ok(args)
+    }
+
+    /// macro_arg = ident ":" expr | expr
+    fn parse_macro_arg(&mut self) -> Result<Expr, InterpreterError> {
+        if let Token::Ident(name) = self.peek().clone() {
+            if *self.peek_n(1) == Token::Colon {
+                self.advance(); // ident
+                self.advance(); // :
+                let value = self.parse_expr()?;
+                return Ok(Expr::NamedArg {
+                    name,
+                    value: Box::new(value),
+                });
+            }
+        }
+        self.parse_expr()
+    }
 }
 
 #[cfg(test)]
@@ -256,6 +293,15 @@ mod tests {
     #[test]
     fn parse_macro_call() {
         let prog = parse_code("ui.element().width(grow!()).empty();").unwrap();
+        assert_eq!(prog.statements.len(), 1);
+    }
+
+    #[test]
+    fn parse_named_macro_call() {
+        let prog = parse_code(
+            "ui.element().width(grow!(min: 100.0, max: 500.0, weight: 2.0)).empty();",
+        )
+        .unwrap();
         assert_eq!(prog.statements.len(), 1);
     }
 

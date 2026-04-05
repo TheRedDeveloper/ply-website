@@ -463,6 +463,11 @@ pre:has(+ .demo-iframe) {
   border-bottom: none !important;
 }
 
+// Paragraphs before iframes should not add extra stacked spacing.
+p:has(+ iframe) {
+  margin-bottom: 0 !important;
+}
+
 .demo-iframe {
   border-radius: 0 0 12px 12px !important;
   margin-top: 0 !important;

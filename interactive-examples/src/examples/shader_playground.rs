@@ -181,7 +181,7 @@ pub fn run(ui: &mut Ui<'_, ()>) {
             .width(grow!())
             .height(grow!())
             .text_input(|t| t
-              .multiline(true)
+              .multiline()
               .font(&CODE_FONT)
               .font_size(13)
               .line_height(18)

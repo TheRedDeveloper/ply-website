@@ -260,7 +260,7 @@ pub fn run(ui: &mut Ui<'_, ()>) {
             .height(fit!())
             .background_color((30, 27, 27, 200))
             .corner_radius(12.0)
-            .floating(|f| f.attach_parent().anchor((CenterX, Top), (CenterX, Top)).offset(0.0, 8.0).passthrough())
+            .floating(|f| f.attach_parent().anchor((CenterX, Top), (CenterX, Top)).offset((0.0, 8.0)).passthrough())
             .layout(|l| l.padding((4, 14, 4, 14)))
             .children(|ui| {
               ui.text(&format!("{score}"), |t| t.font_size(22).color(0xE8E0DC));
@@ -284,7 +284,7 @@ pub fn run(ui: &mut Ui<'_, ()>) {
               .height(fit!())
               .background_color((30, 27, 27, 160))
               .corner_radius(8.0)
-              .floating(|f| f.attach_parent().anchor((CenterX, Bottom), (CenterX, Bottom)).offset(0.0, -8.0).passthrough())
+              .floating(|f| f.attach_parent().anchor((CenterX, Bottom), (CenterX, Bottom)).offset((0.0, -8.0)).passthrough())
               .layout(|l| l.padding((4, 10, 4, 10)))
               .children(|ui| {
                 ui.text("Arrow keys or WASD", |t| t.font_size(12).color(0x6E6560));
