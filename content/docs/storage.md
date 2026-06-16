@@ -40,7 +40,7 @@ storage.save_string("settings.json", "{\"theme\":\"dark\"}").await?;
 let settings = storage.load_string("settings.json").await?;
 ```
 
-`load_string` returns `Result<Option<String>, String>`.
+`load_string` returns `Result<Option<String>, String>`. `Ok(None)` if the file is missing.
 
 ## Save and load bytes
 
@@ -50,7 +50,7 @@ storage.save_bytes("saves/slot1.bin", &bytes).await?;
 let slot = storage.load_bytes("saves/slot1.bin").await?;
 ```
 
-`load_bytes` returns `Result<Option<Vec<u8>>, String>`.
+`load_bytes` returns `Result<Option<Vec<u8>>, String>`. `Ok(None)` if the file is missing.
 
 ## Remove and export
 
