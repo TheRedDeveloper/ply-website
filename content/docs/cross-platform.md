@@ -33,6 +33,16 @@ This compiles to `wasm32-unknown-unknown`, generates an `index.html`,
 and bundles the JavaScript bridge (`ply_bundle.js`) which handles input,
 audio, networking, and accessibility on the web.
 
+Depending on your `cargo` version, this command can fail with several linker errors, which
+complains about not finding certain symbols.  This is actually not an issue: those symbols are
+provided by the runtime, so it is normal that the linked cannot find them yet.  To make `cargo`
+ignore them, you need to add the following lines in the file `.cargo/config.toml`:
+
+```toml
+[target.wasm32-unknown-unknown]
+rustflags = ["-C", "link-args=--allow-undefined"]
+```
+
 For CI pipelines, use `--auto` to skip interactive prompts:
 
 ```bash
