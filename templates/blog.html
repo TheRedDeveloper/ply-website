@@ -2,12 +2,21 @@
 
 {% block title %}{{ section.title }}{% endblock %}
 
+{% block head %}
+<link rel="alternate" type="application/rss+xml" title="{{ config.title }} - Blog" href="{{ get_url(path='blog/rss.xml') | safe }}">
+{% endblock head %}
+
 {% block content %}
 <div class="blog-header">
     <h1 class="blog-header__title">{{ section.title }}</h1>
-    {% if section.description %}
-    <p class="blog-header__description">{{ section.description }}</p>
-    {% endif %}
+    <a href="{{ get_url(path='blog/rss.xml') | safe }}" class="tag" style="display: inline-flex; align-items: center; gap: 0.4rem; font-size: var(--text-sm); text-decoration: none;" title="RSS Feed">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M4 11a9 9 0 0 1 9 9"/>
+            <path d="M4 4a16 16 0 0 1 16 16"/>
+            <circle cx="5" cy="19" r="1"/>
+        </svg>
+        RSS Feed
+    </a>
 </div>
 
 <div class="blog-posts">

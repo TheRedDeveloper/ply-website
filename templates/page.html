@@ -4,6 +4,12 @@
 
 {% block body_class %}page-{{ page.slug }}{% endblock %}
 
+{% block head %}
+{% if current_path is defined and current_path is starting_with("/blog/") %}
+<link rel="alternate" type="application/rss+xml" title="{{ config.title }} - Blog" href="{{ get_url(path='blog/rss.xml') | safe }}">
+{% endif %}
+{% endblock head %}
+
 {% set mode = config.extra.mode | default(value="site") %}
 
 {% block sidebar %}

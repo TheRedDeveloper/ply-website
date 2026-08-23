@@ -4,7 +4,8 @@ title = "Ply"
 description = "Beautiful apps in Rust. Cross-platform. Dead simple."
 compile_sass = true
 build_search_index = true
-generate_feeds = false
+generate_feeds = true
+feed_filenames = ["rss.xml"]
 
 [markdown]
 insert_anchor_links = "left"
