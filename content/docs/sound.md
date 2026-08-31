@@ -1,6 +1,6 @@
 +++
 title = "Sound"
-weight = 17
+weight = 18
 +++
 
 Ply's audio system is powered by macroquad's built-in audio (quad-snd),

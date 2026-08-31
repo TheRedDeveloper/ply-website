@@ -22,24 +22,7 @@ if [ ! -f "$STATIC_DEMO/codemirror-bundle.js" ]; then
     bash "$SCRIPT_DIR/build-codemirror.sh"
 fi
 
-# 3. Copy font assets (macroquad loads relative to the page URL)
-echo "Copying assets..."
-mkdir -p "$STATIC_DEMO/assets/fonts"
-cp "$SCRIPT_DIR/assets/fonts/lexend.ttf" "$STATIC_DEMO/assets/fonts/lexend.ttf"
-
-# Copy image assets (if any)
-if [ -d "$SCRIPT_DIR/assets/images" ]; then
-    mkdir -p "$STATIC_DEMO/assets/images"
-    cp -r "$SCRIPT_DIR/assets/images/"* "$STATIC_DEMO/assets/images/" 2>/dev/null || true
-fi
-
-# Copy shader assets (if any)
-if [ -d "$SCRIPT_DIR/assets/shaders" ]; then
-    mkdir -p "$STATIC_DEMO/assets/shaders"
-    cp -r "$SCRIPT_DIR/assets/shaders/"* "$STATIC_DEMO/assets/shaders/" 2>/dev/null || true
-fi
-
-# 4. Build WASM
+# 3. Build WASM
 echo "Building WASM ($PROFILE)..."
 if [ "$PROFILE" = "dev" ]; then
     cargo build --target wasm32-unknown-unknown \
@@ -53,7 +36,7 @@ fi
 
 WASM_OUT="$STATIC_DEMO/app-v2.wasm"
 
-# 5. Optimize with wasm-opt (release only)
+# 4. Optimize with wasm-opt (release only)
 if [ "$PROFILE" = "release" ] && command -v wasm-opt &> /dev/null; then
     echo "Optimizing with wasm-opt..."
     wasm-opt -Os --all-features "$WASM_IN" -o "$WASM_OUT"

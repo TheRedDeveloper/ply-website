@@ -10,14 +10,14 @@ use ply_engine::prelude::*;
 pub use error::InterpreterError;
 
 /// Interpret a string of Ply UI code, calling real Ply API methods on the given Ui.
-pub fn interpret(code: &str, ui: &mut Ui<'_, ()>) -> Result<(), InterpreterError> {
+pub fn interpret(code: &str, ui: &mut Ui<'_, '_>) -> Result<(), InterpreterError> {
     let tokens = lexer::lex(code)?;
     let program = parser::parse(tokens)?;
     eval::exec_program(&program, ui)
 }
 
 /// Render an interpreter error as styled text in the Ply canvas.
-pub fn render_error(ui: &mut Ui<'_, ()>, err: &InterpreterError) {
+pub fn render_error(ui: &mut Ui<'_, '_>, err: &InterpreterError) {
     ui.element()
         .width(grow!())
         .height(grow!())

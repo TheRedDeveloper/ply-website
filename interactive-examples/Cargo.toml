@@ -5,6 +5,9 @@ edition = "2021"
 
 [dependencies]
 ply-engine = { path = "../../..", default-features = false, features = ["tinyvg", "text-styling"] }
+fluent-bundle = "0.16"
+fluent-syntax = "0.12"
+unic-langid = "0.9"
 
 [profile.release]
 opt-level = "s"

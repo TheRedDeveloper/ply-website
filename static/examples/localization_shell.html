@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Ply Localization Interactive Example</title>
+    <style>
+        @font-face {
+            font-family: 'Geist Mono';
+            font-style: normal;
+            font-weight: 100 900;
+            font-display: swap;
+            src: url('../fonts/GeistMono-Variable.woff2') format('woff2-variations'),
+                 url('../fonts/GeistMono-Variable.woff2') format('woff2');
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { height: 100%; background: #000; overflow: hidden; font-family: 'Geist Mono', 'Fira Code', 'Cascadia Code', monospace; }
+        body { display: flex; flex-direction: column; }
+
+        /* Top control bar: tabs and variable inputs */
+        .top-bar {
+            background: #140d0d;
+            border-bottom: 1px solid #262220;
+            padding: 8px 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 8px;
+            user-select: none;
+        }
+
+        .locale-tabs {
+            display: flex;
+            gap: 6px;
+        }
+
+        .tab-btn {
+            background: #201717;
+            border: 1px solid #362929;
+            color: #a6adc8;
+            font-family: inherit;
+            font-size: 12px;
+            padding: 4px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+        .tab-btn:hover {
+            color: #fff;
+            border-color: #585b70;
+        }
+        .tab-btn.active {
+            background: #2a1f1f;
+            color: #fab387;
+            border-color: #fab387;
+            font-weight: 600;
+        }
+
+        .variables-bar {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 12px;
+            color: #9399b2;
+        }
+
+        .var-group {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .var-label {
+            color: #cba6f7;
+            font-style: italic;
+        }
+
+        .var-input {
+            background: #1e1616;
+            border: 1px solid #3d2f2f;
+            color: #a6e3a1;
+            font-family: inherit;
+            font-size: 12px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            outline: none;
+            width: 60px;
+        }
+        .var-input:focus {
+            border-color: #89b4fa;
+        }
+
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+
+        .stepper-btn {
+            background: #2a1f1f;
+            border: 1px solid #3d2f2f;
+            color: #cdd6f4;
+            font-family: inherit;
+            font-size: 12px;
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+        }
+        .stepper-btn:hover {
+            background: #3d2f2f;
+            color: #fab387;
+        }
+
+        /* Fluent code editor block */
+        .code-block {
+            background: #1a1111;
+            color: #e8e0dc;
+            font-size: 0.82rem;
+            line-height: 1.5;
+            padding: 10px 14px;
+            border-bottom: 1px solid #262220;
+            overflow-x: auto;
+            white-space: pre;
+            flex-shrink: 0;
+            max-height: 250px;
+            overflow-y: auto;
+        }
+
+        .code-block .slot {
+            background: transparent;
+            border: none;
+            border-bottom: 1px dashed #585b70;
+            color: #a6e3a1;
+            font-family: inherit;
+            font-size: inherit;
+            line-height: inherit;
+            padding: 0 2px;
+            outline: none;
+        }
+        .code-block .slot:focus {
+            border-bottom-color: #89b4fa;
+            background: rgba(137, 180, 250, 0.08);
+        }
+        .code-block .slot.slot-error {
+            color: #f87171 !important;
+            border-bottom: 2px dashed #ef4444 !important;
+            background: rgba(239, 68, 68, 0.15) !important;
+        }
+
+        /* Syntax colors */
+        .s-comm { color: #9399b2; font-style: italic; }
+        .s-key  { color: #f9e2af; font-style: italic; }
+        .s-var  { color: #cba6f7; }
+        .s-kw   { color: #89b4fa; }
+        .s-op   { color: #89dceb; }
+        .s-punc { color: #9399b2; }
+
+        /* Canvas area */
+        .canvas-container {
+            flex: 1;
+            display: flex;
+            min-height: 0;
+            position: relative;
+            background: #100a0a;
+        }
+        canvas {
+            width: 100% !important;
+            height: 100% !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <div class="locale-tabs">
+            <button class="tab-btn active" data-locale="en-US" onclick="switchLocale('en-US')">en-US.ftl</button>
+            <button class="tab-btn" data-locale="es-ES" onclick="switchLocale('es-ES')">es-ES.ftl</button>
+            <button class="tab-btn" data-locale="de-DE" onclick="switchLocale('de-DE')">de-DE.ftl</button>
+        </div>
+        <div class="variables-bar">
+            <div class="var-group">
+                <span class="var-label">$user:</span>
+                <input id="input-user" class="var-input" type="text" value="Alice" style="width: 70px;" oninput="onVarChange()">
+            </div>
+            <div class="var-group">
+                <span class="var-label">$potions:</span>
+                <button class="stepper-btn" onclick="stepPotions(-1)">−</button>
+                <input id="input-potions" class="var-input" type="number" value="3" min="0" max="99" style="width: 42px; text-align: center;" oninput="onVarChange()">
+                <button class="stepper-btn" onclick="stepPotions(1)">+</button>
+            </div>
+            <div class="var-group">
+                <span class="var-label">$gold:</span>
+                <button class="stepper-btn" onclick="stepGold(-25)">−</button>
+                <input id="input-gold" class="var-input" type="number" value="120" min="0" max="999" style="width: 50px; text-align: center;" oninput="onVarChange()">
+                <button class="stepper-btn" onclick="stepGold(25)">+</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="code-block" class="code-block"></div>
+
+    <div class="canvas-container">
+        <canvas id="glcanvas" tabindex="-1"></canvas>
+    </div>
+
+    <script>
+        // Prevent canvas from stealing parent-page focus on WASM init.
+        document.getElementById('glcanvas').focus = function () {};
+
+        var currentLocale = 'en-US';
+
+        var translations = {
+            'en-US': {
+                shopTitle: "Alchemist's Shop",
+                greeting: "Welcome back, { $user }!",
+                potionOffer: "Red Potion (50 Gold)",
+                pluralOne: "You carry { $potions } potion in your pouch.",
+                pluralOther: "You carry { $potions } potions in your pouch.",
+                goldBalance: "Gold balance: { $gold }",
+                btnBuy: "Buy Potion",
+                btnLeave: "Leave Shop"
+            },
+            'es-ES': {
+                shopTitle: "Tienda de Alquimia",
+                greeting: "¡Hola de nuevo, { $user }!",
+                potionOffer: "Poción Roja (50 Oro)",
+                pluralOne: "Llevas { $potions } poción en tu bolsa.",
+                pluralOther: "Llevas { $potions } pociones en tu bolsa.",
+                goldBalance: "Saldo de oro: { $gold }",
+                btnBuy: "Comprar Poción",
+                btnLeave: "Salir de la Tienda"
+            },
+            'de-DE': {
+                shopTitle: "Alchemistenladen",
+                greeting: "Willkommen zurück, { $user }!",
+                potionOffer: "Roter Trank (50 Gold)",
+                pluralOne: "Du trägst { $potions } Trank in deinem Beutel.",
+                pluralOther: "Du trägst { $potions } Tränke in deinem Beutel.",
+                goldBalance: "Goldbestand: { $gold }",
+                btnBuy: "Trank Kaufen",
+                btnLeave: "Laden Verlassen"
+            }
+        };
+
+        function switchLocale(loc) {
+            currentLocale = loc;
+            document.querySelectorAll('.tab-btn').forEach(function(btn) {
+                btn.classList.toggle('active', btn.dataset.locale === loc);
+            });
+            renderEditor();
+            updatePlyUi();
+        }
+
+        function stepPotions(delta) {
+            var el = document.getElementById('input-potions');
+            var val = Math.max(0, (parseInt(el.value, 10) || 0) + delta);
+            el.value = val;
+            onVarChange();
+        }
+
+        function stepGold(delta) {
+            var el = document.getElementById('input-gold');
+            var val = Math.max(0, (parseInt(el.value, 10) || 0) + delta);
+            el.value = val;
+            onVarChange();
+        }
+
+        function onVarChange() {
+            updatePlyUi();
+        }
+
+        var expectedVarsByKey = {
+            'shop-title': [],
+            'greeting': ['user'],
+            'potion-offer': [],
+            'inventory-count': ['potions'],
+            'gold-balance': ['gold'],
+            'btn-buy': [],
+            'btn-leave': []
+        };
+
+        function validateSlot(inp, key) {
+            var val = inp.value;
+            if (/\{\s*\}/.test(val)) {
+                inp.classList.add('slot-error');
+                inp.title = "error: Syntax error: Empty placeable '{}'";
+                return;
+            }
+            var openBraces = (val.match(/\{/g) || []).length;
+            var closeBraces = (val.match(/\}/g) || []).length;
+            if (openBraces !== closeBraces) {
+                inp.classList.add('slot-error');
+                inp.title = "error: Syntax error: Unmatched braces in placeable";
+                return;
+            }
+
+            var expected = expectedVarsByKey[key] || [];
+            var found = [];
+            var re = /\$([a-zA-Z0-9_-]+)/g;
+            var match;
+            while ((match = re.exec(val)) !== null) {
+                if (found.indexOf(match[1]) === -1) {
+                    found.push(match[1]);
+                }
+            }
+            var expSorted = expected.slice().sort();
+            var foundSorted = found.slice().sort();
+            var matches = (expSorted.length === foundSorted.length) && expSorted.every(function(v, i) { return v === foundSorted[i]; });
+            if (!matches) {
+                inp.classList.add('slot-error');
+                inp.title = "error: Mismatched Fluent variables for '" + key + "'!\nexpected: [" + expSorted.map(function(s){ return '$' + s; }).join(', ') + "]\nfound:    [" + foundSorted.map(function(s){ return '$' + s; }).join(', ') + "]";
+            } else {
+                inp.classList.remove('slot-error');
+                inp.removeAttribute('title');
+            }
+        }
+
+        function createSlot(initialVal, key, onUpdate) {
+            var inp = document.createElement('input');
+            inp.type = 'text';
+            inp.className = 'slot';
+            inp.value = initialVal;
+            inp.style.width = (initialVal.length + 0.5) + 'ch';
+            validateSlot(inp, key);
+            inp.addEventListener('input', function() {
+                this.style.width = (this.value.length + 0.5) + 'ch';
+                onUpdate(this.value);
+                validateSlot(this, key);
+                updatePlyUi();
+            });
+            return inp;
+        }
+
+        function renderEditor() {
+            var cb = document.getElementById('code-block');
+            cb.innerHTML = '';
+            var cur = translations[currentLocale];
+
+            // shop-title = <slot>
+            appendKeyLine(cb, 'shop-title', cur.shopTitle, function(v) { cur.shopTitle = v; });
+
+            // greeting = <slot>
+            appendKeyLine(cb, 'greeting', cur.greeting, function(v) { cur.greeting = v; });
+
+            // potion-offer = <slot>
+            appendKeyLine(cb, 'potion-offer', cur.potionOffer, function(v) { cur.potionOffer = v; });
+
+            // inventory-count = { $potions ->
+            var k = document.createElement('span');
+            k.className = 's-key';
+            k.textContent = 'inventory-count';
+            cb.appendChild(k);
+            cb.appendChild(document.createTextNode(' = { '));
+            var vName = document.createElement('span');
+            vName.className = 's-var';
+            vName.textContent = '$potions';
+            cb.appendChild(vName);
+            var arr = document.createElement('span');
+            arr.className = 's-kw';
+            arr.textContent = ' ->\n';
+            cb.appendChild(arr);
+
+            //     [one]   <slot>
+            cb.appendChild(document.createTextNode('    ['));
+            var kwOne = document.createElement('span');
+            kwOne.className = 's-kw';
+            kwOne.textContent = 'one';
+            cb.appendChild(kwOne);
+            cb.appendChild(document.createTextNode(']   '));
+            cb.appendChild(createSlot(cur.pluralOne, 'inventory-count', function(v) { cur.pluralOne = v; }));
+            cb.appendChild(document.createTextNode('\n'));
+
+            //    *[other] <slot>
+            cb.appendChild(document.createTextNode('   *['));
+            var kwOther = document.createElement('span');
+            kwOther.className = 's-kw';
+            kwOther.textContent = 'other';
+            cb.appendChild(kwOther);
+            cb.appendChild(document.createTextNode('] '));
+            cb.appendChild(createSlot(cur.pluralOther, 'inventory-count', function(v) { cur.pluralOther = v; }));
+            cb.appendChild(document.createTextNode('\n}\n'));
+
+            // gold-balance = <slot>
+            appendKeyLine(cb, 'gold-balance', cur.goldBalance, function(v) { cur.goldBalance = v; });
+
+            // btn-buy = <slot>
+            appendKeyLine(cb, 'btn-buy', cur.btnBuy, function(v) { cur.btnBuy = v; });
+
+            // btn-leave = <slot>
+            appendKeyLine(cb, 'btn-leave', cur.btnLeave, function(v) { cur.btnLeave = v; });
+        }
+
+        function appendKeyLine(container, key, val, onUpdate) {
+            var k = document.createElement('span');
+            k.className = 's-key';
+            k.textContent = key;
+            container.appendChild(k);
+            container.appendChild(document.createTextNode(' = '));
+            container.appendChild(createSlot(val, key, onUpdate));
+            container.appendChild(document.createTextNode('\n'));
+        }
+
+        function escapeRustStr(s) {
+            return s.replace(/\\/g, '\\\\').replace(/"/g, '\\"');
+        }
+
+        function formatMsg(tpl, vars) {
+            var res = tpl;
+            for (var k in vars) {
+                var re = new RegExp('\\{\\s*\\$' + k + '\\s*\\}', 'g');
+                res = res.replace(re, vars[k]);
+            }
+            return res;
+        }
+
+        function updatePlyUi() {
+            var cur = translations[currentLocale];
+            var userName = document.getElementById('input-user').value || 'Traveler';
+            var potionsCount = parseInt(document.getElementById('input-potions').value, 10);
+            if (isNaN(potionsCount)) potionsCount = 0;
+            var goldAmount = parseInt(document.getElementById('input-gold').value, 10);
+            if (isNaN(goldAmount)) goldAmount = 0;
+
+            var ftlLines = [
+                'shop-title = ' + cur.shopTitle,
+                'greeting = ' + cur.greeting,
+                'potion-offer = ' + cur.potionOffer,
+                'inventory-count = { $potions ->',
+                '    [one] ' + cur.pluralOne,
+                '   *[other] ' + cur.pluralOther,
+                '}',
+                'gold-balance = ' + cur.goldBalance,
+                'btn-buy = ' + cur.btnBuy,
+                'btn-leave = ' + cur.btnLeave
+            ].join('\n');
+
+            var ftlEscaped = ftlLines.replace(/\n/g, '\\n');
+
+            window.example_id = "localization_demo";
+            window.example_params = [
+                'locale=' + currentLocale,
+                'user=' + userName,
+                'potions=' + potionsCount,
+                'gold=' + goldAmount,
+                'ftl_source=' + ftlEscaped
+            ].join('\n');
+        }
+
+        // Initialize editor
+        renderEditor();
+        updatePlyUi();
+
+        // Resize canvas buffer on layout changes
+        (function() {
+            var container = document.querySelector('.canvas-container');
+            new ResizeObserver(function() {
+                window.dispatchEvent(new Event('resize'));
+            }).observe(container);
+        })();
+
+        window.example_id = "localization_demo";
+    </script>
+
+    <!-- Load Ply Engine WASM & Miniquad bundle -->
+    <script src="/demo/ply_bundle.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js', { scope: '/' });
+        }
+        load("/demo/app-v2.wasm");
+    </script>
+</body>
+</html>

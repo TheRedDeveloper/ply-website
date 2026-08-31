@@ -1,0 +1,13 @@
+{#
+  Interactive Localization Demo widget.
+  Embeds the localization shell with live Fluent editing and Ply Engine rendering.
+
+  Usage:
+    {{ localization_example(height=480) }}
+#}
+{% set h = height | default(value=500) %}
+<iframe
+  src="/examples/localization_shell.html"
+  style="width: 100%; height: {{ h }}px; border: 1px solid #262220; border-radius: 12px;"
+  loading="lazy"
+  tabindex="-1"></iframe>

@@ -1,15 +1,9 @@
 use ply_engine::prelude::*;
 use std::cell::RefCell;
 
-static CHECK_ICON: GraphicAsset = GraphicAsset::Bytes {
-  file_name: "check.tvg",
-  data: include_bytes!("../../assets/images/check.tvg"),
-};
+static CHECK_ICON: GraphicAsset = graphic!("assets/images/check.tvg");
 
-static CLOSE_ICON: GraphicAsset = GraphicAsset::Bytes {
-  file_name: "close.tvg",
-  data: include_bytes!("../../assets/images/close.tvg"),
-};
+static CLOSE_ICON: GraphicAsset = graphic!("assets/images/close.tvg");
 
 struct TodoItem {
   text: String,
@@ -24,7 +18,7 @@ thread_local! {
   static SUBMIT_PENDING: RefCell<bool> = RefCell::new(false);
 }
 
-fn add_todo(ui: &mut Ui<'_, ()>) {
+fn add_todo(ui: &mut Ui<'_, '_>) {
   let text = ui.get_text_value("todo_input").to_string();
   if !text.trim().is_empty() {
     TODOS.with(|todos| {
@@ -37,7 +31,7 @@ fn add_todo(ui: &mut Ui<'_, ()>) {
   }
 }
 
-pub fn run(ui: &mut Ui<'_, ()>) {
+pub fn run(ui: &mut Ui<'_, '_>) {
   // Root
   ui.element()
     .width(grow!())
@@ -85,8 +79,7 @@ pub fn run(ui: &mut Ui<'_, ()>) {
                       .on_submit(|_| {
                         SUBMIT_PENDING.with(|f| *f.borrow_mut() = true);
                       })
-                    )
-                    .empty();
+                    );
                 });
 
               // Add button
@@ -153,7 +146,7 @@ pub fn run(ui: &mut Ui<'_, ()>) {
     });
 }
 
-fn todo_row(ui: &mut Ui<'_, ()>, idx: u32, done: bool, text: &str) {
+fn todo_row(ui: &mut Ui<'_, '_>, idx: u32, done: bool, text: &str) {
   ui.element()
     .width(grow!())
     .height(fit!())
@@ -183,7 +176,7 @@ fn todo_row(ui: &mut Ui<'_, ()>, idx: u32, done: bool, text: &str) {
     });
 }
 
-fn checkbox(ui: &mut Ui<'_, ()>, idx: u32, done: bool) {
+fn checkbox(ui: &mut Ui<'_, '_>, idx: u32, done: bool) {
   let idx_copy = idx;
   ui.element()
     .id(("todo_check", idx))
@@ -223,7 +216,7 @@ fn checkbox(ui: &mut Ui<'_, ()>, idx: u32, done: bool) {
     });
 }
 
-fn delete_button(ui: &mut Ui<'_, ()>, idx: u32) {
+fn delete_button(ui: &mut Ui<'_, '_>, idx: u32) {
   let idx_copy = idx;
   ui.element()
     .id(("todo_del", idx))

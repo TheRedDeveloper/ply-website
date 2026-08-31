@@ -38,4 +38,4 @@ let active_jobs = jobs::list();
 
 ## Next steps
 
-→ [Sound](/docs/sound/)
+→ [Localization](/docs/localization/)

@@ -3,11 +3,15 @@ use ply_engine::prelude::*;
 mod examples;
 mod interpreter;
 
+static DEFAULT_FONT: FontAsset = font!("assets/fonts/lexend.ttf");
+static CODE_FONT: FontAsset = font!("assets/fonts/geistmono.ttf");
+
 // ---------------------------------------------------------------------------
 // WASM FFI — read strings from JS plugins
 // ---------------------------------------------------------------------------
 
 #[cfg(target_arch = "wasm32")]
+#[link(wasm_import_module = "env")]
 extern "C" {
     // Home page demo: read code from CodeMirror
     fn ply_demo_get_code(ptr: *mut u8, max_len: u32) -> u32;
@@ -92,11 +96,7 @@ fn window_conf() -> macroquad::conf::Conf {
 
 #[macroquad::main(window_conf)]
 async fn main() {
-    static DEFAULT_FONT: FontAsset = FontAsset::Bytes {
-        file_name: "lexend.ttf",
-        data: include_bytes!("../assets/fonts/lexend.ttf"),
-    };
-    let mut ply = Ply::<()>::new(&DEFAULT_FONT).await;
+    let mut ply = Ply::new(&DEFAULT_FONT).await;
 
     loop {
         clear_background(MacroquadColor::new(0.102, 0.067, 0.067, 1.0));
@@ -118,7 +118,7 @@ async fn main() {
             }
         }
 
-        ui.show(|_| {}).await;
+        ui.show().await;
 
         next_frame().await;
     }

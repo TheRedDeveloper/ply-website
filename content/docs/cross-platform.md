@@ -1,6 +1,6 @@
 +++
 title = "Cross-Platform Builds"
-weight = 18
+weight = 19
 +++
 
 Ply apps run on Linux, macOS, Windows, Android, iOS, and the web.

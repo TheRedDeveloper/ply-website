@@ -166,7 +166,7 @@ fn turn_corners(enter: Dir, exit: Dir) -> (f32, f32, f32, f32) {
   }
 }
 
-pub fn run(ui: &mut Ui<'_, ()>) {
+pub fn run(ui: &mut Ui<'_, '_>) {
   let (snake, dir, food, score, game_over) = GAME.with(|g| {
     let mut game = g.borrow_mut();
 
@@ -202,7 +202,7 @@ pub fn run(ui: &mut Ui<'_, ()>) {
     .children(|ui| {
       ui.element()
         .width(percent!(0.5))
-        .aspect_ratio(GRID_W as f32 / GRID_H as f32)
+        .height(ratio!(GRID_W as f32 / GRID_H as f32))
         .background_color(0x262220)
         .corner_radius(4.0)
         .layout(|l| l.direction(TopToBottom))
@@ -260,7 +260,8 @@ pub fn run(ui: &mut Ui<'_, ()>) {
             .height(fit!())
             .background_color((30, 27, 27, 200))
             .corner_radius(12.0)
-            .floating(|f| f.attach_parent().anchor((CenterX, Top), (CenterX, Top)).offset((0.0, 8.0)).passthrough())
+            .passthrough()
+            .floating(|f| f.attach_parent().anchor((CenterX, Top), (CenterX, Top)).offset((0.0, 8.0)))
             .layout(|l| l.padding((4, 14, 4, 14)))
             .children(|ui| {
               ui.text(&format!("{score}"), |t| t.font_size(22).color(0xE8E0DC));
@@ -272,7 +273,8 @@ pub fn run(ui: &mut Ui<'_, ()>) {
               .height(fit!())
               .background_color((30, 27, 27, 220))
               .corner_radius(8.0)
-              .floating(|f| f.attach_parent().anchor((CenterX, CenterY), (CenterX, CenterY)).passthrough())
+              .passthrough()
+              .floating(|f| f.attach_parent().anchor((CenterX, CenterY), (CenterX, CenterY)))
               .layout(|l| l.padding((12, 20, 12, 20)).direction(TopToBottom).gap(4).align(CenterX, CenterY))
               .children(|ui| {
                 ui.text("Game Over", |t| t.font_size(22).color(0xFF654D));
@@ -284,7 +286,8 @@ pub fn run(ui: &mut Ui<'_, ()>) {
               .height(fit!())
               .background_color((30, 27, 27, 160))
               .corner_radius(8.0)
-              .floating(|f| f.attach_parent().anchor((CenterX, Bottom), (CenterX, Bottom)).offset((0.0, -8.0)).passthrough())
+              .passthrough()
+              .floating(|f| f.attach_parent().anchor((CenterX, Bottom), (CenterX, Bottom)).offset((0.0, -8.0)))
               .layout(|l| l.padding((4, 10, 4, 10)))
               .children(|ui| {
                 ui.text("Arrow keys or WASD", |t| t.font_size(12).color(0x6E6560));

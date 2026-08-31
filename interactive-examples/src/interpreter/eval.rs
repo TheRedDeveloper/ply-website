@@ -4,11 +4,11 @@ use ply_engine::layout::{LayoutDirection, Padding, Sizing};
 use ply_engine::prelude::*;
 
 /// Execute a parsed program against a live Ui handle.
-pub fn exec_program(program: &Program, ui: &mut Ui<'_, ()>) -> Result<(), InterpreterError> {
+pub fn exec_program(program: &Program, ui: &mut Ui<'_, '_>) -> Result<(), InterpreterError> {
     exec_statements(&program.statements, ui)
 }
 
-fn exec_statements(stmts: &[Statement], ui: &mut Ui<'_, ()>) -> Result<(), InterpreterError> {
+fn exec_statements(stmts: &[Statement], ui: &mut Ui<'_, '_>) -> Result<(), InterpreterError> {
     for stmt in stmts {
         match stmt {
             Statement::Expr(expr) => exec_expr_stmt(expr, ui)?,
@@ -19,7 +19,7 @@ fn exec_statements(stmts: &[Statement], ui: &mut Ui<'_, ()>) -> Result<(), Inter
 
 /// Execute an expression used as a statement. Must be either a `ui.element()...` chain
 /// or a `ui.text(...)` call.
-fn exec_expr_stmt(expr: &Expr, ui: &mut Ui<'_, ()>) -> Result<(), InterpreterError> {
+fn exec_expr_stmt(expr: &Expr, ui: &mut Ui<'_, '_>) -> Result<(), InterpreterError> {
     let (root, chain) = flatten_chain(expr)?;
 
     if root != "ui" {
@@ -86,17 +86,32 @@ fn flatten_chain(expr: &Expr) -> Result<(String, Vec<FlatCall>), InterpreterErro
 
 fn exec_element_chain(
     chain: &[FlatCall],
-    ui: &mut Ui<'_, ()>,
+    ui: &mut Ui<'_, '_>,
 ) -> Result<(), InterpreterError> {
-    // chain[0] is "element" — skip it
     if chain.is_empty() || chain[0].name != "element" {
         return Err(InterpreterError::eval("Expected `ui.element()`"));
     }
 
-    let mut builder = ui.element();
+    let id_call = chain.iter().skip(1).find(|c| c.name == "id");
+    if let Some(call) = id_call {
+        expect_args(&call.name, &call.args, 1)?;
+        let s = eval_string(&call.args[0])?;
+        apply_element_calls(ui.element().id((s.as_str(), 0u32)), chain)
+    } else {
+        apply_element_calls(ui.element(), chain)
+    }
+}
 
-    for (_i, call) in chain.iter().enumerate().skip(1) {
+fn apply_element_calls<'ui, S>(
+    mut builder: ElementBuilder<'_, S>,
+    chain: &[FlatCall],
+) -> Result<(), InterpreterError>
+where
+    S: ply_engine::AttachedState<'ui>,
+{
+    for call in chain.iter().skip(1) {
         match call.name.as_str() {
+            "id" => {}
             "width" => {
                 expect_args(&call.name, &call.args, 1)?;
                 let sizing = eval_sizing(&call.args[0])?;
@@ -117,16 +132,6 @@ fn exec_element_chain(
                 let cr = eval_corner_radius(&call.args[0])?;
                 builder = builder.corner_radius(cr);
             }
-            "id" => {
-                expect_args(&call.name, &call.args, 1)?;
-                let s = eval_string(&call.args[0])?;
-                builder = builder.id((&*s, 0u32));
-            }
-            "aspect_ratio" => {
-                expect_args(&call.name, &call.args, 1)?;
-                let f = eval_f32(&call.args[0])?;
-                builder = builder.aspect_ratio(f);
-            }
             "contain" => {
                 expect_args(&call.name, &call.args, 1)?;
                 let f = eval_f32(&call.args[0])?;
@@ -139,6 +144,12 @@ fn exec_element_chain(
             }
             "preserve_focus" => {
                 builder = builder.preserve_focus();
+            }
+            "capture" => {
+                builder = builder.capture();
+            }
+            "passthrough" => {
+                builder = builder.passthrough();
             }
             "layout" => {
                 expect_args(&call.name, &call.args, 1)?;
@@ -180,7 +191,6 @@ fn exec_element_chain(
                 expect_args(&call.name, &call.args, 1)?;
                 let (_params, body) = expect_closure(&call.args[0])?;
                 let stmts = expect_block_stmts(&body)?;
-                // We need to collect errors from inside the closure
                 let mut inner_err: Option<InterpreterError> = None;
                 builder.children(|child_ui| {
                     if let Err(e) = exec_statements(stmts, child_ui) {
@@ -259,7 +269,7 @@ fn exec_element_chain(
 
 fn exec_text_call(
     chain: &[FlatCall],
-    ui: &mut Ui<'_, ()>,
+    ui: &mut Ui<'_, '_>,
 ) -> Result<(), InterpreterError> {
     // chain[0] is "text"
     let call = &chain[0];
@@ -436,9 +446,6 @@ fn apply_floating_calls(
             }
             "clip_by_parent" => {
                 f.clip_by_parent();
-            }
-            "passthrough" => {
-                f.passthrough();
             }
             _ => {}
         }
@@ -787,8 +794,14 @@ fn eval_sizing(expr: &Expr) -> Result<Sizing, InterpreterError> {
                 }
                 Ok(Sizing::Percent(eval_f32(&args[0])?))
             }
+            "ratio" => {
+                if args.len() != 1 {
+                    return Err(InterpreterError::eval("ratio!() takes exactly 1 argument"));
+                }
+                Ok(Sizing::Ratio(eval_f32(&args[0])?))
+            }
             other => Err(InterpreterError::eval(format!(
-                "Unknown sizing macro `{other}!()`. Use grow!(), fit!(), fixed!(), or percent!()"
+                "Unknown sizing macro `{other}!()`. Use grow!(), fit!(), fixed!(), percent!(), or ratio!()"
             ))),
         },
         _ => Err(InterpreterError::eval(

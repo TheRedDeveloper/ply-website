@@ -137,12 +137,7 @@ fn highlight_tokens(line: &str, out: &mut String) {
   }
 }
 
-pub fn run(ui: &mut Ui<'_, ()>) {
-  static CODE_FONT: FontAsset = FontAsset::Bytes {
-    file_name: "geistmono.ttf",
-    data: include_bytes!("../../assets/fonts/geistmono.ttf"),
-  };
-
+pub fn run(ui: &mut Ui<'_, '_>) {
   // Seed the editor with default GLSL exactly once
   if !SEEDED.swap(true, Ordering::Relaxed) {
     let highlighted = highlight_glsl(DEFAULT_GLSL);
@@ -182,15 +177,14 @@ pub fn run(ui: &mut Ui<'_, ()>) {
             .height(grow!())
             .text_input(|t| t
               .multiline()
-              .font(&CODE_FONT)
+              .font(&crate::CODE_FONT)
               .font_size(13)
               .line_height(18)
               .text_color(0xE8E0DC)
               .cursor_color(0xFF654D)
               .selection_color((255u8, 101u8, 77u8, 51u8))
               .no_styles_movement()
-            )
-            .empty();
+            );
         });
 
       // Preview panel
