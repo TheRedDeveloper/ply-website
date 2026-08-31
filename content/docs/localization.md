@@ -92,7 +92,7 @@ pub mod t {}
 The `locales` feature provides `ply_locales` in the prelude and includes fluent-bundle automatically. You can just pass the strings into `ui.text()`:
 
 ```rust
-use ply_locales::prelude::*;
+use ply_engine::prelude::*;
 
 #[ply_locales("locales")] pub mod t {}
 

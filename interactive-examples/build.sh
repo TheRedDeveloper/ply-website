@@ -34,7 +34,7 @@ else
     WASM_IN="$SCRIPT_DIR/target/wasm32-unknown-unknown/release/interactive-examples.wasm"
 fi
 
-WASM_OUT="$STATIC_DEMO/app-v2.wasm"
+WASM_OUT="$STATIC_DEMO/app-v3.wasm"
 
 # 4. Optimize with wasm-opt (release only)
 if [ "$PROFILE" = "release" ] && command -v wasm-opt &> /dev/null; then
