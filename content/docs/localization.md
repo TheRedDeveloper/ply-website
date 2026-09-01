@@ -137,6 +137,14 @@ greet = Hello, { UPPER($name) }!
 - Calls in Fluent templates are checked at compile time
 - Functions remain directly callable in Rust as well
 
+### `VOID`
+
+`ply-locales` provides a built-in `VOID()` function. `VOID` lets you satisfy variable requirements without displaying the variable:
+
+```fluent
+user-greeting = Hello, { $name }!{ VOID($gender) }
+```
+
 ## Compile-time safety
 
 Readable errors are always emitted at compile time, such as mismatched variables:
