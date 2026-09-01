@@ -141,7 +141,7 @@
                 },
                 
                 
-                "wordCount": 520,
+                "wordCount": 539,
                 
                 "inLanguage": "en"
             }
@@ -786,7 +786,9 @@
 <li>Calls in Fluent templates are checked at compile time</li>
 <li>Functions remain directly callable in Rust as well</li>
 </ul>
-<h2 id="compile-time-safety"><a class="zola-anchor" href="#compile-time-safety" aria-label="Anchor link for: compile-time-safety">🔗</a>Compile-time safety</h2>
+<h3 id="void"><a class="zola-anchor" href="#void" aria-label="Anchor link for: void">🔗</a><code>VOID</code></h3>
+<p><code>ply-locales</code> provides a built-in <code>VOID()</code> function. <code>VOID</code> lets you satisfy variable requirements without displaying the variable:</p>
+<pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="fluent"><span class="giallo-l"><span style="color: #F9E2AF;font-style: italic;">user-greeting = </span><span style="color: #A6E3A1;">Hello, </span><span style="color: #CBA6F7;">{</span><span> $name</span><span style="color: #CBA6F7;"> }</span><span style="color: #A6E3A1;">!</span><span style="color: #CBA6F7;">{</span><span style="color: #89B4FA;font-style: italic;"> VOID(</span><span>$gender</span><span style="color: #89B4FA;font-style: italic;">)</span><span style="color: #CBA6F7;"> }</span></span></code></pre><h2 id="compile-time-safety"><a class="zola-anchor" href="#compile-time-safety" aria-label="Anchor link for: compile-time-safety">🔗</a>Compile-time safety</h2>
 <p>Readable errors are always emitted at compile time, such as mismatched variables:</p>
 <pre class="giallo" style="color: #CDD6F4; background-color: #1E1E2E;"><code data-lang="plain"><span class="giallo-l"><span>error: Mismatched Fluent variables in message &#39;order-summary&#39; for locale &#39;de-DE&#39;</span></span>
 <span class="giallo-l"><span>        --&gt; locales/de-DE.ftl:2</span></span>
@@ -910,6 +912,12 @@
                         <li class="page-toc-panel__item">
                             <a href="#custom-functions" class="page-toc-panel__link">
                                 Custom functions
+                            </a>
+                        </li>
+                        
+                        <li class="page-toc-panel__item">
+                            <a href="#void" class="page-toc-panel__link">
+                                VOID
                             </a>
                         </li>
                         
